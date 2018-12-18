@@ -34,6 +34,13 @@ import * as CalamityFunction from './function/CalamityFunction'
 import moment from 'moment'
 
 let id = 0
+let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let indexCount = 0, newCount = 0
+const defaultDamagePropertyStatic = [
+  {
+    name: `${ 'Damage Property' + ' ' + letters.charAt(indexCount) + '' + 1}`
+  }
+]
 
 class CalamityFragment extends BaseMVPView {
 
@@ -59,7 +66,9 @@ class CalamityFragment extends BaseMVPView {
       attachmentDefaultArray: [],
       attachmentsData: [],
       calamityType: [],
-      defaultDamageProperty: [],
+      defaultDamageProperty: [{
+          name: `${'Damage Property ' + letters.charAt(indexCount) + '' + 1}`
+      }],
       damagePropertyCardHolder : [],
       calamityId: '',
       calamityName: '',
@@ -107,10 +116,6 @@ class CalamityFragment extends BaseMVPView {
 
   showAttachmentsMap (attachmentsData) {
     this.setState({ attachmentsData })
-  }
-
-  showDamagePropertyAttachments (defaultDamageProperty) {
-    this.setState({ defaultDamageProperty })
   }
 
   setFileAttachments (attachmentArray) {
@@ -162,31 +167,31 @@ class CalamityFragment extends BaseMVPView {
 
     if (id === null || id === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Type of Calamity is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     } else if (date === null || date === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Date of Occurence is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     } else if (damageProperty === null || !damageProperty.length) {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Damage Property is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }else if (!attachmentArray.length) {
        store.dispatch(NotifyActions.addNotify({
-          title : 'Warning' ,
+          title : 'My Benefits' ,
           message : 'Attachments is required',
           type : 'warning',
           duration : 2000
@@ -197,7 +202,7 @@ class CalamityFragment extends BaseMVPView {
         (attachment, key) => {
           if(!attachment.file) {
             store.dispatch(NotifyActions.addNotify({
-               title : 'Warning',
+               title : 'My Benefits',
                message : attachment.name + ' is required',
                type : 'warning',
                duration : 2000
@@ -280,11 +285,6 @@ class CalamityFragment extends BaseMVPView {
       showEditSubmitButton,
     }=this.state
 
-    const defaultDamagePropertyStatic = [
-      {
-        name: 'Damage Property ' + count
-      }
-    ]
 
     return (
       <div>
@@ -357,7 +357,9 @@ class CalamityFragment extends BaseMVPView {
           damagePropertyCardHolder = { damagePropertyCardHolder }
           updateMode = { updateMode }
           editModeData = { editModeData }
-          resetInstance = { () => this.setState({ defaultDamageProperty : defaultDamagePropertyStatic}) }
+          resetInstance = { () => this.setState({ defaultDamageProperty : [{
+              name: `${'Damage Property ' + letters.charAt(indexCount) + '' + 1}`
+          }] }) }
           propertyTypeValue = { propertyTypeValue }
           defaultDamageProperty = { defaultDamageProperty }
           showPropertyTypeModal = { showPropertyTypeModal }
@@ -397,23 +399,29 @@ class CalamityFragment extends BaseMVPView {
           setAttachmentFunc = { (updatedAttachments) => this.setFileAttachmentsArray(updatedAttachments) }
           addAttachmentsFunc = { () => {
             const updatedAttachments = [...defaultDamageProperty]
-            let newCount = count + 1
+            newCount = count + 1
             this.setState({ count : newCount })
             updatedAttachments.push({
-              name : 'Damage Property ' + count
+              name : `${ 'Damage Property ' +  letters.charAt(indexCount) + '' + count}`
             })
             this.setState({ defaultDamageProperty : updatedAttachments })
             }
           }
           count = { count }
           countFunc = { (count) => this.setState({ count }) }
-          hideModalPropertyFormFunc = { (showPropertyModal) => this.setState({ showPropertyModal }) }
+          hideModalPropertyFormFunc = { (showPropertyModal) => {
+            newCount = 0
+            this.setState({ showPropertyModal, defaultDamageProperty : [{
+                name: `${'Damage Property ' + letters.charAt(indexCount) + '' + 1}`
+            }], count : 2 })
+          }}
           hideModalPropertyTypeFunc = { (showPropertyTypeModal) => this.setState({ showPropertyTypeModal }) }
           updateDataPropertyHolderFunc = { (resp) => {
             this.setState({ damagePropertyCardHolder : resp })
           }}
           getPropertyHolderFunc = { (resp) => {
             const updatePropertyHolder = [...damagePropertyCardHolder]
+            indexCount += 1
             updatePropertyHolder.push(resp)
             this.setState({ damagePropertyCardHolder : updatePropertyHolder})
           }}
@@ -489,18 +497,28 @@ class CalamityFragment extends BaseMVPView {
           preferredDate = { preferredDate }
           handleChangeDate = { (resp) => this.changeDate(resp) }
           requestCalamityTypeFunc = { (resp) => this.showCalamityTypeModal(resp) }
-          onShowPropertyFormModalFunc = { () => this.setState({
-            property : '',
-            propertyDesc : '',
-            propertyType : '',
-            acquisitionValue : '',
-            estimatedCost : '',
-            defaultDamageProperty : defaultDamageProperty,
-            showPropertyModal : true,
-            updateMode : false,})
+          onShowPropertyFormModalFunc = { () =>
+            this.setState({
+             property : '',
+             propertyDesc : '',
+             propertyType : '',
+             acquisitionValue : '',
+             estimatedCost : '',
+             defaultDamageProperty : defaultDamageProperty,
+             showPropertyModal : true,
+             updateMode : false,
+             })
           }
           setAttachmentDefaultyFunc = { (attachmentDefaultArray) => this.setFileAttachments(attachmentDefaultArray) }
-          setCardHolderDefaultyFunc = { (damagePropertyCardHolder) => this.setState({ damagePropertyCardHolder }) }
+          setCardHolderDefaultyFunc = { (damagePropertyCardHolder) => {
+            indexCount -=1
+            this.setState({
+              damagePropertyCardHolder,
+              defaultDamageProperty : [{
+                  name: `${'Damage Property ' + letters.charAt(indexCount) + '' + 1}`
+              }]
+             })
+          }}
           getPreferredDate = { data =>
             this.setState({ date :  data })}
 

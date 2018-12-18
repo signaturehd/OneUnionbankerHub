@@ -207,132 +207,132 @@ class BereavementFragment extends BaseMVPView {
 
     if (dependentId === null || dependentId === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Dependent field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (deceasedDate === null || deceasedDate === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Deceased Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralDate === null || funeralDate === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralHome === null || funeralHome === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Home field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
-    else if (funeralAddress === null || funeralAddress === '') {
+    else if (funeralAddress === null || funeralAddress === '' || funeralAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
-          message: 'Funeral Address field is required',
+          title: 'My Benefits',
+          message: 'Funeral Address field is required and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralRegion === null || funeralRegion === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralProvince === null || funeralProvince === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralCity === null || funeralCity === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (intermentDate === null || intermentDate === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Interment Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialPark === null || memorialPark === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial Park field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
-    else if (memorialAddress === null || memorialAddress === '') {
+    else if (memorialAddress === null || memorialAddress === '' || memorialAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
-          message: 'Memorial Address field is required',
+          title: 'My Benefits',
+          message: 'Memorial Address field is required and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialRegion === null || memorialRegion === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialProvince === null || memorialProvince === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialCity === null || memorialCity === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }else if (!attachmentData.length) {
        store.dispatch(NotifyActions.addNotify({
-          title : 'Warning' ,
+          title : 'My Benefits' ,
           message : 'Attachments is required',
           type : 'warning',
           duration : 2000
@@ -343,7 +343,7 @@ class BereavementFragment extends BaseMVPView {
         (attachment, key) => {
           if(!attachment.file) {
             store.dispatch(NotifyActions.addNotify({
-               title : 'Warning',
+               title : 'My Benefits',
                message : attachment.name + ' is required',
                type : 'warning',
                duration : 2000
@@ -386,127 +386,127 @@ class BereavementFragment extends BaseMVPView {
 
     if (dependentId === null || dependentId === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Dependent field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (deceasedDate === null || deceasedDate === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Deceased Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralDate === null || funeralDate === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralHome === null || funeralHome === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Home field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
-    else if (funeralAddress === null || funeralAddress === '') {
+    else if (funeralAddress === null || funeralAddress === '' || funeralAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
-          message: 'Funeral Address field is required',
+          title: 'My Benefits',
+          message: 'Funeral Address field is required  and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralRegion === null || funeralRegion === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralProvince === null || funeralProvince === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (funeralCity === null || funeralCity === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Funeral City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (intermentDate === null || intermentDate === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Interment Date field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialPark === null || memorialPark === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial Park field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
-    else if (memorialAddress === null || memorialAddress === '') {
+    else if (memorialAddress === null || memorialAddress === '' || memorialAddress.length < 15) {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
-          message: 'Memorial Address field is required',
+          title: 'My Benefits',
+          message: 'Memorial Address field is required and atleast 15 characters',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialRegion === null || memorialRegion === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial Region field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialProvince === null || memorialProvince === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial Province field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     }
     else if (memorialCity === null || memorialCity === '') {
       store.dispatch(NotifyActions.addNotify({
-          title: 'Warning',
+          title: 'My Benefits',
           message: 'Memorial City field is required',
           type: 'warning',
-          duration: 2000
+          duration: 4000
         })
       )
     } else {

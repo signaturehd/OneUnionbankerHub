@@ -56,7 +56,7 @@ class CodeOfConductFragment extends BaseMVPView {
    } else if (String(pin).length < 5) {
       store.dispatch(NotifyActions.addNotify({
          title : 'Code of Conduct' ,
-         message : 'Please enter your 5-digits code',
+         message : 'Please enter your 5-digit code',
          type : 'warning',
          duration : 2000
        })
@@ -96,7 +96,7 @@ class CodeOfConductFragment extends BaseMVPView {
   }
 
   render () {
-    const { history, onClick } = this.props
+    const { history, onClick, profileHasCOC } = this.props
     const {
       compliancesData,
       enabledLoader,
@@ -148,15 +148,16 @@ class CodeOfConductFragment extends BaseMVPView {
               autocomplete = { 'off' }
               value = { pin }
               onChange = { (e) => this.validateInputPin(e.target.value) }
-              text = { 'Password' }
+              text = { 'Pin Code' }
               type = { 'password' }
               maxLength = { 5 }
               inputProps = { 'pin-label' }
             />
-            <p className={ 'pin-label font-12' }>Please enter your 5-digits code</p>
+            <p className={ 'pin-label font-12' }>Please enter your 5-digit code</p>
             <br/>
             <GenericButton
               type = { 'button' }
+              className = { 'global-button' }
               text = { 'Submit' }
               disabled = { (String(pin).length < 5) }
               onClick = {
@@ -189,17 +190,20 @@ class CodeOfConductFragment extends BaseMVPView {
                 )
               }
             <br/>
-            <div className={ 'compliance-body' }>
-              <div></div>
-              <GenericButton
-                type = { 'button' }
-                text = { 'I Acknowledge' }
-                onClick = {
-                  () => this.setState({ showEnterPin : true })
-                }
-                className={ 'compliance-submit' }
-                />
-            </div>
+            {
+              !profileHasCOC &&
+              <div className={ 'compliance-body' }>
+                <div></div>
+                <GenericButton
+                  type = { 'button' }
+                  text = { 'I Acknowledge' }
+                  onClick = {
+                    () => this.setState({ showEnterPin : true })
+                  }
+                  className={ 'compliance-submit' }
+                  />
+              </div>
+            }
           </div>
         </div>
       }
@@ -211,6 +215,7 @@ class CodeOfConductFragment extends BaseMVPView {
 CodeOfConductFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
   onClick: PropTypes.func,
+  profileHasCOC: PropTypes.boolean,
   history: PropTypes.object,
 }
 

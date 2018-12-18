@@ -66,7 +66,6 @@ class BookBorrowedFragment extends Component {
       </div>
     )
 
-
     return (
       <div>
         <Switch>

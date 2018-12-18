@@ -31,7 +31,7 @@ setProcedure (selected) {
 
   if (selectedProcedure) {
     const valueArr = this.getDisabledIds().map(item => item)
-    if (valueArr.includes(selected.id)) {
+    if (!valueArr.includes(selected.id)) {
       let isExisting
       const valueInsideArr = selectedProcedure.map(item => item.id)
       for (const i in selectedProcedure) {

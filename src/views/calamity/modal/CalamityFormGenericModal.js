@@ -95,7 +95,7 @@ class CalamityFormGenericModal extends Component {
       estimatedCostErrorMessageFunc('Estimated cost is required')
     } else if (!genericFileAttachmentArray.length) {
       store.dispatch(NotifyActions.addNotify({
-         title : 'Warning' ,
+         title : 'My Benefits' ,
          message : 'Attachments is required',
          type : 'warning',
          duration : 2000
@@ -106,7 +106,7 @@ class CalamityFormGenericModal extends Component {
         (attachment, key) => {
           if(!attachment.file) {
             store.dispatch(NotifyActions.addNotify({
-               title : 'Warning' ,
+               title : 'My Benefits' ,
                message : attachment.name + ' is required',
                type : 'warning',
                duration : 2000
@@ -271,7 +271,7 @@ class CalamityFormGenericModal extends Component {
             <div>
             <h4>
               <br/>
-              Form Attachments
+              Proof of Damage
             </h4>
             <MultipleAttachments
               count = { count }

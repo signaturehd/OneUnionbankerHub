@@ -1,0 +1,47 @@
+.work-card-grid-option {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr .1fr;
+  margin: 0px auto;
+  align-items: center;
+}
+
+.work-grid-card {
+  display: grid;
+  grid-template-rows: 1fr;
+  column-gap: 2%;
+}
+
+.work-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .005fr;
+}
+
+.work-button {
+  border: none;
+  box-shadow: none;
+}
+
+.work-card {
+  padding: 20px;
+  cursor: pointer;
+}
+
+
+.work-download-button {
+  background-image: url('../../../../images/icons/ic_file_icon_name.png');
+}
+
+.work-seemore-button {
+  background-image: url('../../../../images/icons/ic_next.png');
+}
+
+.work-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}

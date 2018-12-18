@@ -32,7 +32,6 @@ class PhenomFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    this.props.setSelectedNavigation(10)
     this.presenter.getPhenomDiscounts()
   }
 
@@ -40,9 +39,13 @@ class PhenomFragment extends BaseMVPView {
     this.setState({ loader })
   }
 
+  getPhenomDetails (test) {
+  }
+
   showPhenomDiscountList (phenomDataList) {
     this.setState({ phenomDataList })
   }
+
 
   showPhenomDetails (phenomDetails, showPhenomCardDetails) {
     this.setState({ phenomDetails, showPhenomCardDetails })
@@ -65,12 +68,15 @@ class PhenomFragment extends BaseMVPView {
       phenomDetails,
       loader,
       selectedDetails,
-      showPhenomCardDetails
+      showPhenomCardDetails,
     } = this.state
 
     const {
       setSelectedNavigation,
       selected,
+      homePreview,
+      history,
+      homePreviewFunc
     } = this.props
 
     return (
@@ -100,35 +106,75 @@ class PhenomFragment extends BaseMVPView {
               />
               :
               <div className = { 'phenom-container-component' }>
-                <div>
+                <div className =  { 'phenom-grid-header' }>
                   <div>
-                    <h2 className={ 'header-margin-default text-align-left' }> Phenom Prime </h2>
+                    <h2 className={ 'phenoms-header header-margin-default text-align-left unionbank-color' }> Phenom Prime </h2>
                     <h2>We &#39;ve got these special deals, Just for U!</h2>
-                    <br/>
                   </div>
+                  <div></div>
+                  <div></div>
                 </div>
-                <div className = { 'phenom-container-grid' }>
-                  {
-                    phenomDataList.map((resp, key) =>
-                    <PhenomCardComponent
-                      key = { key }
-                      selectedDetails = { resp }
-                      vendor = { resp.vendor }
-                      id = { resp.id }
-                      rewardImage = { resp.rewardImage }
-                      startDate = { resp.startDate }
-                      endDate = { resp.endDate }
-                      isHeart = { resp.isHeart }
-                      onClick = { (selectedDetails) => {
-                          this.presenter.getPhenomSelectedDiscounts(resp.id)
-                          this.setState({ showPhenomCardDetails : true })
+                {
+                  homePreview ?
+                  <div className = { 'phenom-container-grid' }>
+                    {
+                      phenomDataList.slice(0, 4).map((resp, key) =>
+                      <PhenomCardComponent
+                        key = { key }
+                        selectedDetails = { resp }
+                        vendor = { resp.vendor }
+                        id = { resp.id }
+                        rewardImage = { resp.rewardImageBlob }
+                        startDate = { resp.startDate }
+                        endDate = { resp.endDate }
+                        isHeart = { resp.isHeart }
+                        onClick = { (selectedDetails) => {
+                            this.presenter.getPhenomSelectedDiscounts(resp.id)
+                            this.setState({ showPhenomCardDetails : true })
+                          }
                         }
-                      }
-                      onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
-                      />
-                    )
-                  }
-                </div>
+                        onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
+                        />
+                      )
+                    }
+                    <br/>
+                    <button
+                      type = { 'button' }
+                      className = { `viewmore tooltip` }
+                      onClick = { () => {
+                            history.push('/phenom')
+                            setSelectedNavigation(10)
+                            homePreviewFunc(false)
+                          }
+                        }>
+                      <img src={ require('../../images/icons/horizontal.png') } />
+                      <span className={ 'tooltiptext' }>View More</span>
+                    </button>
+                  </div>
+                  :
+                  <div className = { 'phenom-container-grid' }>
+                    {
+                      phenomDataList.map((resp, key) =>
+                      <PhenomCardComponent
+                        key = { key }
+                        selectedDetails = { resp }
+                        vendor = { resp.vendor }
+                        id = { resp.id }
+                        rewardImage = { resp.rewardImageBlob }
+                        startDate = { resp.startDate }
+                        endDate = { resp.endDate }
+                        isHeart = { resp.isHeart }
+                        onClick = { (selectedDetails) => {
+                            this.presenter.getPhenomSelectedDiscounts(resp.id)
+                            this.setState({ showPhenomCardDetails : true })
+                          }
+                        }
+                        onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
+                        />
+                      )
+                    }
+                  </div>
+                }
               </div>
             }
          </div>

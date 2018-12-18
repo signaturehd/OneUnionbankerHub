@@ -11,9 +11,22 @@ class BaseView extends Component {
     super(props)
     this.state = {
       loader : false,
+      notifyState : [],
     }
     this.showLoading = this.showLoading.bind(this)
     this.hideLoading = this.hideLoading.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {
+      notify
+    } = nextProps
+
+    notify &&
+    notify[notify.length - 1] &&
+    notify[notify.length - 1].duration &&
+    this.props.notify !== notify &&
+    setTimeout(() => {store.dispatch(NotifyActions.removeNotify(notify && notify.length - 1))}, notify[notify && notify.length - 1].duration)
   }
 
   showLoading (message) {
@@ -31,7 +44,10 @@ class BaseView extends Component {
 
   render () {
     const { loader } = this.state
-    const { notify } = this.props
+    const {
+      notify,
+    } = this.props
+
     return (
       <div>
         <Loader show = { loader }/>

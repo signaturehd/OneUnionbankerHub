@@ -5,13 +5,13 @@ export function checkedDate (date) {
 }
 
 export function indexDecreased (index) {
-  if(Number(index) === 8) {
+  if(Number(index) === 3) {
     return index
   } else {
-    return index - 8
+    return index - 3
   }
 }
 
 export function indexIncreased (index) {
-  return index + 8
+  return index + 3
 }

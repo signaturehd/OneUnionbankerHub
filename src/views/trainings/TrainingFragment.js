@@ -55,6 +55,7 @@ class TrainingFragment extends BaseMVPView {
   render () {
     const {
       history,
+      profile
     } = this.props
 
     const {
@@ -108,13 +109,18 @@ class TrainingFragment extends BaseMVPView {
                 name = { 'tabs' } />
               <label  htmlFor = { 'tab2' }>Enrolled Trainings</label>
 
-              <input
-                className = { 'input-tab' }
-                id='tab3'
-                onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
-                type = { 'radio' }
-                name = { 'tabs' }/>
-              <label  htmlFor = 'tab3' >For Approval</label>
+            {
+              profile && profile.isLineManager &&
+              <div>
+                <input
+                  className = { 'input-tab' }
+                  id='tab3'
+                  onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
+                  type = { 'radio' }
+                  name = { 'tabs' }/>
+                <label  htmlFor = 'tab3' >For Approval</label>
+              </div>
+            }
 
               <section id = { 'content1' }>
                   <Switch>

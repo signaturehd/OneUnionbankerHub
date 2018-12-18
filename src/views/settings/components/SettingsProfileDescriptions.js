@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, Line } from '../../../ub-components/'
+import { Card, Line, GenericInput, GenericButton } from '../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
@@ -18,22 +18,57 @@ class SettingsProfileDescriptions extends Component {
   render () {
     const {
       performanceRating,
-      profileDescriptions }=this.props
+      descriptionEditMode,
+      descriptionTextFunc,
+      descriptionText,
+      onChangeToEditMode,
+      profileDescriptions,
+      onUpdateDescription
+    }=this.props
+
     const ratings = parseInt(performanceRating)
 
     return (
       <div className={ 'profile-others-card' }>
         <div className={ 'profile-padding' }>
-          <h2 className={ 'unionbank-color font-weight-normal' }>
-            Descriptions
-          </h2>
-          <br/>
-          <div className={ 'font-size-14px' }>
-            {
-              profileDescriptions ? profileDescriptions :
-              'Sorry, you can update this information by our next release. Thank you for bearing with us as we create a better experience, Just For U!'
-            }
+          <div className = { 'grid-global' }>
+            <div className = { 'grid-global' }>
+              <h2 className={ 'unionbank-color font-weight-normal' }>
+                Description
+              </h2>
+              <div className = { 'text-align-right' }>
+                <span
+                  onClick = { () => onChangeToEditMode(true) }
+                  className = { 'profile-icon-settings editIconImage' }/>
+              </div>
+            </div>
+            <div></div>
           </div>
+          <br/>
+          {
+            descriptionEditMode ?
+            <div className = { 'profile-grid-description' }>
+              <GenericInput
+                type = { 'textarea' }
+                text = { 'Add Description' }
+                onChange = { (e) => descriptionTextFunc(e.target.value) }
+                value = { descriptionText }
+                />
+              <GenericButton
+                className = { 'profile-button-small' }
+                onClick = { () => onUpdateDescription() }
+                text = { 'Update' }
+                />
+            </div>
+            :
+            <h2
+              className={ 'font-size-14px' }>
+              {
+                profileDescriptions ? profileDescriptions :
+                '(Add Description)'
+              }
+            </h2>
+          }
           <br/>
           <Line />
           <br/>

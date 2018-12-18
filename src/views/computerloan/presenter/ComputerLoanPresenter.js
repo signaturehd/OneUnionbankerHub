@@ -177,6 +177,17 @@ export default class ComputerLoanPresenter {
         this.view.isValid(true)
       },
       error => {
+        store.dispatch(NotifyActions.resetNotify())
+        error && error.errorResp &&
+        error.errorResp.errors.map((resp) => {
+          store.dispatch(NotifyActions.addNotify({
+              title: 'Benefits',
+              message : `We're sorry, but right now, you're not yet able to avail of this benefit because of your ${ resp.message }`,
+              type : 'success',
+              duration : 2000
+            })
+          )
+        })
         this.view.navigate()
       }
     )

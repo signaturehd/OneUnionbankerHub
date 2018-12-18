@@ -1,5 +1,10 @@
 body {
   background: url('../images/ub_pattern_bg.png');
+  background-size:cover;
+  font-family : 'Roboto', sans-serif !important;
+  padding:0;
+  margin:0;
+  font-weight:lighter;
 }
 i {
   cursor: pointer;
@@ -46,11 +51,38 @@ p {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
+
+.back-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.forward-arrow {
+  transform: rotate(315deg);
+  -webkit-transform: rotate(315deg);
+}
+
+.default-body-grid {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
 .header-margin-default {
   align-items: center;
   margin-bottom: 20px;
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
+}
+
+.global-button:hover {
+  color: white;
+  background-color: #ff8a00;
+}
+
+.profile-button-small {
+  min-width: 100px;
+  height: 30px;
+  border-radius: 50px;
 }
 
 @media (max-width: 768px) {
@@ -176,6 +208,10 @@ p {
   font-size: 30px;
 }
 
+.font-size-35px{
+  font-size: 35px;
+}
+
 /* text-align*/
 
 .text-align-center {
@@ -194,8 +230,26 @@ p {
   text-align: justify;
 }
 
+.text-align-end {
+  text-align: end;
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.align-items-center{
+  align-items: center;
+}
+
+/* flaot position */
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
 }
 
 /* Default color */
@@ -204,22 +258,13 @@ p {
   color: #ff8a00;
 }
 
+.unionbank-white-color {
+  color: #fff;
+}
+
 .grid-global {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 2%;
-}
-
-@media (max-width: 768px) {
-  .grid-global {
-    display: grid;
-    grid-template-columns: 1fr;
-    column-gap: 2%;
-  }
-}
-.grid-global-rows {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
   column-gap: 2%;
 }
 
@@ -229,9 +274,57 @@ p {
   column-gap: 2%;
 }
 
+@media screen and (max-width: 1024px) {
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .grid-global {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-global-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.grid-global-columns-x4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
 .grid-global-row-x3 {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-global {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .grid-global-columns-x3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom : 10px;
+  }
+}
+.grid-global-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   column-gap: 2%;
 }
 
@@ -242,7 +335,7 @@ p {
 }
 
 .global-icons-calendar {
-  background-image: url('../images/icons/ic_date_range_grey_500_18dp.png');
+  background-image: url('../images/icons/ic_date_range_grey_500_24dp.png');
 }
 
 .global-icons-next {
@@ -300,5 +393,40 @@ p {
 /**/
 .close-button-global {
   margin: auto;
+  padding-top: 10px;
   cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
 }

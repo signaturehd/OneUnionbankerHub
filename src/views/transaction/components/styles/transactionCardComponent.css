@@ -43,6 +43,16 @@
   grid-template-columns: 1fr 1fr;
 }
 
+.full-width-button {
+  width: 100%
+}
+.transaction-grid-button {
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-gap: 15px;
+  padding: 0px 10px 0px 10px;
+}
+
 @media screen and (max-width: 768px) {
     .transaction-component-otherdetails-form {
         display: grid;
@@ -89,6 +99,7 @@
   background: transparent;
   cursor: pointer;
   min-width: 80px;
+  font-weight: bold;
 }
 
 .transaction-details-button{
@@ -106,6 +117,10 @@
 
 .transaction-details-button:hover {
   box-shadow: 1px 2px 6px rgba(0,0,0,0.24), 1px 2px 4px rgba(0,0,0,0.40);
+}
+
+.transaction-button-default {
+  min-width: 200px;
 }
 
 .transaction-component-status {

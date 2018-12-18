@@ -8,8 +8,8 @@ import GenericButton from '../../ub-components/UButton/GenericButton'
 
 import moment from 'moment'
 
-import defaultImageIcon from '../../images/mcdologo.jpg'
-import defaultImageBackground from '../../images/phenomtest.jpg'
+import defaultImageIcon from '../../images/profile-picture.png'
+import defaultImageBackground from '../../images/profile-picture.png'
 
 class PhenomCardComponent extends Component {
   constructor (props) {
@@ -51,7 +51,7 @@ class PhenomCardComponent extends Component {
               className = { 'phenom-content-grid-column-right' }>
               <img
                 className = { 'phenom-logo-icon-default' }
-                src = { `${ vendor.image ? vendor.image : defaultImageIcon }` }/>
+                src = { `${ vendor.imageBlob ? vendor.imageBlob : defaultImageIcon }` }/>
               <div>
                 <h2 className = { 'phenom-label-reward' }>
                   { vendor.name }
@@ -62,11 +62,11 @@ class PhenomCardComponent extends Component {
               onClick = { () => null }>
               <span
                 onClick = { () => {
-                  this.setState({ isHeartActive : (isHeartActive == 1) ? "0" : "1" })
+                  this.setState({ isHeartActive : isHeartActive === 0 ? 1 : 0  })
                   onChangeHeart(id, isHeart)
                 }
               }
-                className = { (parseInt(isHeartActive) ? 'phenom-status-icon' : 'phenom-heart-icon') + ' phenom-icon' }/>
+                className = { (parseInt(isHeartActive) !== 1 ? 'phenom-status-icon' : 'phenom-heart-icon') + ' phenom-icon' }/>
             </div>
           </div>
           <div

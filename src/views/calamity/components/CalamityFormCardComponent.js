@@ -78,7 +78,7 @@ class CalamityFormCardComponent extends Component {
           <div className = { 'text-align-right' }>
             <GenericButton
               text = { 'Add Property' }
-              onClick = { (resp, key) => onShowPropertyFormModalFunc(resp, key, false) }
+              onClick = { () => onShowPropertyFormModalFunc() }
               disabled = { showEditSubmitButton }
               />
           </div>
@@ -140,10 +140,16 @@ class CalamityFormCardComponent extends Component {
             </div>
           }
           <br/>
-
+          <Line/>
+          {
+            showEditSubmitButton &&
+            <center>
+              <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+            </center>
+          }
+          <br/>
           {
             showEditSubmitButton ?
-
             <div className = { 'grid-global' }>
               <GenericButton
                 type = { 'button' }

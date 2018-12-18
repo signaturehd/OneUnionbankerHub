@@ -55,12 +55,14 @@ class CarLeaseNewFragment extends BaseMVPView {
       secondaryColor: '',
       file: [],
       solRC: '',
+      solId: '',
+      solIdErrorMessage: '',
       solRCInput: '',
       insurancePayment: '',
       insuranceId: '',
       solRCErrorMessage : '',
       yearErrorMessage : '',
-      attachmentsRequired : [ {name : 'Dealer Quotations'}]
+      attachmentsRequired : [ {name : 'Dealer Quotations'} ]
     }
     this.sendFormData = this.sendFormData.bind(this)
     this.validator = this.validator.bind(this)
@@ -76,16 +78,21 @@ class CarLeaseNewFragment extends BaseMVPView {
   }
 
   showCarValidated (carValidate) {
-    this.setState({ carValidate })
+    this.setState({ carValidate, solRC : carValidate.solRC, solId : carValidate.solId })
   }
 
-  setFileAttachments (file) {
-    this.setState({ file })
+  setFileAttachments (attachmentsRequired) {
+    this.setState({ attachmentsRequired })
   }
 
   validateSolRC (e) {
     const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
     this.setState({ solRC : validate, solRCErrorMessage : '' })
+  }
+
+  validateSolId (e) {
+    const validate = CarLeaseFunctions.checkedValidateInputNumber(e)
+    this.setState({ solId : validate, solIdErrorMessage : '' })
   }
 
   validateInputCarModelValue (e) {
@@ -118,20 +125,20 @@ class CarLeaseNewFragment extends BaseMVPView {
       carBrand,
       carModel,
       makeYear,
-      solRCDefault,
       solRC,
       insurancePayment,
       cMUnit,
       primaryColor,
       secondaryColor,
-      file,
+      attachmentsRequired,
       leaseMode,
-      insuranceId
+      insuranceId,
+      solId,
+      carValidate
     } = this.state
 
-
     let validateAttachments = false
-    file && file.map(
+    attachmentsRequired && attachmentsRequired.map(
       (attachment, key) => {
         if(!attachment.file) {
           validateAttachments = true
@@ -139,11 +146,12 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
     )
 
-    const solRCChecked = solRCDefault ? solRCDefault : solRC
+    const solRCChecked = carValidate.solRC !== '' ? carValidate.solRC : solRC
+    const solIdChecked = carValidate.solId !== '' ? carValidate.solId : solId
 
       if (!this.validator(carBrand)) {
           store.dispatch(NotifyActions.addNotify({
-              title : 'Car Lease (New)',
+              title : 'My Benefits',
               message : 'Car Brand fields are required',
               type: 'warning'
           })
@@ -151,7 +159,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
       else if (!this.validator(carModel)) {
           store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Car Model fields are required',
             type: 'warning'
           })
@@ -159,7 +167,7 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
       else if (!this.validator(makeYear)) {
           store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Year fields are required',
             type: 'warning'
           })
@@ -167,38 +175,49 @@ class CarLeaseNewFragment extends BaseMVPView {
       }
       else if (!this.validator(primaryColor)) {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Primary Color fields are required',
             type: 'warning'
           })
         )
       } else if (!this.validator(secondaryColor)) {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Secondary Color fields are required',
             type: 'warning'
           })
         )
       } else if (!this.validator(insurancePayment)) {
         store.dispatch(NotifyActions.addNotify({
-            title : 'Car Lease (New)',
+            title : 'My Benefits',
             message : 'Insurance Payment is required',
             type: 'warning'
           })
         )
-      } else if (!this.validator(solRCChecked)) {
-        this.setState({ solRCErrorMessage : 'sol rc is required' })
+      } else if (!this.validator(solRC)) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'My Benefits',
+            message : 'Sol RC  is required',
+            type: 'warning'
+          })
+        )
+      } else if (!this.validator(solIdChecked)) {
+        store.dispatch(NotifyActions.addNotify({
+            title : 'My Benefits',
+            message : 'Sol ID  is required',
+            type: 'warning'
+          })
+        )
       } else if (validateAttachments) {
-        file && file.map(
+        attachmentsRequired && attachmentsRequired.map(
           (attachment, key) => {
-            if(!attachment.file) {
+            if(! attachment.file) {
               store.dispatch(NotifyActions.addNotify({
-                 title : 'Warning' ,
-                 message : attachment.name + ' is required',
-                 type : 'warning',
-                 duration : 2000
-               })
-             )
+                  title : 'My Benefits',
+                  message : `${ attachment.name } is required`,
+                  type: 'warning'
+                })
+              )
             }
           }
         )
@@ -236,29 +255,30 @@ class CarLeaseNewFragment extends BaseMVPView {
       carBrand,
       carModel,
       makeYear,
-      solRCDefault,
       solRC,
       insurancePayment,
       cMUnit,
       primaryColor,
       secondaryColor,
-      file,
+      attachmentsRequired,
       leaseMode,
-      insuranceId
+      insuranceId,
+      solId,
+      carValidate
     } = this.state
 
-    const solRCChecked = solRCDefault ? solRCDefault : solRC
     this.presenter.addCarRequest(
       carBrand,
       carModel,
       makeYear,
       leaseMode,
-      solRCChecked,
+      solRC,
+      solId,
       insuranceId,
       cMUnit,
       primaryColor,
       secondaryColor,
-      file ? file : null)
+      attachmentsRequired ? attachmentsRequired : null)
   }
 
   render () {
@@ -291,7 +311,9 @@ class CarLeaseNewFragment extends BaseMVPView {
       showInsurancePaymentModal,
       yearErrorMessage,
       showEditMode,
-      attachmentsRequired
+      attachmentsRequired,
+      solId,
+      solIdErrorMessage,
     } = this.state
 
     const { history }=this.props
@@ -302,7 +324,6 @@ class CarLeaseNewFragment extends BaseMVPView {
         name : 'Salary Deduction',
       }
     ]
-
     return (
       <div>
         {
@@ -391,7 +412,7 @@ class CarLeaseNewFragment extends BaseMVPView {
         {
           showCarBrands &&
           <SingleInputModal
-            label = { 'Brands' }
+            label = { 'Car Brands' }
             inputArray = { carValidate && carValidate.brands }
             selectedArray = { (carId, carBrand) =>
               this.setState({
@@ -445,15 +466,19 @@ class CarLeaseNewFragment extends BaseMVPView {
               makeYear = { makeYear }
               yearErrorMessage = { yearErrorMessage }
               solRC = { solRC }
+              solId = { solId }
+              solIdErrorMessage = { solIdErrorMessage }
               showQuotation = { showQuotation }
               showFileUpload = { showFileUpload }
               secondaryColor = { secondaryColor }
               primaryColor = { primaryColor }
               solRCDefault = { carValidate.solRC }
+              solIdDefault = { carValidate.solId }
               cmUnit = { carValidate.unit }
               attachments = { attachmentsRequired }
               insurancePayment = { insurancePayment }
               onChangeSolRCFunc = { (e) => this.validateSolRC(e) }
+              onChangeSolIdFunc = { (e) => this.validateSolId(e) }
               solRCErrorMessage = { solRCErrorMessage }
               getFileArray = { (resp) => this.setFileAttachments(resp) }
               onShowInsurancePaymentFunc = { () => this.setState({ showInsurancePaymentModal : true }) }

@@ -27,6 +27,7 @@ class ComputerLoanCardComponent extends Component {
       desiredAmount,
       desiredAmountFunc,
       supplierName,
+      supplier,
       showTerm,
       termOfLoan,
       purposeOfAvailment,
@@ -38,7 +39,7 @@ class ComputerLoanCardComponent extends Component {
       onClick,
       status,
       updateForm,
-      review
+      review,
     } = this.props
 
     return (
@@ -66,8 +67,9 @@ class ComputerLoanCardComponent extends Component {
         />
         <GenericInput
           text = { 'Supplier Name' }
-          onClick = { (e) => supplierName(e.target.value) }
+          onChange = { (e) => supplierName(e.target.value) }
           maxLength = { 20 }
+          value = { supplier }
           disabled = { review }
         />
         <GenericInput
@@ -154,6 +156,7 @@ ComputerLoanCardComponent.propTypes = {
   onClick : PropTypes.func,
   updateForm : PropTypes.func,
   supplierName : PropTypes.func,
+  supplier : PropTypes.string,
   setAttachments : PropTypes.func,
   modeOfLoanId : PropTypes.number,
   status : PropTypes.string,

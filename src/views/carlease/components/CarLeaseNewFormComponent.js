@@ -30,6 +30,9 @@ class CarLeaseNewFormComponent extends Component {
       primaryColor,
       solRCDefault,
       solRC,
+      solId,
+      solIdDefault,
+      solIdErrorMessage,
       cmUnit,
       secondaryColor,
       showQuotation,
@@ -39,11 +42,11 @@ class CarLeaseNewFormComponent extends Component {
       onValidateyearFunc,
       onValidatePrimaryColor,
       onValidateSecondaryColor,
-      onValidateSolRC,
       onShowEnterSolRCModalFunc,
       onShowInsurancePaymentFunc,
       insurancePayment,
       onChangeSolRCFunc,
+      onChangeSolIdFunc,
       solRCErrorMessage,
       onSubmit,
       onEdit,
@@ -115,20 +118,29 @@ class CarLeaseNewFormComponent extends Component {
                 errorMessage = { '' }
                 text = { 'Insurance Payment' }
               />
-              <GenericInput
-                disabled = { showEditMode }
-                value = { solRCDefault ? solRCDefault : solRC }
-                onChange = { (e) => onChangeSolRCFunc(e.target.value) }
-                maxLength = { 20 }
-                onClick = { () => onShowEnterSolRCModalFunc }
-                errorMessage = { solRCErrorMessage }
-                text = { 'Sol RC' }
-              />
+              <div className = { 'grid-global' }>
+                <GenericInput
+                  disabled = { showEditMode }
+                  value = { solId }
+                  onChange = { (e) => onChangeSolIdFunc(e.target.value) }
+                  errorMessage = { solIdErrorMessage }
+                  text = { 'Sol ID' }
+                  maxLength = { 20 }
+                />
+                <GenericInput
+                  disabled = { showEditMode }
+                  value = { solRC }
+                  onChange = { (e) => onChangeSolRCFunc(e.target.value) }
+                  errorMessage = { solRCErrorMessage }
+                  text = { 'RC' }
+                  maxLength = { 20 }
+                />
+              </div>
               <GenericInput
                 value = { cmUnit }
                 disabled = { showEditMode }
                 readOnly
-                text = { 'CM Unit' }
+                text = { 'Unit' }
               />
               {
                 showFileUpload &&
@@ -192,7 +204,11 @@ CarLeaseNewFormComponent.propTypes = {
   history: PropTypes.object,
   carBrand: PropTypes.string,
   solRCDefault: PropTypes.string,
+  solIdDefault: PropTypes.string,
   solRC: PropTypes.string,
+  solId: PropTypes.string,
+  onChangeSolIdFunc: PropTypes.func,
+  solIdErrorMessage: PropTypes.string,
   cmUnit: PropTypes.string,
   carModel: PropTypes.string,
   primaryColor: PropTypes.string,
@@ -206,7 +222,6 @@ CarLeaseNewFormComponent.propTypes = {
   onValidateyearFunc: PropTypes.func,
   onValidatePrimaryColor: PropTypes.func,
   onValidateSecondaryColor: PropTypes.func,
-  onValidateSolRC: PropTypes.func,
   onShowEnterSolRCModalFunc: PropTypes.func,
   onSubmit: PropTypes.func,
   onSubmit: PropTypes.func,

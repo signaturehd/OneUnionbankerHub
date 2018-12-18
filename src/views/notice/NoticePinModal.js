@@ -35,8 +35,13 @@ class NoticePinModal extends BaseMVPView {
     }
   }
 
-  noticeResponseFunc (noticeResponse, showNoticeResponseModal, showPinCodeModal) {
-    this.setState({ noticeResponse, showNoticeResponseModal, showPinCodeModal })
+  noticeResponseFunc (noticeResponse, showPinCodeModal) {
+    this.setState({ noticeResponse, showPinCodeModal })
+    this.submitAgreement()
+  }
+
+  submitAgreement() {
+    this.props.onSubmitAgreement()
   }
 
   showCircularLoader () {
@@ -66,7 +71,7 @@ class NoticePinModal extends BaseMVPView {
      )
    } else {
      this.presenter.validateEmployeePin(pin)
-   }
+    }
   }
 
   render () {
@@ -76,6 +81,7 @@ class NoticePinModal extends BaseMVPView {
       onClose,
       onSubmitAgreement
     } = this.props
+    
     const {
       enabledLoader,
       noticeResponse,
@@ -87,16 +93,6 @@ class NoticePinModal extends BaseMVPView {
     return (
       <div>
         {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              onSubmitAgreement()
-            }}
-            noticeResponse = { noticeResponse }
-          />
-        }
-        {
           showPinCodeModal &&
           <Modal
             width = { 40 }
@@ -105,13 +101,13 @@ class NoticePinModal extends BaseMVPView {
               {
                 enabledLoader ?
                 <center className = { 'circular-loader-center' }>
-                  <h2>Please wait while validating your registered pin</h2>
+                  <h2>Please wait while we validate your PIN</h2>
                   <br/>
                   <CircularLoader show = { enabledLoader }/>
                 </center> :
                 <center>
                   <div className = { 'grid-global-row' }>
-                    <span className = { 'lock-icon lock-icon-settings' }/>
+                    <span className = { 'pinlock-icon lock-icon-settings' }/>
                     <h2 className = { 'font-size-12px' }>Please enter your registered digital signature (PIN).</h2>
                   </div>
                   <GenericInput

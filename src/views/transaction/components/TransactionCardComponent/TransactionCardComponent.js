@@ -62,7 +62,7 @@ class TransactionCardComponent extends Component {
           <div className = { 'grid-global' }>
             <div>
               <GenericButton
-                className = { `transaction-component-status-${
+                className = { `transaction-button-default transaction-component-status-${
                   benefitStatus
                 }` }
                 text = { detail.status }

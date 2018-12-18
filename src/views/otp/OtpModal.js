@@ -46,6 +46,7 @@ class OtpModal extends BaseMVPView {
       transactionType,
       username,
       onClose,
+      otpMessage
     } = this.props
 
     const {
@@ -58,7 +59,8 @@ class OtpModal extends BaseMVPView {
     return (
 
       <Modal
-          onClose = {onClose}
+          onClose = { onClose }
+          isDismisable = { true }
         >
         {
           disableSubmit || disableResend ?
@@ -74,7 +76,7 @@ class OtpModal extends BaseMVPView {
                 <span className = { 'security-icon security-icon-settings' }/>
                   <br/>
               </div>
-              <h2 className = { 'font-size-12px' }>You will receive a One-Time Password (OTP) on your registered mobile number</h2>
+              <h2 className = { 'font-size-12px' }>{ otpMessage && otpMessage }</h2>
             </div>
             <br/>
             <GenericInput
@@ -85,7 +87,7 @@ class OtpModal extends BaseMVPView {
               errorMessage = { 'Please enter your 6-digit code' }
             />
             <br/>
-            <div className = {'otp-function'}>
+            <div className = {'grid-global'}>
               <GenericButton text= "Submit"
                 onClick={ () => {
                     this.presenter.verifyOtp(username, otp, transactionType),
@@ -94,13 +96,13 @@ class OtpModal extends BaseMVPView {
                 }
                 disabled = {this.state.disableSubmit}
                />
-              <GenericButton text= "Resend OTP"
-                onClick={ () => {
-                    this.presenter.resendOtp(username, transactionType),
-                    this.setState({ disableResend: true, text : `Please wait while we're resending your OTP` })
-                  }
-                }
-                disabled = {this.state.disableResend}
+               <GenericButton text= "Resend OTP"
+                 onClick={ () => {
+                     this.presenter.resendOtp(username, transactionType),
+                     this.setState({ disableResend: true, text : `Please wait while we're resending your OTP` })
+                   }
+                 }
+                 disabled = {this.state.disableResend}
               />
             </div>
           <br/>

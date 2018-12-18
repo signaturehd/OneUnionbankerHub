@@ -6,6 +6,7 @@ import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { Card, GenericButton } from '../../../../ub-components'
 
 import Rating from 'react-rating'
+import staticBookImage from '../../../../images/icons/book_placeholder.png'
 
 import './styles/bookCardComponent.css'
 
@@ -24,7 +25,7 @@ class BookCardComponent extends Component {
 
     const  styles = {
       cardHeader : {
-        backgroundImage : `url(${(detail.imageUrl)})`,
+        backgroundImage : `url(${(detail.imageUrl ? detail.imageUrl : staticBookImage)})`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       },

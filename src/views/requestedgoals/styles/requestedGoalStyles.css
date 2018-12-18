@@ -1,0 +1,81 @@
+.body {
+  font-family: 'Roboto', sans-serif;
+  color: #999999;
+  }
+
+.grid-main {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: .1fr 3fr;
+}
+
+.margin-auto {
+  marign : auto;
+}
+
+.margin-right {
+  margin-right: 40px;
+}
+
+.margin-left {
+  margin-left: 20px;
+}
+
+.padding-10px {
+  padding: 10px;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.div-fixed {
+  z-index: 99;
+  width: 30%;
+  height: 100%;
+}
+
+.grid-filter {
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr;
+}
+
+.grid-percentage {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.color-Low {
+  color: #4CAF50;
+}
+
+.color-Medium {
+  color: #FF8A00;
+}
+
+.color-High {
+  color: #ff3333;
+}
+
+.icon-edit-img {
+  background-image: url('../../../images/icons/baseline_edit_black_18dp.png')
+}
+
+.icon-add-img {
+  background-image: url('../../../images/icons/icons-add-36.png')
+}
+
+.header-column {
+  display: grid;
+  grid-template-columns: 2fr .1fr;
+}
+
+/* Comment */
+.comment-grid {
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+}

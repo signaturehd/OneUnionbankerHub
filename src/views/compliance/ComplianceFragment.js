@@ -29,8 +29,9 @@ class ComplianceFragment extends BaseMVPView {
   }
 
   render () {
-    const { history } = this.props
+    const { history, profileHasCOC } = this.props
     const { accountNumber, showAccountNumberModal } = this.state
+
     const mycompliance = [{
       id: 0 ,
       styleName: 'mycompliance-cards-1 mycompliance-option-default font-weight-bold',
@@ -87,7 +88,9 @@ class ComplianceFragment extends BaseMVPView {
       <div>
         <Switch>
           <Route path = '/mycompliance/codeofconduct' render = { props =>
-            <CodeOfConductFragment { ...props } /> } />
+            <CodeOfConductFragment
+              profileHasCOC = { profileHasCOC }
+              { ...props } /> } />
             <Route path = '/mycompliance' render = {  MyCompliance } />
         </Switch>
       </div>
@@ -97,5 +100,6 @@ class ComplianceFragment extends BaseMVPView {
 
 ComplianceFragment.propTypes = {
   setSelectedNavigation: PropTypes.func,
+  profileHasCOC: PropTypes.boolean,
 }
 export default ConnectView(ComplianceFragment, Presenter)

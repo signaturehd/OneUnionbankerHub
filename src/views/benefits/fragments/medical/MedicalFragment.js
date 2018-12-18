@@ -10,7 +10,7 @@ class MedicalFragment extends Component {
     super(props)
     this.state = {
       showConfirmationModal : false,
-      checkedpath : ''
+      checkedpath : '',
     }
     this.onCheckedProceed = this.onCheckedProceed.bind(this)
   }
@@ -25,39 +25,49 @@ class MedicalFragment extends Component {
 
   render () {
     const { history } = this.props
-    const { showConfirmationModal, checkedpath } =this.state
+    const {
+      showConfirmationModal,
+      checkedpath,
+    } =this.state
 
     const benefitsOptions = [{
       id: 1,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-2 medical-option-default',
       title: 'Dental Loa Issuance',
       path: '/mybenefits/benefits/medical/loa/dental',
     }, {
       id: 2,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-3 medical-option-default',
       title: 'Dental Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/dental',
     }, {
-      id: 3,
-      styleName: 'medical-cards-1 medical-option-default',
-      title: 'Optical Reimbursement',
-      path: '/mybenefits/benefits/medical/optical',
+      id: 6,
+      styleName: 'medical-cards-4 medical-option-default',
+      title: 'Maternity Assistance',
+      path: '/mybenefits/benefits/medical/assistance/maternity',
     }, {
       id: 4,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-5 medical-option-default',
       title: 'Medical Scheduling',
       path: '/mybenefits/benefits/medical/scheduling',
     }, {
+      id: 3,
+      styleName: 'medical-cards-6 medical-option-default',
+      title: 'Optical Reimbursement',
+      path: '/mybenefits/benefits/medical/optical',
+    }, {
       id: 5,
-      styleName: 'medical-cards-1 medical-option-default',
+      styleName: 'medical-cards-7 medical-option-default',
       title: 'Outpatient Reimbursement',
       path: '/mybenefits/benefits/medical/reimbursement/outpatient',
-    }, {
-      id: 6,
-      styleName: 'medical-cards-1 medical-option-default',
-      title: 'Maternity Assistance',
-      path: '/mybenefits/benefits/medical/assistance/maternity',
-    }]
+    },
+    {
+      id: 7,
+      styleName: 'medical-cards-8 medical-option-default',
+      title: 'Vaccine Requisition',
+      path: '/mybenefits/benefits/medical/vaccine',
+    }
+  ]
 
     const MedicalHome = () => (
       <div>

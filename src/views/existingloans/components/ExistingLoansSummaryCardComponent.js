@@ -18,11 +18,11 @@ class ExistingLoansSummaryCardComponent extends Component {
     super(props)
   }
 
-  computePercentage (balance) {
+  computePercentage (balance, principal) {
     let totalAmount = this.props.totalAmount
-    const percentage = (balance / totalAmount) * 100
+    const percentage = (balance / principal) * 100
 
-    return percentage
+    return parseInt(percentage)
   }
 
   render () {
@@ -33,7 +33,8 @@ class ExistingLoansSummaryCardComponent extends Component {
       balance,
       totalAmount ,
       promissoryNote,
-      date
+      date,
+      principalAmount
     } = this.props
 
     const convertBalance = MyExistitngLoansFunctions.checkedDesiredAmount(balance)
@@ -47,35 +48,43 @@ class ExistingLoansSummaryCardComponent extends Component {
           <Card className = { 'existing-loans-grid-x6' }>
             <span  className = { `existing-icon-fixed-${ MyExistitngLoansFunctions.checkIcon(resp.description) }` }/>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Type</div>
-              <div>{ resp.description }</div>
+              <div className = { 'font-weight-bold font-size-12px' }>Type</div>
+              <div className = { 'font-weight-lighter font-size-12px' }>{ resp.description }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div className = { 'font-weight-bold font-size-14px' }>
+              <div className = { 'font-weight-bold font-size-12px' }>
                 PN Number
               </div>
-              <div>
+              <div className = { 'font-weight-lighter font-size-12px' }>
                 { resp.promissoryNote }
               </div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Date</div>
-              <div>{ moment(resp.date).format('DD MMM YYYY') }</div>
+              <div  className = { 'font-weight-bold font-size-12px' }>Date</div>
+              <div className = { 'font-weight-lighter font-size-12px' }>{ moment(resp.date).format('DD MMM YYYY') }</div>
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Outstanding Balance</div>
-              <div>&#8369; { format(resp.balance) }</div>
+              <div  className = { 'font-weight-bold font-size-12px' }>Amortization</div>
+              <div className = { 'font-weight-lighter font-size-12px' }>{ resp.amortization }</div>
             </div>
-            <div  className = { 'font-weight-bold font-size-14px existingloans-progressbar' }>
+            <div className = { 'existing-loans-grid-label' }>
+              <div  className = { 'font-weight-bold font-size-12px' }>Outstanding Balance</div>
+              <div className = { 'font-weight-lighter font-size-12px' }>&#8369; { format(resp.balance) }</div>
+            </div>
+            <div  className = { 'font-weight-bold font-size-12px existingloans-progressbar' }>
               <br/>
               <br/>
               <Progress
-                percent = { this.computePercentage(resp.balance) } />
+                percent = { this.computePercentage(resp.balance, resp.principal) } />
+              {
+                // <Progress
+                //   percent = { this.computePercentage(resp.balance) } />
+              }
             </div>
             <div className = { 'existing-loans-grid-label' }>
-              <div  className = { 'font-weight-bold font-size-14px' }>Principal Amount</div>
-              <div>
-                &#8369; { format(totalAmount) }
+              <div  className = { 'font-weight-bold font-size-12px' }>Principal Amount</div>
+              <div className = { 'font-weight-lighter font-size-12px' }>
+                &#8369; { format(resp.principal) }
               </div>
             </div>
           </Card>

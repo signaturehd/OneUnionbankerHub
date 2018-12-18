@@ -6,8 +6,16 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/SettingsPresenter'
 
 import SettingsProfileCardComponent from './components/SettingsProfileCardComponent'
+import RequestOtpModal from './modals/RequestOtpModal'
+import * as controller from './functions/SettingFunctions'
 
-import { Card, Modal, GenericButton   } from '../../ub-components/'
+import {
+  Card,
+  Modal,
+  GenericButton,
+  CircularLoader,
+  GenericInput
+} from '../../ub-components/'
 
 class SettingsFragment extends BaseMVPView {
 
@@ -18,6 +26,7 @@ class SettingsFragment extends BaseMVPView {
      profile: [],
      profileInfo: [],
      rank: [],
+     devices: [],
      lineManager: [],
      profileDependent: [],
      staffAccounts : [],
@@ -29,15 +38,34 @@ class SettingsFragment extends BaseMVPView {
      showProfileDependent : false,
      enabledLoader: false,
      showChangePINModal : false,
-     showContactInfoModal : false,
      showDependentModal : false,
-     showCompanyInfoModal : false,
-     showPersonalInfoModal : false,
      showStaffAccountsModal : false,
+     showDevicesModal : false,
      staffLoader : false,
      noticeResponseModal : false,
+     descriptionEditMode : false,
+     enabledStaffLoader : false,
+     showSuccessModal : false,
+     showProfilePhoto : false,
+     showPinComponent : false,
+     showChangePinComponent : false,
+     showUnlockPinComponent : false,
+     showNewPin : true,
+     showPinSettingsComponent : true,
+     showResetModal : false,
+     uniqueOldPIN: '',
+     uniqueNewPIN: '',
      noticeResponse : '',
-     profileBackground : []
+     descriptionText : '',
+     staffResponseMessage : '',
+     requiredOtp : '',
+     newCode : '',
+     requiredNewPin  : '',
+     profileBackground : [],
+     showEditDependents: '',
+     profileAttachments : [{
+      name : 'Profile Photo Attachments'
+    }]
     }
   }
   componentDidMount () {
@@ -69,8 +97,22 @@ class SettingsFragment extends BaseMVPView {
     this.setState({ rank })
   }
 
-  showStaffAccountConfirmation (noticeResponse) {
-    this.setState({ noticeResponse, noticeResponseModal : true })
+  noticeResponseModal (noticeResponse) {
+    this.setState({ noticeResponse, noticeResponseModal : true, enabledLoader: false })
+  }
+
+  noticeResponseModalStaff (staffResponseMessage) {
+    this.setState({ staffResponseMessage })
+    this.setState({ showSuccessModal : true })
+  }
+
+  showResetModalFunc(showResetModal) {
+    this.setState({
+      showResetModal,
+      showNewPin : true,
+      requiredOtp : '',
+      requiredNewPin : ''
+    })
   }
 
   showProfileDependent (profileDependent) {
@@ -100,33 +142,95 @@ class SettingsFragment extends BaseMVPView {
     this.presenter.putEnrollPin(objectPINParam)
   }
 
+  showDevicesData (devices, showDevicesModal) {
+    this.setState({ devices, showDevicesModal })
+  }
+
+  updateDescription () {
+    const {
+      descriptionText
+    } = this.state
+    this.presenter.updateDescription(descriptionText)
+    this.setState({ descriptionEditMode : false })
+  }
+
+  requiredNewPinValidate (data) {
+    this.setState({ requiredNewPin :  controller.checkedValidateInputNumber(data) })
+  }
+
   render () {
     const {
       lineManager,
       profile,
       details,
+      devices,
       className,
       rank,
       profileDependent,
       accountNumber,
       enabledLoader,
       showChangePINModal,
-      showContactInfoModal,
       showDependentModal,
-      showCompanyInfoModal,
-      showPersonalInfoModal,
       showStaffAccountsModal,
+      showDevicesModal,
       staffLoader,
       staffAccounts,
       noticeResponse,
+      descriptionText,
       noticeResponseModal,
-      profileBackground
-    }=this.state
+      profileBackground,
+      descriptionEditMode,
+      enabledStaffLoader,
+      staffResponseMessage,
+      showSuccessModal,
+      showEditDependents,
+      showProfilePhoto,
+      showPinComponent,
+      profileAttachments,
+      uniqueOldPIN,
+      uniqueNewPIN,
+      showChangePinComponent,
+      showUnlockPinComponent,
+      showPinSettingsComponent,
+      showResetModal,
+      requiredOtp,
+      newCode,
+      showNewPin,
+      requiredNewPin
+    } = this.state
+
+    const {
+      profileImage
+    } = this.props
 
     return (
       <div className={ 'profile-container' }>
         { super.render() }
         {
+          showResetModal &&
+          <RequestOtpModal
+            onClose = { () => this.setState({ showResetModal : false }) }
+            enabledLoader = { enabledLoader }
+            showNewPin = { showNewPin }
+            requiredOtp = { requiredOtp }
+            requiredNewPin = { requiredNewPin }
+            requiredOtpFunc = { (requiredOtp) => this.setState({ requiredOtp }) }
+            requiredNewPinFunc = { (e) =>
+              this.requiredNewPinValidate(e)
+            }
+            submitFunction = { () => this.presenter.requestUnlockPin(requiredOtp, requiredNewPin) }
+            showNewPinFunc = { (showNewPin) => this.setState({ showNewPin }) }
+          />
+        }
+        {
+          enabledLoader ?
+          <Modal>
+            <center>
+              <h2>Please wait...</h2>
+              <CircularLoader show = { enabledLoader }/>
+            </center>
+          </Modal>
+          :
           noticeResponseModal &&
           <Modal>
             <center>
@@ -139,31 +243,96 @@ class SettingsFragment extends BaseMVPView {
             </center>
           </Modal>
         }
+
         <SettingsProfileCardComponent
-          profileBackground = { profileBackground }
+           showPinSettingsComponent = { showPinSettingsComponent }
+           showPinComponent = { showPinComponent }
+           profileAttachments = { profileAttachments }
+           uploadAttachments = { () => {
+               this.setState({ showProfilePhoto : false, enabledLoader: true })
+               this.presenter.updateProfilePicture(profileAttachments)
+           } }
+           uniqueOldPIN = { uniqueOldPIN }
+           uniqueNewPIN = { uniqueNewPIN }
+           uniqueOldPINFunc = { (uniqueOldPIN) => this.setState({ uniqueOldPIN }) }
+           uniqueNewPINFunc = { (uniqueNewPIN) => this.setState({ uniqueNewPIN }) }
+           profileImage = { profileImage }
+           showChangePinComponent = { showChangePinComponent }
+           showUnlockPinComponent = { showUnlockPinComponent }
+           showPinComponentFunc = { (showPinComponent) => this.setState({ showPinComponent }) }
+           showPinSettingsComponentFunc = { (showPinSettingsComponent) =>
+             this.setState({ showPinSettingsComponent })
+           }
+           showChangePinComponentFunc = { (showChangePinComponent) =>
+             this.setState({ showChangePinComponent })
+           }
+           showUnlockPinComponentFunc = { () =>
+             this.presenter.getRequestPinOtp()
+           }
+           setAttachmentsPhoto = { (profileAttachments) => this.setState({ profileAttachments }) }
+           changeProfilePhoto = { (showProfilePhoto) => this.setState({ showProfilePhoto }) }
+           showProfilePhoto = { showProfilePhoto }
+           showEditDependentModalFunc = { (showEditDependents) => this.props.history.push('/dependent') }
+           showSuccessModal = { showSuccessModal }
+           onCloseStaffResponseModalFunc = { () => this.setState({ showSuccessModal : false  }) }
+           staffResponseMessage = { staffResponseMessage }
+           devices = { devices }
+           showDevicesModal = { showDevicesModal }
+           profileBackground = { profileBackground }
+           descriptionEditMode = { descriptionEditMode }
+           descriptionText = { descriptionText }
            accountNumber = { accountNumber }
-           profile={ profile }
+           profile={ profile && profile }
            lineManager={ lineManager }
            profileDependent={ profileDependent }
+           enabledStaffLoader = { enabledStaffLoader }
            rank={ rank }
            enabledLoader = { enabledLoader }
            staffLoader = { staffLoader }
            staffAccounts = { staffAccounts }
            showChangePINModal = { showChangePINModal }
-           showContactInfoModal = { showContactInfoModal }
            showDependentModal = { showDependentModal }
-           showCompanyInfoModal = { showCompanyInfoModal }
-           showPersonalInfoModal = { showPersonalInfoModal }
            showStaffAccountsModal = { showStaffAccountsModal }
            showChangePINModalFunc = { (showChangePINModal) => this.setState({ showChangePINModal }) }
-           showContactInfoModalFunc = { (showContactInfoModal) => this.setState({ showContactInfoModal }) }
            showDependentModalFunc = { (showDependentModal) => this.setState({ showDependentModal }) }
-           showCompanyInfoModalFunc = { (showCompanyInfoModal) => this.setState({ showCompanyInfoModal }) }
-           showPersonalInfoModalFunc = { (showPersonalInfoModal) => this.setState({ showPersonalInfoModal }) }
            showStaffAccountsModalFunc = { (showStaffAccountsModal) =>  this.setState({ showStaffAccountsModal }) }
            changePinSendToFragment = { (uniqueOldPIN, uniqueNewPIN) => this.submitUpdatedPIN(uniqueOldPIN, uniqueNewPIN) }
-           getStaffAccounts = { (id) => this.presenter.getForConfirmation(id) }
-           onClickEmployeeConfirmationFunc = { (resp, resp1) => this.presenter.addStaffAccounts(resp, resp1)  }
+           getForConfirmation = { () => this.presenter.getForConfirmation() }
+           onUpdateStaffAccountsFunc = { (employeeName, selectedAccountNumber, sequence) =>
+               this.presenter.updateStaffAccounts(employeeName, selectedAccountNumber, sequence)
+           }
+           onUpdateEmailAddress = { (email) =>
+             this.presenter.updateEmailAddress(email)
+           }
+           onUpdateCivilStatus = { (civil) =>
+             this.presenter.updateCivilStatus(civil)
+           }
+           onUpdateMobileNumber = { (number) =>
+             this.presenter.updateContactNumber(number)
+           }
+           onClickEmployeeConfirmationFunc = {
+          (  fullName,
+             accountNumber,
+             accountTypeCode,
+             accountCapacityCode,
+             accountRemarks
+           ) =>
+           this.presenter.addStaffAccounts(
+             fullName,
+             accountNumber,
+             accountTypeCode,
+             accountCapacityCode,
+             accountRemarks
+           )
+          }
+           onChangeToEditMode = { (descriptionEditMode) => this.setState({ descriptionEditMode }) }
+           descriptionTextFunc = { (descriptionText) => this.setState({ descriptionText }) }
+           onUpdateDescription = { () => this.updateDescription() }
+           showDevicesModalFunc = { (showDevicesModal) => {
+             this.presenter.getDevices(showDevicesModal)
+           }
+          }
+          updateAddressOption = { (address, attachments) => this.presenter.updateAddress(address, attachments) }
         />
       </div>
     )

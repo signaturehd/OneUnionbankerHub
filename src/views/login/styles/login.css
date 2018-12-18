@@ -1,18 +1,18 @@
-
 .login-logo {
   display: block;
-  width: 80px;
+  width: 100px;
   margin: 30px auto;
-  box-shadow: 0 5px 10px -7px #333333;
+  box-shadow: 0px 5px 20px -7px #333333;
   border-radius: 50%;
 }
+
 .text {
   width: 100%;
 }
 
 .login-loader {
-  padding-top: 43.5px;
-  padding-bottom: 43.5px;
+  padding-top: 39.5px;
+  padding-bottom: 39.5px;
 }
 
 .login-form {
@@ -21,7 +21,7 @@
   position: absolute;
   padding: 5px 20px 5px 20px;
   margin: auto;
-  height: 575px;
+  height: 590px;
   border-radius: 8px;
   left: 0;
   overflow: hidden;
@@ -137,7 +137,7 @@
   width: 30px;
   margin-top: 50px;
   margin:2%;
-  background: #fff;
+  background: transparent;
   margin-bottom: 10px;
   border: 0px #e2d3d300;
 }
@@ -171,4 +171,33 @@
   color: gray;
   text-align: right;
   position: relative;
+}
+
+.login-help-grid {
+  display: grid;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  grid-template-columns: 1fr .05fr;
+}
+
+.login-seemore-button {
+  background-image: url('../../../images/icons/ic_next.png');
+}
+
+.login-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
+
+.login-back-icon-grid {
+  display: grid;
+  text-align: right;
+  grid-template-columns: 0.05fr 1fr;
 }

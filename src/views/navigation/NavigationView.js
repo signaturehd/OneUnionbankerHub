@@ -7,6 +7,7 @@ import Presenter from './presenter/NavigationPresenter'
 /* Modules Fragment */
 import BenefitsFragment from '../benefits/BenefitsFragment'
 import NewsFragment from '../news/NewsFragment'
+import HomeFragment from '../home/HomeFragment'
 import FaqFragment from '../faq/FaqFragment'
 import SettingsFragment from '../settings/SettingsFragment'
 import PodcastFragment from '../podcast/PodcastFragment'
@@ -24,8 +25,6 @@ import './styles/drawerview.css'
 
 import { connect } from 'react-redux'
 
-import store from '../../store'
-import { NotifyActions } from '../../actions'
 /* Education */
 import EducationAidFragment from '../educationaid/EducationAidFragment'
 import EducationGrantPlanFragment from '../educationgrantplan/EducationGrantPlanFragment'
@@ -38,6 +37,7 @@ import OpticalFragment from '../optical/OpticalFragment'
 import MedicalSchedulingFragment from '../medicalscheduling/MedicalSchedulingFragment'
 import OutPatientReimbursementFragment from '../outpatientreimbursement/OutPatientReimbursementFragment'
 import MaternityAssistanceFragment from '../maternityassistance/MaternityAssistanceFragment'
+import VaccineFragment from '../vaccine/VaccineFragment'
 /* MPL */
 import HousingAssistanceFragment from '../housingassistanceloan/HousingAssistanceFragment'
 import EmergencyLoanFragment from '../emergencyloan/EmergencyLoanFragment'
@@ -59,13 +59,46 @@ import CalamityFragment from '../calamity/CalamityFragment'
 /* Payslip*/
 import Payslip from '../payslip/PayslipFragment'
 
-import OnboardingView from '../onboarding/OnboardingView'
-import Carousel from '../carousel/Carousel'
+/* Pre Employment */
+import PreEmploymentFragment from '../preemployment/PreEmploymentFragment'
+import AddingDependentsFragment
+  from '../dependents/AddingDependentsFragment'
+import ChildrenFragment
+  from '../preemploymentfragment/childrenform/ChildrenFragment'
+import SpouseFragment
+  from '../preemploymentfragment/spouseform/SpouseFormFragment'
+import ParentFragment
+  from '../preemploymentfragment/parentform/ParentFragment'
+
+/* Post Employment */
+import PostEmploymentFragment from '../postemployment/PostEmploymentFragment'
+
+/* Laptop Lease */
+import LaptopLeaseFragment from '../laptoplease/LaptopLeaseFragment'
+
+/* Event Budget Requisition */
+
+import EventsBudgetFragment from '../eventbudget/EventsBudgetFragment'
+/* Travel */
+import TravelFragment from '../travel/TravelFragment'
+import RequestFlightFragment from '../request/RequestFlightFragment'
+import BookFlightFragment from '../bookflight/BookFlightFragment'
+import LiquidationFragment from '../liquidation/LiquidationFragment'
+import ApprovalFragment from '../approval/ApprovalFragment'
+
+/* Certificate of Employment*/
+import CertificateOfEmploymentFragment from '../coe/CertificateOfEmploymentFragment'
+
+/* Goals */
+import MyGoalsFragment from '../mygoals/MyGoalsFragment'
+import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
+import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
 import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
+
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -78,6 +111,14 @@ class NavigationView extends BaseMVPView {
       showPinEnrollmentModal : true,
       hasPIN: '',
       enabledLoader : false,
+      profileHasCOC: '',
+      tempPreEmploymentModal: false,
+      hasFilledOut: '',
+      preEmploymentStatus: null,
+      isLineManager : false,
+      employeeNumber : '',
+      profileDisplay : 'none',
+      profillePosition: '',
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -91,7 +132,12 @@ class NavigationView extends BaseMVPView {
   }
 
   showProfile (profile) {
-    this.setState({ profile })
+    this.setState({
+      profile : profile.employee,
+      isLineManager: profile.isLineManager,
+      profillePosition: profile.employee.position,
+      employeeNumber: profile.employee.employeeNumber
+    })
   }
 
   showCircularLoader () {
@@ -113,23 +159,52 @@ class NavigationView extends BaseMVPView {
     }
   }
 
+  showPreemploymentStatus (data) {
+    const status = data && data.id
+    const statusName = data && data.status
+    this.setState({ preEmploymentStatus : status })
+
+    if(status === 1 || status === 2) {
+      this.props.history.push('/preemployment')
+    } else if (status === null || status === 6) {
+      this.props.history.push('/')
+    } else if (status === 3 || status === 4 || status === 5) {
+      this.props.history.push('/postemployment')
+    }
+  }
+
   componentDidMount () {
-    const mediaQuery = window.matchMedia('(min-width: 1201px)')
+    const {
+      preEmploymentStatus,
+    } = this.state
+
+    this.presenter.getPreEmploymentStatus()
+    this.presenter.getLibraries()
+    const mediaQuery = window.matchMedia('(min-width: 1300px)')
       if (mediaQuery.matches) {
-        this.setDisplay('block', 'none')
+        this.setDisplay('none', 'none')
       } else {
         this.setDisplay('none', 'block')
       }
         mediaQuery.addListener(mq => {
       if (mq.matches) {
-        this.setDisplay('block', 'none')
+        this.setDisplay('none', 'none')
       } else {
         this.setDisplay('none', 'block')
       }
     })
-    store.dispatch(NotifyActions.resetNotify())
-    this.presenter.getLibraries()
-    this.presenter.getProfile()
+    this.checkWidthNavigation()
+  }
+
+  checkWidthNavigation() {
+    const width = document.body.offsetWidth
+    if(width <= 768) {
+      this.setState({ storeWidth : width - 100 })
+    } else if (width >= 1600) {
+      this.setState({ storeWidth : width - 170 })
+    } else {
+      this.setState({ storeWidth : width - 140 })
+    }
   }
 
   setSelectedNavigation (id) {
@@ -144,12 +219,21 @@ class NavigationView extends BaseMVPView {
     this.presenter.logout()
   }
 
+  isHasCOC (profileHasCOC) {
+    this.setState({ profileHasCOC })
+  }
+
   relogin () {
     this.props.history.push('/')
   }
 
+  skipPage (e) {
+    this.setState({ preEmploymentStatus : e })
+  }
+
   render () {
     const {
+      profileDisplay,
       displayShow,
       displayNavIcon,
       displayNavIconState,
@@ -159,28 +243,67 @@ class NavigationView extends BaseMVPView {
       showLogoutModal,
       showPinEnrollmentModal,
       hasPIN,
-      enabledLoader
+      enabledLoader,
+      profileHasCOC,
+      tempPreEmploymentModal,
+      hasFilledOut,
+      preEmploymentStatus,
+      isLineManager,
+      employeeNumber,
+      profillePosition,
+      storeWidth
     } = this.state
 
-    const { history, login } = this.props
-
+    const { history, login, profilePicture } = this.props
     const style = {
       show: {
-          display : displayShow
+        display : displayShow
       }
     }
-    const locationPath = history.location.pathname
 
+    const locationPath = history.location.pathname
+    const name = profile && profile.fullname
+    let initials = []
+    let splitUserInitial
+    name &&
+    name.split(' ').map((newName, key) => {
+      const length = newName.length
+      if(length > 0) {
+        for(var i = 0; i < length; i++) {
+          if(newName === undefined) {
+            delete newName[key].newName[key]
+          } else {
+            newName.split().map((letters, key) =>
+              initials.push(letters[0])
+            )
+          }
+        }
+      }
+    })
+    const fullName = name && name.split(' ')
+    let firstName = fullName && fullName[0]
+    splitUserInitial = initials[0] + initials[initials.length - 1]
     return (
-      <div className = { 'navigation-body-div' }>
+      <div
+        className = { 'navigation-body-div' }>
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
-            onCallWizard = { () => this.callWizard() }
-            onClick = { onClick }
-            displayNavIcon = { displayNavIcon } displayShow = { displayShow }
+            selected={ selected }
+            profillePosition = { profillePosition }
+            firstName = { firstName }
+            history = { history }
+            profileImage = { profilePicture }
+            displayNavIcon = { displayNavIcon }
+            profileDisplay = { profileDisplay }
+            displayShow = { displayShow }
             hide = { () => this.setState({ displayShow : 'block' })}
-            show = { () => this.setState({ displayShow : 'none' })} />
+            show = { () => this.setState({ displayShow : 'none' }) }
+            profileDisplayFunc = { (profileDisplay) => this.setState({ profileDisplay }) }
+            onHideChangeDisplay = { () => this.setState({ profileDisplay : 'block' }) }
+            onShowChangeDisplay = { () => this.setState({ profileDisplay : 'none' }) }
+            onCallWizard = { () => this.callWizard() }
+            logout = { () => this.setState({ showLogoutModal : true }) }/>
         </header>
         <div className="navigation-panels">
           <main
@@ -210,102 +333,151 @@ class NavigationView extends BaseMVPView {
                   } }
                 />
               }
-              <Drawer >
-                <Switch>
-                  <Route exact path = '/' render = {props =>
-                    <NewsFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> }/>
-                  <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
-                    <TransactionPersonalDetailFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
-                    <TransactionApprovalDetailFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                  <Route path = '/mybenefits/benefits/education/aid' render = { props =>
-                    <EducationAidFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
-                    <EducationGrantPlanFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
-                    <EducationGrantAidFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
-                    <EducationGroupAidFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
-                    <OpticalFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } />}/>
-                  <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
-                    <DentalReimbursement { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                  <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
-                    <DentalLoaView { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                  <Route path = '/mybenefits/benefits/medical/scheduling' render = { props =>
-                    <MedicalSchedulingFragment { ...props }
+            <Drawer>
+              <Switch>
+                <Route exact path = '/' render = {props =>
+                  <HomeFragment
+                    storeWidth = { storeWidth }
+                    { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> }/>
+                <Route path = '/postemployment' render = { props =>
+                  <PostEmploymentFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/preemployment' render = { props =>
+                  <PreEmploymentFragment { ...props }
+                    onBoardingSkipPage = { (e) => this.skipPage(e)}
+                    preEmploymentStatus = { preEmploymentStatus }
+                    tempPreEmploymentModal = { tempPreEmploymentModal }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/dependent' render = { props =>
+                  <AddingDependentsFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path='/dependentchildren' render={ props => <ChildrenFragment{ ...props }
+                  reuse = { true }
+                  setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                <Route path='/dependentspouse' render={ props => <SpouseFragment{ ...props }
+                  reuse = { true }
+                  setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                <Route path='/dependentsiblings' render={ props => <ParentFragment{ ...props }
+                  reuse = { true }
+                  setSelectedNavigation = { this.setSelectedNavigation }  />}/>
+                <Route path = '/mybenefits/transactions/personal/:id' render = { props =>
+                  <TransactionPersonalDetailFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                <Route path = '/mybenefits/transactions/approval/:id' render = { props =>
+                  <TransactionApprovalDetailFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                  <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
-                    <OutPatientReimbursementFragment { ...props }
+                <Route path = '/mybenefits/benefits/education/aid' render = { props =>
+                  <EducationAidFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                <Route path = '/mybenefits/benefits/education/grantplan' render = { props =>
+                  <EducationGrantPlanFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                <Route path = '/mybenefits/benefits/education/grantaid' render = { props =>
+                  <EducationGrantAidFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
+                  <EducationGroupAidFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
+                  <OpticalFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } />}/>
+                <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
+                  <DentalReimbursement { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                  <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
-                    <MaternityAssistanceFragment { ...props }
+                <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
+                  <DentalLoaView { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
-                  <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
-                    <HousingAssistanceFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/carlease/new' render = { props =>
-                    <CarLeaseNewFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
-                    <CarLeaseOldFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
-                    <EmergencyLoanFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
-                    <SalaryLoanFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
-                    <MotorcycleLoanFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
-                    <ComputerLoanFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
-                    <BereavementFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits/benefits/calamity' render = { props =>
-                    <CalamityFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mybenefits' render = { props =>
-                    <BenefitsFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/payslip' render = { props =>
-                    <Payslip { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/faqs' render = { props =>
-                    <FaqFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/settings' render = { props =>
-                    <SettingsFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mylearning' render = { props =>
-                    <MyLearningView { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/feedback' render = { props =>
-                    <FeedbackFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/onboard' render = { props =>
-                    <OnboardingView { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/mycompliance' render = { props =>
-                    <ComplianceFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                  <Route path = '/phenom' render = { props =>
-                    <PhenomFragment { ...props }
-                      setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/medical/scheduling' render = { props =>
+                  <MedicalSchedulingFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
+                  <HousingAssistanceFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/carlease/new' render = { props =>
+                  <CarLeaseNewFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/carlease/old' render = { props =>
+                  <CarLeaseOldFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/laptoplease' render = { props =>
+                  <LaptopLeaseFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/loans/emergency' render = { props =>
+                  <EmergencyLoanFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/loans/salary' render = { props =>
+                  <SalaryLoanFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/loans/motorcycle' render = { props =>
+                  <MotorcycleLoanFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/loans/computer' render = { props =>
+                  <ComputerLoanFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/bereavement/:type' render = { props =>
+                  <BereavementFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits/benefits/calamity' render = { props =>
+                  <CalamityFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  <Route path = '/mybenefits/benefits/eventbudgetrequisition' render = { props =>
+                  <EventsBudgetFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mybenefits' render = { props =>
+                  <BenefitsFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mytravel/travel/request' render = { props =>
+                  <RequestFlightFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mytravel/travel/book' render = { props =>
+                  <BookFlightFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mytravel/travel/liquidation' render = { props =>
+                  <LiquidationFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mytravel/approval' render = { props =>
+                  <ApprovalFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mytravel' render = { props =>
+                  <TravelFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }
+                    isLineManager = { isLineManager } /> } />
+                <Route path = '/coe' render = { props =>
+                  <CertificateOfEmploymentFragment { ...props } /> } />
+                <Route path = '/payslip' render = { props =>
+                  <Payslip { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/faqs' render = { props =>
+                  <FaqFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/settings' render = { props =>
+                  <SettingsFragment { ...props }
+                    profileImage = { profilePicture }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mylearning' render = { props =>
+                  <MyLearningView { ...props }
+                    profile = { profile }
+                    setSelectedNavigation = { this.setSelectedNavigation }/> } />
+                <Route path = '/mygoals' render = { props =>
+                  <MyGoalsFragment { ...props }
+                    profile = { profile }
+                    setSelectedNavigation = { this.setSelectedNavigation }
+                    isLineManager = { isLineManager }
+                    employeeNumber = { employeeNumber }/> } />
+                <Route path = '/feedback' render = { props =>
+                  <FeedbackFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/mycompliance' render = { props =>
+                  <ComplianceFragment { ...props }
+                    profileHasCOC = { profileHasCOC }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/phenom' render = { props =>
+                  <PhenomFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/phenom' render = { props =>
+                  <PhenomFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
           </main>
@@ -313,10 +485,13 @@ class NavigationView extends BaseMVPView {
             className ="left-side"
             style = { style.show }>
             <SideBar
+              splitUserInitial = { splitUserInitial }
+              tempPreEmployment = { preEmploymentStatus }
               logout = { () => this.setState({ showLogoutModal : true }) }
               selected={ selected }
               profile = { profile }
-              history = { this.props.history } >
+              profileImage = { profilePicture }
+              history = { history } >
              </SideBar>
           </aside>
         </div>
@@ -331,6 +506,7 @@ NavigationView.propTypes = {
 
 const mapStateToProps = state => ({
   login : state.login,
+  profilePicture: state.profile,
   notify : state.notify.notify,
 })
 

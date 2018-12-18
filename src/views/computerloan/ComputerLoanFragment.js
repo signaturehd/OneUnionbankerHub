@@ -100,6 +100,9 @@ class ComputerLoanFragment extends BaseMVPView {
 
   setModeOfLoan (modeOfLoan) {
     this.setState({ modeOfLoan })
+    if(modeOfLoan.length === 1) {
+      this.setState({ modeOfLoanLabel : 'New Loan', modeOfLoanId: 1  })
+    }
   }
 
   showValidate (validateLoanType) {
@@ -249,13 +252,15 @@ class ComputerLoanFragment extends BaseMVPView {
         }
       }
     )
+    console.log(supplier)
 
+    store.dispatch(NotifyActions.resetNotify())
     if (review) {
       this.setState({showConfirmationModal : true})
     } else {
       if (!this.validateRequired(purposeOfAvailmentLabel)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Purpose of Availment is required',
             type : 'warning',
             duration : 2000
@@ -263,7 +268,7 @@ class ComputerLoanFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(modeOfLoanId)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Mode of Loan is required',
             type : 'warning',
             duration : 2000
@@ -271,7 +276,7 @@ class ComputerLoanFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(termOfLoanId)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Term of Loan is required',
             type : 'warning',
             duration : 2000
@@ -279,7 +284,7 @@ class ComputerLoanFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(supplier)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Supplier is required',
             type : 'warning',
             duration : 2000
@@ -287,7 +292,7 @@ class ComputerLoanFragment extends BaseMVPView {
         )
       } else if (!this.validateRequired(desiredAmount)) {
          store.dispatch(NotifyActions.addNotify({
-            title : 'Warning' ,
+            title : 'My Benefits' ,
             message : 'Desired Amount is required',
             type : 'warning',
             duration : 2000
@@ -299,7 +304,7 @@ class ComputerLoanFragment extends BaseMVPView {
             (attachment, key) => {
               if(!attachment.file) {
                 store.dispatch(NotifyActions.addNotify({
-                   title : 'Warning' ,
+                   title : 'My Benefits' ,
                    message : attachment.name + ' is required',
                    type : 'warning',
                    duration : 2000
@@ -509,6 +514,7 @@ class ComputerLoanFragment extends BaseMVPView {
               desiredAmount = { desiredAmount }
               desiredAmountFunc  = { (desiredAmount) => this.validateInputAmount(desiredAmount) }
               onClick = { () => this.submitForm() }
+              supplier = { supplier }
               supplierName = { (supplier) => this.supplierFunc(supplier) }
               status = { status }
               review = { review }

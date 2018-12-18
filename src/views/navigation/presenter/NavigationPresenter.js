@@ -6,6 +6,11 @@ import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInte
 import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor'
 import GenericPinCodeInteractor from '../../../domain/interactor/pinCode/GenericPinCodeInteractor'
 
+/* Preemployment Status */
+import GetStatusInteractor from '../../../domain/interactor/preemployment/preemployment/GetStatusInteractor'
+import GetPreEmploymentStatusInteractor from
+'../../../domain/interactor/preemployment/preemployment/GetPreEmploymentStatusInteractor'
+
 import { NotifyActions, LoginActions } from '../../../actions'
 import store from '../../../store'
 
@@ -16,8 +21,10 @@ export default class NavigationPresenter {
     this.getLibrariesInteractor = new GetLibrariesInteractor(container.get('HRBenefitsClient'))
     // this.getWizardInteractor = new GetWizardInteractor(container.get('HRBenefitsClient'))
     // this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
+    this.getStatusInteractor = new GetStatusInteractor(container.get('HRBenefitsClient'))
     this.relogInInteractor = new  RelogInInteractor(container.get('HRBenefitsClient'))
     this.genericPinCodeInteractor = new GenericPinCodeInteractor(container.get('HRBenefitsClient'))
+    this.getPreEmploymentStatusInteractor = new GetPreEmploymentStatusInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -32,17 +39,23 @@ export default class NavigationPresenter {
   }
 
   relogin () {
-    this.relogInInteractor.execute()
-    store.dispatch(LoginActions.showReloginModal(false))
+      this.relogInInteractor.execute()
+      store.dispatch(LoginActions.showReloginModal(false))
   }
 
   getLibraries () {
     this.view.showLoading()
     this.getLibrariesInteractor.execute()
       .subscribe(resp => {
+          this.view.showProfile(resp)
+          this.view.showPinIsValid(resp.hasPIN)
+          this.view.isHasCOC(resp.hasCOC)
+          this.view.hideLoading()
+      }, e => {
         this.view.hideLoading()
-      }, error => {
-        this.view.hideLoading()
+        this.view.showProfile(e.message)
+        this.view.showPinIsValid(e.message.hasPIN)
+        this.view.isHasCOC(e.message.hasCOC)
         // TODO prompt generic error
       }
     )
@@ -65,19 +78,6 @@ export default class NavigationPresenter {
       this.view.hideCircularLoader()
     })
   }
-
-  getProfile () {
-   this.view.showCircularLoader()
-
-   this.getProfileInteractor.execute()
-    .do(profile => this.view.showProfile(profile.employee))
-    .do(profile => this.view.showPinIsValid(profile.hasPIN))
-    .subscribe(profile => {
-     this.view.hideCircularLoader()
-    }, e => {
-     this.view.hideCircularLoader()
-   })
-  }
   //
   // getWizard () {
   //   this.view.showWizard(this.getWizardInteractor.execute())
@@ -87,4 +87,17 @@ export default class NavigationPresenter {
   //   this.setWizardInteractor.execute(wizard)
   //   // this.view.showWizard(wizard)
   // }
+
+  // 123 = pre employment
+  // 4 = post employment
+  // 5 = hide both
+  // 0 or empty string, also hide both and show benefits if employee is regular
+
+  getPreEmploymentStatus () {
+    if (this.getStatusInteractor.execute()) {
+      this.view.showPreemploymentStatus(this.getStatusInteractor.execute())
+    } else {
+      this.getPreEmploymentStatusInteractor.execute()
+    }
+  }
 }
