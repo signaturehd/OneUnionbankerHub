@@ -10,6 +10,7 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedLaptopBrand = '', storedLaptopModel = '', storedScreenSize = '', storedFile
+let storedGraphicsCard = '', storedHardDriveCapacity = '', storedProcessorType = '', storedOperatingSystem = '', storedSystemMemory = ''
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -49,6 +50,31 @@ export default class LaptopLeasePresenter {
   setScreenSize (screenSize) {
     storedScreenSize = screenSize
     this.view.setScreenSize(screenSize)
+  }
+
+  setHardDriveCapacity (hardDrive) {
+    storedHardDriveCapacity = hardDrive
+    this.view.setHardDriveCapacity(hardDrive)
+  }
+
+  setGraphicsCard (graphicsCard) {
+    storedGraphicsCard = graphicsCard
+    this.view.setGraphicsCard(graphicsCard)
+  }
+
+  setProcessorType (processorType) {
+    storedProcessorType = processorType
+    this.view.setProcessorType(processorType)
+  }
+
+  setOperatingSystem (operatingSystem) {
+    storedOperatingSystem = operatingSystem
+    this.view.setOperatingSystem(operatingSystem)
+  }
+
+  setSystemMemory (systemMemory) {
+    storedSystemMemory = systemMemory
+    this.view.setSystemMemory(systemMemory)
   }
 
   setFile (file) {
@@ -139,7 +165,47 @@ export default class LaptopLeasePresenter {
         duration : 2000
       })
     )
-  } else if (storedDeliveryOption === '') {
+  } else if (storedGraphicsCard === '') {
+    store.dispatch(NotifyActions.addNotify({
+       title: 'Laptop Lease',
+       message : 'Please specify the Graphics Card',
+       type : 'warning',
+       duration : 2000
+     })
+   )
+ } else if (storedHardDriveCapacity === '') {
+   store.dispatch(NotifyActions.addNotify({
+      title: 'Laptop Lease',
+      message : 'Please specify the capacity of Hard Drive',
+      type : 'warning',
+      duration : 2000
+    })
+  )
+} else if (storedProcessorType === '') {
+  store.dispatch(NotifyActions.addNotify({
+     title: 'Laptop Lease',
+     message : 'Please specify the type of Processor',
+     type : 'warning',
+     duration : 2000
+   })
+ )
+} else if (storedOperatingSystem === '') {
+  store.dispatch(NotifyActions.addNotify({
+     title: 'Laptop Lease',
+     message : 'Please specify the Operating System',
+     type : 'warning',
+     duration : 2000
+   })
+ )
+} else if (storedSystemMemory === '') {
+  store.dispatch(NotifyActions.addNotify({
+     title: 'Laptop Lease',
+     message : 'Please specify the System Memory',
+     type : 'warning',
+     duration : 2000
+   })
+ )
+} else if (storedDeliveryOption === '') {
     store.dispatch(NotifyActions.addNotify({
        title: 'Laptop Lease',
        message : 'Please choose the destination of item',
@@ -153,21 +219,26 @@ export default class LaptopLeasePresenter {
   }
 
   addLaptopLease () {
-          this.view.showCircularLoader()
-          this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
-            storedLaptopBrand,
-            storedLaptopModel,
-            storedScreenSize,
-            storedColor,
-            storedAmount,
-            storedTerms,
-            storedDeliveryOption,
-            storedFile))
-          .subscribe(data => {
-          this.view.noticeOfUndertaking(data)
-          this.view.hideCircularLoader()
-          }, e => {
-          this.view.hideCircularLoader()
-          })
-    }
+    this.view.showCircularLoader()
+    this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
+      storedLaptopBrand,
+      storedLaptopModel,
+      storedScreenSize,
+      storedColor,
+      storedAmount,
+      storedTerms,
+      storedDeliveryOption,
+      storedGraphicsCard,
+      storedHardDriveCapacity,
+      storedProcessorType,
+      storedOperatingSystem,
+      storedSystemMemory,
+      storedFile))
+    .subscribe(data => {
+      this.view.noticeOfUndertaking(data)
+      this.view.hideCircularLoader()
+      }, e => {
+      this.view.hideCircularLoader()
+    })
+  }
 }

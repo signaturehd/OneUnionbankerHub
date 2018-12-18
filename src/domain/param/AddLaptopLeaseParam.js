@@ -5,6 +5,11 @@ export default (
   color,
   estimatedAmount,
   terms,
+  graphicsCard,
+  hardDriveCapacity,
+  processorType,
+  operatingSystem,
+  systemMemory,
   deliveryOption,
   qoutation,
 ) => ({
@@ -14,6 +19,11 @@ export default (
   color,
   estimatedAmount,
   terms,
+  graphicsCard,
+  hardDriveCapacity,
+  processorType,
+  operatingSystem,
+  systemMemory,
   deliveryOption,
   attachments: qoutation,
 })

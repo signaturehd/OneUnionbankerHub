@@ -2030,7 +2030,12 @@ export default class HRBenefitsService {
      color: laptopLeaseParam.color,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
-     deliveryOptionId: laptopLeaseParam.deliveryOption
+     deliveryOptionId: laptopLeaseParam.deliveryOption,
+     graphicsCard : laptopLeaseParam.graphicsCard,
+     hardDriveCapacity : laptopLeaseParam.hardDriveCapacity,
+     processorType : laptopLeaseParam.processorType,
+     operatingSystem : laptopLeaseParam.operatingSystem,
+     systemMemory : laptopLeaseParam.systemMemory,
    }
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
