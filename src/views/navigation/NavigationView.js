@@ -289,6 +289,7 @@ class NavigationView extends BaseMVPView {
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            tempPreEmployment = { preEmploymentStatus }          
             selected={ selected }
             profillePosition = { profillePosition }
             firstName = { firstName }
@@ -444,7 +445,9 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation }
                     isLineManager = { isLineManager } /> } />
                 <Route path = '/coe' render = { props =>
-                  <CertificateOfEmploymentFragment { ...props } /> } />
+                  <CertificateOfEmploymentFragment
+                  { ...props }
+                  setSelectedNavigation = { this.setSelectedNavigation } /> }/>
                 <Route path = '/payslip' render = { props =>
                   <Payslip { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />

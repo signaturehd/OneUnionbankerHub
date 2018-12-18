@@ -4,14 +4,18 @@ import './styles/sidebar.css'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ExifOrientationImg  from 'react-exif-orientation-img'
 import { Line } from '../../../../ub-components'
+
+
 class SideBar extends Component {
   constructor (props) {
     super(props)
     this.callLogout = this.callLogout.bind(this)
   }
+
   callLogout () {
     this.props.logout()
   }
+
   render () {
     const {
       onClick,
@@ -31,7 +35,7 @@ class SideBar extends Component {
       id: 0 ,
       title: 'Home',
       action: () => history.push('/'),
-      className: 'newsfeed-icon'
+      className: 'home-icon'
     },
     {
       id: 10 ,
@@ -79,7 +83,13 @@ class SideBar extends Component {
       id: 14 ,
       title: 'My Goals & Performance',
       action: () => history.push('/mygoals'),
-      className: 'payslip-icon'
+      className: 'goals-icon'
+    },
+    {
+      id: 15 ,
+      title: 'My COE',
+      action: () => history.push('/coe'),
+      className: 'coe-icon'
     },
     {
       id: 9 ,
@@ -172,6 +182,7 @@ class SideBar extends Component {
           d.id !== 10 &&
           d.id !== 12 &&
           d.id !== 13 &&
+          d.id !== 14 &&
           <div key = { idx }>
             <li
               className = { `_text-link ${selected === d.id && 'active'}` }
@@ -190,16 +201,13 @@ class SideBar extends Component {
           {
             tempPreEmployment === 6 ||
             tempPreEmployment === 0 ||
-            tempPreEmployment === null ?
+            tempPreEmployment === null ||
+            tempPreEmployment === undefined ?
             <div>
             {
               modules.map((d, idx) =>
-              d.id !== 2 &&
-              d.id !== 3 &&
-              d.id !== 6 &&
-              d.id !== 7 &&
-              d.id !== 12 &&
               d.id !== 11 &&
+              d.id !== 12 &&
               <div key = { idx }>
                 <li
                   className = { `_text-link ${selected === d.id && 'active'}` }
@@ -240,12 +248,7 @@ class SideBar extends Component {
               <div>
                 {
                   modules.map((d, idx) =>
-                  d.id !== 1 &&
-                  d.id !== 4 &&
-                  d.id !== 8 &&
-                  d.id !== 9 &&
                   d.id !== 12 &&
-                  d.id !== 13 &&
                   <div key = { idx }>
                     <li
                       className = { `_text-link ${selected === d.id && 'active'}` }
