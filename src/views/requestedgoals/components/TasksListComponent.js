@@ -42,7 +42,8 @@ class TasksListComponent extends Component {
       <div>
       {
         cardHolder.map((resp, key) =>
-          <div className={ 'comment-border margin-5px padding-5px employee-column' }>
+          <div
+            className={ 'requestTask-border margin-5px padding-5px employee-column' }>
             <Checkbox
               checked = { resp.isCompleted }
               onChange = { () => changeTask(resp.id , !resp.isCompleted) }

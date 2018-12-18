@@ -158,7 +158,13 @@
 }
 
 /* Comments */
-.comment-border {
+.requestComment-border {
   border-radius: 5px;
-  background-color: #e3e3e3;
+  background-color: #FFF8E1;
+}
+
+/* Tasks */
+.requestTask-border {
+  border-radius: 5px;
+  background-color: #FFFDE7;
 }
