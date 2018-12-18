@@ -108,6 +108,18 @@ ul {
   -webkit-mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
   mask-image: url('../../../../../images/icons/Phenom Prime - Grey.png');
 }
+.coe-icon {
+  -webkit-mask-image: url('../../../../../images/SIDE MENU/COE - Grey.png');
+  mask-image: url('../../../../../images/SIDE MENU/COE - Grey.png');
+}
+.goals-icon {
+  -webkit-mask-image: url('../../../../../images/SIDE MENU/Goals - Grey.png');
+  mask-image: url('../../../../../images/SIDE MENU/Goals - Grey.png');
+}
+.home-icon {
+  -webkit-mask-image: url('../../../../../images/NAVIGATION BAR/HOME - Grey.png');
+  mask-image: url('../../../../../images/NAVIGATION BAR/HOME - Grey.png');
+}
 @media screen and (max-width: 3000px) and (max-height: 2000px) {
   ._sidebar-overlay {
     width: 250px;

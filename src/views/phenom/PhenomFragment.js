@@ -32,6 +32,9 @@ class PhenomFragment extends BaseMVPView {
   }
 
   componentDidMount () {
+    if(!this.props.homePreview) {
+      this.props.setSelectedNavigation(10)
+    }
     this.presenter.getPhenomDiscounts()
   }
 
@@ -55,6 +58,10 @@ class PhenomFragment extends BaseMVPView {
 
   }
 
+  showPhenomListLength (phenomLength) {
+    this.setState({ phenomLength })
+  }
+
   navigate () {
     this.props.history.push('/phenom')
   }
@@ -69,6 +76,7 @@ class PhenomFragment extends BaseMVPView {
       loader,
       selectedDetails,
       showPhenomCardDetails,
+      phenomLength
     } = this.state
 
     const {
@@ -118,7 +126,7 @@ class PhenomFragment extends BaseMVPView {
                   homePreview ?
                   <div className = { 'phenom-container-grid' }>
                     {
-                      phenomDataList.slice(0, 4).map((resp, key) =>
+                      phenomDataList && phenomDataList.slice(0, 3).map((resp, key) =>
                       <PhenomCardComponent
                         key = { key }
                         selectedDetails = { resp }
@@ -154,7 +162,7 @@ class PhenomFragment extends BaseMVPView {
                   :
                   <div className = { 'phenom-container-grid' }>
                     {
-                      phenomDataList.map((resp, key) =>
+                      phenomDataList && phenomDataList.map((resp, key) =>
                       <PhenomCardComponent
                         key = { key }
                         selectedDetails = { resp }
