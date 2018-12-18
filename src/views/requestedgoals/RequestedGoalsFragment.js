@@ -33,6 +33,10 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/requestedGoalStyles.css'
 
+import { MdStarOutline, MdStar } from 'react-icons/lib/md'
+import { FaPlayCircleO } from 'react-icons/lib/fa/'
+import Rating from 'react-rating'
+
 class RequestedGoalsFragment extends BaseMVPView {
 
   constructor(props) {
@@ -61,6 +65,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
+      ratings: 1,
       taskId: '',
       taskDescription: '',
       taskDescriptionErrorMessage: '',
@@ -376,6 +381,20 @@ class RequestedGoalsFragment extends BaseMVPView {
     return count
   }
 
+  checkRatings (rate) {
+    if(rate === 0) {
+      return 'Poor'
+    } else if (rate === 1) {
+      return 'Borderline'
+    } else if (rate === 2) {
+      return 'Satisfactory'
+    } else if (rate === 3) {
+      return 'Good'
+    } else if (rate === 4) {
+      return 'Outstanding'
+    }
+  }
+
   render () {
     const {
       enabledLoader,
@@ -431,8 +450,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       showFilterModal,
       filterId,
       filterName,
-      historyArray
+      historyArray,
+      ratings,
     } = this.state
+
+    const {
+      isLineManager
+    } = this.props
 
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
@@ -657,7 +681,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             <div className = { 'text-align-left margin-right grid-global' }>
               <GenericInput
                 text = { 'Filter by status' }
-                className = { 'global-button' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 value = { filterName }
                 onClick = { () => {
                   this.setState({ showFilterModal: true })
@@ -668,7 +692,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             <div className = { 'text-align-right margin-right grid-global' }>
               <GenericButton
                 text = { 'Add Goal' }
-                className = { 'global-button' }
+                className = { 'global-button profile-button-medium  font-size-11px' }
                 onClick = { () => {
                   this.resetValue()
                   this.setState({ showForm: true })
@@ -676,7 +700,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               />
               <GenericButton
                 text = { 'Request for Coaching' }
-                className = { 'global-button' }
+                className = { 'global-button profile-button-medium' }
                 onClick = { () => showRequestCoachFunc(true)}
               />
             </div>
@@ -735,11 +759,36 @@ class RequestedGoalsFragment extends BaseMVPView {
                 }
                 <div className = { 'grid-percentage' }>
                   <div>
-                    <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
-                      <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount }</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
-                      <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
+                    <div className = { 'grid-global' }>
+                      <div className = { 'text-align-center' }>
+                        <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
+                          <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount ? commentArray.totalCount : 0 }</h2>
+                      </div>
+                      <div className = { 'text-align-center' }>
+                        <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
+                          <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
+                      </div>
+                    </div>
+                    <div className = { 'text-align-center' }>
+                      {
+                        isLineManager ?
+                        <Rating
+                          emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                          fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                          fractions={ 1 }
+                          initialRating={ (ratings ? ratings : 0) || 0 }
+                        />
+                      :
+                        <Rating
+                          emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                          fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                          fractions={ 1 }
+                          initialRating={ (ratings ? ratings : 0) || 0 }
+                          readOnly
+                        />
+                      }
+                      <h2 className = { 'font-size-9px unionbank-color' }>{ this.checkRatings(ratings) }</h2>
+                    </div>
                   </div>
                   <div className = { 'text-align-center padding-10px' }>
                     <Progress
@@ -774,8 +823,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                           :
                           approvalStatus === 5 &&
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
-
                       }
+                      <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
                     </div>
                   </div>
                 </div>
