@@ -321,29 +321,29 @@ class BenefitsFragment extends BaseMVPView {
         </div>
         <div className = { 'tabs-container' }>
           <input
-            className = { 'input-tab' }
-            id = { 'tab1' }
+            className = { 'benefits-input-tab' }
+            id = { 'benefitsTab1' }
             type = { 'radio' }
             name = { 'tabs' }
             defaultChecked = { true }
             onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
-          <label className = { 'benefit-icon-tab' } htmlFor='tab1'>Benefits</label>
+          <label className = { 'benefit-icon-tab' } htmlFor='benefitsTab1'>Benefits</label>
 
          <input
-           className = { 'input-tab' }
-           id = { 'tab2' }
+           className = { 'benefits-input-tab' }
+           id = { 'benefitsTab2' }
            type = { 'radio' }
            name = { 'tabs' }
            onClick={ () => this.props.history.push('/mybenefits/transactions/personal') } />
-         <label className={ 'transaction-icon-tab' } htmlFor='tab2'>My Transactions</label>
+         <label className={ 'transaction-icon-tab' } htmlFor='benefitsTab2'>My Transactions</label>
 
          <input
-           className = { 'input-tab' }
-           id = { 'tab3' }
+           className = { 'benefits-input-tab' }
+           id = { 'benefitsTab3' }
            type = { 'radio' }
            name = { 'tabs' }
            onClick={ () => this.props.history.push('/mybenefits/loan/existing') } />
-         <label className={ 'transaction-icon-tab' } htmlFor='tab3'>My Existing Loans</label>
+         <label className={ 'transaction-icon-tab' } htmlFor='benefitsTab3'>My Existing Loans</label>
           {
             // TODO uncomment if required the for approval module
 

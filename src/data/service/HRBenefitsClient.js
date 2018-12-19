@@ -890,7 +890,9 @@ export default class HRBenefitsClient {
 
   getPhenomImage (token, file) {
     return this.service.getPhenomImage(token, file)
-      .pipe(ServiceErrorOperator())
+      .map(resp => {
+        return resp.data
+      })
       .flatMap(resp =>
         Observable.create(observer => {
           const reader = new FileReader()
@@ -905,7 +907,9 @@ export default class HRBenefitsClient {
 
   getVendorImage (token, file) {
     return this.service.getVendorImage(token, file)
-      .pipe(ServiceErrorOperator())
+      .map(resp => {
+        return resp.data
+      })
       .flatMap(resp =>
         Observable.create(observer => {
           const reader = new FileReader()
