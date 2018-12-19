@@ -64,11 +64,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       showFilterModal: false,
       showMarkAsCompleted: false,
       ifYesCompleted: false,
+      showRemarksText: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
       ratings: 1,
       taskId: '',
+      remarksText: '',
       taskDescription: '',
       taskDescriptionErrorMessage: '',
       goalComment: '',
@@ -400,16 +402,32 @@ class RequestedGoalsFragment extends BaseMVPView {
     this.setState({ showMarkAsCompleted: show })
   }
 
+  commentRateFunc (ratings) {
+    this.setState({ ratings, showRemarksText : true })
+  }
+
+  submitRatingWithRemarks (e) {
+    console.log(e)
+    if(e.which === 13) {
+      try {
+        this.presenter.addRatingGoal(this.state.goalId, this.state.ratings, this.state.remarks)
+
+      }catch(e) {
+        console.log(e)
+      }
+    }
+  }
+
   checkRatings (rate) {
-    if(rate === 0) {
+    if(rate === 1) {
       return 'Poor'
-    } else if (rate === 1) {
-      return 'Borderline'
     } else if (rate === 2) {
-      return 'Satisfactory'
+      return 'Borderline'
     } else if (rate === 3) {
-      return 'Good'
+      return 'Satisfactory'
     } else if (rate === 4) {
+      return 'Good'
+    } else if (rate === 5) {
       return 'Outstanding'
     }
   }
@@ -494,7 +512,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       ratings,
       ifYesCompleted,
       businessOutcome,
-      businessOutcomeErrorMessage
+      businessOutcomeErrorMessage,
+      showRemarksText,
+      remarksText
     } = this.state
 
     const {
@@ -898,12 +918,31 @@ console.log(this.checkIfGoalCompleted(taskArray))
                             emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
+                            onChange={ e => this.commentRateFunc(e) }
                             initialRating={ (ratings ? ratings : 0) || 0 }
 
                           />
                         }
+                        <br/>
                       </div>
                       <h2 className = { 'font-size-9px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+                      {
+                        showRemarksText &&
+
+                        <GenericInput
+                          value = { remarksText }
+                          hint = { 'Please add remarks' }
+                          type = { 'textarea' }
+                          onChange = { (e) => {
+                            try {
+                              this.setState({ remarksText : e.target.value })
+                            } catch(e) {
+                              console.log(e)
+                            }
+                          } }
+                          onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
+                        />
+                      }
                       <br/>
                     </div>
                   </div>

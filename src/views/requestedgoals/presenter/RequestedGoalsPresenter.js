@@ -12,7 +12,9 @@ import DeleteGoalsInteractor from '../../../domain/interactor/goals/DeleteGoalsI
 import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInteractor'
 import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
 import MarkAsCompletedGoalsInteractor from '../../../domain/interactor/goals/MarkAsCompletedGoalsInteractor'
+import AddRatingGoalsInteractor from '../../../domain/interactor/goals/AddRatingGoalsInteractor'
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
+import addRatingGoalsParam from '../../../domain/param/AddRatingGoalsParam'
 import markParam from '../../../domain/param/MarkAsCompletedGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -35,6 +37,7 @@ export default class RequestCoachPresenter {
     this.deleteTaskInteractor = new DeleteTaskInteractor(container.get('HRBenefitsClient'))
     this.deleteCommentInteractor = new DeleteCommentInteractor(container.get('HRBenefitsClient'))
     this.markAsCompletedGoalsInteractor = new MarkAsCompletedGoalsInteractor(container.get('HRBenefitsClient'))
+    this.addRatingGoalsInteractor = new AddRatingGoalsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -318,5 +321,16 @@ export default class RequestCoachPresenter {
         this.view.hideSubmitLoader()
       }
     )
+  }
+
+  addRatingGoal (id, ratings, remarks) {
+    this.view.showSubmitLoader()
+    this.addRatingGoalsInteractor.execute(addRatingGoalsParam(id, ratings, remarks))
+    .subscribe(data => {
+      this.view.noticeResponse(data)
+      this.view.hideSubmitLoader()
+    }, error => {
+      this.view.hideSubmitLoader()
+    })
   }
 }
