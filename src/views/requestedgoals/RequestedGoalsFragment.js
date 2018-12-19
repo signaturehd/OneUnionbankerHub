@@ -63,6 +63,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       deleteComment: false,
       showFilterModal: false,
       showMarkAsCompleted: false,
+      ifYesCompleted: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -91,6 +92,8 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeErrorMessage : '',
       filterId: '',
       filterName: '',
+      businessOutcome: '',
+      businessOutcomeErrorMessage: '',
       commentArray: [],
       taskArray: [],
       goalsArray : [],
@@ -382,6 +385,21 @@ class RequestedGoalsFragment extends BaseMVPView {
     return count
   }
 
+  checkIfGoalCompleted(taskArray) {
+    let count = 0
+    taskArray.length !== 0 &&
+    taskArray.map((resp, key) =>
+      resp.isCompleted &&
+      count++
+    )
+    return taskArray.length !==0 &&
+     taskArray.length === count ? true : false
+  }
+
+  checkIfShowMarkAsCompleted(show) {
+    show && this.setState({ showMarkAsCompleted: show })
+  }
+
   checkRatings (rate) {
     if(rate === 0) {
       return 'Poor'
@@ -394,6 +412,10 @@ class RequestedGoalsFragment extends BaseMVPView {
     } else if (rate === 4) {
       return 'Outstanding'
     }
+  }
+
+  checkApprovalStatus (approvalStatus) {
+    return approvalStatus === 2 || approvalStatus === 6 ? true : false
   }
 
   render () {
@@ -454,6 +476,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       filterName,
       historyArray,
       ratings,
+      ifYesCompleted,
+      businessOutcome,
+      businessOutcomeErrorMessage
     } = this.state
 
     const {
@@ -535,22 +560,45 @@ class RequestedGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
-        percentageTask &&
+        approvalStatus !== 6 &&
+        showMarkAsCompleted &&
         <Modal>
-          <center>
-            <h2>The Goal is completed. Do you want to mark as completed?</h2>
-            <br/>
-            <div className = { 'grid-global' }>
-              <GenericButton
-                text = { 'No' }
-                onClick = { () => this.setState({ showMarkAsCompleted: false }) }
+          {
+            ifYesCompleted ?
+            <div>
+              <GenericInput
+                text = { 'Business Outcome' }
+                value = { businessOutcome }
+                onChange = { (e) => this.setState({ businessOutcome: e.target.value }) }
               />
-              <GenericButton
-                text = { 'Yes' }
-                onClick = { () => this.setState({ showMarkAsCompleted: false }) }
-              />
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Cancel' }
+                  onClick = { () => this.setState({ showMarkAsCompleted: false, ifYesCompleted: false }) }
+                />
+                <GenericButton
+                  text = { 'Submit' }
+                  onClick = { () => this.setState({ showMarkAsCompleted: false, ifYesCompleted: false }) }
+                />
+              </div>
             </div>
-          </center>
+            :
+            <center>
+              <h2>The Goal is completed. Do you want to mark as completed?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'No' }
+                  onClick = { () => this.setState({ showMarkAsCompleted: false }) }
+                />
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => this.setState({ ifYesCompleted: true }) }
+                />
+              </div>
+            </center>
+          }
         </Modal>
       }
       {
@@ -763,6 +811,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                  this.checkIfShowMarkAsCompleted(this.checkIfGoalCompleted(taskArray))
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
@@ -832,7 +881,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <div>
                       {
                         approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
                         :
                           approvalStatus === 3 ?
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
@@ -843,10 +892,13 @@ class RequestedGoalsFragment extends BaseMVPView {
                           approvalStatus === 4 ?
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
                           :
-                          approvalStatus === 5 &&
+                          approvalStatus === 5 ?
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                          :
+                          approvalStatus === 6 &&
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
                       }
-                      <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                      <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
                     </div>
                   </div>
                 </div>
@@ -868,7 +920,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
                 </div>
                 {
-                  approvalStatus === 2 &&
+                  this.checkApprovalStatus(approvalStatus) &&
                   <div>
                   <br/>
                   <Line/>
@@ -977,7 +1029,6 @@ class RequestedGoalsFragment extends BaseMVPView {
                       />
                       {
                         commentLoader ?
-
                         <center>
                           <CircularLoader  show = { commentLoader }/>
                         </center>
