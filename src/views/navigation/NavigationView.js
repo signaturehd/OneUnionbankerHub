@@ -16,10 +16,15 @@ import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
+<<<<<<< HEAD
 
 /*Rewards and Recognition */
 import RewardsFragment from '../rewards/RewardsFragment'
 
+=======
+/*Rewards and Recognition */
+import RewardsRecognitionFragment from '../rewards/rewards'
+>>>>>>> 403f20842a59c929801fe593c7cb5a4427143e31
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -293,6 +298,7 @@ class NavigationView extends BaseMVPView {
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            tempPreEmployment = { preEmploymentStatus }
             selected={ selected }
             profillePosition = { profillePosition }
             firstName = { firstName }
@@ -389,12 +395,18 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
                   <DentalReimbursement { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
+                  <OutPatientReimbursementFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                 <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
                   <DentalLoaView { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                 <Route path = '/mybenefits/benefits/medical/scheduling' render = { props =>
                   <MedicalSchedulingFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
+                  <MaternityAssistanceFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                   <HousingAssistanceFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -448,7 +460,9 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation }
                     isLineManager = { isLineManager } /> } />
                 <Route path = '/coe' render = { props =>
-                  <CertificateOfEmploymentFragment { ...props } /> } />
+                  <CertificateOfEmploymentFragment
+                  { ...props }
+                  setSelectedNavigation = { this.setSelectedNavigation } /> }/>
                 <Route path = '/payslip' render = { props =>
                   <Payslip { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -479,8 +493,8 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/phenom' render = { props =>
                   <PhenomFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/phenom' render = { props =>
-                  <PhenomFragment { ...props }
+                <Route path = '/rewards' render = { props =>
+                  <Reward { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
 /*sherwin perez*/  <Route path = '/myrewards' render = { props =>
                       <RewardsFragment { ...props }
