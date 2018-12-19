@@ -418,6 +418,10 @@ class RequestedGoalsFragment extends BaseMVPView {
     return approvalStatus === 2 || approvalStatus === 6 ? true : false
   }
 
+  checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
+    return isLineManager === true && approvalStatus === 6 ? true : false
+  }
+
   postMarkAsCompleted() {
     const { goalId, businessOutcome } = this.state
 
@@ -843,46 +847,65 @@ class RequestedGoalsFragment extends BaseMVPView {
                   // </div>
                 }
                 <div className = { 'grid-percentage' }>
-                  <div>
-                    <div className = { 'grid-global' }>
-                      <div className = { 'text-align-center' }>
-                        <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
-                          <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount ? commentArray.totalCount : 0 }</h2>
-                      </div>
-                      <div className = { 'text-align-center' }>
-                        <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
-                          <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
-                      </div>
-                    </div>
-                    <div className = { 'text-align-center' }>
-                      {
-                        isLineManager ?
-                        <Rating
-                          emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
-                          fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                          fractions={ 1 }
-                          initialRating={ (ratings ? ratings : 0) || 0 }
-                        />
-                      :
-                        <Rating
-                          emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
-                          fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                          fractions={ 1 }
-                          initialRating={ (ratings ? ratings : 0) || 0 }
-                          readOnly
-                        />
-                      }
-                      <h2 className = { 'font-size-9px unionbank-color' }>{ this.checkRatings(ratings) }</h2>
-                    </div>
-                  </div>
                   <div className = { 'text-align-center padding-10px' }>
+                    {
+                      approvalStatus === 2 ?
+                      <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold color-Medium' }>Approved</h2>
+                      :
+                        approvalStatus === 3 ?
+                        <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                        :
+                        approvalStatus === 1 ?
+                        <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Requested</h2>
+                        :
+                        approvalStatus === 4 ?
+                        <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Update for approval</h2>
+                        :
+                        approvalStatus === 5 ?
+                        <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                        :
+                        approvalStatus === 6 &&
+                        <h2 className = { 'text-align-center font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                    }
+                    <br/>
                     <Progress
                       type = { 'circle' }
                       height = { 80 }
                       width = { 80 }
                       percent = { percentageTask ? parseInt(percentageTask) : 0 } />
+                    <br/>
+                    <br/>
                   </div>
-                  <div className = { 'grid-global-rows text-align-right' }>
+                  <div>
+                    <div>
+                      <br/>
+                      <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>4.3</h2>
+                      <br/>
+                      <div className = { 'text-align-center' }>
+                        {
+                          this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager)?
+                          <Rating
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                            fractions={ 1 }
+                            initialRating={ (ratings ? ratings : 0) || 0 }
+                            readOnly
+                          />
+                        :
+                          <Rating
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                            fractions={ 1 }
+                            initialRating={ (ratings ? ratings : 0) || 0 }
+
+                          />
+                        }
+                      </div>
+                      <h2 className = { 'font-size-9px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+                      <br/>
+                    </div>
+                  </div>
+                  <div className = { 'text-align-right' }>
                     <div>
                       {
                         goalTypeId === 1 ?
@@ -891,28 +914,23 @@ class RequestedGoalsFragment extends BaseMVPView {
                           goalTypeId === 2 &&
                           <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
                       }
-                    </div>
-                    <div>
-                      {
-                        approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
-                        :
-                          approvalStatus === 3 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
-                          :
-                          approvalStatus === 1 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold' }>Requested</h2>
-                          :
-                          approvalStatus === 4 ?
-                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Update for approval</h2>
-                          :
-                          approvalStatus === 5 ?
-                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
-                          :
-                          approvalStatus === 6 &&
-                          <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
-                      }
-                      <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                      <div>
+                        <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                      </div>
+                      <br/>
+                      <div className = { 'grid-global' }>
+                        <div></div>
+                        <div className = { 'grid-global' }>
+                          <div className = { 'text-align-center' }>
+                            <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
+                              <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount ? commentArray.totalCount : 0 }</h2>
+                          </div>
+                          <div className = { 'text-align-center' }>
+                            <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
+                              <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
