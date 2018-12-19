@@ -10,6 +10,19 @@ class MaternityOptionModal extends Component {
     super (props)
   }
 
+  checkGender (gender) {
+    const data = gender && gender
+    if(data.toLowerCase() === 'f') {
+      return false
+    } else if (data.toLowerCase() === 'm') {
+      return true
+    } else if (data.towLowerCase() === 'female') {
+      return false
+    } else if (data.towLowerCase() === 'male') {
+      return true
+    }
+  }
+
   render () {
 
     const femaleRequirements = [{
@@ -75,6 +88,7 @@ class MaternityOptionModal extends Component {
       showMoreCheck,
       showMoreTextFunc,
       showMoreCheckFunc,
+      gender
     } = this.props
 
     return (
@@ -101,33 +115,41 @@ class MaternityOptionModal extends Component {
             {
               showMoreCheck &&
               <div>
-                <br/>
-                <h2 className = { 'font-weight-bold font-size-14px' }>Female</h2>
-                  {
-                    femaleRequirements.map(resp =>
-                      <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
-                    )
-                  }
-                <br/>
-              <h2 className = { 'font-weight-normal font-size-13px' }>Additional Requirements if Miscarriage:</h2>
                 {
-                  femaleRequirementsMiscarriage.map(resp =>
-                    <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
-                  )
-                }
-                <br/>
-                <h2 className = { 'font-weight-bold font-size-14px' }>Male</h2>
-                {
-                  maleRequirements.map(resp =>
-                    <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
-                  )
-                }
-                <br/>
-              <h2 className = { 'font-weight-normal font-size-13px' }>Additional Requirements if Miscarriage:</h2>
-                {
-                  maleRequirementsMiscarriage.map(resp =>
-                    <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
-                  )
+                  this.checkGender(gender) ?
+                  <div>
+                    <h2 className = { 'font-weight-bold font-size-14px' }>Male</h2>
+                    {
+                      maleRequirements.map(resp =>
+                        <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
+                      )
+                    }
+                    <br/>
+                  <h2 className = { 'font-weight-normal font-size-13px' }>Additional Requirements if Miscarriage:</h2>
+                    {
+                      maleRequirementsMiscarriage.map(resp =>
+                        <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
+                      )
+                    }
+                  </div>
+                  :
+                  <div>
+                    <br/>
+                    <h2 className = { 'font-weight-bold font-size-14px' }>Female</h2>
+                      {
+                        femaleRequirements.map(resp =>
+                          <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
+                        )
+                      }
+                    <br/>
+                  <h2 className = { 'font-weight-normal font-size-13px' }>Additional Requirements if Miscarriage:</h2>
+                    {
+                      femaleRequirementsMiscarriage.map(resp =>
+                        <h4 className = { 'font-size-12px font-weight-lighter' }>&#8226; { '  '+resp.name }</h4>
+                      )
+                    }
+                    <br/>
+                  </div>
                 }
               </div>
             }

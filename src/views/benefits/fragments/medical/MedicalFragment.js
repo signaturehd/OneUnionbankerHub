@@ -27,14 +27,14 @@ class MedicalFragment extends Component {
   }
 
   render () {
-    const { history } = this.props
+    const { history, gender } = this.props
     const {
       showConfirmationModal,
       checkedpath,
       showMoreCheck,
       showMoreText
     } =this.state
-
+    console.log(gender)
     const benefitsOptions = [{
       id: 1,
       styleName: 'medical-cards-2 medical-option-default',
@@ -83,6 +83,7 @@ class MedicalFragment extends Component {
             showConfirmationModal &&
 
             <MaternityOptionModal
+              gender = { gender }
               showMoreText = { showMoreText }
               showMoreCheck = { showMoreCheck }
               showMoreTextFunc = { (showMoreText) => this.setState({ showMoreText }) }
