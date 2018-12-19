@@ -28,3 +28,67 @@
   display: grid;
   grid-template-columns: 1fr .5fr 1fr;
 }
+
+
+.mygoal-input-tab:checked + label {
+  color: #ff8a00;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #ff8a00;
+  border-top: 1px solid #ff8a00;
+  border-left: 1px solid #ff8a00;
+  border-right: 1px solid #ff8a00;
+}
+
+.mygoal-input-tab + label {
+  color: #546E7A;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #546E7A;
+  border-top: 1px solid #546E7A;
+  border-left: 1px solid #546E7A;
+  border-right: 1px solid #546E7A;
+}
+
+@media screen and (max-width : 768px) {
+  .mygoal-tabs-container {
+    margin: auto;
+    text-align: center;
+  }
+
+  label {
+    font-size: 9px !important;
+  }
+
+  .mygoal-input-tab + label {
+    color: #546E7A;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border-bottom: 1px solid #546E7A;
+    border-top: 1px solid #546E7A;
+    border-left: 1px solid #546E7A;
+    border-right: 1px solid #546E7A;
+  }
+
+  .mygoal-input-tab:checked + label {
+    color: #ff8a00;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border-bottom: 1px solid #ff8a00;
+    border-top: 1px solid #ff8a00;
+    border-left: 1px solid #ff8a00;
+    border-right: 1px solid #ff8a00;
+  }
+}
+
+.mygoal-input-tab {
+  display: none;
+}

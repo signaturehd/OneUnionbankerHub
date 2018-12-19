@@ -90,7 +90,7 @@ class MedicalFragment extends Component {
                   <GenericButton
                     onClick = { () => {
                       this.setState({ showConfirmationModal : false})
-                      this.props.history.push(checkedpath)
+                      this.props.history.push('/mybenefits/benefits/medical/assistance/maternity')
                       }
                     }
                     text = { 'Yes' }/>
@@ -103,11 +103,11 @@ class MedicalFragment extends Component {
           benefitsOptions.map((value, idx) => (
             <Card
               onClick = { () => {
-                if(value.id == 6) {
-                  this.onCheckedProceed(value.path)
-                } else {
-                  history.push(value.path)
-                  }
+                  if(value.id == 6) {
+                    this.onCheckedProceed(value.path)
+                  } else {
+                    history.push(value.path)
+                    }
                 }
               }
               className={ 'medical-card' }

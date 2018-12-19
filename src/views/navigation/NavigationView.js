@@ -395,6 +395,9 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/mybenefits/benefits/medical/scheduling' render = { props =>
                   <MedicalSchedulingFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                <Route path = '/mybenefits/benefits/medical/assistance/maternity' render = { props =>
+                  <MaternityAssistanceFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/mybenefits/benefits/loans/housingassistance' render = { props =>
                   <HousingAssistanceFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
@@ -477,9 +480,6 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/mycompliance' render = { props =>
                   <ComplianceFragment { ...props }
                     profileHasCOC = { profileHasCOC }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/phenom' render = { props =>
-                  <PhenomFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/phenom' render = { props =>
                   <PhenomFragment { ...props }

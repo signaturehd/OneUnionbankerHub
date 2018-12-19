@@ -59,9 +59,9 @@ class TransactionPersonalFragment extends BaseMVPView {
     let transactionSearch = transactions
     const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
-      transactionSearch = transactions.filter(transactions =>
-      transactions.benefit.toLowerCase().match(search) ||
-      transactions.referenceNumber.toLowerCase().match(search))
+      transactionSearch = transactions && transactions.filter(transactions =>
+      transactions.benefit && transactions.benefit.toLowerCase().match(search) ||
+      transactions.referenceNumber && transactions.referenceNumber.toLowerCase().match(search))
     }
 
     const {
