@@ -194,26 +194,26 @@ class TravelFragment extends BaseMVPView {
             <br/>
           </div>
         </div>
-        <div className = { 'tabs-container' }>
+        <div className = { 'travel-tabs-container' }>
           <input
-            className = { 'input-tab' }
-            id = { 'tab1' }
+            className = { 'travel-input-tab' }
+            id = { 'travel-tab1' }
             type = { 'radio' }
             name = { 'tabs' }
             defaultChecked = { true }
-            onClick = { () => this.props.history.push('/mytravel/travel') }/>
-          <label className = { 'travel-icon-tab' } htmlFor='tab1'>My Travel</label>
+            onClick = { () => history.push('/mytravel/travel') }/>
+          <label className = { 'travel-icon-tab' } htmlFor='travel-tab1'>My Travel</label>
 
           {
             isLineManager &&
             <label>
               <input
-                className = { 'input-tab' }
-                id = { 'tab2' }
+                className = { 'travel-input-tab' }
+                id = { 'travel-tab2' }
                 type = { 'radio' }
                 name = { 'tabs' }
-                onClick = { () => this.props.history.push('/mytravel/approval') }/>
-              <label className = { 'travel-icon-tab' } htmlFor='tab2'>Approvals</label>
+                onClick = { () => history.push('/mytravel/approval') }/>
+              <label className = { 'travel-icon-tab' } htmlFor='travel-tab2'>Approvals</label>
             </label>
           }
 

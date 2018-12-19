@@ -23,6 +23,7 @@ class Notice extends BaseMVPView {
       showValidatedCofirmation: false,
       showCancelCofirmation: false,
       showPinCodeModal : false,
+      showDisagreeModal : false,
       tranId : '',
       isAgree: '',
       benId : '',
@@ -56,7 +57,8 @@ class Notice extends BaseMVPView {
       showPinCodeModal,
       tranId,
       isAgree,
-      benId
+      benId,
+      showDisagreeModal
     } = this.state
 
     return (
@@ -83,6 +85,28 @@ class Notice extends BaseMVPView {
           )
         }
         {
+          showDisagreeModal &&
+          <Modal>
+            <center>
+              <h2>By disagreeing, your application will not proceed. Are you sure you want to cancel?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => {
+                    this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true, showDisagreeModal: false })
+                    this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
+                  } }
+                />
+                <GenericButton
+                  text = { 'Cancel' }
+                  onClick = { () => this.setState({ showDisagreeModal : false }) }
+                />
+              </div>
+            </center>
+          </Modal>
+        }
+        {
           showPinCodeModal &&
           <NoticePinModal
             onSubmitAgreement = { () => this.isAgreementConfirm(tranId, isAgree, benId) }
@@ -98,10 +122,8 @@ class Notice extends BaseMVPView {
             <br/>
             <br/>
             <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
-              onClick = { () => {
-                this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true })
-                this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
-                }
+              onClick = { () => 
+                this.setState({ showDisagreeModal : true })
               }
             />
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
