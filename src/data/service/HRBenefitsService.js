@@ -2396,7 +2396,7 @@ export default class HRBenefitsService {
   }
 
   markAsCompleted (token, markParam) {
-    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, ratingParam.body, {
+    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
       headers: { token }
     })
   }

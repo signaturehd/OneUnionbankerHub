@@ -418,6 +418,16 @@ class RequestedGoalsFragment extends BaseMVPView {
     return approvalStatus === 2 || approvalStatus === 6 ? true : false
   }
 
+  postMarkAsCompleted() {
+    const { goalId, businessOutcome } = this.state
+
+    if(businessOutcome) {
+      this.presenter.markAsCompleted(goalId, businessOutcome)
+    } else {
+      this.setState ({ businessOutcomeErrorMessage: 'Required field' })
+    }
+  }
+
   render () {
     const {
       enabledLoader,
@@ -569,7 +579,8 @@ class RequestedGoalsFragment extends BaseMVPView {
               <GenericInput
                 text = { 'Business Outcome' }
                 value = { businessOutcome }
-                onChange = { (e) => this.setState({ businessOutcome: e.target.value }) }
+                onChange = { (e) => this.setState({ businessOutcome: e.target.value, businessOutcomeErrorMessage: '' }) }
+                errorMessage = { businessOutcomeErrorMessage }
               />
               <br/>
               <div className = { 'grid-global' }>
@@ -579,7 +590,10 @@ class RequestedGoalsFragment extends BaseMVPView {
                 />
                 <GenericButton
                   text = { 'Submit' }
-                  onClick = { () => this.setState({ showMarkAsCompleted: false, ifYesCompleted: false }) }
+                  onClick = { () => {
+                    this.postMarkAsCompleted(),
+                    this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
+                  } }
                 />
               </div>
             </div>
@@ -811,7 +825,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  this.checkIfShowMarkAsCompleted(this.checkIfGoalCompleted(taskArray))
+                  // this.checkIfShowMarkAsCompleted(this.checkIfGoalCompleted(taskArray))
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
