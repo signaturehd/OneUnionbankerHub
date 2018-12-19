@@ -54,6 +54,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
     amountErrorMessage,
     procedureArray,
     employeeName,
+    limit
   } = this.props
 
   return (
@@ -85,12 +86,12 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 errorMessage = { dependentErrorMessage }
                 />
               <GenericInput
+                type = { 'textarea' }
                 value = { diagnosisText }
                 onChange = { (e) => diagnosisValueFunc(e.target.value) }
                 text = { 'Diagnosis' }
                 disabled = { showEditSubmitButton }
-                errorMessage = { diagnosisErrorMessage }
-                type = { 'text' }/>
+                errorMessage = { diagnosisErrorMessage }/>
               <DatePicker
                 selected = { preferredDate }
                 readOnly
@@ -128,6 +129,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                       <GenericInput
                         hint = { 'Enter Amount' }
                         text = { resp.name }
+                        maxLength = { limit.toString().length }
                         value = { resp.amount ? resp.amount : '' }
                         errorMessage = {
                           resp.amount === 0  &&
