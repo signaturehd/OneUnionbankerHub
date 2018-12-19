@@ -386,6 +386,9 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/mybenefits/benefits/medical/reimbursement/dental' render = { props =>
                   <DentalReimbursement { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
+                  <Route path = '/mybenefits/benefits/medical/reimbursement/outpatient' render = { props =>
+                  <OutPatientReimbursementFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation }/>}/>
                 <Route path = '/mybenefits/benefits/medical/loa/dental' render = { props =>
                   <DentalLoaView { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation }/>}/>
