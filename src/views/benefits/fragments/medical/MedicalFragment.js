@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Card, GenericButton, Modal } from '../../../../ub-components'
 import './styles/medical.css'
 import DentalReimbursementFragment from '../../../dentalreimbursement/DentalReimbursementFragment'
+import MaternityOptionModal from '../../modal/MaternityOptionModal'
 
 class MedicalFragment extends Component {
   constructor (props) {
@@ -11,6 +12,8 @@ class MedicalFragment extends Component {
     this.state = {
       showConfirmationModal : false,
       checkedpath : '',
+      showMoreText: 'View requirements',
+      showMoreCheck: false,
     }
     this.onCheckedProceed = this.onCheckedProceed.bind(this)
   }
@@ -28,6 +31,8 @@ class MedicalFragment extends Component {
     const {
       showConfirmationModal,
       checkedpath,
+      showMoreCheck,
+      showMoreText
     } =this.state
 
     const benefitsOptions = [{
@@ -76,27 +81,15 @@ class MedicalFragment extends Component {
         <div className = { 'adjustment' }>
           {
             showConfirmationModal &&
-            <Modal>
-              <center>
-                <h2>We&#39;d like to help you in your labor expenses but this benefit requires post-submission of multiple documents. Would you like to proceed?</h2>
-                <br/>
-                <div className = { 'grid-global' }>
-                  <GenericButton
-                    text = { 'No' }
-                    onClick = { () => {
-                      this.setState({ showConfirmationModal : false})
-                    } }
-                    />
-                  <GenericButton
-                    onClick = { () => {
-                      this.setState({ showConfirmationModal : false})
-                      this.props.history.push('/mybenefits/benefits/medical/assistance/maternity')
-                      }
-                    }
-                    text = { 'Yes' }/>
-                </div>
-              </center>
-            </Modal>
+
+            <MaternityOptionModal
+              showMoreText = { showMoreText }
+              showMoreCheck = { showMoreCheck }
+              showMoreTextFunc = { (showMoreText) => this.setState({ showMoreText }) }
+              showMoreCheckFunc = { (showMoreCheck) => this.setState({ showMoreCheck }) }
+              navigateMedical = { () => history.push('/mybenefits/benefits/medical/assistance/maternity') }
+              showConfirmationModalFunc = { (showConfirmationModal) => this.setState({ showConfirmationModal }) }
+            />
           }
         <div className = { 'medical-card-container' }>
           {
