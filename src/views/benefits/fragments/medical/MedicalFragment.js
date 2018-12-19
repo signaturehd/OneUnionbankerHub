@@ -103,14 +103,11 @@ class MedicalFragment extends Component {
           benefitsOptions.map((value, idx) => (
             <Card
               onClick = { () => {
-                  try {
-                    if(value.id == 6) {
-                      this.onCheckedProceed(value.path)
-                    } else {
-                      history.push(value.path)
-                      }
-                  } catch (e) {
-                  }
+                  if(value.id == 6) {
+                    this.onCheckedProceed(value.path)
+                  } else {
+                    history.push(value.path)
+                    }
                 }
               }
               className={ 'medical-card' }
