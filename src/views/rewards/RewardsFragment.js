@@ -1,10 +1,10 @@
-import React from 'react'
+	import React from 'react'
 
 
-const Greet = () => {
+const RewardsRecognitionFragment = () => {
 	return (<h2>Hello </h2>)
 }
 
 
 
-export default Greet;
+export default RewardsRecognitionFragment;
