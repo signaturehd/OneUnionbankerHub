@@ -1,11 +1,11 @@
-import React from 'react';
+	import React from 'react'
 
-const RewardsFragment = () => {
+const RewardsRecognitionFragment = () => {
   return (
 
-    <p> hello world </p>
+    <h2> My Rewards and Recognition</h2>
 
   )
 }
 
-export default RewardsFragment;
+export default RewardsRecognitionFragment;
