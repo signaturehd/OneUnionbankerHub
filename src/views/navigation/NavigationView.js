@@ -16,6 +16,10 @@ import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
+
+/*Rewards and Recognition */
+import RewardsFragment from '../rewards/RewardsFragment'
+
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -478,6 +482,10 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/phenom' render = { props =>
                   <PhenomFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
+/*sherwin perez*/  <Route path = '/myrewards' render = { props =>
+                      <RewardsFragment { ...props }
+                        setSelectedNavigation = { this.setSelectedNavigation }
+                        isLineManager = { isLineManager } /> } />
                </Switch>
             </Drawer>
           </main>
