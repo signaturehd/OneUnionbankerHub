@@ -11,6 +11,7 @@ import { NotifyActions } from '../../../actions'
 
 let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedLaptopBrand = '', storedLaptopModel = '', storedScreenSize = '', storedFile
 let storedGraphicsCard = '', storedHardDriveCapacity = '', storedProcessorType = '', storedOperatingSystem = '', storedSystemMemory = ''
+let storedOrDate = '', storedOrNumber = ''
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -83,6 +84,17 @@ export default class LaptopLeasePresenter {
 
   setDeliveryOption (deliveryOption) {
     storedDeliveryOption = deliveryOption
+    this.view.setDeliveryOption(deliveryOption)
+  }
+
+  setOrDate (orDate) {
+    storedOrDate = orDate
+    this.view.setOrNumber(orDate)
+  }
+
+  setOrNumber (orNumber) {
+    storedOrNumber = orNumber
+    this.view.setOrNumber(orNumber)
   }
 
   validateLaptopLease () {
@@ -233,7 +245,9 @@ export default class LaptopLeasePresenter {
       storedProcessorType,
       storedOperatingSystem,
       storedSystemMemory,
-      storedFile))
+      storedFile,
+      storedOrNumber,
+      storedOrDate))
     .subscribe(data => {
       this.view.noticeOfUndertaking(data)
       this.view.hideCircularLoader()

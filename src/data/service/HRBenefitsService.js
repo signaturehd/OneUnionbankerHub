@@ -2024,6 +2024,9 @@ export default class HRBenefitsService {
      laptopLeaseParam) {
    const formData = new FormData()
    const object = {
+     accountNumber,
+     releasingCenter,
+     benefitId: '16',
      brand: laptopLeaseParam.brand,
      model: laptopLeaseParam.model,
      screenSize: laptopLeaseParam.screenSize,

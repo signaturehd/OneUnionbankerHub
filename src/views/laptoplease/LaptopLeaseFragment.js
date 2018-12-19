@@ -84,8 +84,8 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ screenSize })
   }
 
-  setHardDriveCapacity (hardDrive) {
-    this.setState({ hardDrive })
+  setHardDriveCapacity (hardDriveCapacity) {
+    this.setState({ hardDriveCapacity })
   }
 
   setGraphicsCard (graphicsCard) {
@@ -343,6 +343,10 @@ class LaptopLeaseFragment extends BaseMVPView {
                           />
                          :
                          <LaptopLeaseEmpToPurchaseComponent
+                           orDate = { orDate }
+                           orDateFunc = { (e) => this.presenter.setOrDate(e) }
+                           orNumber = { orNumber }
+                           orNumberFunc = { (e) => this.presenter.setOrNumber(e) }
                            laptopLeaseAttachment = { laptopLeaseAttachment }
                            setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
                            onContinue={ () => this.presenter.validateSubmission() }

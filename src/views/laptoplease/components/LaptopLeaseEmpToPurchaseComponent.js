@@ -32,6 +32,8 @@ class LaptopLeaseCardComponent extends Component {
       onContinue,
       orNumber,
       orNumberFunc,
+      orDate,
+      orDateFunc,
       vendor,
       vendorFunc,
       costAquisition,
@@ -58,8 +60,10 @@ class LaptopLeaseCardComponent extends Component {
                   maxLength = { 15 }
                   />
                 <DatePicker
-                  onChange = { () => {} }
-                  selected = { moment() }
+                  text = { 'Official Receipt Date' }
+                  onChange = { (e) => orDateFunc(e) }
+                  maxDate = { moment() }
+                  selected = { orDate ? moment(orDate) : moment() }
                   errorMessage = { '' }
                   readOnly
                   />
