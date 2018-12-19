@@ -308,13 +308,11 @@ export default class RequestCoachPresenter {
       markParam(goalId,
       businessOutcome)
     )
-    .do(data => {
-      this.getGoal()
-    })
     .subscribe(
       data => {
         this.view.noticeResponse(data)
         this.view.hideSubmitLoader()
+        this.getGoals()
       },
       errors => {
         this.view.hideSubmitLoader()

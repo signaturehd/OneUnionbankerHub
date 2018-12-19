@@ -397,7 +397,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfShowMarkAsCompleted(show) {
-    show && this.setState({ showMarkAsCompleted: show })
+    this.setState({ showMarkAsCompleted: show })
   }
 
   checkRatings (rate) {
@@ -415,7 +415,9 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkApprovalStatus (approvalStatus) {
-    return approvalStatus === 2 || approvalStatus === 6 ? true : false
+    return approvalStatus !== 1 &&
+    approvalStatus !== 3
+    && approvalStatus !== 5 ? true : false
   }
 
   postMarkAsCompleted() {
@@ -500,7 +502,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
-
+console.log(this.checkIfGoalCompleted(taskArray))
     return (
     <div>
       { super.render() }
@@ -825,7 +827,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  // this.checkIfShowMarkAsCompleted(this.checkIfGoalCompleted(taskArray))
+                  this.setState({ ifYesCompleted: false, showMarkAsCompleted: false })
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
