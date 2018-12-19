@@ -429,6 +429,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             amountErrorMessage = { amountErrorMessage }
             procedureArray = { procedureArray }
             employeeName = { outpatientData.name }
+            limit = { limit }
             updateTotalAmount = { updateTotalAmount }
           />
         }
