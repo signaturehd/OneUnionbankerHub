@@ -57,11 +57,16 @@ class BenefitsFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
     this.presenter.getReleasingCenters()
+    this.presenter.getProfile()
     this.presenter.getAccountNumber()
   }
 
   showAccountNumberPrefill (accountNumber) {
     this.setState({ accountNumber })
+  }
+
+  showGender (resp) {
+    this.setState({ gender : resp.gender })
   }
 
   showReleasingCenters (releasingCenters) {
@@ -139,7 +144,8 @@ class BenefitsFragment extends BaseMVPView {
       isAccountNumber,
       carValidated,
       enableLoader,
-      enabledAccountNumberLoader
+      enabledAccountNumberLoader,
+      gender
     } = this.state
 
 
@@ -367,7 +373,9 @@ class BenefitsFragment extends BaseMVPView {
               <Route path='/mybenefits/benefits/eventbudgetrequisition'
                 render={ props => <EventsBudgetFragment { ...props } />}/>
               <Route exact path='/mybenefits/benefits/medical'
-                render={ props => <MedicalFragment { ...props } />}/>
+                render={ props => <MedicalFragment
+                  gender = { gender }
+                  { ...props } />}/>
               <Route exact path='/mybenefits/benefits/loans'
                 render={ props => <LoansFragment { ...props } />}/>
               {
