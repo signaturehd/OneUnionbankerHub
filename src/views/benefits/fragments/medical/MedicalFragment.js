@@ -34,7 +34,6 @@ class MedicalFragment extends Component {
       showMoreCheck,
       showMoreText
     } =this.state
-    console.log(gender)
     const benefitsOptions = [{
       id: 1,
       styleName: 'medical-cards-2 medical-option-default',
