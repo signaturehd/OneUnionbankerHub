@@ -48,8 +48,8 @@
   }
   
   .myrewards-cards-1 {
-    -webkit-mask-image: url('../../../images/icons/ic_my_compliance.png');
-    mask-image: url('../../../images/icons/ic_my_compliance.png');
+    -webkit-mask-image: url('../../../images/icons/ic_cstatus.png');
+    mask-image: url('../../../images/icons/ic_cstatus.png');
   }
   .myrewards-title-view {
     font-size: 30px;
