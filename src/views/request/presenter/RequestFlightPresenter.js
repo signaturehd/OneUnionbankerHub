@@ -55,7 +55,9 @@ export default class RequestFlightPresenter {
     returnDate,
     returnTime,
     returnRemarks,
-    typeOfFlight
+    typeOfFlight,
+    trainingId,
+    pleaseSpecify
   ) {
     this.view.showSubmitLoader()
     typeOfFlight === 'RoundTrip' ?
@@ -70,7 +72,9 @@ export default class RequestFlightPresenter {
       returnDestinationId,
       returnDate,
       returnTime,
-      returnRemarks
+      returnRemarks,
+      trainingId,
+      pleaseSpecify
     ))
       .subscribe(req => {
           this.view.hideSubmitLoader()
@@ -89,6 +93,8 @@ export default class RequestFlightPresenter {
       departureDate,
       departureTime,
       departureRemarks,
+      trainingId,
+      pleaseSpecify
     ))
       .subscribe(req => {
           this.view.hideSubmitLoader()
