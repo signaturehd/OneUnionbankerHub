@@ -1,4 +1,5 @@
 export default (
+  id,
   brand,
   model,
   screenSize,
@@ -12,7 +13,10 @@ export default (
   operatingSystem,
   systemMemory,
   qoutation,
+  orNumber,
+  orDate,
 ) => ({
+  id,
   brand,
   model,
   screenSize,
@@ -26,4 +30,6 @@ export default (
   operatingSystem,
   systemMemory,
   attachments: qoutation,
+  orNumber,
+  orDate,
 })

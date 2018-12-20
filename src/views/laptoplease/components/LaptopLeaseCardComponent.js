@@ -56,10 +56,14 @@ class LaptopLeaseCardComponent extends Component {
       setLaptopBrand,
       setLaptopModel,
       setScreenSize,
+      getCardOptionId
     } = this.props
 
     return (
       <div className={'carview-container'}>
+        <center>
+          Laptop Lease (Bank to purchase)
+        </center>
         <div className={ 'car-grid-column-2' }>
           <div></div>
           <div className={ 'car-form-card' }>

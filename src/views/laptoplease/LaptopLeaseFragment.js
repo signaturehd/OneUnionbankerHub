@@ -43,6 +43,8 @@ class LaptopLeaseFragment extends BaseMVPView {
       noticeResponse : null,
       showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
+      showFeedbackModal : false,
+      noticeResponseModal: false,
       showEditMode: false,
       laptopModel: '',
       screenSize: '',
@@ -158,6 +160,27 @@ class LaptopLeaseFragment extends BaseMVPView {
     return word.replace(nonDigitRegex, '')
   }
 
+  checkIfDigitRegex (number) {
+    let digitRegex = /^[0-9]+$/
+    return number.replace(digitRegex, '')
+  }
+
+  setOrDate (orDate) {
+    this.setState({ orDate })
+  }
+
+  setOrNumber (orNumber) {
+    this.setState({ orNumber })
+  }
+
+  setVendor (vendor) {
+    this.setState({ vendor })
+  }
+
+  setcostAquisition (costAquisition) {
+    this.setState({ costAquisition })
+  }
+
   render () {
     const {
       terms,
@@ -188,6 +211,12 @@ class LaptopLeaseFragment extends BaseMVPView {
       processorType,
       operatingSystem,
       systemMemory ,
+      orNumber,
+      orDate,
+      vendor,
+      costAquisition,
+      noticeResponseModal,
+      showFeedbackModal,
     } = this.state
 
     const { history }=this.props
@@ -337,21 +366,27 @@ class LaptopLeaseFragment extends BaseMVPView {
                             systemMemory = { systemMemory }
                             showSystemMemory = { (e) => this.presenter.setSystemMemory(e) }
                             setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-                            onContinue={ () => this.presenter.validateSubmission() }
+                            onContinue={ () => this.presenter.validateSubmission(getCardOptionId) }
                             onEdit = { () => this.setState({ showEditMode : false })  }
-                            onSubmit = { () => this.presenter.addLaptopLease()  }
+                            onSubmit = { () => this.presenter.addLaptopLease(getCardOptionId)  }
                           />
                          :
                          <LaptopLeaseEmpToPurchaseComponent
+                           getCardOptionId = { getCardOptionId }
+                           vendor = { vendor }
+                           showEditMode = { showEditMode }
+                           vendorFunc = { (e) => this.presenter.setVendor(e) }
                            orDate = { orDate }
                            orDateFunc = { (e) => this.presenter.setOrDate(e) }
                            orNumber = { orNumber }
                            orNumberFunc = { (e) => this.presenter.setOrNumber(e) }
+                           costAquisition = { costAquisition }
+                           costAquisitionFunc = { (e) => this.presenter.setcostAquisition(this.checkIfDigitRegex(e)) }
                            laptopLeaseAttachment = { laptopLeaseAttachment }
                            setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-                           onContinue={ () => this.presenter.validateSubmission() }
+                           onContinue={ () => this.presenter.validateSubmission(getCardOptionId) }
                            onEdit = { () => this.setState({ showEditMode : false })  }
-                           onSubmit = { () => this.presenter.addLaptopLease()  }
+                           onSubmit = { () => this.presenter.addLaptopLease(getCardOptionId)  }
                          />
                        }
                      </div>

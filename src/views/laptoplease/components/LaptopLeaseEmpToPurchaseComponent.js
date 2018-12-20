@@ -40,10 +40,14 @@ class LaptopLeaseCardComponent extends Component {
       costAquisitionFunc,
       laptopLeaseAttachment,
       setAttachments,
+      getCardOptionId
     } = this.props
 
     return (
       <div className={'carview-container'}>
+        <center>
+          Laptop Lease (Employee to purchase)
+        </center>
         <div className={ 'car-grid-column-2' }>
           <div></div>
           <div className={ 'car-form-card' }>
@@ -63,7 +67,7 @@ class LaptopLeaseCardComponent extends Component {
                   text = { 'Official Receipt Date' }
                   onChange = { (e) => orDateFunc(e) }
                   maxDate = { moment() }
-                  selected = { orDate ? moment(orDate) : moment() }
+                  selected = { orDate }
                   errorMessage = { '' }
                   readOnly
                   />
@@ -117,8 +121,15 @@ class LaptopLeaseCardComponent extends Component {
                 <GenericButton
                   text={ 'Continue' }
                   onClick={ () =>
-                    onContinue()
-                    }
+                      {
+                        try {
+                          onContinue()
+
+                        } catch (e) {
+                          console.log(e)
+                        }
+                      }
+                  }
                   className={ 'carview-submit' } />
               }
             </div>
