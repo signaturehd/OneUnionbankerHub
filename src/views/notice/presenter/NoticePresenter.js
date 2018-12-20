@@ -3,6 +3,8 @@ import NoticeParam from '../../../domain/param/NoticeParam'
 import SubmitPinInteractor from '../../../domain/interactor/compliances/SubmitPinInteractor'
 import ValidateEmployeePinInteractor from '../../../domain/interactor/pinCode/ValidateEmployeePinInteractor'
 
+let pinCode = ''
+
 export default class NoticePresenter {
   constructor (container) {
     this.updateNoticeInteractor = new UpdateNoticeInteractor(container.get('HRBenefitsClient'))
@@ -15,9 +17,9 @@ export default class NoticePresenter {
     this.view = view
   }
 
-  updateNotice (transactionId, isAgree, benefitId) {
+  updateNotice (transactionId, isAgree, benefitId, code) {
     this.view.showLoading()
-    this.updateNoticeInteractor.execute(NoticeParam(transactionId, isAgree, benefitId))
+    this.updateNoticeInteractor.execute(NoticeParam(transactionId, isAgree, benefitId, code))
      .subscribe(response => {
       this.view.hideLoading()
       this.view.onSuccess(response)
@@ -28,14 +30,16 @@ export default class NoticePresenter {
   }
 
   validateEmployeePin (code) {
-    this.view.showCircularLoader()
-    this.validateEmployeePinInteractor.execute(code)
-      .subscribe(
-        data => {
-          this.view.hideCircularLoader()
-          this.view.noticeResponseFunc(data, false)
-        }, error => {
-        this.view.hideCircularLoader()
-    })
+    this.view.noticeResponseFunc(code, false)
+    // this.view.showCircularLoader()
+    // this.validateEmployeePinInteractor.execute(code)
+    //   .subscribe(
+    //     data => {
+    //       this.view.hideCircularLoader()
+    //       this.view.noticeResponseFunc(data, false)
+    //     }, error => {
+    //     this.view.hideCircularLoader()
+    // })
+
   }
 }
