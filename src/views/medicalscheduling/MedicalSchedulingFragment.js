@@ -99,12 +99,17 @@ class MedicalSchedulingFragment extends BaseMVPView {
     }
   }
 
+  setHospitalBranch (branches) {
+    this.setState({ branches })
+  }
+
   render () {
     const {
       enabledLoader,
       isFormReview,
       showClinics,
       showPackages,
+      showBranches,
       showNoticeModal,
       showNoticeResponseModal,
       showBenefitFeedbackModal,
@@ -119,6 +124,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
       preferredDate,
       index,
       viewMoreText,
+      branches,
+      branchesId,
+      branchesLabel,
+      branchesAddress,
     } = this.state
 
     let procedureList = []
@@ -133,8 +142,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
           showClinics &&
           <SingleInputModal
             inputArray = { clinics }
-            selectedArray = { (clinicId, clinicLabel) =>
+            selectedArray = { (clinicId, clinicLabel) => {
+              this.presenter.getHospitalBranch(clinicId)
               this.setState({ clinicId, clinicLabel, showClinics : false, packageId : null, packageLabel : '' }) }
+            }
             onClose = { () => this.setState({showClinics : false}) }
           />
         }
@@ -142,10 +153,26 @@ class MedicalSchedulingFragment extends BaseMVPView {
           showPackages &&
           <SingleInputModal
             inputArray = { packages.filter(pack => pack.clinicId === clinicId) }
-            selectedArray = { (packageId, packageLabel) =>{
-              this.setState({ packageId, packageLabel, showPackages : false, index : 4, viewMoreText : 'View more' }) }
+            selectedArray = { (packageId, packageLabel) =>
+              this.setState({ packageId, packageLabel, showPackages : false, index : 4, viewMoreText : 'View more' })
             }
             onClose = { () => this.setState({showPackages : false}) }
+          />
+        }
+        {
+          showBranches &&
+          <SingleInputModal
+            inputArray = { branches && branches.branchDetails }
+            multipleContentArray = { (branch) =>
+              this.setState({
+                branchesId: branch.id,
+                branchesLabel: branch.name,
+                branchesAddress: branch.address,
+                showBranches : false
+              })
+            }
+            selectedArray = {() => {} }
+            onClose = { () => this.setState({showBranches : false}) }
           />
         }
         {
@@ -192,9 +219,14 @@ class MedicalSchedulingFragment extends BaseMVPView {
               <CircularLoader show = { enabledLoader }/>
             </center> :
             <FormComponent
+              branches = { branches }
+              branchesId = { branchesId }
+              branchesLabel = { branchesLabel }
+              branchesAddress = { branchesAddress }
               showFormReview = { (isFormReview) => this.confirmation(isFormReview) }
               showClinics = { () => this.setState({ showClinics : true }) }
               showPackages = { () => this.setState({ showPackages : true }) }
+              showBranchesFunc = { () => this.setState({ showBranches : true }) }
               isFormReview = { isFormReview }
               clinicLabel = { clinicLabel }
               packageLabel = { packageLabel }
@@ -203,7 +235,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
               onChangePreferredDate = { (preferredDate) => this.setState({ preferredDate }) }
               onSubmit = { () => {
                 this.setState({ isFormReview : false })
-                this.presenter.addMedicalScheduling(preferredDate.format('MM/DD/YYYY'), clinicId, packageId)
+                this.presenter.addMedicalScheduling(preferredDate.format('MM/DD/YYYY'), clinicId, packageId, branchesId)
                 }
               }
               index = { index }
