@@ -548,6 +548,57 @@ class TeamGoalsFragment extends BaseMVPView {
           </div>
           <div className = { 'grid-main' }>
             <div>
+            <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Team Goals</h2>
+            <Line/>
+            <br/>
+            {
+              enabledLoader ?
+              <center>
+                <CircularLoader show = { enabledLoader }/>
+              </center>
+              :
+              teamGoalsArray.length !== 0 ?
+              teamGoalsArray.map((resp, key) =>
+                <TeamGoalsComponent
+                  employeeName = { resp.name }
+                  imageUrl = { resp.imageUrl }
+                  cardHolder = { resp.goalDetails }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onSelected = { (
+                    details,
+                    goalId,
+                    goalTitle,
+                    description,
+                    startDate,
+                    dueDate,
+                    priorityName,
+                    approvalStatus,
+                    goalTypeId
+                  ) => {
+                    this.setState({
+                      goalId,
+                      goalTitle,
+                      description,
+                      startDate,
+                      dueDate,
+                      priorityName,
+                      approvalStatus,
+                      goalTypeId
+                     })
+                    this.presenter.getGoalTask(goalId)
+                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                  }
+                 }
+                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                />
+              )
+              :
+              <center><h2>No record</h2></center>
+            }
+            <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Squad Goals</h2>
+            <Line/>
+            <br/>
             {
               enabledLoader ?
               <center>

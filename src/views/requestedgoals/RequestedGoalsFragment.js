@@ -526,7 +526,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
-console.log(this.checkIfGoalCompleted(taskArray))
+
     return (
     <div>
       { super.render() }
