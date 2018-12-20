@@ -72,13 +72,12 @@ export default class MedicalSchedulingPresenter {
 
     getHospitalBranch (id) {
       try {
+        this.getHospitalBranchInteractor.execute(id)
+        .subscribe(data => {
+          this.view.setHospitalBranch(data)
+        }, error => {
 
-          this.getHospitalBranchInteractor.execute(id)
-          .subscribe(data => {
-            this.view.setHospitalBranch(data)
-          }, error => {
-
-          })
+        })
       } catch(e) {
         console.log(e)
       }
@@ -87,13 +86,15 @@ export default class MedicalSchedulingPresenter {
     addMedicalScheduling (
       preferredDate,
       clinicId,
-      packageId
+      packageId,
+      branchesId
       ) {
         this.view.showCircularLoader()
         this.addMedicalSchedulingInteractor.execute(addMedicalSchedulingParam(
           preferredDate,
           clinicId,
-          packageId
+          packageId,
+          branchesId
           )
         )
         .subscribe(

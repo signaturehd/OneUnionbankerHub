@@ -21,9 +21,13 @@ export default class MedicalSchedulingFormCardComponent extends Component {
   render () {
     const {
       branches,
+      branchesAddress ,
+      branchesId,
+      branchesLabel,
       showPackages,
       showFormReview,
       showClinics,
+      showBranchesFunc,
       isFormReview,
       clinicLabel,
       packageLabel,
@@ -54,12 +58,26 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             type = { 'text' }/>
           {
             branches &&
-            <GenericInput
-              value = { branches }
-              text = { 'Branches' }
-              readOnly
-              type = { 'text' }
-              />
+            <div>
+              <GenericInput
+                value = { branchesLabel }
+                disabled = { isFormReview }
+                text = { 'Branches' }
+                onClick = { () => showBranchesFunc() }
+                type = { 'text' }
+                />
+              {
+                branchesAddress &&
+                <GenericInput
+                  value = { branchesAddress }
+                  disabled = { true }
+                  readOnly
+                  text = { 'Address' }
+                  type = { 'textarea' }
+                  />
+              }
+            </div>
+
           }
           <GenericInput
             text = { 'Packages' }
