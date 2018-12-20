@@ -161,7 +161,9 @@ class RequestFlightFragment extends BaseMVPView {
       returnTime,
       returnRemarks,
       typeOfFlight,
-      trainingArray
+      trainingArray,
+      trainingId,
+      pleaseSpecify
     } = this.state
 
     this.presenter.addRequestFlight(
@@ -176,7 +178,9 @@ class RequestFlightFragment extends BaseMVPView {
       returnDate,
       returnTime,
       returnRemarks,
-      typeOfFlight
+      typeOfFlight,
+      trainingId,
+      pleaseSpecify
     )
   }
 

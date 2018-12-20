@@ -1572,6 +1572,16 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addRatingGoal (token, ratingParam) {
+    return this.service.addRatingGoal(token, ratingParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  markAsCompleted (token, markParam) {
+    return this.service.markAsCompleted(token, markParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

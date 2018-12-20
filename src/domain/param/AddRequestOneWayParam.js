@@ -4,12 +4,16 @@ export default (
   departureDestinationId,
   departureDate,
   departureTime,
-  departureRemarks
+  departureRemarks,
+  trainingId,
+  pleaseSpecify
 ) => ({
   purposeId,
   departureOriginId,
   departureDestinationId,
   departureDate,
   departureTime,
-  departureRemarks
+  departureRemarks,
+  trainingId,
+  pleaseSpecify
 })

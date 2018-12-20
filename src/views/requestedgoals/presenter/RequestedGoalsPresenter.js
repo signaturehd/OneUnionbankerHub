@@ -11,7 +11,11 @@ import AddGoalCommentInteractor from '../../../domain/interactor/goals/AddGoalCo
 import DeleteGoalsInteractor from '../../../domain/interactor/goals/DeleteGoalsInteractor'
 import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInteractor'
 import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
+import MarkAsCompletedGoalsInteractor from '../../../domain/interactor/goals/MarkAsCompletedGoalsInteractor'
+import AddRatingGoalsInteractor from '../../../domain/interactor/goals/AddRatingGoalsInteractor'
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
+import addRatingGoalsParam from '../../../domain/param/AddRatingGoalsParam'
+import markParam from '../../../domain/param/MarkAsCompletedGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -32,6 +36,8 @@ export default class RequestCoachPresenter {
     this.deleteGoalsInteractor = new DeleteGoalsInteractor(container.get('HRBenefitsClient'))
     this.deleteTaskInteractor = new DeleteTaskInteractor(container.get('HRBenefitsClient'))
     this.deleteCommentInteractor = new DeleteCommentInteractor(container.get('HRBenefitsClient'))
+    this.markAsCompletedGoalsInteractor = new MarkAsCompletedGoalsInteractor(container.get('HRBenefitsClient'))
+    this.addRatingGoalsInteractor = new AddRatingGoalsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -57,6 +63,7 @@ export default class RequestCoachPresenter {
       .subscribe(data => {
         this.view.hideTaskLoader()
         this.view.getTasklist(data)
+        this.view.checkIfShowMarkAsCompleted(this.view.checkIfGoalCompleted(data))
       }, error => {
         this.view.hideTaskLoader()
         store.dispatch(NotifyActions.resetNotify())
@@ -292,6 +299,38 @@ export default class RequestCoachPresenter {
       this.view.getHistoryList(data)
       }, error => {
         store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  markAsCompleted (
+    goalId,
+    businessOutcome
+  ){
+    this.view.showSubmitLoader()
+    this.markAsCompletedGoalsInteractor.execute(
+      markParam(goalId,
+      businessOutcome)
+    )
+    .subscribe(
+      data => {
+        this.view.noticeResponse(data)
+        this.view.hideSubmitLoader()
+        this.getGoals()
+      },
+      errors => {
+        this.view.hideSubmitLoader()
+      }
+    )
+  }
+
+  addRatingGoal (id, ratings, remarks) {
+    this.view.showSubmitLoader()
+    this.addRatingGoalsInteractor.execute(addRatingGoalsParam(id, ratings, remarks))
+    .subscribe(data => {
+      this.view.noticeResponse(data)
+      this.view.hideSubmitLoader()
+    }, error => {
+      this.view.hideSubmitLoader()
     })
   }
 }

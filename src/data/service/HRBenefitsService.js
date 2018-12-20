@@ -2086,6 +2086,8 @@ export default class HRBenefitsService {
   addRequestOneWay (token, requestParam) {
     const object = {
       purposeId : requestParam.purposeId,
+      training : requestParam.trainingId,
+      others : requestParam.pleaseSpecify,
       departure: {
         origin: requestParam.departureOriginId,
         destination: requestParam.departureDestinationId,
@@ -2102,6 +2104,8 @@ export default class HRBenefitsService {
   addRequestRoundTrip (token, requestParam) {
     const object = {
       purposeId : requestParam.purposeId,
+      training : requestParam.trainingId,
+      others : requestParam.pleaseSpecify,
       departure: {
         origin: requestParam.departureOriginId,
         destination: requestParam.departureDestinationId,
@@ -2402,6 +2406,19 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  addRatingGoal (token, ratingParam) {
+    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate`, ratingParam.body, {
+      headers: { token }
+    })
+  }
+
+  markAsCompleted (token, markParam) {
+    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
+      headers: { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

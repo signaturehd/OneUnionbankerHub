@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/teamGoal.css'
 
-class AddGoalsFormComponent extends Component {
+class AddTeamGoalsFormComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -114,6 +114,18 @@ class AddGoalsFormComponent extends Component {
               />
             </div>
             <div className = { 'grid-global' }>
+            <div>
+            <h2 className = { 'text-align-left font-size-16px font-weight-bold' }>Members</h2>
+              <Card className = { 'margin-10px padding-15' }>
+                <h2 className = { 'text-align-left font-size-14px text-weight-lighter' }>Sample Employee Name</h2>
+              </Card>
+            </div>
+            <div></div>
+            </div>
+            <br/>
+            <Line/>
+            <br/>
+            <div className = { 'grid-global' }>
               <GenericButton
                 text = { 'Cancel' }
                 onClick = { () => onCancel() }
@@ -137,8 +149,8 @@ class AddGoalsFormComponent extends Component {
   }
 }
 
-AddGoalsFormComponent.propTypes = {
+AddTeamGoalsFormComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default AddGoalsFormComponent
+export default AddTeamGoalsFormComponent

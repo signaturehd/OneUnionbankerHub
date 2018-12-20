@@ -4,6 +4,7 @@ import ValidateReleasingCenterInteractor from '../../../domain/interactor/rds/Va
 import GetReleasingCentersInteractor from '../../../domain/interactor/rds/GetReleasingCentersInteractor'
 import AddReleasingCenterInteractor from '../../../domain/interactor/rds/AddReleasingCenterInteractor'
 import GetManagersCheckInteractor from '../../../domain/interactor/user/GetManagersCheckInteractor'
+import GetInformationInteractor from '../../../domain/interactor/user/GetInformationInteractor'
 import GetCarValidateInteractor from '../../../domain/interactor/carlease/GetCarNewValidateInteractor'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -12,6 +13,8 @@ export default class BenefitsPresenter {
   constructor (container) {
     this.getAccountNumberInteractor =
       new GetAccountNumberInteractor(container.get('HRBenefitsClient'))
+    this.getInformationInteractor =
+      new GetInformationInteractor(container.get('HRBenefitsClient'))
 
     this.validateReleasingCenterInteractor =
       new ValidateReleasingCenterInteractor(container.get('HRBenefitsClient'))
@@ -69,6 +72,11 @@ export default class BenefitsPresenter {
   getAccountNumber () {
     const accountNumberPrefill = this.getAccountNumberInteractor.execute()
       this.view.showAccountNumberPrefill(accountNumberPrefill)
+  }
+
+  getProfile () {
+    const employeeInformation = this.getInformationInteractor.execute()
+      this.view.showGender(employeeInformation)
   }
 
   validateFabToShow () {
