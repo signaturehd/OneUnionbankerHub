@@ -2027,7 +2027,7 @@ export default class HRBenefitsService {
      accountNumber,
      releasingCenter,
      benefitId: '16',
-     type: laptopLeaseParam.id === 0 ? 2 : 1,
+     type: laptopLeaseParam.id === 0 ? 1 : 2,
      brand: laptopLeaseParam.brand,
      model: laptopLeaseParam.model,
      screenSize: laptopLeaseParam.screenSize,

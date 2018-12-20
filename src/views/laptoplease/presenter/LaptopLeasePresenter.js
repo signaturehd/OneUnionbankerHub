@@ -109,6 +109,25 @@ export default class LaptopLeasePresenter {
     this.view.setCostOfAmount(amount)
   }
 
+  resetValue () {
+    this.view.setLaptopBrand('')
+    this.view.setLaptopModel('')
+    this.view.setScreenSize('')
+    this.view.setColor('')
+    this.view.setAmount('')
+    this.view.setTerms('')
+    this.view.setVendor('')
+    this.view.setDeliveryOption('')
+    this.view.setGraphicsCard('')
+    this.view.setHardDriveCapacity('')
+    this.view.setOperatingSystem('')
+    this.view.setProcessorType('')
+    this.view.setSystemMemory('')
+    this.view.setFile('')
+    this.view.setOrDate('')
+    this.view.setOrNumber('')
+  }
+
   validateLaptopLease () {
     this.view.showCircularLoader()
     this.validateLaptopLeaseInteractor.execute()

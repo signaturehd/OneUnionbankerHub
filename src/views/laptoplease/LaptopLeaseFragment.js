@@ -57,7 +57,6 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateLaptopLease()
   }
 
   /* Presenter Functions */
@@ -179,6 +178,11 @@ class LaptopLeaseFragment extends BaseMVPView {
 
   setcostAquisition (costAquisition) {
     this.setState({ costAquisition })
+  }
+
+  resetValue () {
+    this.setState({ showEditMode : false })
+    this.presenter.resetValue()
   }
 
   render () {
@@ -313,7 +317,11 @@ class LaptopLeaseFragment extends BaseMVPView {
                 !cardOptionComponent &&
                 <i
                   className={ 'back-arrow' }
-                  onClick = { () => this.setState({ cardOptionComponent : true }) }>
+                  onClick = { () => {
+                    this.setState({ cardOptionComponent : true })
+                    this.resetValue()
+                   }
+                  }>
                 </i>
               }
               <h2 className={ 'header-margin-default' }>
@@ -324,6 +332,7 @@ class LaptopLeaseFragment extends BaseMVPView {
                 cardOptionComponent ?
                   <CardOptionComponent
                     getCardOptionIdFunc = { (getCardOptionId) => {
+                      this.presenter.validateLaptopLease()
                       this.setState({ getCardOptionId, cardOptionComponent : false })
                     }}
                   />
