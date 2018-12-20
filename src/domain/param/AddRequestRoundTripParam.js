@@ -9,7 +9,9 @@ export default (
   returnDestinationId,
   returnDate,
   returnTime,
-  returnRemarks
+  returnRemarks,
+  trainingId,
+  pleaseSpecify
 ) => ({
   purposeId,
   departureOriginId,
@@ -21,5 +23,7 @@ export default (
   returnDestinationId,
   returnDate,
   returnTime,
-  returnRemarks
+  returnRemarks,
+  trainingId,
+  pleaseSpecify
 })
