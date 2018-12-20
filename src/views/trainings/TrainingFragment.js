@@ -93,32 +93,32 @@ class TrainingFragment extends BaseMVPView {
           <div>
             <div className = { 'tabs-container' }>
               <input
-                className = { 'input-tab text-align-left' }
-                id = { 'tab1' }
+                className = { 'training-input-tab' }
+                id = { 'training-tab1' }
                 type = { 'radio' }
                 name = { 'tabs' }
                 onClick = { () => history.push('/mylearning/trainings/mytrainings') }
                 defaultChecked />
-              <label  htmlFor = 'tab1'>Trainings</label>
+              <label  htmlFor = 'training-tab1'>Trainings</label>
 
               <input
-                className = { 'input-tab' }
-                id = { 'tab2' }
+                className = { 'training-input-tab' }
+                id = { 'training-tab2' }
                 type = { 'radio' }
                 onClick = { () => history.push('/mylearning/trainings/enrolledtrainings') }
                 name = { 'tabs' } />
-              <label  htmlFor = { 'tab2' }>Enrolled Trainings</label>
+              <label  htmlFor = { 'training-tab2' }>Enrolled Trainings</label>
 
             {
               profile && profile.isLineManager &&
               <div>
                 <input
-                  className = { 'input-tab' }
-                  id='tab3'
+                  className = { 'training-input-tab' }
+                  id='training-tab3'
                   onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
                   type = { 'radio' }
                   name = { 'tabs' }/>
-                <label  htmlFor = 'tab3' >For Approval</label>
+                <label  htmlFor = 'training-tab3' >For Approval</label>
               </div>
             }
 

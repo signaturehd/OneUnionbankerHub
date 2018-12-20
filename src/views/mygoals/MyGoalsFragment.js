@@ -92,6 +92,7 @@ class MyGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
+    this.props.setSelectedNavigation(14)
     this.presenter.getForApprovalGoals()
   }
 
@@ -274,10 +275,11 @@ class MyGoalsFragment extends BaseMVPView {
                   <h2 className={ 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
                 </div>
               </div>
-                <div className = { 'tabs-container' }>
+              <br/>
+                <div className = { 'mygoal-tabs-container' }>
                 <input
-                  className = { 'input-tab' }
-                  id = { 'tab1' }
+                  className = { 'mygoal-input-tab' }
+                  id = { 'mygoal-tab1' }
                   type = { 'radio' }
                   name = { 'tabs' }
                   defaultChecked = { true }
@@ -286,14 +288,14 @@ class MyGoalsFragment extends BaseMVPView {
                       this.props.history.push('/mygoals/request')
                     }
                   }/>
-                <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>
+                <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab1'>Individual Goals</label>
 
                 {
                   isLineManager &&
                   <label>
                       <input
-                        className = { 'input-tab' }
-                        id = { 'tab2' }
+                        className = { 'mygoal-input-tab' }
+                        id = { 'mygoal-tab2' }
                         type = { 'radio' }
                         name = { 'tabs' }
                         onClick = { () => {
@@ -301,7 +303,7 @@ class MyGoalsFragment extends BaseMVPView {
                             this.props.history.push('/mygoals/team')
                           }
                         }/>
-                      <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
+                      <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team Goals</label>
                   </label>
                 }
 
@@ -309,8 +311,8 @@ class MyGoalsFragment extends BaseMVPView {
                   isLineManager &&
                   <label>
                     <input
-                      className = { 'input-tab' }
-                      id = { 'tab3' }
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab3' }
                       type = { 'radio' }
                       name = { 'tabs' }
                       onClick = { () => {
@@ -318,7 +320,7 @@ class MyGoalsFragment extends BaseMVPView {
                           this.props.history.push('/mygoals/approved')
                         }
                       }/>
-                    <label className = { 'travel-icon-tab' } htmlFor='tab3'>For Approval</label>
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Approval</label>
                   </label>
                 }
                 <section>

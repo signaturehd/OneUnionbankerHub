@@ -39,7 +39,8 @@ class DrawerAppBar extends Component {
       profileImage,
       firstName,
       profillePosition,
-      selected
+      selected,
+      tempPreEmployment
     } = this.props
 
     const style = {
@@ -70,11 +71,21 @@ class DrawerAppBar extends Component {
       name: 'My Personal Information',
       imageStyle : 'settings',
       action : () => history.push('/settings'),
-    },,{
+    },{
       id: 10,
       name: 'Phenom Prime',
       imageStyle : 'phenom',
       action : () => history.push('/phenom'),
+    },{
+      id: 11,
+      name: 'Pre-Employment',
+      imageStyle : 'preemployment',
+      action : () => history.push('/preemployment'),
+    },{
+      id: 12,
+      name: 'Post-Employment',
+      imageStyle : 'postemployment',
+      action : () => history.push('/postemployment'),
     },{
       id: 13,
       name: 'My Travel',
@@ -281,20 +292,117 @@ class DrawerAppBar extends Component {
                       </div>
                     </li>
                     {
-                      appBarList.map((resp, key) =>
-                        <li
-                          onClick = { () => resp.action() }
-                          key = { key }
-                          className = { 'appbar-list' }>
-                          <div className = { 'appbar-icon-grid' }>
-                            <span
-                              className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
-                            <a>
-                              { resp.name }
-                            </a>
+                      tempPreEmployment === 1 || tempPreEmployment === 2 ?
+                      <div>
+                        {
+                          appBarList.map((resp, key) =>
+                            resp.id !== 0 &&
+                            resp.id !== 1 &&
+                            resp.id !== 2 &&
+                            resp.id !== 3 &&
+                            resp.id !== 4 &&
+                            resp.id !== 5 &&
+                            resp.id !== 6 &&
+                            resp.id !== 8 &&
+                            resp.id !== 9 &&
+                            resp.id !== 10 &&
+                            resp.id !== 12 &&
+                            resp.id !== 13 &&
+                            resp.id !== 14 &&
+                            <li
+                              onClick = { () => resp.action() }
+                              key = { key }
+                              className = { 'appbar-list' }>
+                              <div className = { 'appbar-icon-grid' }>
+                                <span
+                                  className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                <a>
+                                  { resp.name }
+                                </a>
+                              </div>
+                            </li>
+                          )
+                        }
+                      </div>
+
+                      :
+                      <div>
+                        {
+                          tempPreEmployment === 6 ||
+                          tempPreEmployment === 0 ||
+                          tempPreEmployment === null ||
+                          tempPreEmployment === undefined ?
+                          <div>
+                            {
+
+                              appBarList.map((resp, key) =>
+                                resp.id !== 11 &&
+                                resp.id !== 12 &&
+                                <li
+                                  onClick = { () => resp.action() }
+                                  key = { key }
+                                  className = { 'appbar-list' }>
+                                  <div className = { 'appbar-icon-grid' }>
+                                    <span
+                                      className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                    <a>
+                                      { resp.name }
+                                    </a>
+                                  </div>
+                                </li>
+                              )
+                            }
+                          </div> :
+                          <div>
+                            {
+                              tempPreEmployment === 3 ||
+                              tempPreEmployment === 4 ||
+                              tempPreEmployment === 5 ?
+
+                              <div>
+                                {
+                                  appBarList.map((resp, key) =>
+                                    resp.id !== 11 &&
+                                    <li
+                                      onClick = { () => resp.action() }
+                                      key = { key }
+                                      className = { 'appbar-list' }>
+                                      <div className = { 'appbar-icon-grid' }>
+                                        <span
+                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                        <a>
+                                          { resp.name }
+                                        </a>
+                                      </div>
+                                    </li>
+                                  )
+                                }
+                              </div>
+                              :
+                              <div>
+                                {
+                                  appBarList.map((resp, key) =>
+
+                                    resp.id !== 12 &&
+                                    <li
+                                      onClick = { () => resp.action() }
+                                      key = { key }
+                                      className = { 'appbar-list' }>
+                                      <div className = { 'appbar-icon-grid' }>
+                                        <span
+                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                        <a>
+                                          { resp.name }
+                                        </a>
+                                      </div>
+                                    </li>
+                                  )
+                                }
+                              </div>
+                            }
                           </div>
-                        </li>
-                      )
+                        }
+                      </div>
                     }
                   </ul>
                 </div>

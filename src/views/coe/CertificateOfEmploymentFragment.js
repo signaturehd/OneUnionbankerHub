@@ -26,6 +26,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
   componentDidMount () {
     this.presenter.getPurposeCoeType()
     this.presenter.getCoeSalary()
+    this.props.setSelectedNavigation(15)
     this.presenter.getCountryCoeType()
   }
 
