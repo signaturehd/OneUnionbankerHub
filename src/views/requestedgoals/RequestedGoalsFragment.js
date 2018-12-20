@@ -15,7 +15,8 @@ import {
   DatePicker,
   Card,
   Line,
-  FloatingActionButton
+  FloatingActionButton,
+  GenericIconButton
 } from '../../ub-components/'
 
 import RequestedGoalsComponent from './components/RequestedGoalsComponent'
