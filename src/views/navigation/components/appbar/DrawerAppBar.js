@@ -72,6 +72,11 @@ class DrawerAppBar extends Component {
       imageStyle : 'settings',
       action : () => history.push('/settings'),
     },{
+      id: 17,
+      name: 'My Rewards and Recognition',
+      imageStyle : 'settings',
+      action : () => history.push('/myrewards'),
+    },{
       id: 10,
       name: 'Phenom Prime',
       imageStyle : 'phenom',
@@ -95,7 +100,7 @@ class DrawerAppBar extends Component {
       id: 17,
       name: 'Rewards & Recognition',
       imageStyle : 'goals',
-      action : () => history.push('/rewardsfragment'),
+      action : () => history.push('/myrewards'),
     },{
       id: 14,
       name: 'My Goals & Performance',
