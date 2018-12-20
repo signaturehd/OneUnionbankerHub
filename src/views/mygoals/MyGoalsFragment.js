@@ -237,7 +237,7 @@ class MyGoalsFragment extends BaseMVPView {
                 </div>
               </div>
               <br/>
-                <div className = { 'mygoal-tabs-container' }>
+              <div className = { 'mygoal-tabs-container' }>
                 <input
                   className = { 'mygoal-input-tab' }
                   id = { 'mygoal-tab1' }
@@ -251,39 +251,35 @@ class MyGoalsFragment extends BaseMVPView {
                   }/>
                 <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab1'>Individual Goals</label>
 
-                {
-                  isLineManager &&
-                  <label>
-                      <input
-                        className = { 'mygoal-input-tab' }
-                        id = { 'mygoal-tab2' }
-                        type = { 'radio' }
-                        name = { 'tabs' }
-                        onClick = { () => {
-                            this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
-                            this.props.history.push('/mygoals/team')
-                          }
-                        }/>
-                      <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team Goals</label>
-                  </label>
-                }
+                <input
+                  className = { 'mygoal-input-tab' }
+                  id = { 'mygoal-tab2' }
+                  type = { 'radio' }
+                  name = { 'tabs' }
+                  onClick = { () => {
+                      this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
+                      this.props.history.push('/mygoals/team')
+                    }
+                  }/>
+                  {
+                    isLineManager &&
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team Goals</label>
+                  }
 
-                {
-                  isLineManager &&
-                  <label>
-                    <input
-                      className = { 'mygoal-input-tab' }
-                      id = { 'mygoal-tab3' }
-                      type = { 'radio' }
-                      name = { 'tabs' }
-                      onClick = { () => {
-                          this.setState({ forApproval : true })
-                          this.props.history.push('/mygoals/approved')
-                        }
-                      }/>
+                  <input
+                    className = { 'mygoal-input-tab' }
+                    id = { 'mygoal-tab3' }
+                    type = { 'radio' }
+                    name = { 'tabs' }
+                    onClick = { () => {
+                        this.setState({ forApproval : true })
+                        this.props.history.push('/mygoals/approved')
+                      }
+                    }/>
+                  {
+                    isLineManager &&
                     <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Approval</label>
-                  </label>
-                }
+                  }
                 <section>
                   <Switch>
                     <Route exact path='/mygoals/request/RequestedGoalsFragment'

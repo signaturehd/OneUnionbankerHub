@@ -328,6 +328,7 @@ export default class RequestCoachPresenter {
     this.addRatingGoalsInteractor.execute(addRatingGoalsParam(id, ratings, remarks))
     .subscribe(data => {
       this.view.noticeResponse(data)
+      this.view.resetRemarks()
       this.view.hideSubmitLoader()
     }, error => {
       this.view.hideSubmitLoader()

@@ -377,6 +377,10 @@ class RequestedGoalsFragment extends BaseMVPView {
     })
   }
 
+  resetRemarks () {
+    this.setState({ showRemarksText : false, remarksText : '' })
+  }
+
   checkIfTaskCompleted (task) {
     let count = 0
     task && task.map((resp) => {
@@ -836,7 +840,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                   dueDate,
                   priorityName,
                   approvalStatus,
-                  goalTypeId
+                  goalTypeId,
+                  ratings,
                 ) => {
                   this.setState({
                     goalId,
@@ -846,7 +851,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                     dueDate,
                     priorityName,
                     approvalStatus,
-                    goalTypeId
+                    goalTypeId,
+                    ratings: parseFloat(ratings),
                    })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
@@ -901,7 +907,9 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <div>
                     <div>
                       <br/>
-                      <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>4.3</h2>
+                      <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
+                        { ratings }
+                      </h2>
                       <br/>
                       <div className = { 'text-align-center' }>
                         {
