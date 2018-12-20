@@ -1,0 +1,64 @@
+/* benefits */
+
+.myrewards-card-adjustment {
+    margin: 3px 3px;
+  }
+  
+  .myrewards-card {
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .myrewards-card-container {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    text-align: center;
+    column-gap: 2%;
+  }
+  
+  .page-header-buttons {
+    text-align : right;
+  }
+  
+  .myrewards-option-cards {
+    color: #1f1d1d;
+    margin: 0px;
+  }
+  
+  .myrewards-option-default {
+    background-color: #ff8a00;
+    -webkit-mask-size: auto 100%;
+    -webkit-mask-repeat: no-repeat;
+    height: 50px;
+    margin: 0px auto;
+    width: 50px;
+  }
+  
+  .myrewards-column-grid {
+    display: grid;
+    grid-template-rows: .5fr .5fr ;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .myrewards-adjustment {
+    margin-top: 4%;
+  }
+  
+  .myrewards-cards-1 {
+    -webkit-mask-image: url('../../../images/icons/ic_my_compliance.png');
+    mask-image: url('../../../images/icons/ic_my_compliance.png');
+  }
+  .myrewards-title-view {
+    font-size: 30px;
+  }
+  
+  @media screen and (max-width : 768px) {
+    .myrewards-title-view {
+      text-align: center;
+      margin: auto;
+    }
+  }
+  
