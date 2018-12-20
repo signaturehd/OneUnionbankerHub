@@ -19,7 +19,7 @@ import {
 } from '../../ub-components/'
 
 import TeamGoalsComponent from './components/TeamGoalsComponent'
-import AddGoalsFormComponent from './components/AddGoalsFormComponent'
+import AddTeamGoalsFormComponent from './components/AddTeamGoalsFormComponent'
 import TasksListComponent from './components/TasksListComponent'
 import CommentsListComponent from './components/CommentsListComponent'
 import HistoryListComponent from './components/HistoryListComponent'
@@ -500,7 +500,7 @@ class TeamGoalsFragment extends BaseMVPView {
       }
       {
         showForm ?
-          <AddGoalsFormComponent
+          <AddTeamGoalsFormComponent
             onCancel = { () => {
                 this.setState({ showForm : false })
                 this.resetValue()
@@ -536,6 +536,14 @@ class TeamGoalsFragment extends BaseMVPView {
           <div className = { 'grid-filter margin-left' }>
             <div></div>
             <div className = { 'text-align-right margin-right' }>
+              <GenericButton
+                text = { 'Add Team Goal' }
+                className = { 'global-button' }
+                onClick = { () => {
+                  this.resetValue()
+                  this.setState({ showForm: true })
+                } }
+              />
             </div>
           </div>
           <div className = { 'grid-main' }>

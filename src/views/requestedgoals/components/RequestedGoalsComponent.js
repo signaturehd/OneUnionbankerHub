@@ -76,7 +76,7 @@ class RequestedGoalsComponent extends Component {
                   <div>
                     {
                       resp.approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
+                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
                       :
                         resp.approvalStatus === 3 ?
                         <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
@@ -87,8 +87,11 @@ class RequestedGoalsComponent extends Component {
                         resp.approvalStatus === 4 ?
                         <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
                         :
-                        resp.approvalStatus === 5 &&
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
+                        resp.approvalStatus === 5 ?
+                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                        :
+                        resp.approvalStatus === 6 &&
+                        <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
                     }
                     <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                   </div>
@@ -146,7 +149,7 @@ class RequestedGoalsComponent extends Component {
                   <div>
                     {
                       resp.approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
+                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
                       :
                         resp.approvalStatus === 3 ?
                         <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
@@ -157,8 +160,11 @@ class RequestedGoalsComponent extends Component {
                         resp.approvalStatus === 4 ?
                         <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
                         :
-                        resp.approvalStatus === 5 &&
+                        resp.approvalStatus === 5 ?
                         <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
+                        :
+                        resp.approvalStatus === 6 &&
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
                     }
                     <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                   </div>
