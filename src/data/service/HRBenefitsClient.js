@@ -732,6 +732,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getHospitalBranch (token, id) {
+    return this.service.getHospitalBranch(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   addMedicalScheduling (
     token,
     addMedicalSchedulingParam

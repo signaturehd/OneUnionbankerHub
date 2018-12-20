@@ -957,6 +957,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getHospitalBranch (token, id) {
+    return this.apiClient.get(`v1/medical/hospitals/${ id }/branches`, {
+      headers : { token }
+    })
+  }
+
   addMedicalScheduling (
     token,
     addMedicalSchedulingParam
@@ -965,6 +971,7 @@ export default class HRBenefitsService {
       date : addMedicalSchedulingParam.preferredDate,
       clinicId : addMedicalSchedulingParam.clinicId,
       packageId : addMedicalSchedulingParam.packageId,
+      branchId: addMedicalSchedulingParam.branchId,
     }
     return this.apiClient.post('v1/medical/exam/submit', medicalSchedulingObject, {
       headers : { token }

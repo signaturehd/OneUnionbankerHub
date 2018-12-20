@@ -20,6 +20,7 @@ export default class MedicalSchedulingFormCardComponent extends Component {
 
   render () {
     const {
+      branches,
       showPackages,
       showFormReview,
       showClinics,
@@ -51,6 +52,15 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             value = { clinicLabel }
             onClick = { () => showClinics() }
             type = { 'text' }/>
+          {
+            branches &&
+            <GenericInput
+              value = { branches }
+              text = { 'Branches' }
+              readOnly
+              type = { 'text' }
+              />
+          }
           <GenericInput
             text = { 'Packages' }
             disabled = { isFormReview }

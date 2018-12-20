@@ -99,6 +99,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
     }
   }
 
+  setHospitalBranch (branches) {
+    this.setState({ branches })
+  }
+
   render () {
     const {
       enabledLoader,
@@ -119,6 +123,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
       preferredDate,
       index,
       viewMoreText,
+      branches
     } = this.state
 
     let procedureList = []
@@ -133,8 +138,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
           showClinics &&
           <SingleInputModal
             inputArray = { clinics }
-            selectedArray = { (clinicId, clinicLabel) =>
+            selectedArray = { (clinicId, clinicLabel) => {
+              this.presenter.getHospitalBranch(packageId)
               this.setState({ clinicId, clinicLabel, showClinics : false, packageId : null, packageLabel : '' }) }
+            }
             onClose = { () => this.setState({showClinics : false}) }
           />
         }
@@ -142,8 +149,8 @@ class MedicalSchedulingFragment extends BaseMVPView {
           showPackages &&
           <SingleInputModal
             inputArray = { packages.filter(pack => pack.clinicId === clinicId) }
-            selectedArray = { (packageId, packageLabel) =>{
-              this.setState({ packageId, packageLabel, showPackages : false, index : 4, viewMoreText : 'View more' }) }
+            selectedArray = { (packageId, packageLabel) =>
+              this.setState({ packageId, packageLabel, showPackages : false, index : 4, viewMoreText : 'View more' })
             }
             onClose = { () => this.setState({showPackages : false}) }
           />
@@ -192,6 +199,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
               <CircularLoader show = { enabledLoader }/>
             </center> :
             <FormComponent
+              branches = { branches }
               showFormReview = { (isFormReview) => this.confirmation(isFormReview) }
               showClinics = { () => this.setState({ showClinics : true }) }
               showPackages = { () => this.setState({ showPackages : true }) }
