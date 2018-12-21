@@ -1,30 +1,35 @@
-	import React from 'react'
-	import PropTypes from 'prop-types'
-	import Presenter from './presenter/RewardsPresenter'
-	import BaseMVPView from '../common/base/BaseMVPView'
-	import ConnectView from '../../utils/ConnectView'
-	import { InputModal, Card, GenericButton } from '../../ub-components'
-	import './styles/myrewards.css'
+import React from 'react'
+import { Switch, Route, createBrowserHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
+import BaseMVPView from '../common/base/BaseMVPView'
+import ConnectView from '../../utils/ConnectView'
+import Presenter from './presenter/RewardsPresenter'
 
 
-	class RewardsRecognitionFragment extends BaseMVPView {
-			constructor (props) {
-			super(props)
-		  }
-		  componentDidMount () {
-			this.props.setSelectedNavigation(9)
-		  }
-		
+import { InputModal, Card, GenericButton } from '../../ub-components'
+import './styles/myrewards.css'
+
+
+
+class RewardsRecognitionFragment extends BaseMVPView {
+	constructor (props) {
+		super(props)
+	}
+	componentDidMount () {
+		this.props.setSelectedNavigation(9)
+	}
+
 
 	render () {
-		const { history, profileHasCOC } = this.props
+		const { history } = this.props
     	const { accountNumber, showAccountNumberModal } = this.state
 
 		const myrewards1 = [{
 			id: 0 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
-			path: '/myrewards/celebbratedna',
+			path: '/myrewards/celebratedna',
 		},
 		{
 			id: 1 ,
@@ -40,12 +45,13 @@
 		}]
 
 		return (
-				<div className={'myrewards-container'} >
-					<div>
-						<h2 className={ 'header-margin-default text-align-left' }>My Rewards</h2>
-						<h2> Check your rewards. </h2>
-					</div>
-					{
+
+			<div className={'myrewards-container'} >
+				<div>
+					<h2 className={'header-margin-default text-align-left'}>My Rewards</h2>
+					<h2> Check your rewards. </h2>
+				</div>
+				{/* {
 					showAccountNumberModal &&
 						<InputModal
 						isDismisable = { true }
@@ -59,31 +65,33 @@
 							}
 						}
 					/>
-					}
-					<div className = { 'myrewards-adjustment' }>
-						<div className = { 'myrewards-card-container' }>
+					} */}
+				<div className={'myrewards-adjustment'}>
+					<div className={'myrewards-card-container'}>
 						{
-						myrewards1.map((value, idx) => (
-							<Card
-							className = { 'myrewards-card' }
-							onClick={ () =>
-								history.push(value.path)
-							}
-							key={ idx }>
-							<div className = { 'rewards-column-grid' }>
-								<div
-								className={ value.styleName }
-								text={ value.title } >
-								</div>
-								<p className={ 'myrewards-option-cards font-weight-bold' }>{ value.title }</p>
-							</div>
-							</Card>
+							myrewards1.map((value, idx) => (
+								<Card
+									className={'myrewards-card'}
+									onClick={() =>
+										history.push(value.path)
+									}
+									key={idx}>
+									<div className={'rewards-column-grid'}>
+										<div
+											className={value.styleName}
+											text={value.title} >
+										</div>
+										<p className={'myrewards-option-cards font-weight-bold'}>{value.title}</p>
+									</div>
+								</Card>
 							))
 						}
-						</div>
 					</div>
 				</div>
-			) 
+			</div>
+
+
+		) 
 	}
 }
 RewardsRecognitionFragment.propTypes = {
