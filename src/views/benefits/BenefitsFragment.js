@@ -66,7 +66,7 @@ class BenefitsFragment extends BaseMVPView {
   }
 
   showGender (resp) {
-    this.setState({ gender : resp.gender })
+    this.setState({ gender : resp && resp.gender })
   }
 
   showReleasingCenters (releasingCenters) {
