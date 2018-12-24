@@ -7,6 +7,10 @@
   height: 100%;
 }
 
+.appbar-style-color {
+  background-color: #424242;
+}
+
 .appbar-default-menu {
   font-weight: bold;
   cursor: pointer;
