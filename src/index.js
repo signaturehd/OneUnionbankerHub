@@ -15,12 +15,13 @@ import store from './store'
 import Container from './di/Container'
 import AppModule from './di/AppModule'
 
-
+/* Mobile View */
+import MobileView from './views/mobileplatform/MobileView'
 
 
 ReactDOM.render(
   <Provider store={ store }>
     <HashRouter basename = { '/' }>
-      <App />
+      <MobileView />
     </HashRouter>
   </Provider>, document.getElementById('root'))

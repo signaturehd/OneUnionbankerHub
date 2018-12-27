@@ -122,36 +122,36 @@ class DrawerAppBar extends Component {
       id: 0,
       name: 'Home',
       imageStyle : 'news',
-      imageActive: require('../../../../images/NAVIGATION BAR/HOME - Grey.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/HOME - Orange.png'),
+      imageActive: require('../../../../images/NAVIGATION BAR/HOME - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/HOME - Grey.png'),
       action : () => history.push('/'),
     },{
       id: 1,
       name: 'My Benefits',
       imageStyle : 'benefits',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Benefits - Grey.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Benefits - Orange.png'),
+      imageActive: require('../../../../images/NAVIGATION BAR/My Benefits - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/My Benefits - Grey.png'),
       action : () => history.push('/mybenefits')
     },{
       id: 8,
       name: 'My Pay',
       imageStyle : 'pay',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Pay - Grey.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Pay - Orange.png'),
+      imageActive: require('../../../../images/NAVIGATION BAR/My Pay - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/My Pay - Grey.png'),
       action : () => history.push('/payslip')
     },{
       id: 4,
       name: 'My Learning',
       imageStyle : 'learning',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Learning - Grey.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Learning - Orange.png'),
+      imageActive: require('../../../../images/NAVIGATION BAR/My Learning - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/My Learning - Grey.png'),
       action : () => history.push('/mylearning'),
     },{
       id: 6,
       name: 'Feedback',
       imageStyle : 'feedback',
-      imageActive: require('../../../../images/NAVIGATION BAR/Feedback - Grey.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/Feedback - Orange.png'),
+      imageActive: require('../../../../images/NAVIGATION BAR/Feedback - Orange.png'),
+      imageInactive: require('../../../../images/NAVIGATION BAR/Feedback - Grey.png'),
       action : () => history.push('/feedback'),
     }]
 
