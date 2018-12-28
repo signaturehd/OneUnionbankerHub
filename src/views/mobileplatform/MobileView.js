@@ -10,6 +10,7 @@ import MobileHeaderComponent from './components/MobileHeaderComponent'
 import MobileFeaturesComponent from './components/MobileFeaturesComponent'
 import MobileNewsFeedComponent from './components/MobileNewsFeedComponent'
 import MobileMyLearningComponent from './components/MobileMyLearningComponent'
+import MobileTeamGoalsComponent from './components/MobileTeamGoalsComponent'
 
 import './styles/mobileStyle.css'
 
@@ -54,7 +55,12 @@ class MobileView extends BaseMVPView {
             <br/>
             <br/>
             <br/>
+            <br/>
             <MobileMyLearningComponent />
+            <br/>
+            <br/>
+            <MobileTeamGoalsComponent/>
+            <br/>
             <div></div>
             <br/>
             <div></div>
