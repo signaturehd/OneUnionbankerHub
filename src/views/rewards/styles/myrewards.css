@@ -93,3 +93,18 @@ padding-bottom: 3px;
       margin: auto;
     }
   }
+  
+/* rex */
+  .myrewards-container-component {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  border-radius: 20px;
+}
+
+.myrewards-grid {
+  display: grid;
+  grid-template-columns: 3fr .10fr;
+}
+
+/* rex */

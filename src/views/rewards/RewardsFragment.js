@@ -3,23 +3,25 @@
 	import Presenter from './presenter/RewardsPresenter'
 	import BaseMVPView from '../common/base/BaseMVPView'
 	import ConnectView from '../../utils/ConnectView'
+
+
 	import { InputModal, Card, GenericButton } from '../../ub-components'
-
 	import './styles/myrewards.css'
+	import staticImage from './styles/ubp-bg.png'
 
-
-	class RewardsRecognitionFragment extends BaseMVPView {
-			constructor (props) {
-			super(props)
-		  }
-		  componentDidMount () {
-			this.props.setSelectedNavigation(9)
-		  }
+class RewardsRecognitionFragment extends BaseMVPView {
+	constructor (props) {
+		super(props)
+	}
+	componentDidMount () {
+		this.props.setSelectedNavigation(9)
+	}
 
 
 	render () {
 		const { history, profileHasCOC } = this.props
     	const { accountNumber, showAccountNumberModal } = this.state
+
 
 		const myrewards1 = [{
 			id: 0 ,
@@ -45,6 +47,17 @@
 			title: 'Etc',
 			path: '/myrewards/staraward',
 		}]
+
+		
+		const styleImage = {
+				backgroundImage: `url(${staticImage})`,
+				backgroundImage: `url('${staticImage}')`,
+				width: '50px',
+				height: '20px',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+		}
+		
 
 		return (
 				<div className={'myrewards-container'} >
@@ -101,11 +114,20 @@
 							))
 						}
 
-
-
-						</div>
+						<Card className={'myrewards-container-component'} >
+							<img src={staticImage} height="150" width="260px" border-radius="250px" />
+			   	
+								<div className={'myrewards-grid'}>
+									<h2 class="text-align-left font-size-12px font-weight-lighter" >20 % OFF in Zalora</h2>
+								</div>
+							<div className={'myrewards-grid'}>
+								<h2 className="margin-10px text-align-right font-size-12px font-weight-bold color-gray">Update for approval</h2>
+									</div>
+						
+						</Card>
 					</div>
 				</div>
+			</div>
 			)
 	}
 }
