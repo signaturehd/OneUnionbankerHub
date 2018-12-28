@@ -6,20 +6,21 @@
 	import { InputModal, Card, GenericButton } from '../../ub-components'
 
 	import './styles/myrewards.css'
+	import staticImage from './styles/ubp-bg.png'
 
-
-	class RewardsRecognitionFragment extends BaseMVPView {
-			constructor (props) {
-			super(props)
-		  }
-		  componentDidMount () {
-			this.props.setSelectedNavigation(9)
-		  }
+class RewardsRecognitionFragment extends BaseMVPView {
+	constructor (props) {
+		super(props)
+	}
+	componentDidMount () {
+		this.props.setSelectedNavigation(9)
+	}
 
 
 	render () {
 		const { history, profileHasCOC } = this.props
     	const { accountNumber, showAccountNumberModal } = this.state
+
 
 		const myrewards1 = [{
 			id: 0 ,
@@ -46,10 +47,20 @@
 			path: '/myrewards/staraward',
 		}]
 
-		return (
-<div className = {'grid-container'}>
-			<div className={'myrewards-container'} >
+		
+		const styleImage = {
+				backgroundImage: `url(${staticImage})`,
+				backgroundImage: `url('${staticImage}')`,
+				width: '50px',
+				height: '20px',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+		}
+		
 
+		return (
+			<div className = {'grid-container'}>
+				<div className={'myrewards-container'} >
 					<div>
 						<h2 className={ 'header-margin-default text-align-left ' }>My Rewards</h2>
 						<p> Gather and redeem your points</p>
@@ -102,18 +113,23 @@
 							</Card>
 							))
 						}
-
-
-
-						</div>
 					</div>
 				</div>
 
 				<div className={'grid-item2'}>
-						<h1 className= { 'header-margin-default text-align-left' } > Redeem </h1>
-						<p> awjeawjeiajw iejaw ijeaw</p>
+					<Card>
+						<img src={staticImage} height="150" width="260px" />
+
+						<div className={'myrewards-grid'}>
+							<h2 class="margin-10px text-align-left font-size-12px font-weight-lighter" >20 % OFF in Zalora</h2>
+							<div className={'myrewards-grid'}>
+								<h2 class="margin-10px text-align-left font-size-12px font-weight-lighter" >23, 000 points</h2>
+							</div>
+						</div>
+					</Card>
 				</div>
-</div>
+			</div>
+		</div>
 			)
 	}
 }
