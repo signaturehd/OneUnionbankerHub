@@ -1,13 +1,12 @@
 
 
-
 import React from 'react';
 
 
 const CelebrateDNAFragment = () => {
-  return(
-    <h1>Celebrate a DNA Moment</h1>
-  )
+  return (
+    <h1>Star Award Fragment</h1>
+  );
 }
 
 export default CelebrateDNAFragment

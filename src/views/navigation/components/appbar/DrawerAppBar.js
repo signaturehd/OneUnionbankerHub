@@ -72,11 +72,6 @@ class DrawerAppBar extends Component {
       imageStyle : 'settings',
       action : () => history.push('/settings'),
     },{
-      id: 17,
-      name: 'My Rewards and Recognition',
-      imageStyle : 'settings',
-      action : () => history.push('/myrewards'),
-    },{
       id: 10,
       name: 'Phenom Prime',
       imageStyle : 'phenom',
