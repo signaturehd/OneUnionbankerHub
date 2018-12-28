@@ -12,6 +12,7 @@ import MobileNewsFeedComponent from './components/MobileNewsFeedComponent'
 import MobileMyLearningComponent from './components/MobileMyLearningComponent'
 import MobileTeamGoalsComponent from './components/MobileTeamGoalsComponent'
 import MobileOnboardingComponents from './components/MobileOnboardingComponents'
+import MobileDiscountComponent from './components/MobileDiscountComponent'
 
 import './styles/mobileStyle.css'
 
@@ -65,11 +66,24 @@ class MobileView extends BaseMVPView {
             <br/>
             <MobileOnboardingComponents/>
             <br/>
-            <div></div>
             <br/>
-            <div></div>
+            <MobileDiscountComponent/>
             <br/>
-            <div></div>
+            <br/>
+            <br/>
+            <center>
+              <h4
+                style = {{
+                  fontSize : '12pt'
+                }}
+                className = { 'font-weight-normal unionbank-color mobile-view-label-detail' }>Check our Data Privacy Statement</h4>
+              <br/>
+              <h2
+                style = {{
+                  fontSize : '8pt'
+                }}
+                className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Copyright 2018 Union Bank of the Philippines</h2>
+            </center>
           </div>
           <div></div>
         </div>
