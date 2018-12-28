@@ -69,7 +69,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
-      ratings: 1,
+      ratings: 0,
       taskId: '',
       remarksText: '',
       taskDescription: '',
@@ -854,6 +854,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                     approvalStatus,
                     goalTypeId,
                     ratings: parseFloat(ratings),
+                    showRemarksText: false,
+                    remarksText: ''
                    })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
@@ -916,7 +918,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                         {
                           this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager)?
                           <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
                             initialRating={ (ratings ? ratings : 0) || 0 }
@@ -924,7 +926,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                           />
                         :
                           <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
                             onChange={ e => this.commentRateFunc(e) }
