@@ -25,7 +25,7 @@
 			id: 0 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
-			path: '/myrewards/celebbratedna',
+			path: '/myrewards/celebratedna',
 		},
 		{
 			id: 1 ,
