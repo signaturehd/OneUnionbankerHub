@@ -25,7 +25,7 @@
 			id: 0 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
-			path: '/myrewards/celebratedna',
+			path: '/myrewards/celebbratedna',
 		},
 		{
 			id: 1 ,
@@ -49,8 +49,8 @@
 		return (
 				<div className={'myrewards-container'} >
 					<div>
-						<h2 className={ 'header-margin-default text-align-left' }>My Rewards</h2>
-						<h6> Gather and redeem your points</h6>
+						<h2 className={ 'header-margin-default text-align-left ' }>My Rewards</h2>
+						<p> Gather and redeem your points</p>
 					</div>
 					{
 					showAccountNumberModal &&
@@ -68,10 +68,11 @@
 					/>
 					}
 
-						<Card className = {'myreward-orange-color'}>
+						<Card className = {'myreward-orange-color '}>
 						<div className = { 'myrewards-card-adjustment'}>
 
-							<p className = { '' }> 20,000 </p>
+							<p className= { '' }> My Reward </p>
+							<p className = { 'myrewards-card-adjustment '}> 20,000 </p>
 						</div>
 						</Card>
 
@@ -99,6 +100,7 @@
 							</Card>
 							))
 						}
+
 
 
 						</div>

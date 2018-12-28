@@ -1,4 +1,12 @@
 /* benefits */
+/*she */
+.multiple-grid-option{
+  display: grid;
+  grid-template-columns: .2fr 1fr .1fr;
+  margin: 0px auto;
+  align-items: center;
+}
+
 .myreward-textcolor-white{
   text-decoration-color: white;
 }
@@ -11,12 +19,18 @@
   text-align: right;
 }
 
-.myrewards-card-adjustment{
-padding-right: 20px;
-padding-left: 20px;
-margin-top: auto;
-margin-bottom: auto;
+.myrewards-container{
+  margin-left: 50px;
 }
+
+.myrewards-card-adjustment{
+padding-right: 10px;
+padding-left: 5px;
+padding-top: 3px;
+padding-bottom: 3px;
+}
+/*she */
+
 
 .myrewards-card-adjustment {
     margin: 3px 3px;
@@ -54,7 +68,7 @@ margin-bottom: auto;
 
   .myrewards-column-grid {
     display: grid;
-    grid-template-rows: .5fr .5fr .5fr;
+    grid-template-rows: .5fr .5fr ;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
