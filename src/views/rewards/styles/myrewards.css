@@ -9,11 +9,35 @@
 
 .myreward-textcolor-white{
   text-decoration-color: white;
+  
 }
 
+/*jom*/
 .myreward-orange-color{
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 40px;
   background-color: orange;
+  border-radius: 20px;
+  clear: both;
+  overflow:auto;
 }
+
+.myreward-orange-text{
+  margin: 5px 5px 5px 5px;
+  color: white;
+}
+
+.align-left{
+  float: left;
+  }
+
+.align-right{
+  float: right;
+  }
+/*jom*/
 
 .myrewards-card-align-right{
   text-align: right;
@@ -35,28 +59,37 @@ padding-bottom: 3px;
 .myrewards-card-adjustment {
     margin: 3px 3px;
   }
-
+  
   .myrewards-card {
+    padding-top: 20px;
+    padding-bottom:20px;
     margin-bottom: 20px;
     cursor: pointer;
+    border-radius: 20px;
   }
-
+  
   .myrewards-card-container {
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     text-align: center;
     column-gap: 2%;
   }
-
+  
   .page-header-buttons {
     text-align : right;
   }
-
+  
   .myrewards-option-cards {
     color: #1f1d1d;
-    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 15px;
   }
 
+  .myrewards-option-cards-details {
+    color: #1f1d1d;
+    margin-bottom: 25px;
+  }
+  
   .myrewards-option-default {
     background-color: #ff8a00;
     -webkit-mask-size: auto 100%;
@@ -65,7 +98,7 @@ padding-bottom: 3px;
     margin: 0px auto;
     width: 50px;
   }
-
+  
   .myrewards-column-grid {
     display: grid;
     grid-template-rows: .5fr .5fr ;
@@ -74,11 +107,11 @@ padding-bottom: 3px;
     padding-left: 20px;
     padding-right: 20px;
   }
-
+  
   .myrewards-adjustment {
     margin-top: 4%;
   }
-
+  
   .myrewards-cards-1 {
     -webkit-mask-image: url('../../../images/icons/ic_cstatus.png');
     mask-image: url('../../../images/icons/ic_cstatus.png');
@@ -86,7 +119,7 @@ padding-bottom: 3px;
   .myrewards-title-view {
     font-size: 30px;
   }
-
+  
   @media screen and (max-width : 768px) {
     .myrewards-title-view {
       text-align: center;
