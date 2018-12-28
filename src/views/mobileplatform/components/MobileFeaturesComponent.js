@@ -35,6 +35,15 @@ class MobileFeaturesComponent extends Component {
             height: '100%',
             width : '100%'
           }}/>
+          <div
+            style = {{
+              paddingRight: '20px',
+              marginTop: '-120px'
+            }}
+            className = { 'text-align-right' }>
+            <h4 className = { 'font-weight-lighter unionbank-white-color' }>HR Services right at your fingerprints!</h4>
+            <h4 className = { 'font-weight-lighter unionbank-color' }>Use the My Benefits Module today!</h4>
+          </div>
       </div>
     )
   }
