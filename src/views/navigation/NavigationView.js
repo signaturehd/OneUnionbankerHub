@@ -18,9 +18,9 @@ import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
 /*Rewards and Recognition */
 import RewardsRecognitionFragment from '../rewards/RewardsFragment'
-import CelebrateDNAFragment from '../rewards/fragments/celebratedna/CelebrateDNAFragment'
-import UAreRecognizedFragment from '../rewards/fragments/uarerecognized/UAreRecognizedFragment'
-import StarAwardFragment from '../rewards/fragments/staraward/StarAwardFragment'
+import CelebrateDNAFragment from '../celebratedna/CelebrateDNAFragment'
+import UAreRecognizedFragment from '../uarerecognized/UAreRecognizedFragment'
+import StarAwardFragment from '../staraward/StarAwardFragment'
 
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
