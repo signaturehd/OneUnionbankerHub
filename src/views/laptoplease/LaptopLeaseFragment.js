@@ -41,10 +41,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       showNoticeModal : false,
       showNoticeResponseModal : false,
       noticeResponse : null,
-      showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
-      showFeedbackModal : false,
-      noticeResponseModal: false,
       showEditMode: false,
       laptopModel: '',
       screenSize: '',
@@ -58,6 +55,17 @@ class LaptopLeaseFragment extends BaseMVPView {
   componentDidMount () {
     this.props.setSelectedNavigation(1)
   }
+
+  /* Display Modal Notice of Undertaking*/
+
+  noticeOfUndertaking (noticeResponse) {
+   this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse })
+  }
+
 
   /* Presenter Functions */
 
@@ -125,15 +133,6 @@ class LaptopLeaseFragment extends BaseMVPView {
     if (!isValid) {
       this.props.history.push('/mybenefits/benefits/')
     }
-  }
-
-  /* Notice Response*/
-  noticeOfUndertaking (noticeResponse) {
-   this.setState({ showNoticeModal : true, noticeResponse })
-  }
-
-  noticeResponseResp (noticeResponse) {
-    this.setState({ noticeResponse })
   }
 
   /* Loader*/
@@ -219,8 +218,6 @@ class LaptopLeaseFragment extends BaseMVPView {
       orDate,
       vendor,
       costAquisition,
-      noticeResponseModal,
-      showFeedbackModal,
     } = this.state
 
     const { history }=this.props
