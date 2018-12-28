@@ -10,22 +10,31 @@ class MobileFeaturesComponent extends Component {
 
   render () {
     return (
-      <div className = { 'mobile-view-header-components' }>
-        <div></div>
-        <div className = { 'mobile-view-header-grid-detail' }>
-          <h4 className = { 'unionbank-white-color mobile-view-title-detail' }>Features:</h4>
-          <div>
-          </div>
-          <div className = { 'text-align-left' }>
-            <br/>
-            <h4 className = { 'font-weight-lighter unionbank-white-color' }>There's so many things that you can do
+      <div>
+        <div className = { 'mobile-view-header-components' }>
+          <div></div>
+          <div className = { 'mobile-view-header-grid-detail' }>
+            <h4 className = { 'unionbank-white-color mobile-view-title-detail' }>Features:</h4>
+            <div>
+            </div>
+            <div className = { 'text-align-left' }>
               <br/>
-              with <b className = { 'font-weight-lighter unionbank-color' }> One UnionBanker Hub!</b>
-            </h4>
+              <h4 className = { 'font-weight-lighter unionbank-white-color' }>There's so many things that you can do
+                <br/>
+                with <b className = { 'font-weight-lighter unionbank-color' }> One UnionBanker Hub!</b>
+              </h4>
+            </div>
+            <div></div>
           </div>
           <div></div>
         </div>
-        <div></div>
+        <img
+          src = { require('../../../images/mobileview/Benefits.png') }
+          style = {{
+            marginTop: '-120px',
+            height: '100%',
+            width : '100%'
+          }}/>
       </div>
     )
   }
