@@ -7,6 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 
 /* Mobile View Components */
 import MobileHeaderComponent from './components/MobileHeaderComponent'
+import MobileFeaturesComponent from './components/MobileFeaturesComponent'
 
 import './styles/mobileStyle.css'
 
@@ -24,7 +25,7 @@ class MobileView extends BaseMVPView {
       backgroundImage: `url(${require('../../images/mobileview/bg.png')})`,
       backgroundSize: 'cover',
       padding: '0',
-      height: '-webkit-fill-available',
+      height: 'fit-content',
       width: '-webkit-fill-available',
       margin: '0',
     }
@@ -38,9 +39,14 @@ class MobileView extends BaseMVPView {
           <div></div>
           <div>
             <MobileHeaderComponent />
-            <br/>
-            <h2>awdawd</h2>
-            <span className = { 'mobile-view-phone-vertical mobile-view-phone-vertical-detail' }/>
+            <img
+              src = { require('../../images/mobileview/login phone.png') }
+              style = {{
+                marginTop: '-120px',
+                height: '100%',
+                width : '100%'
+              }}/>
+            <MobileFeaturesComponent />
             <br/>
             <div></div>
             <br/>

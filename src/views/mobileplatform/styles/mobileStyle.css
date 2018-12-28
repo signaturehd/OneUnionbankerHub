@@ -61,7 +61,14 @@
 .mobile-view-grid-row-text {
   display: grid;
   grid-template-rows: .5fr .5fr;
+}
+
+.mobile-view-title-detail {
   letter-spacing: 1pt;
   font-size: 30pt;
   font-weight: 500;
+}
+
+.mobile-view-label-detail {
+  letter-spacing: 0.3pt;
 }
