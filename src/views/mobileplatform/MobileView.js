@@ -8,6 +8,7 @@ import ConnectView from '../../utils/ConnectView'
 /* Mobile View Components */
 import MobileHeaderComponent from './components/MobileHeaderComponent'
 import MobileFeaturesComponent from './components/MobileFeaturesComponent'
+import MobileNewsFeedComponent from './components/MobileNewsFeedComponent'
 
 import './styles/mobileStyle.css'
 
@@ -48,6 +49,7 @@ class MobileView extends BaseMVPView {
               }}/>
             <MobileFeaturesComponent />
             <br/>
+            <MobileNewsFeedComponent />
             <div></div>
             <br/>
             <div></div>
