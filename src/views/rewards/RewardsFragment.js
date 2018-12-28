@@ -25,24 +25,28 @@
 			id: 0 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
+			details: 'Short Description',
 			path: '/myrewards/celebratedna',
 		},
 		{
 			id: 1 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'U Are Recognized',
+			details: 'Short Description',
 			path: '/myrewards/uarerecognized',
 		},
 		{
 			id: 2 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Star Award',
+			details: 'Recognize a UnionBanker',
 			path: '/myrewards/staraward',
 		},
 		{
 			id: 3 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Etc',
+			details: 'Short Description',
 			path: '/myrewards/staraward',
 		}]
 
@@ -68,13 +72,11 @@
 					/>
 					}
 
-						<Card className = {'myreward-orange-color '}>
-						<div className = { 'myrewards-card-adjustment'}>
-
-							<p className= { '' }> My Reward </p>
-							<p className = { 'myrewards-card-adjustment '}> 20,000 </p>
+						<div className = { 'myreward-orange-color'}>
+							<span className= { 'myreward-orange-text align-left'}>☻</span>
+							<span className= { 'myreward-orange-text align-left'}> My Reward </span>
+							<span className = { 'myreward-orange-text align-right'}> 20,000 </span>
 						</div>
-						</Card>
 
 					<div>
 							<h2 className={ 'header-margin-default text-align-left' }> Recognize a Unionbanker </h2>
@@ -96,6 +98,9 @@
 								text={ value.title } >
 								</div>
 								<p className={ 'myrewards-option-cards font-weight-bold' }>{ value.title }</p>
+								</div>
+								<div>
+								<p className={ 'myrewards-option-cards' }>{ value.details }</p>
 							</div>
 							</Card>
 							))
