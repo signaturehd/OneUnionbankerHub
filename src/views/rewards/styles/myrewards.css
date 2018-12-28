@@ -1,10 +1,12 @@
 /* benefits */
+
 /*she */
-.multiple-grid-option{
+
+.grid-container {
   display: grid;
-  grid-template-columns: .2fr 1fr .1fr;
-  margin: 0px auto;
-  align-items: center;
+  grid-template-columns: 70% 30%;
+  grid-column-gap: 1em;
+
 }
 
 .myreward-textcolor-white{
