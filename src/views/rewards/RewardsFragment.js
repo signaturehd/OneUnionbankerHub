@@ -68,15 +68,17 @@
 					/>
 					}
 
-						<Card>
-							<p className = { 'myrewards-card-align-right' }> 20,000 </p>
+						<Card className = {'myreward-orange-color'}>
+						<div className = { 'myrewards-card-adjustment'}>
+
+							<p className = { '' }> 20,000 </p>
+						</div>
 						</Card>
 
-
-
-
-
-
+					<div>
+							<h2 className={ 'header-margin-default text-align-left' }> Recognize a Unionbanker </h2>
+							<h6> Celebrate those who own the future and drive innovation </h6>
+					</div>
 					<div className = { 'myrewards-adjustment' }>
 						<div className = { 'myrewards-card-container' }>
 						{

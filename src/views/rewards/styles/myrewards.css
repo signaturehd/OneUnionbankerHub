@@ -1,12 +1,23 @@
 /* benefits */
+.myreward-textcolor-white{
+  text-decoration-color: white;
+}
+
+.myreward-orange-color{
+  background-color: orange;
+}
 
 .myrewards-card-align-right{
   text-align: right;
 }
 
-.myrewards-container{
-  padding-right: 25%;
+.myrewards-card-adjustment{
+padding-right: 20px;
+padding-left: 20px;
+margin-top: auto;
+margin-bottom: auto;
 }
+
 .myrewards-card-adjustment {
     margin: 3px 3px;
   }
