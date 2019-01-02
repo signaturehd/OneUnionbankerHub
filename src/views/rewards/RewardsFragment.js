@@ -42,13 +42,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			title: 'Star Award',
 			details: 'Recognized a UnionBanker',
 			path: '/myrewards/staraward',
-		},
-		{
-			id: 3,
-			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
-			title: 'Etc',
-			details: 'Short Description',
-			path: '/myrewards/staraward',
 		}]
 
 
@@ -112,19 +105,22 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
 				</div>
 
-				<div className={'grid-item2'}>
-					<h2 className={'header-margin-default text-align-left '}>Redeem</h2>
+				<div>
+					<h2 className={'header-margin-default text-align-left'}>Redeem</h2>
 					<Card className="myrewards-container-component">
-						<img src={staticImage} height="80px" width="70%" className={'myrewards-card-image'} />
-
-						<div className={'myrewards-grid'}>
+						<img className={'myrewards-card-image '} src={staticImage} />
+						<div className={'myrewards-grid myrewards-card-image-text'}>
 							<span class="align-left" >20 % OFF in Zalora</span>
 							<span class="align-right" >23, 000 points</span>
-
-						</div>{'myrewards-card-image'}
-
+						</div>
 					</Card>
-
+					<Card className="myrewards-container-component">
+						<img className={'myrewards-card-image '} src={staticImage} />
+						<div className={'myrewards-grid myrewards-card-image-text'}>
+							<span class="align-left" >20 % OFF in Zalora</span>
+							<span class="align-right" >23, 000 points</span>
+						</div>
+					</Card>
 				</div>
 			</div>
 		)
