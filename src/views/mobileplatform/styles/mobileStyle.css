@@ -1,0 +1,86 @@
+
+.mobile-view-grid-row {
+  padding-top: 40px;
+  /* grid-template-rows: .05fr 1fr .05fr; */
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
+}
+
+.mobile-view-grid-row-x6 {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+/* Header  Component Style */
+
+.mobile-view-header-components {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+.mobile-view-header-grid-detail {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+}
+
+.mobile-view-ubplogo {
+  background-image : url('../../../images/mobileview/UBP Logo.png');
+}
+
+.mobile-view-ubplogo-detail {
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 40px;
+  width: 100%;
+}
+
+.mobile-view-googleplay {
+  background-image : url('../../../images/Googleplay.png');
+}
+
+.mobile-view-googleplay-detail {
+  background-size: 120px;
+  background-repeat: no-repeat;
+  height: 80px;
+  margin-top: -25px;
+  width: auto;
+}
+
+.mobile-view-appstore {
+  background-image : url('../../../images/APPLE.png');
+}
+
+.mobile-view-appstore-detail {
+  background-size: 120px;
+  background-repeat: no-repeat;
+  height: 80px;
+  margin-top: 22px;
+  width: auto;
+}
+
+.mobile-view-phone-vertical {
+  background-image : url('../../../images/mobileview/login phone.png');
+}
+
+.mobile-view-phone-vertical-detail {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100px;
+  width: 100px;
+}
+
+.mobile-view-grid-row-text {
+  display: grid;
+  grid-template-rows: .5fr .5fr;
+}
+
+.mobile-view-title-detail {
+  letter-spacing: 1pt;
+  font-size: 30pt;
+  font-weight: 500;
+}
+
+.mobile-view-label-detail {
+  letter-spacing: 0.3pt;
+}
