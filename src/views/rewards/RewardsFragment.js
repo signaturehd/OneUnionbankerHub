@@ -26,36 +26,30 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			id: 0 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
+			details: 'Short Description',
 			path: '/myrewards/celebratedna',
 		},
 		{
 			id: 1 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'U Are Recognized',
+			details: 'Short Description',
 			path: '/myrewards/uarerecognized',
 		},
 		{
 			id: 2 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Star Award',
+			details: 'Recognized a UnionBanker',
 			path: '/myrewards/staraward',
 		},
 		{
 			id: 3 ,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Etc',
+			details: 'Short Description',
 			path: '/myrewards/staraward',
 		}]
-
-		
-		const styleImage = {
-				backgroundImage: `url(${staticImage})`,
-				backgroundImage: `url('${staticImage}')`,
-				width: '50px',
-				height: '20px',
-				backgroundSize: 'cover',
-				backgroundRepeat: 'no-repeat',
-		}
 		
 
 		return (
@@ -81,13 +75,11 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					/>
 					}
 
-						<Card className = {'myreward-orange-color '}>
-						<div className = { 'myrewards-card-adjustment'}>
+					<div className={ 'myreward-orange-color'}>
 
-							<p className= { '' }> My Reward </p>
-							<p className = { 'myrewards-card-adjustment '}> 20,000 </p>
+						<span className={ 'myreward-orange-text align-left' }> My Reward </span>
+						<span className={ 'myreward-orange-text align-right'}> 20,000 </span>
 						</div>
-						</Card>
 
 					<div>
 							<h2 className={ 'header-margin-default text-align-left' }> Recognize a Unionbanker </h2>
@@ -109,6 +101,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 								text={ value.title } >
 								</div>
 								<p className={ 'myrewards-option-cards font-weight-bold' }>{ value.title }</p>
+								<p className={'myrewards-option-cards-details'}>{value.details}</p>
 							</div>
 							</Card>
 							))
@@ -116,19 +109,23 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					</div>
 				</div>
 
+				
+			</div>
+
 				<div className={'grid-item2'}>
-					<Card>
-						<img src={staticImage} height="150" width="260px" />
+					<h2 className={'header-margin-default text-align-left '}>Redeem</h2>
+					<Card className="myrewards-container-component">
+						<img src={staticImage} height="80px" width="70%" className={'myrewards-card-image'} />
 
 						<div className={'myrewards-grid'}>
-							<h2 class="margin-10px text-align-left font-size-12px font-weight-lighter" >20 % OFF in Zalora</h2>
-							<div className={'myrewards-grid'}>
-								<h2 class="margin-10px text-align-left font-size-12px font-weight-lighter" >23, 000 points</h2>
-							</div>
-						</div>
+							<span class="align-left" >20 % OFF in Zalora</span>
+							<span class="align-right" >23, 000 points</span>
+							
+						</div>{'myrewards-card-image'}
+						
 					</Card>
+					
 				</div>
-			</div>
 		</div>
 			)
 	}

@@ -21,6 +21,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 40px;
+  margin-right: 80px;
   background-color: orange;
   border-radius: 20px;
   clear: both;
@@ -72,7 +73,7 @@ padding-bottom: 3px;
   
   .myrewards-card-container {
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     text-align: center;
     column-gap: 2%;
   }
@@ -134,12 +135,18 @@ padding-bottom: 3px;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
-  border-radius: 20px;
+  padding-bottom: 40px;
+  border-radius: 10px;
 }
 
-.myrewards-grid {
-  display: grid;
-  grid-template-columns: 3fr .10fr;
+.myrewards-card-image
+{
+  align-content: center;
+  
 }
 
+.display-grid {
+  display: block;
+  overflow: auto;
+}
 /* rex */
