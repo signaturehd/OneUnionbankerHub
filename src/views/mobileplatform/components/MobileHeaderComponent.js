@@ -9,6 +9,10 @@ class MobileHeaderComponent extends Component {
   }
 
   render () {
+    const {
+      platformUsed
+    } = this.props
+    
     return (
       <div className = { 'mobile-view-header-components' }>
         <div></div>
@@ -30,7 +34,12 @@ class MobileHeaderComponent extends Component {
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>app of the Unionbank of the Philippines</h4>
             <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail' }>Designed with U in mind.</h4>
           </div>
-          <span className = { 'mobile-view-googleplay mobile-view-googleplay-detail' }/>
+          {
+            platformUsed === 'android' ?
+            <span className = { 'mobile-view-googleplay mobile-view-googleplay-detail' }/>
+            :
+            <span className = { 'mobile-view-appstore mobile-view-appstore-detail' }/>
+          }
         </div>
         <div></div>
       </div>

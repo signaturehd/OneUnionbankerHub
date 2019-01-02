@@ -47,6 +47,18 @@
   width: auto;
 }
 
+.mobile-view-appstore {
+  background-image : url('../../../images/APPLE.png');
+}
+
+.mobile-view-appstore-detail {
+  background-size: 120px;
+  background-repeat: no-repeat;
+  height: 80px;
+  margin-top: 22px;
+  width: auto;
+}
+
 .mobile-view-phone-vertical {
   background-image : url('../../../images/mobileview/login phone.png');
 }

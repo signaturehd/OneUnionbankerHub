@@ -26,6 +26,10 @@ class MobileView extends BaseMVPView {
   }
 
   render () {
+    const {
+      platformUsed
+    } = this.props
+
     const bodyStyle = {
       backgroundImage: `url(${require('../../images/mobileview/bg.png')})`,
       backgroundSize: 'cover',
@@ -34,7 +38,7 @@ class MobileView extends BaseMVPView {
       width: '-webkit-fill-available',
       margin: '0',
     }
-
+  console.log(platformUsed)
    return (
       <div
         style = {
@@ -43,7 +47,9 @@ class MobileView extends BaseMVPView {
         <div className = { 'mobile-view-grid-row' }>
           <div></div>
           <div>
-            <MobileHeaderComponent />
+            <MobileHeaderComponent
+              platformUsed = { platformUsed }
+              />
             <img
               src = { require('../../images/mobileview/login phone.png') }
               style = {{
