@@ -38,7 +38,7 @@ class MobileView extends BaseMVPView {
       width: '-webkit-fill-available',
       margin: '0',
     }
-  console.log(platformUsed)
+
    return (
       <div
         style = {
