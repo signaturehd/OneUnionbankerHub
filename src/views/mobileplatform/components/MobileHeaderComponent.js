@@ -8,11 +8,19 @@ class MobileHeaderComponent extends Component {
     super (props)
   }
 
+  downloadIOS () {
+    window.location.href = 'itms-services://?action=download-manifest&amp;url=https://oneunionbankerhub.com/download/manifest.plist'
+  }
+
+  downloadAndroid () {
+    window.open('https://play.google.com/store/apps/details?id=com.unionbankph.oneuhub')
+  }
+
   render () {
     const {
       platformUsed
     } = this.props
-    
+
     return (
       <div className = { 'mobile-view-header-components' }>
         <div></div>
@@ -36,9 +44,13 @@ class MobileHeaderComponent extends Component {
           </div>
           {
             platformUsed === 'android' ?
-            <span className = { 'mobile-view-googleplay mobile-view-googleplay-detail' }/>
+            <span
+              onClick = { () => this.downloadAndroid() }
+              className = { 'cursor-pointer mobile-view-googleplay mobile-view-googleplay-detail' }/>
             :
-            <span className = { 'mobile-view-appstore mobile-view-appstore-detail' }/>
+            <span
+              onClick = { () => this.downloadIOS() }
+              className = { 'cursor-pointer mobile-view-appstore mobile-view-appstore-detail' }/>
           }
         </div>
         <div></div>
