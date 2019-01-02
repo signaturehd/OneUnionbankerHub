@@ -37,11 +37,11 @@ class NoticePinModal extends BaseMVPView {
 
   noticeResponseFunc (noticeResponse, showPinCodeModal) {
     this.setState({ noticeResponse, showPinCodeModal })
-    this.submitAgreement()
+    this.submitAgreement(noticeResponse)
   }
 
-  submitAgreement() {
-    this.props.onSubmitAgreement()
+  submitAgreement(noticeResponse) {
+    this.props.onSubmitAgreement(noticeResponse)
   }
 
   showCircularLoader () {
