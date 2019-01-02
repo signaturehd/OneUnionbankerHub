@@ -1,0 +1,4 @@
+.laptoplease-container-grid {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}

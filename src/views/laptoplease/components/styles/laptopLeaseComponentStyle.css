@@ -16,6 +16,16 @@
   color: #090909;
 }
 
+.laptoplease-card-option {
+  padding : 20px;
+  margin: auto;
+}
+
+.laptoplease-option-grid {
+  display: grid;
+  grid-template-columns: .3fr 1fr .3fr;
+}
+
 .carview-submit {
   border-radius: 5px;
   text-align: center;

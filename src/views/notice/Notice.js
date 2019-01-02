@@ -35,8 +35,8 @@ class Notice extends BaseMVPView {
     this.setState({ tranId, isAgree, benId })
   }
 
-  isAgreementConfirm (tranId, isAgree, benId) {
-    this.presenter.updateNotice(tranId, isAgree, benId)
+  isAgreementConfirm (tranId, isAgree, benId, code) {
+    this.presenter.updateNotice(tranId, isAgree, benId, code)
   }
 
   onSuccess (response) {
@@ -109,7 +109,7 @@ class Notice extends BaseMVPView {
         {
           showPinCodeModal &&
           <NoticePinModal
-            onSubmitAgreement = { () => this.isAgreementConfirm(tranId, isAgree, benId) }
+            onSubmitAgreement = { (code) => this.isAgreementConfirm(tranId, isAgree, benId, code) }
           />
         }
         {
@@ -122,7 +122,7 @@ class Notice extends BaseMVPView {
             <br/>
             <br/>
             <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
-              onClick = { () => 
+              onClick = { () =>
                 this.setState({ showDisagreeModal : true })
               }
             />
