@@ -201,9 +201,15 @@ class DrawerAppBar extends Component {
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <div>
+            {
+              // <img
+              //   style={ style.navbar }
+              //   src={ require('../../../../images/union-logo.png') }
+              //   className={'_img-ub-logo'}/>
+            }
               <img
                 style={ style.navbar }
-                src={ require('../../../../images/union-logo.png') }
+                src={ require('../../../../images/WEB and LOGO/UBP Logo 2.png') }
                 className={'_img-ub-logo'}/>
             </div>
             <div
