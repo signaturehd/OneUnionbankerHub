@@ -329,6 +329,7 @@ export default class RequestCoachPresenter {
     .subscribe(data => {
       this.view.noticeResponse(data)
       this.view.resetRemarks()
+      this.getGoals()
       this.view.hideSubmitLoader()
     }, error => {
       this.view.hideSubmitLoader()
