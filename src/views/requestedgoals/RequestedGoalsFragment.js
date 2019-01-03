@@ -412,10 +412,9 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitRatingWithRemarks (e) {
-    console.log(e)
     if(e.which === 13) {
       try {
-        this.presenter.addRatingGoal(this.state.goalId, this.state.ratings, this.state.remarks)
+        this.presenter.addRatingGoal(this.state.goalId, this.state.ratings, this.state.remarksText)
 
       }catch(e) {
         console.log(e)
@@ -945,6 +944,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                           onChange = { (e) => {
                             try {
                               this.setState({ remarksText : e.target.value })
+                              console.log(e.target.value)
                             } catch(e) {
                               console.log(e)
                             }
