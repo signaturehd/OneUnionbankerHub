@@ -424,15 +424,15 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   checkRatings (rate) {
     if(rate === 1) {
-      return 'Poor'
+      return 'Seldom Meets'
     } else if (rate === 2) {
-      return 'Borderline'
+      return 'Usually Meets'
     } else if (rate === 3) {
-      return 'Satisfactory'
+      return 'Consistently Meets'
     } else if (rate === 4) {
-      return 'Good'
+      return 'Usually Exceeds'
     } else if (rate === 5) {
-      return 'Outstanding'
+      return 'Consistently Exceeds'
     }
   }
 
@@ -443,7 +443,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    return isLineManager === true && approvalStatus === 6 ? true : false
+    return isLineManager === true || approvalStatus === 6 ? true : false
   }
 
   postMarkAsCompleted() {
