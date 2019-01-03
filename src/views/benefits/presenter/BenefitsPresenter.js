@@ -77,6 +77,7 @@ export default class BenefitsPresenter {
   getProfile () {
     const employeeInformation = this.getInformationInteractor.execute()
       this.view.showGender(employeeInformation)
+      console.log(employeeInformation)
   }
 
   validateFabToShow () {
