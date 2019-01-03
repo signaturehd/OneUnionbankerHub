@@ -1587,6 +1587,13 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  /* Squad Goals */
+
+  addSquadGoals (token, squadParam) {
+    return this.service.addSquadGoals(token, squadParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

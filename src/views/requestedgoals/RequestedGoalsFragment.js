@@ -443,7 +443,8 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    return isLineManager === true || approvalStatus === 6 ? true : false
+    console.log(approvalStatus, isLineManager)
+    return isLineManager && approvalStatus === 6 ? true : false
   }
 
   postMarkAsCompleted() {
@@ -528,7 +529,6 @@ class RequestedGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
-
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
 
     return (
@@ -600,7 +600,6 @@ class RequestedGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
-        approvalStatus !== 6 &&
         showMarkAsCompleted &&
         <Modal>
           {
@@ -814,7 +813,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               />
               <GenericButton
                 text = { 'Request for Coaching' }
-                className = { 'global-button profile-button-medium' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 onClick = { () => showRequestCoachFunc(true)}
               />
             </div>
@@ -841,6 +840,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                   priorityName,
                   approvalStatus,
                   goalTypeId,
+                  isTeamGoal,
+                  isCompleted,
                   ratings,
                 ) => {
                   this.setState({
@@ -852,12 +853,14 @@ class RequestedGoalsFragment extends BaseMVPView {
                     priorityName,
                     approvalStatus,
                     goalTypeId,
+                    isTeamGoal,
+                    isCompleted,
                     ratings: parseFloat(ratings),
                    })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  this.setState({ ifYesCompleted: false, showMarkAsCompleted: false })
+                  this.setState({ ifYesCompleted: false, showMarkAsCompleted: isCompleted === 1 ? true : false, showRemarksText : false })
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
@@ -913,27 +916,26 @@ class RequestedGoalsFragment extends BaseMVPView {
                       <br/>
                       <div className = { 'text-align-center' }>
                         {
-                          this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager)?
-                          <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
-                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                            fractions={ 1 }
-                            initialRating={ (ratings ? ratings : 0) || 0 }
-                            readOnly
-                          />
-                        :
+                          this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) ?
                           <Rating
                             emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
                             onChange={ e => this.commentRateFunc(e) }
                             initialRating={ (ratings ? ratings : 0) || 0 }
-
+                          />
+                        :
+                          <Rating
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                            fractions={ 1 }
+                            initialRating={ (ratings ? ratings : 0) || 0 }
+                            readonly
                           />
                         }
                         <br/>
                       </div>
-                      <h2 className = { 'font-size-9px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+                      <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
                       {
                         showRemarksText &&
 
@@ -944,7 +946,6 @@ class RequestedGoalsFragment extends BaseMVPView {
                           onChange = { (e) => {
                             try {
                               this.setState({ remarksText : e.target.value })
-                              console.log(e.target.value)
                             } catch(e) {
                               console.log(e)
                             }
