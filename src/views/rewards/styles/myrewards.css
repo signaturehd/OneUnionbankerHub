@@ -116,8 +116,8 @@ padding-bottom: 3px;
   }
 
   .myrewards-cards-1 {
-    -webkit-mask-image: url('../../../images/icons/ic_cstatus.png');
-    mask-image: url('../../../images/icons/ic_cstatus.png');
+    -webkit-mask-image: url('../../../images/icons/test.jpg');
+    mask-image: url('../../../images/icons/test.jpg');
   }
   .myrewards-title-view {
     font-size: 30px;
