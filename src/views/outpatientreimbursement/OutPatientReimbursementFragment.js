@@ -62,6 +62,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
         dateErrorMessage: '',
         orNumberErrorMessage: '',
         amountErrorMessage : '',
+        othersText : ''
     }
   }
 
@@ -305,6 +306,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       titleChange,
       limit,
       updateTotalAmount,
+      othersText,
     } = this.state
 
     const {
@@ -371,7 +373,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
                 procedureArray: updateProcedure,
                 showProcedure : false,
                 showProcedureInput : true,
-                errorMessageRequiredProcedure : ''
+                errorMessageRequiredProcedure : '',
                 })
               }
             }
@@ -401,6 +403,8 @@ class OutPatientReimbursementFragment extends BaseMVPView {
             <CircularLoader show = { true }/>
           </center> :
           <FormComponent
+            othersText = { othersText }
+            othersTextFunc = { (othersText) => this.setState({ othersText }) }
             oRNumberFunc = { (resp) => this.validateSymbol(resp) }
             procedureModalFunc = { (resp) => this.showProcedureModal(resp) }
             diagnosisValueFunc = { (resp) => this.validateText(resp) }
