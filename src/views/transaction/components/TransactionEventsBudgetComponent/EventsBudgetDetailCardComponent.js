@@ -46,6 +46,7 @@ class EventsBudgetDetailCardComponent extends Component {
      const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
      const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
      const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+     const releasingCenter = TransactionPersonalFunction.checkReleasingCenter(details.details)
 
     return (
       <div className = { 'transaction-component-details-form' }>
@@ -68,15 +69,30 @@ class EventsBudgetDetailCardComponent extends Component {
               <br/>
             </div>
           </div>
-          <div className = { 'transaction-icons-details-grid' }>
-            <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
-            <div>
-              <h2>
-                { acccountNumber }
-              </h2>
-              <br/>
+          {
+            acccountNumber &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+              <div>
+                <h2>
+                  { acccountNumber }
+                </h2>
+                <br/>
+              </div>
             </div>
-          </div>
+          }
+          {
+            releasingCenter &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+              <div>
+                <h2>
+                  { releasingCenter }
+                </h2>
+                <br/>
+              </div>
+            </div>
+          }
           <br/>
           <EventsBudgetOtherDetailCardComponent
             details = { details && details.details }

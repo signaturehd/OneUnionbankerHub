@@ -25,6 +25,7 @@ class MedicalSchedulingDetailCardComponent extends Component {
    const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
    const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
    const amountValue = TransactionPersonalFunction.checkedAmountFormat(details.details.MedicalScheduleDetails.Amount)
+   const releasingCenter = TransactionPersonalFunction.checkReleasingCenter(details.details)
 
     return (
       <div className = { 'transaction-component-details-form' }>
@@ -48,13 +49,26 @@ class MedicalSchedulingDetailCardComponent extends Component {
             </div>
           </div>
           {
-            acccountNumber !== '(Not Yet Provided)' &&
+            acccountNumber &&
             <div className = { 'transaction-icons-details-grid' }>
               <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
               <div>
                 <h2>
                   { acccountNumber }
                 </h2>
+                <br/>
+              </div>
+            </div>
+          }
+          {
+            releasingCenter &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+              <div>
+                <h2>
+                  { releasingCenter }
+                </h2>
+                <br/>
               </div>
             </div>
           }
