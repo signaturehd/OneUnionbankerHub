@@ -67,7 +67,9 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
 		return (
 			<div className={'grid-container'}>
-				<div className={'myrewards-container'} >
+			<div className={'container'} >
+
+
 					<div>
 						<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
 						<p> Gather and redeem your points</p>
@@ -89,15 +91,15 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					}
 
 					<div className={'myreward-orange-color'}>
-
 						<span className={'myreward-orange-text align-left'}> My Reward </span>
 						<span className={'myreward-orange-text align-right'}> 20,000 </span>
 					</div>
 
 					<div>
 						<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
-						<h6> Celebrate those who own the future and drive innovation </h6>
+						<h6> Celebrate those who own the future and drive innovation.</h6>
 					</div>
+
 					<div className={'myrewards-adjustment'}>
 						<div className={'myrewards-card-container'}>
 							{

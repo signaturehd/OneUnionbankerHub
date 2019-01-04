@@ -5,13 +5,14 @@
 .grid-container {
   display: grid;
   grid-template-columns: 70% 30%;
-  grid-column-gap: 1em;
-
+  grid-column-gap: 3em;
+  margin-left: 40px;
+  margin-right: 60px;
 }
 
 .myreward-textcolor-white{
   text-decoration-color: white;
-  
+
 }
 
 /*jom*/
@@ -21,7 +22,6 @@
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 40px;
-  margin-right: 80px;
   background-color: orange;
   border-radius: 20px;
   clear: both;
@@ -46,8 +46,8 @@
   text-align: right;
 }
 
-.myrewards-container{
-  margin-left: 50px;
+.container{
+  margin:auto;
 }
 
 .myrewards-card-adjustment{
@@ -62,7 +62,7 @@ padding-bottom: 3px;
 .myrewards-card-adjustment {
     margin: 3px 3px;
   }
-  
+
   .myrewards-card {
     padding-top: 20px;
     padding-bottom:20px;
@@ -70,18 +70,18 @@ padding-bottom: 3px;
     cursor: pointer;
     border-radius: 20px;
   }
-  
+
   .myrewards-card-container {
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     text-align: center;
     column-gap: 2%;
   }
-  
+
   .page-header-buttons {
     text-align : right;
   }
-  
+
   .myrewards-option-cards {
     color: #1f1d1d;
     margin-top: 10px;
@@ -92,7 +92,7 @@ padding-bottom: 3px;
     color: #1f1d1d;
     margin-bottom: 25px;
   }
-  
+
   .myrewards-option-default {
     background-color: #ff8a00;
     -webkit-mask-size: auto 100%;
@@ -101,7 +101,7 @@ padding-bottom: 3px;
     margin: 0px auto;
     width: 50px;
   }
-  
+
   .myrewards-column-grid {
     display: grid;
     grid-template-rows: .5fr .5fr ;
@@ -110,26 +110,26 @@ padding-bottom: 3px;
     padding-left: 20px;
     padding-right: 20px;
   }
-  
+
   .myrewards-adjustment {
     margin-top: 4%;
   }
-  
+
   .myrewards-cards-1 {
-    -webkit-mask-image: url('../../../images/icons/ic_cstatus.png');
-    mask-image: url('../../../images/icons/ic_cstatus.png');
+    -webkit-mask-image: url('../../../images/icons/test.jpg');
+    mask-image: url('../../../images/icons/test.jpg');
   }
   .myrewards-title-view {
     font-size: 30px;
   }
-  
+
   @media screen and (max-width : 768px) {
     .myrewards-title-view {
       text-align: center;
       margin: auto;
     }
   }
-  
+
 /* rex */
   .myrewards-container-component {
   padding-left: 20px;
@@ -158,7 +158,7 @@ padding-bottom: 3px;
   height: 125px;
   margin-bottom: 15px;
   border-radius: 10px;
-  
+
 }
 
 .display-grid {
