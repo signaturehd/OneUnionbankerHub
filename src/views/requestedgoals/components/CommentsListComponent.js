@@ -149,7 +149,7 @@ class CommentsListComponent extends Component {
             <br/>
             </div>
             :
-            <div className={ 'comment-border margin-5px padding-5px cursor-pointer' } onClick = { () =>
+            <div className={ 'requestComment-border margin-5px padding-5px cursor-pointer' } onClick = { () =>
               {
                 employeeNumber === respEmployeeNumber &&
                 this.setState({ showCommentOption: true, goalEditComment: goalComment })

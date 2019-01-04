@@ -85,6 +85,12 @@ p {
   border-radius: 50px;
 }
 
+.profile-button-medium {
+  min-width: 130px;
+  height: 40px;
+  border-radius: 50px
+}
+
 @media (max-width: 768px) {
   .header-margin-default {
     display: flex;
@@ -212,6 +218,10 @@ p {
   font-size: 35px;
 }
 
+.font-size-40px{
+  font-size: 50px;
+}
+
 /* text-align*/
 
 .text-align-center {
@@ -242,6 +252,10 @@ p {
   align-items: center;
 }
 
+.margin-auto {
+  margin: auto;
+}
+
 /* flaot position */
 
 .float-left {
@@ -255,7 +269,7 @@ p {
 /* Default color */
 
 .unionbank-color {
-  color: #ff8a00;
+  color: #fea30a;
 }
 
 .unionbank-white-color {

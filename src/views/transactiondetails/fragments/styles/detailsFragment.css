@@ -2,6 +2,11 @@
   display: grid;
 }
 
+.transaction-details-global-x3 {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
 .transaction-card-details {
   padding : 20px 40px;
 }

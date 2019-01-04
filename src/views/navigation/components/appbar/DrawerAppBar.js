@@ -202,13 +202,15 @@ class DrawerAppBar extends Component {
     }
 
     return (
-      <AppBar>
+      <AppBar
+        className = { 'appbar-style-color' }
+      >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <div>
               <img
                 style={ style.navbar }
-                src={ require('../../../../images/union-logo.png') }
+                src={ require('../../../../images/mobileview/UBP Logo.png') }
                 className={'_img-ub-logo'}/>
             </div>
             <div

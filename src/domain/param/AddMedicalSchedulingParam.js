@@ -1,9 +1,11 @@
 export default (
     preferredDate,
     clinicId,
-    packageId
+    packageId,
+    branchId,
   ) => ({
     preferredDate,
     clinicId,
-    packageId
+    packageId,
+    branchId,
   })

@@ -732,6 +732,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getHospitalBranch (token, id) {
+    return this.service.getHospitalBranch(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   addMedicalScheduling (
     token,
     addMedicalSchedulingParam
@@ -1569,6 +1574,16 @@ export default class HRBenefitsClient {
 
   getGoalsHistory (token, goalId, pageNumber, pageItem) {
     return this.service.getGoalsHistory(token, goalId, pageNumber, pageItem)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRatingGoal (token, ratingParam) {
+    return this.service.addRatingGoal(token, ratingParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  markAsCompleted (token, markParam) {
+    return this.service.markAsCompleted(token, markParam)
     .pipe(ServiceErrorOperator())
   }
 

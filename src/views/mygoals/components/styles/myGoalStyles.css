@@ -97,12 +97,14 @@
 .icon-check {
   background-size: contain;
   cursor: pointer;
+  background-position: center;
   background-color: transparent;
   display: block;
   height: 25px;
   width: inherit;
   background-repeat: no-repeat;
   margin: auto;
+  object-fit: cover;
 }
 
 .icon-check-img {

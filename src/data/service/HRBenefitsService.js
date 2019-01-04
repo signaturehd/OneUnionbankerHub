@@ -957,6 +957,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getHospitalBranch (token, id) {
+    return this.apiClient.get(`v1/medical/hospitals/${ id }/branches`, {
+      headers : { token }
+    })
+  }
+
   addMedicalScheduling (
     token,
     addMedicalSchedulingParam
@@ -965,6 +971,7 @@ export default class HRBenefitsService {
       date : addMedicalSchedulingParam.preferredDate,
       clinicId : addMedicalSchedulingParam.clinicId,
       packageId : addMedicalSchedulingParam.packageId,
+      branchId: addMedicalSchedulingParam.branchId,
     }
     return this.apiClient.post('v1/medical/exam/submit', medicalSchedulingObject, {
       headers : { token }
@@ -2024,14 +2031,28 @@ export default class HRBenefitsService {
      laptopLeaseParam) {
    const formData = new FormData()
    const object = {
+     accountNumber,
+     releasingCenter,
+     benefitId: '16',
+     type: laptopLeaseParam.id === 0 ? 1 : 2,
      brand: laptopLeaseParam.brand,
      model: laptopLeaseParam.model,
      screenSize: laptopLeaseParam.screenSize,
      color: laptopLeaseParam.color,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
-     deliveryOptionId: laptopLeaseParam.deliveryOption
+     deliveryOptionId: laptopLeaseParam.deliveryOption,
+     graphicsCard : laptopLeaseParam.graphicsCard,
+     hardDriveCapacity : laptopLeaseParam.hardDriveCapacity,
+     processorType : laptopLeaseParam.processorType,
+     operatingSystem : laptopLeaseParam.operatingSystem,
+     systemMemory : laptopLeaseParam.systemMemory,
+     or: {
+       number : laptopLeaseParam.orNumber,
+       date: laptopLeaseParam.orDate
+     }
    }
+
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
@@ -2392,6 +2413,19 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  addRatingGoal (token, ratingParam) {
+    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate`, ratingParam.body, {
+      headers: { token }
+    })
+  }
+
+  markAsCompleted (token, markParam) {
+    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
+      headers: { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {
