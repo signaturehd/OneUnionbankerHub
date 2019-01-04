@@ -805,7 +805,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             <div className = { 'text-align-right margin-right grid-global' }>
               <GenericButton
                 text = { 'Add Goal' }
-                className = { 'global-button profile-button-medium  font-size-11px' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 onClick = { () => {
                   this.resetValue()
                   this.setState({ showForm: true })
@@ -1105,26 +1105,29 @@ class RequestedGoalsFragment extends BaseMVPView {
                       <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                     }
                     <br/>
-                    <div className = { 'comment-grid align-items-center' }>
-                      <GenericInput
-                        text = { 'Write a comment' }
-                        value = { goalComment }
-                        onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                        errorMessage = { goalCommentErrorMessage }
-                      />
-                      {
-                        commentLoader ?
-                        <center>
-                          <CircularLoader  show = { commentLoader }/>
-                        </center>
-                        :
-                        <GenericButton
-                          text = { 'Post' }
-                          className = { 'profile-button-small' }
-                          onClick = { () => this.submitComment() }
+                    {
+                      goalId &&
+                      <div className = { 'comment-grid align-items-center' }>
+                        <GenericInput
+                          text = { 'Write a comment' }
+                          value = { goalComment }
+                          onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                          errorMessage = { goalCommentErrorMessage }
                         />
-                      }
-                    </div>
+                        {
+                          commentLoader ?
+                          <center>
+                            <CircularLoader  show = { commentLoader }/>
+                          </center>
+                          :
+                          <GenericButton
+                            text = { 'Post' }
+                            className = { 'profile-button-small' }
+                            onClick = { () => this.submitComment() }
+                          />
+                        }
+                      </div>
+                    }
                   </div>
                 </div>
                 }

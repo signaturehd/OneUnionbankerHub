@@ -16,8 +16,10 @@ export default class MyGoalsPresenter {
   }
 
   getForApprovalGoals () {
+    this.view.showCircularLoader()
     this.getForApprovalGoalsInteractor.execute()
     .subscribe(data => {
+        this.view.hideCircularLoader()
         this.view.getForApprovalGoals(data)
       }, error => {
         store.dispatch(NotifyActions.resetNotify())

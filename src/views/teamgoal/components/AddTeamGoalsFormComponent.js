@@ -48,6 +48,8 @@ class AddTeamGoalsFormComponent extends Component {
       goalType,
       goalTypeId,
       goalTypeErrorMessage,
+      participantArray,
+      participantErrorMessage,
       editMode,
       showGoalTypeModal,
       showGoalTypeModalFunc,
@@ -116,6 +118,10 @@ class AddTeamGoalsFormComponent extends Component {
             <div className = { 'grid-global' }>
             <div>
             <h2 className = { 'text-align-left font-size-16px font-weight-bold' }>Members</h2>
+              {
+                participantErrorMessage &&
+                <span className = {'error-message'}>participantErrorMessage</span>
+              }
               <Card className = { 'margin-10px padding-15' }>
                 <h2 className = { 'text-align-left font-size-14px text-weight-lighter' }>Sample Employee Name</h2>
               </Card>
