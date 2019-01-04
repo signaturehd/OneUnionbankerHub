@@ -8,10 +8,6 @@
   grid-template-columns: 3fr 2fr;
 }
 
-.textarea {
-  height: 30px;
-}
-
 .grid-container {
   display: grid;
   grid-template-columns: .1fr 3fr;

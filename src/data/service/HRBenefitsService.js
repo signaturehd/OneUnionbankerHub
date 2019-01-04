@@ -995,6 +995,7 @@ export default class HRBenefitsService {
   ) {
     const formData = new FormData()
     formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    console.log(outPatientParam.procedure)
       const objectOutPatient = {
         accountNumber,
         releasingCenter,
