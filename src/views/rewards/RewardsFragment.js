@@ -66,7 +66,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
 
 		return (
-			<div className={'grid-container'}>
+			<div className={'myreward-grid-container'}>
 				<div className={'myrewards-container'} >
 					<div>
 						<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
