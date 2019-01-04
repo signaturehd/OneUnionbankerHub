@@ -2031,14 +2031,28 @@ export default class HRBenefitsService {
      laptopLeaseParam) {
    const formData = new FormData()
    const object = {
+     accountNumber,
+     releasingCenter,
+     benefitId: '16',
+     type: laptopLeaseParam.id === 0 ? 1 : 2,
      brand: laptopLeaseParam.brand,
      model: laptopLeaseParam.model,
      screenSize: laptopLeaseParam.screenSize,
      color: laptopLeaseParam.color,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
-     deliveryOptionId: laptopLeaseParam.deliveryOption
+     deliveryOptionId: laptopLeaseParam.deliveryOption,
+     graphicsCard : laptopLeaseParam.graphicsCard,
+     hardDriveCapacity : laptopLeaseParam.hardDriveCapacity,
+     processorType : laptopLeaseParam.processorType,
+     operatingSystem : laptopLeaseParam.operatingSystem,
+     systemMemory : laptopLeaseParam.systemMemory,
+     or: {
+       number : laptopLeaseParam.orNumber,
+       date: laptopLeaseParam.orDate
+     }
    }
+
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
@@ -2408,6 +2422,14 @@ export default class HRBenefitsService {
 
   markAsCompleted (token, markParam) {
     return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
+      headers: { token }
+    })
+  }
+
+  /* Squad Goals */
+
+  addSquadGoals (token, squadParam) {
+    return this.apiClient.post('v1/goals/squad', squadParam, {
       headers: { token }
     })
   }

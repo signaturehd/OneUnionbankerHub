@@ -13,6 +13,8 @@ import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInt
 import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
 import MarkAsCompletedGoalsInteractor from '../../../domain/interactor/goals/MarkAsCompletedGoalsInteractor'
 import AddRatingGoalsInteractor from '../../../domain/interactor/goals/AddRatingGoalsInteractor'
+import AddSquadGoalsInteractor from '../../../domain/interactor/goals/AddSquadGoalsInteractor'
+
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
 import addRatingGoalsParam from '../../../domain/param/AddRatingGoalsParam'
 import markParam from '../../../domain/param/MarkAsCompletedGoalsParam'
@@ -38,6 +40,7 @@ export default class RequestCoachPresenter {
     this.deleteCommentInteractor = new DeleteCommentInteractor(container.get('HRBenefitsClient'))
     this.markAsCompletedGoalsInteractor = new MarkAsCompletedGoalsInteractor(container.get('HRBenefitsClient'))
     this.addRatingGoalsInteractor = new AddRatingGoalsInteractor(container.get('HRBenefitsClient'))
+    this.addSquadGoalsInteractor = new AddSquadGoalsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -63,7 +66,7 @@ export default class RequestCoachPresenter {
       .subscribe(data => {
         this.view.hideTaskLoader()
         this.view.getTasklist(data)
-        this.view.checkIfShowMarkAsCompleted(this.view.checkIfGoalCompleted(data))
+        // this.view.checkIfShowMarkAsCompleted(this.view.checkIfGoalCompleted(data))
       }, error => {
         this.view.hideTaskLoader()
         store.dispatch(NotifyActions.resetNotify())
@@ -107,7 +110,7 @@ export default class RequestCoachPresenter {
     priorityId,
     goalTypeId
   ){
-    this.view.showSubmitLoader()
+      this.view.showSubmitLoader()
       this.addRequestedGoalsInteractor.execute(requestedGoalsParam(
           goalTitle,
           description,
@@ -117,11 +120,9 @@ export default class RequestCoachPresenter {
           goalTypeId
         )
       )
-      .do(data => {
-        this.getGoals()
-      })
       .subscribe (
         data => {
+          this.getGoals()
           this.view.hideSubmitLoader()
           this.view.noticeResponse(data)
           this.view.resetValue()
@@ -329,6 +330,20 @@ export default class RequestCoachPresenter {
     .subscribe(data => {
       this.view.noticeResponse(data)
       this.view.resetRemarks()
+      this.getGoals()
+      this.view.hideSubmitLoader()
+    }, error => {
+      this.view.hideSubmitLoader()
+    })
+  }
+
+  /* Squad Goals */
+
+  addSquadGoals () {
+    this.view.showSubmitLoader()
+    // this.addRatingGoalsInteractor.execute(addRatingGoalsParam(id, ratings, remarks))
+    .subscribe(data => {
+      this.getGoals()
       this.view.hideSubmitLoader()
     }, error => {
       this.view.hideSubmitLoader()

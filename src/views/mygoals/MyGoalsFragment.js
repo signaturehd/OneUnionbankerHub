@@ -300,6 +300,7 @@ class MyGoalsFragment extends BaseMVPView {
                     :
                     <RequestedGoalsFragment
                       employeeNumber = { employeeNumber }
+                      isLineManager = { isLineManager }
                       showRequestCoachForm = { showRequestCoachForm }
                       showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                   :
