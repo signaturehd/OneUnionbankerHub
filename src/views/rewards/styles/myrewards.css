@@ -97,9 +97,9 @@ padding-bottom: 3px;
     background-color: #ff8a00;
     -webkit-mask-size: auto 100%;
     -webkit-mask-repeat: no-repeat;
-    height: 50px;
+    height: 200px;
     margin: 0px auto;
-    width: 50px;
+    width: 200px;
   }
 
   .myrewards-column-grid {
@@ -116,8 +116,16 @@ padding-bottom: 3px;
   }
 
   .myrewards-cards-1 {
-    -webkit-mask-image: url('../../../images/icons/test.jpg');
+    background-image: url('../../../images/icons/test.jpg');
     mask-image: url('../../../images/icons/test.jpg');
+    -webkit-background-size: cover;
+    padding-right: 40px;
+    padding-left: 40px;
+    width: 230px;
+    height: 230px;
+    max-width: 230px;
+    max-height: 230px;
+    border-radius: 10px;
   }
   .myrewards-title-view {
     font-size: 30px;
