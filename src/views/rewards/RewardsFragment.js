@@ -7,17 +7,18 @@ import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/myrewards.css'
 import staticImage from './styles/ubp-bg.png'
+/* import Redeem from './fragments/redeem/redeem' */
 
 class RewardsRecognitionFragment extends BaseMVPView {
-	constructor(props) {
+	constructor (props) {
 		super(props)
 	}
-	componentDidMount() {
+	componentDidMount () {
 		this.props.setSelectedNavigation(9)
 	}
 
 
-	render() {
+	render () {
 		const { history, profileHasCOC } = this.props
 		const { accountNumber, showAccountNumberModal } = this.state
 
@@ -44,12 +45,29 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			path: '/myrewards/staraward',
 		}]
 
+		const redeem = [{
+			id: 0,
+			staticImage: '',
+			leftText: '10% OFF in Zalora',
+			rightText: '13, 000 points',
+		},
+		{
+			id: 1,
+			staticImage: '',
+			leftText: '20% OFF in Carola',
+			rightText: '23, 000 points',
+		},
+		{
+			id: 2,
+			staticImage: '',
+			leftText: '30% OFF in Valora',
+			rightText: '33, 000 points',
+		}]
+
 
 		return (
 			<div className={'grid-container'}>
-			<div className={'container'} >
-
-
+				<div className={'myrewards-container'} >
 					<div>
 						<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
 						<p> Gather and redeem your points</p>
@@ -71,15 +89,15 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					}
 
 					<div className={'myreward-orange-color'}>
+
 						<span className={'myreward-orange-text align-left'}> My Reward </span>
 						<span className={'myreward-orange-text align-right'}> 20,000 </span>
 					</div>
 
 					<div>
 						<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
-						<h6> Celebrate those who own the future and drive innovation.</h6>
+						<h6> Celebrate those who own the future and drive innovation </h6>
 					</div>
-
 					<div className={'myrewards-adjustment'}>
 						<div className={'myrewards-card-container'}>
 							{
@@ -102,29 +120,22 @@ class RewardsRecognitionFragment extends BaseMVPView {
 								))
 							}
 						</div>
-				</div>
-
-			</div>
-
-			<div>
-						<div className={ 'container' }>
-						<h2 className={'header-margin-default text-align-left'}>Redeem</h2>
-						<Card className="myrewards-container-component">
-							<img className={'myrewards-card-image '} src={staticImage} />
-							<div className={'myrewards-grid myrewards-card-image-text'}>
-								<span class="align-left" >20 % OFF in Zalora</span>
-								<span class="align-right" >23, 000 points</span>
-							</div>
-						</Card>
-						<Card className="myrewards-container-component">
-							<img className={'myrewards-card-image '} src={staticImage} />
-							<div className={'myrewards-grid myrewards-card-image-text'}>
-								<span class="align-left" >20 % OFF in Zalora</span>
-								<span class="align-right" >23, 000 points</span>
-							</div>
-						</Card>
 					</div>
-						</div>
+				</div>
+				<div>
+					<h2 className={'header-margin-default text-align-left'}>Redeem</h2>
+					{
+						redeem.map((value, idx) => (
+							<Card className="myrewards-container-component">
+								<img className={'myrewards-card-image '} src={staticImage} />
+								<div className={'myrewards-grid myrewards-card-image-text'}>
+									<span class="align-left" >{value.leftText}</span>
+									<span class="align-right" >{value.rightText}</span>
+								</div>
+							</Card>
+						))
+					}
+				</div>
 			</div>
 		)
 	}
