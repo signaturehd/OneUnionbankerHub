@@ -533,6 +533,7 @@ class TeamGoalsFragment extends BaseMVPView {
           />
         :
         <div>
+          <br/>
           <div className = { 'grid-filter margin-left' }>
             <div></div>
             <div className = { 'text-align-right margin-right' }>

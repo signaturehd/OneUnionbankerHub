@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Loader, Notify } from '../../../ub-components/'
+import { Loader, Notify, GenericLoader } from '../../../ub-components/'
 
 import './styles/base.css'
 import store from '../../../store'
@@ -50,7 +50,7 @@ class BaseView extends Component {
 
     return (
       <div>
-        <Loader show = { loader }/>
+        <GenericLoader show = { loader }/>
         <div className = { 'notify-container' }>
         {
           notify &&
