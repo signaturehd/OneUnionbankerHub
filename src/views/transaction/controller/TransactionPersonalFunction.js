@@ -23,7 +23,11 @@ import { format } from '../../../utils/numberUtils'
 
   /* Medical */
   export function checkedAccountNumber (details) {
-    return details && details.AccountNo ? details && details.AccountNo : '(Not Yet Provided)'
+    return details && details.AccountNo ? details && details.AccountNo : ''
+  }
+
+  export function checkReleasingCenter (details) {
+    return details && details.ReleasingCenter ? details && details.ReleasingCenter : ''
   }
 
   export function  checkedReferenceNumber (details) {
