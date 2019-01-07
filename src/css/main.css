@@ -1,3 +1,9 @@
+@media print {
+  * {
+    display: none !important;
+  }
+}
+
 body {
   background: url('../images/ub_pattern_bg.png');
   background-size:cover;

@@ -45,7 +45,7 @@ class MobileHeaderComponent extends Component {
           {
             platformUsed === 'android' ?
             <span
-              onClick = { () => this.downloadAndroid() }
+              onClick = { () =>  this.downloadAndroid() }
               className = { 'cursor-pointer mobile-view-googleplay mobile-view-googleplay-detail' }/>
             :
             <span

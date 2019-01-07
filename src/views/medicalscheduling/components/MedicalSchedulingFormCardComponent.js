@@ -38,7 +38,8 @@ export default class MedicalSchedulingFormCardComponent extends Component {
       index,
       viewMoreText,
       viewMore,
-      viewLess
+      viewLess,
+      remarksText
     } = this.props
 
     const isVisible = (packageLabel && procedureList && procedureList.length > 4) ? '' : 'hide'
@@ -92,7 +93,14 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             minDate = { moment(Date.now()).add(3, 'weeks') }
             selected = { func.checkedDate(preferredDate) }
             onChange = { (data) => onChangePreferredDate(data) }/>
+          {
+            remarksText &&
 
+            <GenericInput
+              disabled = { true }
+              value = { remarksText && remarksText }
+              type = { 'textare' }/>
+          }
             <br/>
             <div className={ 'medsched-package-procedure' }>
               <table>
