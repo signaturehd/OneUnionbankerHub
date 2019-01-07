@@ -5,8 +5,8 @@ import DNAParam from '../../../domain/param/GetDNAParam'
 
 export default class CelebrateDNAPresenter {
 
-    constructor () {
-      this.getRewardsDNAMoment = new GetRewardsDNAMoment(container.get('HRBenefitsService'));
+    constructor (container) {
+      this.getRewardsDNAMoment = new GetRewardsDNAMoment(container.get("HRBenefitsService"));
     }
 
     setView (view) {
