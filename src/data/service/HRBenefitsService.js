@@ -2471,10 +2471,11 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
-    // Reward and Goals
-    getRewardsDNAMoment (token, dataParam) {
-      return this.rootClient.get(`v1/rewards?awardId=2`, null, {
-        headers : { token }
-      })
-    }
+
+  // Reward and Goals
+  getRewardsDNAMoment (token, id) {
+    return this.apiClient.get(`v1/rewards?awardId=${ id }`, {
+      headers : { token }
+    })
+  }
 }

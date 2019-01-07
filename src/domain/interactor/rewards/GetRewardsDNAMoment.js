@@ -3,7 +3,7 @@ export default class GetRewardsDNAMoment {
     this.client = client
   }
 
-  execute (dataParam) {
-    return this.client.getRewardsDNAMoment(this.client.getToken(), dataParam)
+  execute (id) {
+    return this.client.getRewardsDNAMoment(this.client.getToken(), id)
   }
 }

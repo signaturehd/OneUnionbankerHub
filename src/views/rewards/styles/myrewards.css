@@ -91,6 +91,7 @@ padding-bottom: 3px;
   .myrewards-option-cards-details {
     color: #1f1d1d;
     margin-bottom: 25px;
+    font-size: 14px;  /* sherwin */
   }
 
   .myrewards-option-default {
@@ -165,7 +166,7 @@ padding-bottom: 3px;
   width: 100%;
   height: 125px;
   margin-bottom: 15px;
-  border-radius: 10px;
+  border-radius: 5px;
 
 }
 
