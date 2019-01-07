@@ -2426,6 +2426,14 @@ export default class HRBenefitsService {
     })
   }
 
+  /* Team Goals */
+
+  addTeamGoals (token, teamGoalsParam) {
+    return this.apiClient.post('v1/goals/squad', teamGoalsParam, {
+      headers: { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

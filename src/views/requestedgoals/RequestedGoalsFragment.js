@@ -15,7 +15,8 @@ import {
   DatePicker,
   Card,
   Line,
-  FloatingActionButton
+  FloatingActionButton,
+  GenericIconButton
 } from '../../ub-components/'
 
 import RequestedGoalsComponent from './components/RequestedGoalsComponent'
@@ -68,7 +69,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
-      ratings: 1,
+      ratings: 0,
       taskId: '',
       remarksText: '',
       taskDescription: '',
@@ -377,6 +378,10 @@ class RequestedGoalsFragment extends BaseMVPView {
     })
   }
 
+  resetRemarks () {
+    this.setState({ showRemarksText : false, remarksText : '' })
+  }
+
   checkIfTaskCompleted (task) {
     let count = 0
     task && task.map((resp) => {
@@ -407,10 +412,9 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitRatingWithRemarks (e) {
-    console.log(e)
     if(e.which === 13) {
       try {
-        this.presenter.addRatingGoal(this.state.goalId, this.state.ratings, this.state.remarks)
+        this.presenter.addRatingGoal(this.state.goalId, this.state.ratings, this.state.remarksText)
 
       }catch(e) {
         console.log(e)
@@ -420,15 +424,15 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   checkRatings (rate) {
     if(rate === 1) {
-      return 'Poor'
+      return 'Seldom Meets'
     } else if (rate === 2) {
-      return 'Borderline'
+      return 'Usually Meets'
     } else if (rate === 3) {
-      return 'Satisfactory'
+      return 'Consistently Meets'
     } else if (rate === 4) {
-      return 'Good'
+      return 'Usually Exceeds'
     } else if (rate === 5) {
-      return 'Outstanding'
+      return 'Consistently Exceeds'
     }
   }
 
@@ -439,7 +443,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    return isLineManager === true && approvalStatus === 6 ? true : false
+    return isLineManager && approvalStatus === 6 ? true : false
   }
 
   postMarkAsCompleted() {
@@ -524,9 +528,8 @@ class RequestedGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
-
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
-console.log(this.checkIfGoalCompleted(taskArray))
+
     return (
     <div>
       { super.render() }
@@ -596,7 +599,6 @@ console.log(this.checkIfGoalCompleted(taskArray))
         </Modal>
       }
       {
-        approvalStatus !== 6 &&
         showMarkAsCompleted &&
         <Modal>
           {
@@ -802,7 +804,7 @@ console.log(this.checkIfGoalCompleted(taskArray))
             <div className = { 'text-align-right margin-right grid-global' }>
               <GenericButton
                 text = { 'Add Goal' }
-                className = { 'global-button profile-button-medium  font-size-11px' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 onClick = { () => {
                   this.resetValue()
                   this.setState({ showForm: true })
@@ -810,7 +812,7 @@ console.log(this.checkIfGoalCompleted(taskArray))
               />
               <GenericButton
                 text = { 'Request for Coaching' }
-                className = { 'global-button profile-button-medium' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 onClick = { () => showRequestCoachFunc(true)}
               />
             </div>
@@ -836,7 +838,10 @@ console.log(this.checkIfGoalCompleted(taskArray))
                   dueDate,
                   priorityName,
                   approvalStatus,
-                  goalTypeId
+                  goalTypeId,
+                  isTeamGoal,
+                  isCompleted,
+                  ratings,
                 ) => {
                   this.setState({
                     goalId,
@@ -846,12 +851,17 @@ console.log(this.checkIfGoalCompleted(taskArray))
                     dueDate,
                     priorityName,
                     approvalStatus,
-                    goalTypeId
+                    goalTypeId,
+                    isTeamGoal,
+                    isCompleted,
+                    ratings: parseFloat(ratings),
+                    showRemarksText: false,
+                    remarksText: ''
                    })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  this.setState({ ifYesCompleted: false, showMarkAsCompleted: false })
+                  this.setState({ ifYesCompleted: false, showMarkAsCompleted: isCompleted === 1 ? true : false, showRemarksText : false })
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
@@ -901,31 +911,32 @@ console.log(this.checkIfGoalCompleted(taskArray))
                   <div>
                     <div>
                       <br/>
-                      <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>4.3</h2>
+                      <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
+                        { ratings }
+                      </h2>
                       <br/>
                       <div className = { 'text-align-center' }>
                         {
-                          this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager)?
+                          this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) ?
                           <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
-                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                            fractions={ 1 }
-                            initialRating={ (ratings ? ratings : 0) || 0 }
-                            readOnly
-                          />
-                        :
-                          <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
                             onChange={ e => this.commentRateFunc(e) }
                             initialRating={ (ratings ? ratings : 0) || 0 }
-
+                          />
+                        :
+                          <Rating
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                            fractions={ 1 }
+                            initialRating={ (ratings ? ratings : 0) || 0 }
+                            readonly
                           />
                         }
                         <br/>
                       </div>
-                      <h2 className = { 'font-size-9px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+                      <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
                       {
                         showRemarksText &&
 
@@ -1093,26 +1104,29 @@ console.log(this.checkIfGoalCompleted(taskArray))
                       <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                     }
                     <br/>
-                    <div className = { 'comment-grid align-items-center' }>
-                      <GenericInput
-                        text = { 'Write a comment' }
-                        value = { goalComment }
-                        onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                        errorMessage = { goalCommentErrorMessage }
-                      />
-                      {
-                        commentLoader ?
-                        <center>
-                          <CircularLoader  show = { commentLoader }/>
-                        </center>
-                        :
-                        <GenericButton
-                          text = { 'Post' }
-                          className = { 'profile-button-small' }
-                          onClick = { () => this.submitComment() }
+                    {
+                      goalId &&
+                      <div className = { 'comment-grid align-items-center' }>
+                        <GenericInput
+                          text = { 'Write a comment' }
+                          value = { goalComment }
+                          onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                          errorMessage = { goalCommentErrorMessage }
                         />
-                      }
-                    </div>
+                        {
+                          commentLoader ?
+                          <center>
+                            <CircularLoader  show = { commentLoader }/>
+                          </center>
+                          :
+                          <GenericButton
+                            text = { 'Post' }
+                            className = { 'profile-button-small' }
+                            onClick = { () => this.submitComment() }
+                          />
+                        }
+                      </div>
+                    }
                   </div>
                 </div>
                 }
