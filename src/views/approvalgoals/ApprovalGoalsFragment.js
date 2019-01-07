@@ -162,7 +162,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
       }
         <div>
         <br/>
-          <div className = { 'grid-main' }>
+          <div className = { 'grid-main padding-10px' }>
             <div>
             {
               enabledLoader ?

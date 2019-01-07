@@ -1587,10 +1587,10 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  /* Squad Goals */
+  /* Team Goals */
 
-  addSquadGoals (token, squadParam) {
-    return this.service.addSquadGoals(token, squadParam)
+  addTeamGoals (token, teamGoalsParam) {
+    return this.service.addTeamGoals(token, teamGoalsParam)
     .pipe(ServiceErrorOperator())
   }
 

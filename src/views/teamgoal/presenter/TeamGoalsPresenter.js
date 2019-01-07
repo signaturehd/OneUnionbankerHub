@@ -5,13 +5,13 @@ import GetGoalHistoryInteractor from '../../../domain/interactor/goals/GetGoalHi
 import UpdateGoalsInteractor from '../../../domain/interactor/goals/UpdateGoalsInteractor'
 import UpdateGoalTaskInteractor from '../../../domain/interactor/goals/UpdateGoalTaskInteractor'
 import UpdateGoalCommentInteractor from '../../../domain/interactor/goals/UpdateGoalCommentInteractor'
-import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddRequestedGoalsInteractor'
+import AddTeamGoalsInteractor from '../../../domain/interactor/goals/AddTeamGoalsInteractor'
 import AddGoalTaskInteractor from '../../../domain/interactor/goals/AddGoalTaskInteractor'
 import AddGoalCommentInteractor from '../../../domain/interactor/goals/AddGoalCommentInteractor'
 import DeleteGoalsInteractor from '../../../domain/interactor/goals/DeleteGoalsInteractor'
 import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInteractor'
 import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
-import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
+import teamGoalsParam from '../../../domain/param/AddTeamGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -26,7 +26,7 @@ export default class RequestCoachPresenter {
     this.updateGoalsInteractor = new UpdateGoalsInteractor(container.get('HRBenefitsClient'))
     this.updateGoalTaskInteractor = new UpdateGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.updateGoalCommentInteractor = new UpdateGoalCommentInteractor(container.get('HRBenefitsClient'))
-    this.addRequestedGoalsInteractor = new AddRequestedGoalsInteractor(container.get('HRBenefitsClient'))
+    this.addTeamGoalsInteractor = new AddTeamGoalsInteractor(container.get('HRBenefitsClient'))
     this.addGoalTaskInteractor = new AddGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.addGoalCommentInteractor = new AddGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.deleteGoalsInteractor = new DeleteGoalsInteractor(container.get('HRBenefitsClient'))
@@ -92,7 +92,8 @@ export default class RequestCoachPresenter {
     )
   }
 
-  addRequestedGoals (
+  addTeamGoals (
+    participantArray,
     goalTitle,
     description,
     startDate,
@@ -111,7 +112,8 @@ export default class RequestCoachPresenter {
         })
       )
     } else {
-      this.addRequestedGoalsInteractor.execute(requestedGoalsParam(
+      this.addTeamGoalsInteractor.execute(teamGoalsParam(
+          participantArray,
           goalTitle,
           description,
           startDate,
@@ -121,7 +123,7 @@ export default class RequestCoachPresenter {
         )
       )
       .do(data => {
-        this.getGoals()
+        this.getTeamGoals()
       })
       .subscribe (
         data => {

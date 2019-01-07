@@ -69,7 +69,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
-      ratings: 1,
+      ratings: 0,
       taskId: '',
       remarksText: '',
       taskDescription: '',
@@ -443,7 +443,6 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    console.log(approvalStatus, isLineManager)
     return isLineManager && approvalStatus === 6 ? true : false
   }
 
@@ -805,7 +804,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             <div className = { 'text-align-right margin-right grid-global' }>
               <GenericButton
                 text = { 'Add Goal' }
-                className = { 'global-button profile-button-medium  font-size-11px' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 onClick = { () => {
                   this.resetValue()
                   this.setState({ showForm: true })
@@ -856,6 +855,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                     isTeamGoal,
                     isCompleted,
                     ratings: parseFloat(ratings),
+                    showRemarksText: false,
+                    remarksText: ''
                    })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
@@ -918,7 +919,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                         {
                           this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) ?
                           <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
                             onChange={ e => this.commentRateFunc(e) }
@@ -926,7 +927,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                           />
                         :
                           <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#c65e11' }} /> }
+                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
                             fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
                             fractions={ 1 }
                             initialRating={ (ratings ? ratings : 0) || 0 }
@@ -1103,26 +1104,29 @@ class RequestedGoalsFragment extends BaseMVPView {
                       <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
                     }
                     <br/>
-                    <div className = { 'comment-grid align-items-center' }>
-                      <GenericInput
-                        text = { 'Write a comment' }
-                        value = { goalComment }
-                        onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                        errorMessage = { goalCommentErrorMessage }
-                      />
-                      {
-                        commentLoader ?
-                        <center>
-                          <CircularLoader  show = { commentLoader }/>
-                        </center>
-                        :
-                        <GenericButton
-                          text = { 'Post' }
-                          className = { 'profile-button-small' }
-                          onClick = { () => this.submitComment() }
+                    {
+                      goalId &&
+                      <div className = { 'comment-grid align-items-center' }>
+                        <GenericInput
+                          text = { 'Write a comment' }
+                          value = { goalComment }
+                          onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                          errorMessage = { goalCommentErrorMessage }
                         />
-                      }
-                    </div>
+                        {
+                          commentLoader ?
+                          <center>
+                            <CircularLoader  show = { commentLoader }/>
+                          </center>
+                          :
+                          <GenericButton
+                            text = { 'Post' }
+                            className = { 'profile-button-small' }
+                            onClick = { () => this.submitComment() }
+                          />
+                        }
+                      </div>
+                    }
                   </div>
                 </div>
                 }
