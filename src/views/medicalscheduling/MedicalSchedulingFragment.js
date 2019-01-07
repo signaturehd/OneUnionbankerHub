@@ -219,7 +219,9 @@ class MedicalSchedulingFragment extends BaseMVPView {
           </h2>
         </div>
         {
-          enabledLoader &&
+          enabledLoader ?
+            <CircularLoader show = { enabledLoader }/>
+          :
             <FormComponent
               branches = { branches }
               branchesId = { branchesId }
