@@ -1604,9 +1604,9 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  //Reward Goals
+  // Reward Goals
   getRewardsDNAMoment (token, id) {
-    return this.service.submitCoe(token, id)
+    return this.service.getRewardsDNAMoment(token, id)
       .pipe(ServiceErrorOperator())
   }
 }
