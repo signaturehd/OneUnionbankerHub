@@ -2472,4 +2472,11 @@ export default class HRBenefitsService {
     })
   }
 
+/* Pension Funds */
+
+  getPensionFunds (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
 }

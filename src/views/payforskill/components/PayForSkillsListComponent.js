@@ -33,76 +33,51 @@ class PayForSkillsListComponent extends Component {
       <div className = {'payforskills-container'} >
         <div className = { 'payforskills-card-list' }>
           <div>
-            <h2
-              className = { 'header-margin-default text-align-left' }>Pay For Skills</h2>
+            <h2 className = { 'header-margin-default text-align-left' }>Pay For Skills</h2>
             <h2>List of your skill list in one place.</h2>
             <br/>
-            <br/>
-            {
-              payForSkillsList === undefined &&
-              <center className = { 'circular-loader-center' }>
-                <h2>
-                  No Records.
-                </h2>
-              </center>
-            }
-            <br/>
-            {
-              posApproved && posApproved.length !== 0 &&
-              <div>
-                <h2
-                  className = { 'font-weight-bold font-size-18px' }>Approved ...</h2>
-                <br/>
-                {
-                  enabledLoader ?
+            <div>
+              <h2>For Approval ...</h2>
+              <br/>
+              {
+                enabledLoader ?
 
-                  <LoaderComponent
-                    enabledLoader  = { enabledLoader  }
-                  /> :
-                  <div className = { 'grid-global-columns-x3' }>
-                    <SkillCard
-                      array = { posApproved }
-                    />
-                  </div>
-                }
-              </div>
-            }
-            {
-              posReview && posReview.length !== 0 &&
-              <div>
-                <h2 className = { 'font-weight-bold font-size-18px' }>For Review ...</h2>
-                <br/>
-                {
-                  enabledLoader ?
-
-                  <LoaderComponent
-                    enabledLoader = { enabledLoader }
-                  /> :
-                  <div className = { 'grid-global-columns-x3' }>
-                    <SkillCard
-                      array = { posReview }
-                    />
-                  </div>
-                }
-              </div>
-            }
-            {
-              posDraft && posDraft.length !== 0 &&
-              <div>
-                <h2 className = { 'font-weight-bold font-size-18px' }>Draft ...</h2>
-                <br/>
-                {
-                  enabledLoader ?
-
-                  <LoaderComponent
-                    enabledLoader = { enabledLoader }
-                  /> :
+                <LoaderComponent
+                  enabledLoader  = { enabledLoader  }
+                /> :
+                <div className = { 'grid-global-columns-x3' }>
                   <SkillCard
-                    array = { posDraft }
+                    array = { posApproved }
                   />
-                }
-              </div>
-            }
+                </div>
+              }
+            </div>
+            <div>
+              <h2>For Review ...</h2>
+              <br/>
+              {
+                enabledLoader ?
+
+                <LoaderComponent /> :
+                <div className = { 'grid-global-columns-x3' }>
+                  <SkillCard
+                    array = { posReview }
+                  />
+                </div>
+              }
+            </div>
+            <div>
+              <h2>For Draft ...</h2>
+
+              {
+                enabledLoader ?
+
+                <LoaderComponent /> :
+                <SkillCard
+                  array = { posDraft }
+                />
+              }
+            </div>
           </div>
         </div>
       </div>

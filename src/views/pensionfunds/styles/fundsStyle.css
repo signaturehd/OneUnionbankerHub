@@ -1,0 +1,4 @@
+.funds-fragment {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
