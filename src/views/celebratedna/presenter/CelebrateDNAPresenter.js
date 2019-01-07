@@ -1,12 +1,12 @@
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
-import GetRewardsDNAMoment from '../../../domain/interactor/rewards/GetRewardsDNAMoment'
+import GetRewardsDNAMomentInteractor from '../../../domain/interactor/rewards/GetRewardsDNAMoment'
 import DNAParam from '../../../domain/param/GetDNAParam'
 
 export default class CelebrateDNAPresenter {
 
     constructor (container) {
-      this.getRewardsDNAMoment = new GetRewardsDNAMoment(container.get("HRBenefitsService"));
+      this.getRewardsDNAMoment = new GetRewardsDNAMomentInteractor(container.get("HRBenefitsService"));
     }
 
     setView (view) {

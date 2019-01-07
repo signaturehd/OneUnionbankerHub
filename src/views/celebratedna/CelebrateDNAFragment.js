@@ -19,32 +19,31 @@ class CelebrateDNAFragment extends BaseMVPView {
       componentDidMount () {
         this.props.setSelectedNavigation(9)
         //this.presenter.getRewardDNA(5)
-
       }
 
       setRewardDNA(rewardDNA){
         this.setState({ rewardDNA })
       }
 
-
-
       render () {
-        const { history } = this.props
+        const { history, onClick } = this.props
           const { accountNumber, showAccountNumberModal } = this.state
 
           return(
-
             <div>
                   <h1>Celebrate DNA</h1>
-
+                  <GenericButton text={'Button'} onclick={''}>
+                  </GenericButton>
             </div>
           )
-      }
+        }
     }
 
 CelebrateDNAFragment.propTypes = {
 	setSelectedNavigation: PropTypes.func,
-	profileHasCOC: PropTypes.boolean,
+  onClick: PropTypes.func,
+  history: PropTypes.object,
+	profileHasCOC: PropTypes.bool,
   }
 
 export default ConnectView (CelebrateDNAFragment, Presenter)
