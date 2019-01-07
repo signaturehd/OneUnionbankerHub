@@ -1,4 +1,4 @@
-export default class GetRewardsDNAMoment {
+export default class GetRewardsDNAMomentInteractor {
   constructor (client) {
     this.client = client
   }
