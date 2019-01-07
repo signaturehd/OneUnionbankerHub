@@ -1,25 +1,59 @@
 import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsInteractor'
 
-let phenomData = [], phenomLength = 0
+let mockData = {
+  'totalUnits': '15.34',
+  'totalInvestment' : '20000',
+  'unitToday': '425.07',
+  'paymentHistory' : [
+    {
+      'id': 1,
+      'datePayment': '01/01/2019',
+      'totalInvestment': '20000',
+      'totalReturn': '2000',
+    }, {
+      'id': 2,
+      'datePayment': '01/02/2019',
+      'totalInvestment': '20000',
+      'totalReturn': '2000',
+    }, {
+      'id': 3,
+      'datePayment': '03/03/2019',
+      'totalInvestment': '20000',
+      'totalReturn': '2000',
+    }, {
+      'id': 4,
+      'datePayment': '04/04/2019',
+      'totalInvestment': '20000',
+      'totalReturn': '2000',
+    }
+  ]
+}
 
 export default class PensionFundsPresenter {
   constructor (container) {
-    this.getPensionFundsInteractor = this.GetPensionFundsInteractor(container.get('HRBenefitsClient'))
+    // this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
   }
 
-  setView(view) {
+  setView (view) {
     this.view = view
   }
 
-  getPensionFunds () {
-    this.getPensionFundsInteractor.execute()
-    this.view.showCircularLoader(true)
-    .subscribe(data => {
-      this.view.setPensionFundsData(data)
-      this.view.showCircularLoader(false)
-    }, error => {
-      this.view.showCircularLoader(false)
-    })
+  getMockData () {
+    try {
+      this.view.setPensionFundsData(mockData)
+    } catch(e) {
+      console.log(e)
+    }
   }
-
+  //
+  // getPensionFunds () {
+  //   this.getPensionFundsInteractor.execute()
+  //   this.view.showCircularLoader(true)
+  //   .subscribe(data => {
+  //     this.view.setPensionFundsData(data)
+  //     this.view.showCircularLoader(false)
+  //   }, error => {
+  //     this.view.showCircularLoader(false)
+  //   })
+  // }
 }

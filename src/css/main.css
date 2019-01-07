@@ -272,6 +272,16 @@ p {
   float: right;
 }
 
+/* Text Alignment Spacing */
+
+.letter-spacing-1 {
+  letter-spacing: .1pc;
+}
+
+.letter-spacing-2 {
+  letter-spacing: .2pc;
+}
+
 /* Default color */
 
 .unionbank-color {

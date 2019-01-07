@@ -1,4 +1,14 @@
 .funds-fragment {
   display: grid;
-  grid-template-columns: .05fr 1fr .05fr;
+  grid-template-columns: .03fr 1fr .03fr;
+}
+
+.funds-grid-content {
+  display: grid;
+  grid-template-columns: .6fr .4fr;
+}
+
+.funds-grid-content-detail {
+  display: grid;
+  grid-template-columns: .7fr .35fr; 
 }

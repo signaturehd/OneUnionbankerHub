@@ -1,0 +1,25 @@
+.funds-grid-details-income {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #f6821d;
+  padding: 3.5px 0px 0px 0px;
+  border-radius: 30px;
+}
+
+.funds-grid-row-details {
+  display: grid;
+  grid-template-rows: .3fr .3fr;
+  margin: auto;
+  text-align: center;
+}
+
+.funds-component-history-grid {
+  display: grid;
+  grid-template-columns: .1fr 1fr;
+}
+
+.funds-component-card-details-grid {
+  display: grid;
+  grid-template-columns: .5fr .25fr .25fr;
+  padding: 5px;
+}

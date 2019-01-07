@@ -94,6 +94,9 @@ import MyGoalsFragment from '../mygoals/MyGoalsFragment'
 import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
 import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 
+/* Pension Funds */
+import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -483,6 +486,9 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/phenom' render = { props =>
                   <PhenomFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/pensionfunds' render = { props =>
+                  <PensionFundsFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
