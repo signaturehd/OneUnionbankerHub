@@ -205,7 +205,7 @@ class DrawerAppBar extends Component {
             <div>
               <img
                 style={ style.navbar }
-                src={ require('../../../../images/mobileview/UBP Logo.png') }
+                src={ require('../../../../images/mobileview/UBP Logo 2.png') }
                 className={'_img-ub-logo'}/>
             </div>
             <div
