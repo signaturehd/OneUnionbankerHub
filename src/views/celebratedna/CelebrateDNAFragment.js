@@ -14,6 +14,9 @@ import { InputModal, Card, GenericButton } from '../../ub-components'
 class CelebrateDNAFragment extends BaseMVPView {
       constructor (props) {
         super(props)
+        this.state = {
+          rewardDNA: []
+        }
       }
 
       componentDidMount () {
