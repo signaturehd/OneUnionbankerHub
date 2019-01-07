@@ -443,7 +443,6 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    console.log(approvalStatus, isLineManager)
     return isLineManager && approvalStatus === 6 ? true : false
   }
 
