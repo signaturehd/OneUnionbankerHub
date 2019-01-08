@@ -27,6 +27,7 @@ class Notice extends BaseMVPView {
       tranId : '',
       isAgree: '',
       benId : '',
+      enabledLoader : false,
     }
     this.onFailed = this.onFailed.bind(this)
   }
@@ -47,6 +48,10 @@ class Notice extends BaseMVPView {
     this.props.onDismiss(false)
   }
 
+  circularLoader (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
   render () {
     const { noticeResponse, onClose, back, benefitId, onDismiss } = this.props
     const {
@@ -58,7 +63,8 @@ class Notice extends BaseMVPView {
       tranId,
       isAgree,
       benId,
-      showDisagreeModal
+      showDisagreeModal,
+      enabledLoader
     } = this.state
 
     return (
@@ -110,13 +116,13 @@ class Notice extends BaseMVPView {
           showPinCodeModal &&
           <NoticePinModal
             onSubmitAgreement = { (code) => this.isAgreementConfirm(tranId, isAgree, benId, code) }
+            enabledLoader = { enabledLoader }
           />
         }
         {
-          disableSubmit || isDismissable ?
+          disableSubmit ?
           <center>
-            <CircularLoader show={true}/>
-          </center>          :
+          </center>   :
           <div>
           <center>
             <br/>
@@ -128,9 +134,13 @@ class Notice extends BaseMVPView {
             />
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () => {
-                this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true  })
-                this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
-              }
+                  try {
+                    this.setState({ disableSubmit: true, showPinCodeModal : true  })
+                    this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
+                  } catch (e) {
+                    console.log(e)
+                  }
+                }
               }
             />
           </center>

@@ -18,13 +18,13 @@ export default class NoticePresenter {
   }
 
   updateNotice (transactionId, isAgree, benefitId, code) {
-    this.view.showLoading()
+    this.view.circularLoader(true)
     this.updateNoticeInteractor.execute(NoticeParam(transactionId, isAgree, benefitId, code))
      .subscribe(response => {
-      this.view.hideLoading()
+      this.view.circularLoader(false)
       this.view.onSuccess(response)
      }, e => {
-      this.view.hideLoading()
+      this.view.circularLoader(false)
       // TODO prompt generic error
      })
   }
