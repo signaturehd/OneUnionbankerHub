@@ -7,9 +7,9 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/CelebrateDNAPresenter'
 
 
-import { InputModal, Card, GenericButton } from '../../ub-components'
-// import './styles/myrewards.css'
-
+import { InputModal, Card, GenericButton,GenericInput } from '../../ub-components'
+import './style/RewardStyle.css'
+import staticImage   from '../../images/DNA.png'
 
 class CelebrateDNAFragment extends BaseMVPView {
       constructor (props) {
@@ -37,6 +37,7 @@ class CelebrateDNAFragment extends BaseMVPView {
 
       render () {
         const { history, onClick } = this.props
+
           const { accountNumber, showAccountNumberModal, rewardDNA } = this.state
           console.log(rewardDNA)
           return (
