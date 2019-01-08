@@ -53,7 +53,6 @@ class MobileView extends BaseMVPView {
             <img
               src = { require('../../images/mobileview/login phone.png') }
               style = {{
-                marginTop: '-120px',
                 height: '100%',
                 width : '100%'
               }}/>

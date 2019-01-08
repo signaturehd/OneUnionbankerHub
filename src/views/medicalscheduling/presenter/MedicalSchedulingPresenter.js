@@ -60,6 +60,7 @@ export default class MedicalSchedulingPresenter {
               )
             }
           )
+          this.view.setRemarks(resp.remarks)
           this.view.setClinics (clinics)
           this.view.setPackages(packages)
           this.view.setProcedures(procedures)

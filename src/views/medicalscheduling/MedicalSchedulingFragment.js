@@ -103,6 +103,10 @@ class MedicalSchedulingFragment extends BaseMVPView {
     this.setState({ branches })
   }
 
+  setRemarks (remarksText) {
+    this.setState({ remarksText })
+  }
+
   render () {
     const {
       enabledLoader,
@@ -128,6 +132,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
       branchesId,
       branchesLabel,
       branchesAddress,
+      remarksText
     } = this.state
 
     let procedureList = []
@@ -215,9 +220,8 @@ class MedicalSchedulingFragment extends BaseMVPView {
         </div>
         {
           enabledLoader ?
-            <center className = { 'circular-loader-center' }>
-              <CircularLoader show = { enabledLoader }/>
-            </center> :
+            <CircularLoader show = { enabledLoader }/>
+          :
             <FormComponent
               branches = { branches }
               branchesId = { branchesId }
@@ -232,6 +236,7 @@ class MedicalSchedulingFragment extends BaseMVPView {
               packageLabel = { packageLabel }
               procedureList = { procedureList }
               preferredDate = { preferredDate }
+              remarksText = { remarksText }
               onChangePreferredDate = { (preferredDate) => this.setState({ preferredDate }) }
               onSubmit = { () => {
                 this.setState({ isFormReview : false })
