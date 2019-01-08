@@ -16,7 +16,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
     const {
       pensionFundsData
     } = this.props
-    console.log(pensionFundsData)
+    console.log(pensionFundsData && pensionFundsData.paymentHistory)
 
     return (
       <div>
@@ -44,7 +44,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
 }
 
 PensionFundsPaymentHistoryComponent.propTypes = {
-  pensionFundsData : PropTypes.array,
+  pensionFundsData : PropTypes.object,
 }
 
 

@@ -8,6 +8,8 @@ import {
 
 import './styles/fundsComponentStyle.css'
 
+import { format } from '../../../utils/numberUtils'
+
 class PensionDetailsComponent extends Component {
   constructor (props) {
     super(props)
@@ -59,10 +61,6 @@ class PensionDetailsComponent extends Component {
           </div>
         </div>
         <div
-          style = {{
-            borderRightColor: '#fff',
-            borderRight: '.5px solid',
-          }}
           className = { 'funds-grid-row-details  line-spacing-2' }>
           <h4 className = { 'font-weight-normal font-size-18px' }>{ parseFloat(pensionFundsData && pensionFundsData.unitToday) }</h4>
           <div>
@@ -73,7 +71,7 @@ class PensionDetailsComponent extends Component {
               lineHeight: '1.5'
               }}>
             <span className = { 'font-size-12px font-weight-bold' }>Unit Today</span>
-          <span className = { 'font-size-9px font-weight-lighter' }>(Net assets Value per unit)</span>
+            <span className = { 'font-size-9px font-weight-lighter' }>(Net assets Value per unit)</span>
             </p>
           </div>
         </div>

@@ -29,7 +29,6 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   setPensionFundsData (pensionFundsData) {
-    console.log(pensionFundsData)
     this.setState({ pensionFundsData })
   }
 
@@ -42,7 +41,7 @@ class PensionFundsFragment extends BaseMVPView {
       loader,
       pensionFundsData
     } = this.state
-    console.log(pensionFundsData)
+
     return (
       <div>
         {
