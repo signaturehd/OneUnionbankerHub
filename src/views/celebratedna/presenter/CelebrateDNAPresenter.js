@@ -15,7 +15,7 @@ export default class CelebrateDNAPresenter {
 
     getRewardDNA (id) {
       this.view.showLoading()
-      this.GetRewardsDNAMomentInteractor.execute(id)
+      this.GetRewardsDNAMomentInteractor.execute(DNAParam(id))
        .subscribe(data => {
          // rendering to view (output)
          this.view.setRewardDNA(data)

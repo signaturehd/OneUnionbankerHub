@@ -21,17 +21,23 @@ class CelebrateDNAFragment extends BaseMVPView {
 
       componentDidMount () {
         this.props.setSelectedNavigation(9)
-        // this.presenter.getRewardDNA(5)
+        this.presenter.getRewardDNA(5)
       }
 
       setRewardDNA (rewardDNA) {
         this.setState({ rewardDNA })
       }
 
+      getRewardsDNAMoment (rewardDNA) {
+        this.setState({ rewardDNA })
+        this.presenter.getRewardsDNAMoment()
+      }
+  
+  
       render () {
         const { history, onClick } = this.props
           const { accountNumber, showAccountNumberModal } = this.state
-
+a
           return (
             <div>
                   <h1>Celebrate DNA</h1>
