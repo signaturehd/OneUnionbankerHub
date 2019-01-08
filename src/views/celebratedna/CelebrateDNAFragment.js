@@ -42,6 +42,8 @@ class CelebrateDNAFragment extends BaseMVPView {
           return (
             <div>
                   <h1>Celebrate DNA</h1>
+                  <p>{ rewardDNA.award }</p>
+                  <p>{ rewardDNA.points }</p>
                   <GenericButton text={'Button'} onclick={''}>
                   </GenericButton>
             </div>
