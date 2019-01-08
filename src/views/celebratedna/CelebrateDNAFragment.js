@@ -21,7 +21,7 @@ class CelebrateDNAFragment extends BaseMVPView {
 
       componentDidMount () {
         this.props.setSelectedNavigation(9)
-        this.presenter.getRewardDNA(5)
+        this.presenter.getRewardDNA(2)
       }
 
        setRewardDNA (rewardDNA) {

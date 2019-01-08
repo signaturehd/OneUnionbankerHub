@@ -4,7 +4,6 @@ import GetRewardsDNAMomentInteractor from '../../../domain/interactor/rewards/Ge
 import DNAParam from '../../../domain/param/GetDNAParam'
 
 export default class CelebrateDNAPresenter {
-
     constructor (container) {
       this.GetRewardsDNAMomentInteractor = new GetRewardsDNAMomentInteractor(container.get('HRBenefitsClient'))
     }
@@ -14,17 +13,20 @@ export default class CelebrateDNAPresenter {
     }
 
     getRewardDNA (id) {
-    try  {this.view.showLoading()
-      this.GetRewardsDNAMomentInteractor.execute(DNAParam(id))
-       .subscribe(data => {
-         // rendering to view (output)
-         this.view.setRewardDNA(data)
-         this.view.hideLoading()
-       }, e => {
-         // for error catching
-       })}
-       catch(e){
-         console.log(e)
-       }
+      try {
+        this.view.showLoading()
+        this.GetRewardsDNAMomentInteractor.execute(DNAParam(id))
+        .subscribe(data => {
+          // rendering to view (output)
+          // console.log(data)
+          this.view.setRewardDNA(data)
+          this.view.hideLoading()
+        }, e => {
+          // for error catching
+        })
+        }
+      catch (e) {
+          console.log(e)
+      }
     }
   }
