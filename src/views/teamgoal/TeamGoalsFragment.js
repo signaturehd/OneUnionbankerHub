@@ -80,10 +80,12 @@ class TeamGoalsFragment extends BaseMVPView {
       goalTypeId : '',
       goalType : '',
       goalTypeErrorMessage : '',
+      participantErrorMessage : '',
       commentArray: [],
       taskArray: [],
       teamGoalsArray : [],
       historyArray : [],
+      participantArray : [],
       priorityArray : [
         {
           id: 3,
@@ -188,19 +190,19 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   goalTitleFunc (goalTitle) {
-    this.setState({ goalTitle })
+    this.setState({ goalTitle, goalTitleErrorMessage: '' })
   }
 
   descriptionFunc (description) {
-    this.setState({ description })
+    this.setState({ description, descriptionErrorMessage: '' })
   }
 
   startDateFunc (startDate) {
-    this.setState({ startDate })
+    this.setState({ startDate, startDateErrorMessage: '' })
   }
 
   dueDateFunc (dueDate) {
-    this.setState({ dueDate })
+    this.setState({ dueDate, dueDateErrorMessage: '' })
   }
 
   taskDescriptionFunc (taskDescription) {
@@ -232,24 +234,28 @@ class TeamGoalsFragment extends BaseMVPView {
       startDate,
       dueDate,
       priorityId,
-      goalTypeId
+      goalTypeId,
+      participantArray
     } = this.state
 
     if(!goalTitle) {
       this.setState({ goalTitleErrorMessage: 'Required field' })
-    } else if (!description) {
-      this.setState({ descriptionErrorMessage: 'Required field' })
+    } else if (!goalTypeId) {
+      this.setState({ goalTypeErrorMessage: 'Required field' })
     } else if (!startDate) {
       this.setState({ startDateErrorMessage: 'Required field' })
     } else if (!dueDate) {
       this.setState({ dueDateErrorMessage: 'Required field' })
+    } else if (!description) {
+      this.setState({ descriptionErrorMessage: 'Required field' })
     } else if (!priorityId) {
       this.setState({ priorityErrorMessage: 'Required field' })
-    } else if (!goalTypeId) {
-      this.setState({ goalTypeErrorMessage: 'Required field' })
+    } else if (participantArray.length == 0) {
+      this.setState({ participantErrorMessage: 'Required field' })
     }
     else {
-      this.presenter.addRequestedGoals (
+      this.presenter.addTeamGoals (
+        participantArray,
         goalTitle,
         description,
         moment(startDate).format('YYYY-MM-DD'),
@@ -392,11 +398,12 @@ class TeamGoalsFragment extends BaseMVPView {
       teamGoalsArray,
       priorityArray,
       goalTypeArray,
-      historyArray
+      historyArray,
+      participantArray,
+      participantErrorMessage
     } = this.state
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
-
 
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
@@ -524,6 +531,8 @@ class TeamGoalsFragment extends BaseMVPView {
             goalType = { goalType }
             goalTypeId = { goalTypeId }
             goalTypeErrorMessage = { goalTypeErrorMessage }
+            participantArray = { participantArray }
+            participantErrorMessage = { participantErrorMessage }
             showPriorityModal = { showPriorityModal }
             showPriorityModalFunc = { () => this.setState({ showPriorityModal : true }) }
             showGoalTypeModal = { showGoalTypeModal }
@@ -533,12 +542,12 @@ class TeamGoalsFragment extends BaseMVPView {
           />
         :
         <div>
-          <div className = { 'grid-filter margin-left' }>
+          <div className = { 'padding-10px grid-filter margin-left' }>
             <div></div>
             <div className = { 'text-align-right margin-right' }>
               <GenericButton
                 text = { 'Add Team Goal' }
-                className = { 'global-button' }
+                className = { 'global-button profile-button-medium font-size-11px' }
                 onClick = { () => {
                   this.resetValue()
                   this.setState({ showForm: true })
@@ -548,6 +557,57 @@ class TeamGoalsFragment extends BaseMVPView {
           </div>
           <div className = { 'grid-main' }>
             <div>
+            <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Team Goals</h2>
+            <Line/>
+            <br/>
+            {
+              enabledLoader ?
+              <center>
+                <CircularLoader show = { enabledLoader }/>
+              </center>
+              :
+              teamGoalsArray.length !== 0 ?
+              teamGoalsArray.map((resp, key) =>
+                <TeamGoalsComponent
+                  employeeName = { resp.name }
+                  imageUrl = { resp.imageUrl }
+                  cardHolder = { resp.goalDetails }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onSelected = { (
+                    details,
+                    goalId,
+                    goalTitle,
+                    description,
+                    startDate,
+                    dueDate,
+                    priorityName,
+                    approvalStatus,
+                    goalTypeId
+                  ) => {
+                    this.setState({
+                      goalId,
+                      goalTitle,
+                      description,
+                      startDate,
+                      dueDate,
+                      priorityName,
+                      approvalStatus,
+                      goalTypeId
+                     })
+                    this.presenter.getGoalTask(goalId)
+                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                  }
+                 }
+                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                />
+              )
+              :
+              <center><h2>No record</h2></center>
+            }
+            <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Squad Goals</h2>
+            <Line/>
+            <br/>
             {
               enabledLoader ?
               <center>

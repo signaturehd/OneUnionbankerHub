@@ -60,7 +60,10 @@ class RequestedGoalsComponent extends Component {
                     resp.endDate,
                     priorityFunc(resp.priority),
                     resp.approvalStatus,
-                    resp.type
+                    resp.type,
+                    resp.isTeamGoal,
+                    resp.isCompleted,
+                    resp.rating && resp.rating ? resp.rating : 0.0
                   ) }>
                   <div>
                     <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
@@ -133,7 +136,10 @@ class RequestedGoalsComponent extends Component {
                     resp.endDate,
                     priorityFunc(resp.priority),
                     resp.approvalStatus,
-                    resp.type
+                    resp.type,
+                    resp.isTeamGoal,
+                    resp.isCompleted,
+                    resp.rating && resp.rating ? resp.rating : 0.0
                   ) }>
                   <div>
                     <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>

@@ -98,7 +98,7 @@ import CertificateOfEmploymentFragment from '../coe/CertificateOfEmploymentFragm
 /* Goals */
 import MyGoalsFragment from '../mygoals/MyGoalsFragment'
 import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
-import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
+import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
