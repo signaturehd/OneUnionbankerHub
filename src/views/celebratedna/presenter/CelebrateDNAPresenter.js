@@ -14,17 +14,18 @@ export default class CelebrateDNAPresenter {
     }
 
     getRewardDNA (id) {
-    try  {this.view.showLoading()
+      this.view.showLoading()
       this.GetRewardsDNAMomentInteractor.execute(DNAParam(id))
        .subscribe(data => {
          // rendering to view (output)
+         console.log(data)
          this.view.setRewardDNA(data)
          this.view.hideLoading()
        }, e => {
          // for error catching
-       })}
-       catch(e){
-         console.log(e)
-       }
-    }
+       })
+     }
+
+
+
   }

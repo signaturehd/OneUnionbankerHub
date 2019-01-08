@@ -28,10 +28,11 @@ class CelebrateDNAFragment extends BaseMVPView {
         this.setState({ rewardDNA })
       }
 
-      getRewardsDNAMoment (rewardDNA) {
-        this.setState({ rewardDNA })
-        this.presenter.getRewardsDNA()
-      }
+
+      // getRewardsDNAMoment (rewardDNA) {
+      //   this.setState({ rewardDNA })
+      //   this.presenter.getRewardsDNA()
+      // }
 
 
       render () {
