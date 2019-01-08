@@ -2030,7 +2030,7 @@ export default class HRBenefitsService {
      releasingCenter,
      laptopLeaseParam) {
    const formData = new FormData()
-   const object = {
+   const bankToPurchaseObject = {
      accountNumber,
      releasingCenter,
      benefitId: '16',
@@ -2046,19 +2046,31 @@ export default class HRBenefitsService {
      hardDriveCapacity : laptopLeaseParam.hardDriveCapacity,
      processorType : laptopLeaseParam.processorType,
      operatingSystem : laptopLeaseParam.operatingSystem,
-     systemMemory : laptopLeaseParam.systemMemory,
+     systemMemory : laptopLeaseParam.systemMemory
+   }
+   const employeeToPurchaseObject = {
+     accountNumber,
+     releasingCenter,
+     benefitId: '16',
+     type: laptopLeaseParam.id === 0 ? 1 : 2,
+     term: laptopLeaseParam.terms,
+     estimatedCost : laptopLeaseParam.estimatedAmount,
+     vendor: laptopLeaseParam.vendor,
      or: {
        number : laptopLeaseParam.orNumber,
        date: laptopLeaseParam.orDate
      }
    }
 
+   const validate = laptopLeaseParam.id === 1 ? true : false
+   let objectParam = validate ? bankToPurchaseObject : employeeToPurchaseObject
+
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
      formData.append('qoutation', resp.file)
    ))
-   formData.append('body', JSON.stringify(object))
+   formData.append('body', JSON.stringify(objectParam))
    return this.apiClient.post('v1/leases/laptop',  formData, {
      headers : { token }
    })

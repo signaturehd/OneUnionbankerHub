@@ -15,6 +15,7 @@ export default (
   qoutation,
   orNumber,
   orDate,
+  vendor
 ) => ({
   id,
   brand,
@@ -32,4 +33,5 @@ export default (
   attachments: qoutation,
   orNumber,
   orDate,
+  vendor
 })

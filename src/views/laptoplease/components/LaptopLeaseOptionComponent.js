@@ -19,12 +19,12 @@ class LaptopLeaseOptionComponent extends Component {
 
     const laptopLeaseOption = [
       {
-        id : 0,
+        id : 1,
         subtitle: '',
         title: 'Bank to Purchase',
         imageSrc : require('../../../images/icons/banktopurchase.png')
       }, {
-        id : 1,
+        id : 2,
         subtitle: '',
         title: 'Employee to Purchase',
         imageSrc : require('../../../images/icons/employeetopurchase.png')
