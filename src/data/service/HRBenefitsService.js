@@ -2482,7 +2482,25 @@ export default class HRBenefitsService {
 
 /* Pension Funds */
 
+  getPensionFundsDocuments (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
   getPensionFunds (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  submitPensionPin (token, pin) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  confirmPensionDocumentsCode (token, code) {
     return this.apiClient.get('v1/phension', {
       headers : { token }
     })

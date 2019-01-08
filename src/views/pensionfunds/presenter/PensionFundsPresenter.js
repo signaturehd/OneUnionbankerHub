@@ -1,4 +1,5 @@
 import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsInteractor'
+import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDocumentsInteractor'
 
 let mockData = {
   'totalUnits': '15.34',
@@ -32,6 +33,7 @@ let mockData = {
 export default class PensionFundsPresenter {
   constructor (container) {
     // this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
+    // this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -48,6 +50,17 @@ export default class PensionFundsPresenter {
   //
   // getPensionFunds () {
   //   this.getPensionFundsInteractor.execute()
+  //   this.view.showCircularLoader(true)
+  //   .subscribe(data => {
+  //     this.view.setPensionFundsData(data)
+  //     this.view.showCircularLoader(false)
+  //   }, error => {
+  //     this.view.showCircularLoader(false)
+  //   })
+  // }
+  //
+  // getPensionFundsDocuments () {
+  //   this.getPensionFundsDocumentsInteractor.execute()
   //   this.view.showCircularLoader(true)
   //   .subscribe(data => {
   //     this.view.setPensionFundsData(data)

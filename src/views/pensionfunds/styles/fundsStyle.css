@@ -3,12 +3,52 @@
   grid-template-columns: .03fr 1fr .03fr;
 }
 
+.funds-documents-card {
+  padding: 10px;
+}
+
+.funds-documents-background {
+  background-image: url('../../../images/funds/risk-text-website.png');
+  object-fit: cover;
+  width: auto;
+  background-size: contain;
+  height: 600px;
+  background-repeat: no-repeat;
+  margin: auto;
+}
+
 .funds-grid-content {
   display: grid;
   grid-template-columns: .6fr .4fr;
 }
 
+.funds-grid-content-x3 {
+  display: grid;
+  grid-template-columns: .03fr 1fr .03fr;
+}
+
 .funds-grid-content-detail {
   display: grid;
-  grid-template-columns: .7fr .35fr; 
+  grid-template-columns: .7fr .35fr;
+}
+
+@media screen and (max-width : 768px) {
+  .funds-grid-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .funds-grid-content-detail {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.funds-documens-card-grid {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
+.funds-documents-grid-x3 {
+  display: grid;
+  grid-template-rows: .7fr 1fr .7fr;
 }

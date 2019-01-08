@@ -8,8 +8,7 @@ import Presenter from './presenter/PensionFundsPresenter'
 
 import './styles/fundsStyle.css'
 
-import PensionDetailsComponent from './components/PensionDetailsComponent'
-import PensionFundsPaymentHistoryComponent from './components/PensionFundsPaymentHistoryComponent'
+import PensionFundsDocumentsFragment from './fragments/PensionFundsDocumentsFragment'
 
 class PensionFundsFragment extends BaseMVPView {
   constructor (props) {
@@ -50,23 +49,12 @@ class PensionFundsFragment extends BaseMVPView {
           :
           <div  className = { 'funds-fragment' }>
             <div></div>
-            <div className = { 'funds-grid-content' }>
-              <div>
-                <h4 className = { 'font-weight-bold font-size-30px letter-spacing-1' }>Retirement Pension Period</h4>
-                <br/>
-                <h4 className = { 'font-size-16px font-weight-ligther letter-spacing-1' }>Secure your future.</h4>
-                <br/>
-                <div className = { 'funds-grid-content-detail' }>
-                  <PensionDetailsComponent
-                    pensionFundsData= { pensionFundsData }/>
-                  <div></div>
-                </div>
-              </div>
-              <div>
-                <PensionFundsPaymentHistoryComponent
-                  pensionFundsData = { pensionFundsData }/>
-              </div>
+            <div>
+              <PensionFundsDocumentsFragment />
             </div>
+            {
+              // <PensionDetailsFragment pensionFundsData = { pensionFundsData } />
+            }
             <div></div>
           </div>
         }
