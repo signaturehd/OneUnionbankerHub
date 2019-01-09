@@ -31,6 +31,10 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ pensionFundsData })
   }
 
+  setPensionFundsDocumentsData (pensionFundsDocumentsData) {
+    this.setState({ pensionFundsDocumentsData })
+  }
+
   navigate () {
     this.props.history.push('/phenom')
   }
@@ -38,7 +42,8 @@ class PensionFundsFragment extends BaseMVPView {
   render () {
     const {
       loader,
-      pensionFundsData
+      pensionFundsData,
+      pensionFundsDocumentsData,
     } = this.state
 
     return (
@@ -50,7 +55,8 @@ class PensionFundsFragment extends BaseMVPView {
           <div  className = { 'funds-fragment' }>
             <div></div>
             <div>
-              <PensionFundsDocumentsFragment />
+              <PensionFundsDocumentsFragment
+                pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData.documents }/>
             </div>
             {
               // <PensionDetailsFragment pensionFundsData = { pensionFundsData } />
