@@ -20,6 +20,8 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
       showPurposeModal : false,
       showVisaModal : false,
       enabledLoader : false,
+      vlFrom: '',
+      vlTo: ''
     }
   }
 
@@ -79,6 +81,8 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
       visaBody,
       enabledLoader,
       showEditMode,
+      vlFrom,
+      vlTo
     } = this.state
 
     return (
@@ -160,6 +164,10 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
           purpose = { purpose }
           visaBody = { visaBody }
           visa = { visa }
+          vlFrom = { vlFrom }
+          vlTo = { vlTo }
+          vlFromFunc = { (resp) => this.setState({ vlFrom: resp }) }
+          vlToFunc = { (resp) => this.setState({ vlTo: resp }) }
           showTypeModalFunc = { () =>
             this.setState({ showTypeModal : true }) }
           showPurposeModalFunc = { () =>

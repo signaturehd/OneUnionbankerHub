@@ -33,6 +33,10 @@ class CertificateOfEmploymentFormComponent extends Component {
       typeOfCoeBody,
       visa,
       visaBody,
+      vlFrom,
+      vlTo,
+      vlFromFunc,
+      vlToFunc,
       onContinue,
       onEdit
   	} = this.props
@@ -66,14 +70,29 @@ class CertificateOfEmploymentFormComponent extends Component {
               {
                 purposeBody &&
                 purposeBody.id === 37 &&
-                <GenericInput
-                  errorMessage = { '' }
-                  text = { 'VISA' }
-                  disabled = { showEditMode }
-                  readOnly
-                  value = { visaBody && visaBody.visa }
-                  onClick = { () => showVisaModalFunc() }
-                  />
+                <div>
+                  <GenericInput
+                    errorMessage = { '' }
+                    text = { 'VISA' }
+                    disabled = { showEditMode }
+                    readOnly
+                    value = { visaBody && visaBody.visa }
+                    onClick = { () => showVisaModalFunc() }
+                    />
+                  <h2 className = { 'font-size-14px' }>Vacation Leave</h2>
+                  <div className = { 'grid-global' }>
+                    <DatePicker
+                      text = { 'From' }
+                      selected = { vlFrom }
+                      onChange = { (e) => vlFromFunc(e) }
+                    />
+                    <DatePicker
+                      text = { 'To' }
+                      selected = { vlTo }
+                      onChange = { (e) => vlToFunc(e) }
+                    />
+                  </div>
+                </div>
               }
               <br/>
               <Line/>
