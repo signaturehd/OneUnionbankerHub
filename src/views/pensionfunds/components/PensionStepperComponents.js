@@ -29,7 +29,7 @@ class PensionStepperComponents extends Component {
           {
             list && list.forms.map((resp) => (
               <div>
-                <h4 className = { 'font-size-10px' }>{ resp.name }</h4>
+                <h4 className = { 'font-size-11px' }>{ resp.name }</h4>
                 <div className = { `funds-circle${ 'active' }` }></div>
               </div>
             ))

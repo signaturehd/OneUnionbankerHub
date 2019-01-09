@@ -29,9 +29,8 @@ class PensionDocumentsComponent extends Component {
       <Card
         key = { id }
         className = { 'funds-documents-card' }>
-        <p>
-          <div dangerouslySetInnerHTML = {{ __html : content }}></div>
-        </p>
+        <div
+          dangerouslySetInnerHTML = {{ __html : content }}></div>
         <br/>
         <center>
           <Checkbox
