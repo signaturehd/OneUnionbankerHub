@@ -20,7 +20,8 @@ class PensionDocumentsComponent extends Component {
       name,
       id,
       content,
-      documents
+      documents,
+      stepperStatus
     } = this.props
 
     console.log(documents)
@@ -39,7 +40,9 @@ class PensionDocumentsComponent extends Component {
           <br/>
           <br/>
           <div>
-            <PensionStepperComponents list = { documents }/>
+            <PensionStepperComponents
+              stepperStatus = { stepperStatus }
+              list = { documents }/>
           </div>
         </center>
       </Card>

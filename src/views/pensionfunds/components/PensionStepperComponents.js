@@ -8,9 +8,18 @@ class PensionStepperComponents extends Component {
     super(props)
   }
 
+  checkIfSelected (stepper, id) {
+    if(id === stepper) {
+      return 'active'
+    } else {
+      return ''
+    }
+  }
+
   render () {
     const {
-      list
+      list,
+      stepperStatus
     } = this.props
 
     return (
@@ -30,7 +39,7 @@ class PensionStepperComponents extends Component {
             list && list.forms.map((resp) => (
               <div>
                 <h4 className = { 'font-size-11px' }>{ resp.name }</h4>
-                <div className = { `funds-circle${ 'active' }` }></div>
+                <div className = { `funds-circle${ this.checkIfSelected(stepperStatus, resp.id) }` }></div>
               </div>
             ))
           }

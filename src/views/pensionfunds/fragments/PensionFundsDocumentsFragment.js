@@ -23,7 +23,8 @@ class PensionFundsDocumentsFragment extends Component {
 
   render () {
     const {
-      pensionFundsDocumentsData
+      pensionFundsDocumentsData,
+      stepperStatus,
     } = this.props
 
     return (
@@ -46,14 +47,15 @@ class PensionFundsDocumentsFragment extends Component {
                     <div>
                       {
                         pensionFundsDocumentsData &&
-                        pensionFundsDocumentsData.forms.map((resp) => (
+                        pensionFundsDocumentsData.forms.map((resp) =>
+                          resp.id === stepperStatus &&
                           <PensionDocumentsComponent
                             id = { resp.id }
                             title = { resp.name }
                             content = { resp.content }
                             documents = { pensionFundsDocumentsData }
+                            stepperStatus = { stepperStatus }
                           />
-                          )
                         )
                       }
                     </div>

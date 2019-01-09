@@ -5,7 +5,7 @@
 
 
 .funds-documents-background {
-  background: url('../../../images/funds/risk-text-website.png');
+  background: url('../../../images/funds/risk-text-website.png') center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;

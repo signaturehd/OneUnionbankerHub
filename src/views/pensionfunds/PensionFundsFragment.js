@@ -15,6 +15,7 @@ class PensionFundsFragment extends BaseMVPView {
     super (props)
     this.state = {
       loader : false,
+      stepperStatus: 1,
     }
   }
 
@@ -44,6 +45,7 @@ class PensionFundsFragment extends BaseMVPView {
       loader,
       pensionFundsData,
       pensionFundsDocumentsData,
+      stepperStatus,
     } = this.state
 
     return (
@@ -56,6 +58,7 @@ class PensionFundsFragment extends BaseMVPView {
             <div></div>
             <div>
               <PensionFundsDocumentsFragment
+                stepperStatus = { stepperStatus }
                 pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData.documents }/>
             </div>
             {
