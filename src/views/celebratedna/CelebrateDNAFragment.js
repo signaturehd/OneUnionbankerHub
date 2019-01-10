@@ -7,7 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/CelebrateDNAPresenter'
 
 
-import { InputModal, Card, GenericButton,GenericInput,GenericTextBox } from '../../ub-components'
+import { InputModal, Card, GenericButton,GenericInput,GenericTextBox,List } from '../../ub-components'
 import './style/RewardStyle.css'
 import staticImage   from '../../images/DNA.png'
 
@@ -29,13 +29,11 @@ class CelebrateDNAFragment extends BaseMVPView {
       }
 
 
+
       // getRewardsDNAMoment (rewardDNA) {
       //   this.setState({ rewardDNA })
       //   this.presenter.getRewardsDNA()
       // }
-clicked(){
-  alert('wewewe');
-}
 
       render () {
         const { history, onClick } = this.props
@@ -45,28 +43,40 @@ clicked(){
           return (
             <div className = {'celebrate-container'}>
 
-                  <img src={staticImage} className = {''}/>
+              <div className={'text-align-center'}>
 
-                  <h1>Celebrating a DNA Moment</h1>
+                <img src={staticImage} className = {''}/>
 
+              </div>
+
+              <div className={'text-align-center'}>
+
+                <h1 >Celebrating a DNA Moment</h1>
+
+              </div>
 
                   <h6 className={ 'celebrate-container-space' }> This award is given to individuals or teams who demonstrate behaviors aligned to the following: </h6>
 
+                  <h3 className={ 'celebrate-container-space ' }>Distinguishing beliefs/principle:</h3>
 
-
-                  <h3 className={ 'celebrate-container-space' }>Distinguishing beliefs/principle:</h3>
-                  <p>Forwird-thinking, Agile, Open, and Innovative</p>
+                  <p className={'font-size-12px'}>Forwird-thinking, Agile, Open, and Innovative</p>
 
                   <h3>Values : </h3>
-                  <p>Integrity, Magis,Ubuntu</p>
 
-                  <GenericInput hint={'Search employees name'} imageProps={'wewewew'} onChange={this.clicked()} >
+                  <p className={'font-size-12px'}>Integrity, Magis,Ubuntu</p>
+
+                  <GenericInput hint={'Search employees name'}>
 
                   </GenericInput>
 
-                  <h2 className={'celebrate-container-space'}>Who will I award this to?</h2>
+                    <div>
+
+                    <h2 className={'celebrate-container-space'}>Who will I award this to?</h2>
+
+                    </div>
 
                   <div className={ 'celebrate-container-space' }>
+                      <p>Write a personal message of gratitude for this award`s recipients.</p>
 
                       <GenericInput  type={ 'textarea' } resize={150}>
 
@@ -74,14 +84,13 @@ clicked(){
 
                   </div>
 
-                    <div className={'celebrate-aligned-center'}>
+                    <div className={'text-align-center'}>
 
                       <GenericButton text={ 'Submit' }  className={ 'celebrate-button-center ' } >
 
                       </GenericButton>
 
                     </div>
-
             </div>
 
           )
