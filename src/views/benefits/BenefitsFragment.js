@@ -229,9 +229,9 @@ class BenefitsFragment extends BaseMVPView {
           {
           enabledAccountNumberLoader ?
             <center>
-              <h4>Please wait while we validating the Account Number</h4>
-              <br/>
-              <CircularLoader show={ true }/>
+              <CircularLoader
+                 message = { 'Please wait while we validating the Account Number' }
+                 show={ true }/>
             </center>
             :
               <div>
