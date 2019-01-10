@@ -22,7 +22,7 @@ class LaptopLeaseOptionComponent extends Component {
         id : 1,
         subtitle: '',
         title: 'Bank to Purchase',
-        imageSrc : require('../../../images/icons/banktopurchase.png')
+        imageSrc : require('../../../images/icons/banktopurchaseorange.png')
       }, {
         id : 2,
         subtitle: '',
