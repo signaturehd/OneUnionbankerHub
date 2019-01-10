@@ -42,24 +42,20 @@ class PensionFundsDocumentsFragment extends Component {
               <div></div>
               <div className = { 'funds-documents-grid-x3' }>
                 <div></div>
-                <div  className = { 'funds-documens-card-grid' }>
-                  <div></div>
-                    <div>
-                      {
-                        pensionFundsDocumentsData &&
-                        pensionFundsDocumentsData.forms.map((resp) =>
-                          resp.id === stepperStatus &&
-                          <PensionDocumentsComponent
-                            id = { resp.id }
-                            title = { resp.name }
-                            content = { resp.content }
-                            documents = { pensionFundsDocumentsData }
-                            stepperStatus = { stepperStatus }
-                          />
-                        )
-                      }
-                    </div>
-                  <div></div>
+                <div>
+                  {
+                    pensionFundsDocumentsData &&
+                    pensionFundsDocumentsData.forms.map((resp) =>
+                      resp.id === stepperStatus &&
+                      <PensionDocumentsComponent
+                        id = { resp.id }
+                        title = { resp.name }
+                        content = { resp.content }
+                        documents = { pensionFundsDocumentsData }
+                        stepperStatus = { stepperStatus }
+                      />
+                    )
+                  }
                 </div>
                 <div></div>
               </div>
