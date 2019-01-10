@@ -38,13 +38,23 @@ class CertificateOfEmploymentFormComponent extends Component {
       vlFromFunc,
       vlToFunc,
       onContinue,
-      onEdit
+      onEdit,
+      backToList,
+      vlFrom,
+      vlTo,
+      vlFromFunc,
+      vlToFunc
   	} = this.props
 
     return (
       <div className = {'coe-container'} >
         <div className = { 'coe-grid-column-2' }>
-          <div></div>
+          <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { () => backToList() }>
+            </i>
+          </div>
           <div className={ 'coe-form-coed' }>
             <h4 className = { 'font-size-24px font-weight-bold' }>Certificate of Employment Form</h4>
             <br/>
@@ -78,7 +88,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                     readOnly
                     value = { visaBody && visaBody.visa }
                     onClick = { () => showVisaModalFunc() }
-                    />
+                  />
                   <h2 className = { 'font-size-14px' }>Vacation Leave</h2>
                   <div className = { 'grid-global' }>
                     <DatePicker
