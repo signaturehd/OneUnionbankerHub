@@ -2046,7 +2046,12 @@ export default class HRBenefitsService {
      hardDriveCapacity : laptopLeaseParam.hardDriveCapacity,
      processorType : laptopLeaseParam.processorType,
      operatingSystem : laptopLeaseParam.operatingSystem,
-     systemMemory : laptopLeaseParam.systemMemory
+     systemMemory : laptopLeaseParam.systemMemory,
+     vendor: laptopLeaseParam.vendor,
+     or: {
+       number : laptopLeaseParam.orNumber,
+       date: laptopLeaseParam.orDate
+     }
    }
    const employeeToPurchaseObject = {
      accountNumber,

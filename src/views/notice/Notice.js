@@ -29,7 +29,6 @@ class Notice extends BaseMVPView {
       benId : '',
       enabledLoader : false,
     }
-    this.onFailed = this.onFailed.bind(this)
   }
 
   isAgree (tranId, isAgree, benId) {
@@ -44,8 +43,8 @@ class Notice extends BaseMVPView {
     this.props.onDismiss(false, response)
   }
 
-  onFailed (response) {
-    this.props.onDismiss(false)
+  onFailed () {
+    this.setState({ disableSubmit : false, showPinCodeModal : false })
   }
 
   circularLoader (enabledLoader) {
@@ -98,15 +97,15 @@ class Notice extends BaseMVPView {
               <br/>
               <div className = { 'grid-global' }>
                 <GenericButton
+                  text = { 'Cancel' }
+                  onClick = { () => this.setState({ showDisagreeModal : false }) }
+                />
+                <GenericButton
                   text = { 'Yes' }
                   onClick = { () => {
                     this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true, showDisagreeModal: false })
                     this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
                   } }
-                />
-                <GenericButton
-                  text = { 'Cancel' }
-                  onClick = { () => this.setState({ showDisagreeModal : false }) }
                 />
               </div>
             </center>

@@ -25,6 +25,7 @@ export default class NoticePresenter {
       this.view.onSuccess(response)
      }, e => {
       this.view.circularLoader(false)
+      this.view.onFailed()
       // TODO prompt generic error
      })
   }
