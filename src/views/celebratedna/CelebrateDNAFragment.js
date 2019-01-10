@@ -7,7 +7,7 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/CelebrateDNAPresenter'
 
 
-import { InputModal, Card, GenericButton,GenericInput } from '../../ub-components'
+import { InputModal, Card, GenericButton,GenericInput,GenericTextBox } from '../../ub-components'
 import './style/RewardStyle.css'
 import staticImage   from '../../images/DNA.png'
 
@@ -33,7 +33,9 @@ class CelebrateDNAFragment extends BaseMVPView {
       //   this.setState({ rewardDNA })
       //   this.presenter.getRewardsDNA()
       // }
-
+clicked(){
+  alert('wewewe');
+}
 
       render () {
         const { history, onClick } = this.props
@@ -44,15 +46,44 @@ class CelebrateDNAFragment extends BaseMVPView {
             <div className = {'celebrate-container'}>
 
                   <img src={staticImage} className = {''}/>
+
                   <h1>Celebrating a DNA Moment</h1>
-                  <h6> This award is given to individuals or teams who demonstrate behaviors aligned to the following: </h6>
 
-                  <h6>Distinguishing beliefs/principle:</h6>
 
-                  <GenericInput hint={'Search employees name'} maxLength={150} >
+                  <h6 className={ 'celebrate-container-space' }> This award is given to individuals or teams who demonstrate behaviors aligned to the following: </h6>
+
+
+
+                  <h3 className={ 'celebrate-container-space' }>Distinguishing beliefs/principle:</h3>
+                  <p>Forwird-thinking, Agile, Open, and Innovative</p>
+
+                  <h3>Values : </h3>
+                  <p>Integrity, Magis,Ubuntu</p>
+
+                  <GenericInput hint={'Search employees name'} imageProps={'wewewew'} onChange={this.clicked()} >
 
                   </GenericInput>
+
+                  <h2 className={'celebrate-container-space'}>Who will I award this to?</h2>
+
+                  <div className={ 'celebrate-container-space' }>
+
+                      <GenericInput  type={ 'textarea' } resize={150}>
+
+                      </GenericInput>
+
+                  </div>
+
+                    <div className={'celebrate-aligned-center'}>
+
+                      <GenericButton text={ 'Submit' }  className={ 'celebrate-button-center ' } >
+
+                      </GenericButton>
+
+                    </div>
+
             </div>
+
           )
         }
     }
