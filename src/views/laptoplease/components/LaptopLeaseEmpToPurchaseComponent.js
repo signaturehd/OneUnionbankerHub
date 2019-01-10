@@ -40,13 +40,15 @@ class LaptopLeaseCardComponent extends Component {
       costAquisitionFunc,
       laptopLeaseAttachment,
       setAttachments,
-      getCardOptionId
+      getCardOptionId,
+      showTerms,
+      terms
     } = this.props
 
     return (
       <div className={'carview-container'}>
         <center>
-          Laptop Lease (Employee to purchase)
+          (Employee to purchase)
         </center>
         <div className={ 'car-grid-column-2' }>
           <div></div>
@@ -86,6 +88,15 @@ class LaptopLeaseCardComponent extends Component {
                   disabled = { showEditMode }
                   value = { costAquisition }
                   maxLength = { 15 }
+                  />
+                <GenericInput
+                  placeholder = { 'Payment Terms' }
+                  errorMessage = { '' }
+                  disabled = { showEditMode }
+                  text = { 'Payment Terms' }
+                  readOnly
+                  onClick = { () => showTerms() }
+                  value = { terms }
                   />
               </div>
                 <MultipleFileUploader
