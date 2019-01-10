@@ -47,7 +47,6 @@ export default class EducationAidPresenter {
      this.view.noticeOfUndertaking(educationAid)
      this.view.hideCircularLoader()
    }, e => {
-     this.view.noticeResponse(e)
      this.view.hideCircularLoader()
    })
  }

@@ -174,7 +174,8 @@ class EducationAidFragment extends BaseMVPView {
   submitForm () {
     const {
       courseText,
-      academicYearText,
+      academicYearToText,
+      academicYearFromText,
       semesterText,
       gwaText,
       tuitionFeeText,
@@ -187,7 +188,7 @@ class EducationAidFragment extends BaseMVPView {
 
     this.presenter.addEducationAid(
       courseText,
-      academicYearText,
+      academicYearFromText + '-' +academicYearToText,
       semesterText,
       gwaText,
       tuitionFeeText,
@@ -209,7 +210,8 @@ class EducationAidFragment extends BaseMVPView {
       registrationFeeText,
       schoolName,
       courseText,
-      academicYearText,
+      academicYearFromText,
+      academicYearToText,
       semesterText,
       gwaText,
       orNumber,
@@ -234,7 +236,7 @@ class EducationAidFragment extends BaseMVPView {
       this.setState({ schoolErrorMessage : 'Please select a Colleges/Universities' })
     } else if (!this.validateRequired(courseText)) {
       this.setState({ courseTextErrorMessage : 'Please enter a Course' })
-    } else if (!this.validateRequired(academicYearText)) {
+    } else if (!this. validateRequired(academicYearToText) || !this.validateRequired(academicYearFromText)) {
       this.setState({ academicYearTextErrorMessage : 'Please select an Academic Year' })
     } else if (!this.validateRequired(semesterText)) {
       this.setState({ semesterErrorMessage : 'Please select a Semester' })
@@ -556,7 +558,7 @@ class EducationAidFragment extends BaseMVPView {
         {
           enabledLoader ?
            <center className={ 'circular-loader-center' }>
-             <CircularLoader show={ this.state.enabledLoader }/>
+             <CircularLoader show={ enabledLoader }/>
            </center> :
           <FormComponent
             educationAid = { educationAid }
