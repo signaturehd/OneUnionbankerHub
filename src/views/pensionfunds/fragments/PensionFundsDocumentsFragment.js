@@ -18,13 +18,16 @@ class PensionFundsDocumentsFragment extends Component {
   }
 
   checkIdActionCompleted (id) {
-
+    const count = id + 1
+    return count
   }
 
   render () {
     const {
       pensionFundsDocumentsData,
       stepperStatus,
+      statusCodeFunc,
+      changeCheckedFunc
     } = this.props
 
     return (
@@ -53,6 +56,9 @@ class PensionFundsDocumentsFragment extends Component {
                         content = { resp.content }
                         documents = { pensionFundsDocumentsData }
                         stepperStatus = { stepperStatus }
+                        isChecked = { resp.isChecked }
+                        changeCheckedFunc = { (e, e1) => changeCheckedFunc(e, e1) }
+                        statusCodeFunc = { () => statusCodeFunc(this.checkIdActionCompleted(stepperStatus)) }
                       />
                     )
                   }

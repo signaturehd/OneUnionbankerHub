@@ -16,6 +16,7 @@ class PensionFundsFragment extends BaseMVPView {
     this.state = {
       loader : false,
       stepperStatus: 1,
+      showCoeModal: false,
     }
   }
 
@@ -46,10 +47,19 @@ class PensionFundsFragment extends BaseMVPView {
       pensionFundsData,
       pensionFundsDocumentsData,
       stepperStatus,
+      codeText,
+      showCoeModal
     } = this.state
 
     return (
       <div>
+        {
+          showCoeModal &&
+          <PensionCodeModals
+            submitCodeFunc = { () =>{} }
+            codeTextFunc = { (codeText) => this.setState({ codeText }) }
+            codeText = { codeText }/>
+        }
         {
           loader ?
           <CircularLoader show = { loader } />
@@ -58,8 +68,17 @@ class PensionFundsFragment extends BaseMVPView {
             <div></div>
             <div>
               <PensionFundsDocumentsFragment
+                statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
                 stepperStatus = { stepperStatus }
-                pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData.documents }/>
+                changeCheckedFunc = { (e, e1) => {
+                  try {
+                    this.presenter.setDocumentsCheckerPresenter(e, e1)
+                  } catch(e) {
+                    console.log(e)
+                  }
+                } }
+                showCoeModalFunc = { (showCoeModal) => this.setState({ showCoeModal }) }
+                pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }/>
             </div>
             {
               // <PensionDetailsFragment pensionFundsData = { pensionFundsData } />

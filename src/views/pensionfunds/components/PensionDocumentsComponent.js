@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import {
   Card,
-  Checkbox
+  Checkbox,
+  GenericButton
 } from '../../../ub-components/'
 
 import './styles/fundsComponentStyle.css'
@@ -21,10 +22,11 @@ class PensionDocumentsComponent extends Component {
       id,
       content,
       documents,
-      stepperStatus
+      stepperStatus,
+      statusCodeFunc,
+      isChecked,
+      changeCheckedFunc,
     } = this.props
-
-    console.log(documents)
 
     return (
       <Card
@@ -35,12 +37,15 @@ class PensionDocumentsComponent extends Component {
         <br/>
         <center>
           <Checkbox
+            checked = { isChecked }
+            onChange = { () => changeCheckedFunc(isChecked, id) }
             label = { 'I Agree in terms and conditions' }
           />
           <br/>
           <br/>
           <div>
             <PensionStepperComponents
+              statusCodeFunc = { () => statusCodeFunc() }
               stepperStatus = { stepperStatus }
               list = { documents }/>
           </div>

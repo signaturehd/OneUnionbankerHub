@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 
 import './styles/fundsComponentStyle.css'
 
+import {
+  GenericButton
+} from '../../../ub-components/'
+
 class PensionStepperComponents extends Component {
   constructor (props) {
     super(props)
@@ -19,7 +23,8 @@ class PensionStepperComponents extends Component {
   render () {
     const {
       list,
-      stepperStatus
+      stepperStatus,
+      statusCodeFunc
     } = this.props
 
     return (
@@ -37,14 +42,21 @@ class PensionStepperComponents extends Component {
           className = { ' funds-border-stepper' }>
           {
             list && list.forms.map((resp) => (
-              <div>
+              <div onClick = { () => {} }>
                 <h4 className = { 'font-size-11px' }>{ resp.name }</h4>
                 <div className = { `funds-circle${ this.checkIfSelected(stepperStatus, resp.id) }` }></div>
               </div>
             ))
           }
         </div>
-        <div></div>
+        <div
+          className = { 'text-align-right' }>
+          <h4
+            className = { 'cursor-pointer font-size-12px font-weight-lighter unionbank-color' }
+            onClick = { () => statusCodeFunc () }>
+            Next
+          </h4>
+        </div>
       </div>
     )
   }
