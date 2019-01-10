@@ -62,7 +62,7 @@ class LaptopLeaseCardComponent extends Component {
     return (
       <div className={'carview-container'}>
         <center>
-          Laptop Lease (Bank to purchase)
+          (Bank to purchase)
         </center>
         <div className={ 'car-grid-column-2' }>
           <div></div>
