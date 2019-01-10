@@ -45,9 +45,9 @@ export default class RequestCoachPresenter {
     this.view = view
   }
 
-  getGoals () {
+  getGoals (status) {
     this.view.showCircularLoader()
-    this.getRequestedGoalsInteractor.execute()
+    this.getRequestedGoalsInteractor.execute(status)
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.getRequestedGoals(data)
