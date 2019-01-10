@@ -84,7 +84,7 @@ export default class PensionFundsPresenter {
       if(id === resp.id) {
         formsData.push({
           id : resp.id,
-          isChecked : check,
+          isChecked : !check && true,
           name : resp.name,
           content: resp.content,
         })
