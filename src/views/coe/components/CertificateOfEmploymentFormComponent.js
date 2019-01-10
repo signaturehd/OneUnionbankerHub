@@ -39,11 +39,7 @@ class CertificateOfEmploymentFormComponent extends Component {
       vlToFunc,
       onContinue,
       onEdit,
-      backToList,
-      vlFrom,
-      vlTo,
-      vlFromFunc,
-      vlToFunc
+      backToList
   	} = this.props
 
     return (
