@@ -1,4 +1,5 @@
 import GetTeamGoalsInteractor from '../../../domain/interactor/goals/GetTeamGoalsInteractor'
+import GetSquadGoalsInteractor from '../../../domain/interactor/goals/GetSquadGoalsInteractor'
 import GetGoalTaskInteractor from '../../../domain/interactor/goals/GetGoalTaskInteractor'
 import GetGoalCommentInteractor from '../../../domain/interactor/goals/GetGoalCommentInteractor'
 import GetGoalHistoryInteractor from '../../../domain/interactor/goals/GetGoalHistoryInteractor'
@@ -20,6 +21,7 @@ let storedGoalId = '', storedPageNumber = '', storedPageItem = ''
 export default class RequestCoachPresenter {
   constructor (container) {
     this.getTeamGoalsInteractor = new GetTeamGoalsInteractor(container.get('HRBenefitsClient'))
+    this.getSquadGoalsInteractor = new GetSquadGoalsInteractor(container.get('HRBenefitsClient'))
     this.getGoalTaskInteractor = new GetGoalTaskInteractor(container.get('HRBenefitsClient'))
     this.getGoalCommentInteractor = new GetGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.getGoalHistoryInteractor = new GetGoalHistoryInteractor(container.get('HRBenefitsClient'))
@@ -44,6 +46,18 @@ export default class RequestCoachPresenter {
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.getTeamGoals(data)
+      }, error => {
+        this.view.hideCircularLoader()
+        store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  getSquadGoals (status) {
+    this.view.showCircularLoader()
+    this.getSquadGoalsInteractor.execute(status)
+    .subscribe(data => {
+      this.view.hideCircularLoader()
+      this.view.getSquadGoals(data)
       }, error => {
         this.view.hideCircularLoader()
         store.dispatch(NotifyActions.resetNotify())
