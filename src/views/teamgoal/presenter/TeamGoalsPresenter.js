@@ -40,9 +40,9 @@ export default class RequestCoachPresenter {
     this.view = view
   }
 
-  getTeamGoals (status) {
+  getTeamGoals (status, goalType) {
     this.view.showCircularLoader()
-    this.getTeamGoalsInteractor.execute(status)
+    this.getTeamGoalsInteractor.execute(status, goalType)
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.getTeamGoals(data)
@@ -52,9 +52,9 @@ export default class RequestCoachPresenter {
     })
   }
 
-  getSquadGoals (status) {
+  getSquadGoals (goalType) {
     this.view.showCircularLoader()
-    this.getSquadGoalsInteractor.execute(status)
+    this.getSquadGoalsInteractor.execute(goalType)
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.getSquadGoals(data)

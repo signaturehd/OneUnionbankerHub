@@ -37,8 +37,8 @@ class TeamGoalsFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      teamStatus: 'team',
-      squadStatus: 'squad',
+      teamType: 'team',
+      squadType: 'squad',
       enabledLoader : false,
       submitLoader: false,
       taskLoader: false,
@@ -117,8 +117,8 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getTeamGoals(this.state.teamStatus)
-    this.presenter.getSquadGoals(this.state.squadStatus)
+    // this.presenter.getTeamGoals(2, this.state.teamType)
+    // this.presenter.getSquadGoals(this.state.squadType)
     // this.scrollFunction()
   }
 
@@ -358,8 +358,8 @@ class TeamGoalsFragment extends BaseMVPView {
 
   render () {
     const {
-      teamStatus,
-      squadStatus,
+      teamType,
+      squadType,
       enabledLoader,
       submitLoader,
       taskLoader,

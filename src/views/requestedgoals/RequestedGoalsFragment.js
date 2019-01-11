@@ -43,7 +43,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
-      status : 'personal',
+      personal : 'personal',
       enabledLoader : false,
       submitLoader: false,
       taskLoader: false,
@@ -144,7 +144,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getGoals(this.state.status)
+    this.presenter.getGoals(this.state.personal)
     // this.scrollFunction()
   }
 
@@ -470,7 +470,7 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   render () {
     const {
-      status,
+      personal,
       enabledLoader,
       submitLoader,
       taskLoader,

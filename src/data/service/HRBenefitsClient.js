@@ -1492,8 +1492,8 @@ export default class HRBenefitsClient {
   }
 
   /* My Goals */
-  getGoals (token, status) {
-    return this.service.getGoals(token, status)
+  getGoals (token, goalType) {
+    return this.service.getGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1567,8 +1567,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getTeamGoals (token, status) {
-    return this.service.getTeamGoals(token, status)
+  getTeamGoals (token, status, goalType) {
+    return this.service.getTeamGoals(token, status, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1592,8 +1592,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getSquadGoals (token, status) {
-    return this.service.getSquadGoals(token, status)
+  getSquadGoals (token, goalType) {
+    return this.service.getSquadGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
