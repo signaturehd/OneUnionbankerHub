@@ -22,11 +22,20 @@ class PensionFundsDocumentsFragment extends Component {
     return count
   }
 
+  checkIdActionCompletedReturn (id) {
+    let count = id
+    if(count > 1) {
+      count = id - 1
+    }
+    return count
+  }
+
   render () {
     const {
       pensionFundsDocumentsData,
       stepperStatus,
       statusCodeFunc,
+      statusCodeReturnFunc,
       changeCheckedFunc
     } = this.props
 
@@ -40,7 +49,7 @@ class PensionFundsDocumentsFragment extends Component {
             <h4 className = { 'font-size-16px font-weight-ligther letter-spacing-1' }>Secure your future.</h4>
             <br/>
           </div>
-          <div className = { 'funds-documents-background' }>
+          <div className = { `funds-documents-background${ stepperStatus }` }>
             <div>
               <div></div>
               <div className = { 'funds-documents-grid-x3' }>
@@ -59,6 +68,7 @@ class PensionFundsDocumentsFragment extends Component {
                         isChecked = { resp.isChecked }
                         changeCheckedFunc = { (e, e1) => changeCheckedFunc(e, e1) }
                         statusCodeFunc = { () => statusCodeFunc(this.checkIdActionCompleted(stepperStatus)) }
+                        statusCodeReturnFunc = { () => statusCodeReturnFunc(this.checkIdActionCompletedReturn(stepperStatus)) }
                       />
                     )
                   }

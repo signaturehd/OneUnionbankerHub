@@ -56,6 +56,24 @@
   border: 1px solid #9a91917d
 }
 
+.funds-history-circleactive {
+  height: 10px;
+  width: 10px;
+  background-color: #f6821d;
+  border-radius: 50%;
+  margin-left: -11px;
+  border: 1px solid #9a91917d
+}
+
+.funds-history-circle {
+  height: 10px;
+  width: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-left:-11px;
+  border: 1px solid #9a91917d
+}
+
 /* Stepper */
 .funds-component-stepper-grid {
   display: grid;

@@ -37,7 +37,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                    margin: 'auto 5px'
                  }}
                 className = { 'unionbank-color ' }>
-                  <div className = { `funds-circle${ 'active' }` }></div>
+                  <div className = { `funds-history-circle${ resp.isChecked ? 'active' : '' }` }></div>
               </div>
               <Card className = { 'funds-component-card-details-grid' }>
                 <div className = { 'funds-history-content-grid-row' }>

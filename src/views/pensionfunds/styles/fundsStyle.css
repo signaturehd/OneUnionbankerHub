@@ -4,8 +4,26 @@
 }
 
 
-.funds-documents-background {
+.funds-documents-background1 {
   background: url('../../../images/funds/risk-text-website.png') center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.funds-documents-background2 {
+  background: url('../../../images/funds/rules-text-web.png') center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.funds-documents-background3 {
+  background: url('../../../images/funds/disclosure-text-website.png') center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;

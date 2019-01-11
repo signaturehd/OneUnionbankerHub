@@ -9,6 +9,12 @@ import Presenter from './presenter/PensionFundsPresenter'
 import './styles/fundsStyle.css'
 
 import PensionFundsDocumentsFragment from './fragments/PensionFundsDocumentsFragment'
+import PensionDetailsFragment from './fragments/PensionDetailsFragment'
+import PensionCodeModals from './modals/PensionCodeModals'
+
+import {
+  CircularLoader
+} from '../../ub-components/'
 
 class PensionFundsFragment extends BaseMVPView {
   constructor (props) {
@@ -16,7 +22,7 @@ class PensionFundsFragment extends BaseMVPView {
     this.state = {
       loader : false,
       stepperStatus: 1,
-      showCoeModal: false,
+      showCodeModal: false,
     }
   }
 
@@ -48,13 +54,13 @@ class PensionFundsFragment extends BaseMVPView {
       pensionFundsDocumentsData,
       stepperStatus,
       codeText,
-      showCoeModal
+      showCodeModal
     } = this.state
 
     return (
       <div>
         {
-          showCoeModal &&
+          showCodeModal &&
           <PensionCodeModals
             submitCodeFunc = { () =>{} }
             codeTextFunc = { (codeText) => this.setState({ codeText }) }
@@ -62,27 +68,32 @@ class PensionFundsFragment extends BaseMVPView {
         }
         {
           loader ?
-          <CircularLoader show = { loader } />
+          <CircularLoader
+            validateLoading = { true }
+            show = { loader } />
           :
           <div  className = { 'funds-fragment' }>
             <div></div>
             <div>
-              <PensionFundsDocumentsFragment
-                statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
-                stepperStatus = { stepperStatus }
-                changeCheckedFunc = { (e, e1) => {
-                  try {
-                    this.presenter.setDocumentsCheckerPresenter(e, e1)
-                  } catch(e) {
-                    console.log(e)
-                  }
-                } }
-                showCoeModalFunc = { (showCoeModal) => this.setState({ showCoeModal }) }
-                pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }/>
+              {
+                stepperStatus === 4 ?
+                <PensionDetailsFragment pensionFundsData = { pensionFundsData } /> :
+                <PensionFundsDocumentsFragment
+                  statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
+                  statusCodeReturnFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
+                  stepperStatus = { stepperStatus }
+                  changeCheckedFunc = { (e, e1) => {
+                    try {
+                      this.presenter.setDocumentsCheckerPresenter(e, e1)
+                      this.setState({ showCodeModal : true })
+                    } catch(e) {
+                      console.log(e)
+                    }
+                  } }
+                  showCodeModalFunc = { (showCodeModal) => this.setState({ showCodeModal }) }
+                  pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }/>
+              }
             </div>
-            {
-              // <PensionDetailsFragment pensionFundsData = { pensionFundsData } />
-            }
             <div></div>
           </div>
         }

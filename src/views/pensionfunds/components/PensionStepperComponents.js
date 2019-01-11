@@ -24,7 +24,8 @@ class PensionStepperComponents extends Component {
     const {
       list,
       stepperStatus,
-      statusCodeFunc
+      statusCodeFunc,
+      statusCodeReturnFunc,
     } = this.props
 
     return (
@@ -49,14 +50,7 @@ class PensionStepperComponents extends Component {
             ))
           }
         </div>
-        <div
-          className = { 'text-align-right' }>
-          <h4
-            className = { 'cursor-pointer font-size-12px font-weight-lighter unionbank-color' }
-            onClick = { () => statusCodeFunc () }>
-            Next
-          </h4>
-        </div>
+        <div></div>
       </div>
     )
   }

@@ -10,6 +10,7 @@ import '../styles/fundsStyle.css'
 
 import PensionDetailsComponent from '../components/PensionDetailsComponent'
 import PensionFundsPaymentHistoryComponent from '../components/PensionFundsPaymentHistoryComponent'
+import PensionFundsChartComponent from '../components/PensionFundsChartComponent'
 
 import { format } from '../../../utils/numberUtils'
 
@@ -33,8 +34,13 @@ class PensionDetailsFragment extends Component {
           <div className = { 'funds-grid-content-detail' }>
             <PensionDetailsComponent
               pensionFundsData= { pensionFundsData }/>
-            <div></div>
+            <div>
+            </div>
           </div>
+          <br/>
+        <h4 className = { 'font-weight-lighter font-size-25px' }>Unit Summary</h4>
+          <br/>
+          <PensionFundsChartComponent />
         </div>
         <div>
           <PensionFundsPaymentHistoryComponent

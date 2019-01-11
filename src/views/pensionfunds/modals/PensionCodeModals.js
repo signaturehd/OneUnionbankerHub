@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericInput, GenericButton } from '../../../ub-components/'
+import { GenericInput, GenericButton, Modal } from '../../../ub-components/'
 
-import './styles/fundsComponentStyle.css'
+import '../styles/fundsStyle.css'
 
 class PensionCodeModals extends Component {
   constructor (props) {
@@ -23,10 +23,14 @@ class PensionCodeModals extends Component {
           value = { codeText }
           text = { 'Enter your Four digit activation code' }
           type = { 'text' }
+          errorMessage = { '' }
           onChange = { (e) => codeTextFunc(e.target.value) }
           />
+        <h4 className={ 'font-weight-lighter text-align-center font-size-10px' }>We have sent an SMS including activation code to +63XXXXXXXX</h4>
+        <br/>
         <center>
           <GenericButton
+            className = { 'profile-button-small' }
             text = { 'Submit' }
             onClick = { () => submitCodeFunc() }
             />

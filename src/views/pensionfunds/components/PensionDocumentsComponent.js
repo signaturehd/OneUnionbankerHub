@@ -23,8 +23,9 @@ class PensionDocumentsComponent extends Component {
       content,
       documents,
       stepperStatus,
-      statusCodeFunc,
       isChecked,
+      statusCodeFunc,
+      statusCodeReturnFunc,
       changeCheckedFunc,
     } = this.props
 
@@ -37,15 +38,38 @@ class PensionDocumentsComponent extends Component {
         <br/>
         <center>
           <Checkbox
-            checked = { isChecked }
+            checked = { isChecked && isChecked }
             onChange = { () => changeCheckedFunc(isChecked, id) }
             label = { 'I Agree in terms and conditions' }
           />
           <br/>
           <br/>
+          <div className = {'grid-global-columns-x3' }>
+            <div></div>
+            <center>
+              <div className = { `${ id > 1 ? 'grid-global' : 'text-align-center' }` }>
+                {
+                  id > 1 &&
+                  <h4
+                    className = { 'text-align-right cursor-pointer font-size-25px font-weight-bold unionbank-color' }
+                    onClick = { () =>  statusCodeReturnFunc () }>
+                    {'<'}
+                  </h4>
+                }
+                <h4
+                  className = { `${ id === 1 ? 'text-align-center' : 'text-align-left' } cursor-pointer font-size-25px font-weight-bold unionbank-color` }
+                  onClick = { () => statusCodeFunc () }>
+                  {'>'}
+                </h4>
+              </div>
+            </center>
+            <div></div>
+          </div>
+
+          <br/>
+          <br/>
           <div>
             <PensionStepperComponents
-              statusCodeFunc = { () => statusCodeFunc() }
               stepperStatus = { stepperStatus }
               list = { documents }/>
           </div>

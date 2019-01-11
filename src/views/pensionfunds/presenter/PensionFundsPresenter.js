@@ -11,21 +11,25 @@ let mockData = {
       'datePayment': '01/01/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
+      'isChecked' : false,
     }, {
       'id': 2,
       'datePayment': '01/02/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
+      'isChecked' : true,
     }, {
       'id': 3,
       'datePayment': '03/03/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
+      'isChecked' : true,
     }, {
       'id': 4,
       'datePayment': '04/04/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
+      'isChecked' : true,
     }
   ]
 }
@@ -100,7 +104,7 @@ export default class PensionFundsPresenter {
       const objectParam = {
         forms : formsData
       }
-      console.log(objectParam)
+      this.setAgreeementDataPresenter(objectParam)
     })
   }
 
