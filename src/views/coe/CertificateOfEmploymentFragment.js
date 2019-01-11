@@ -6,11 +6,12 @@ import Presenter from './presenter/CertificateOfEmploymentPresenter'
 
 import {
   SingleInputModal,
-  CircularLoader
+  CircularLoader,
+  Card
 } from '../../ub-components/'
 
 import CertificateOfEmploymentFormComponent from './components/CertificateOfEmploymentFormComponent'
-
+import './styles/coeStyles.css'
 class CertificateOfEmploymentFragment extends BaseMVPView {
   constructor (props) {
     super(props)
@@ -20,6 +21,10 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
       showPurposeModal : false,
       showVisaModal : false,
       enabledLoader : false,
+      showCOEForm : false,
+      showListForm : true,
+      vlFrom : '',
+      vlTo : ''
     }
   }
 
@@ -54,6 +59,14 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
     this.setState({ visaBody })
   }
 
+  setVLFromBody (vlFrom) {
+    this.setState({ vlFrom })
+  }
+
+  setVLToBody (vlTo) {
+    this.setState({ vlTo })
+  }
+
   checkLoader(enabledLoader) {
     this.setState({ enabledLoader })
   }
@@ -77,8 +90,14 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
       showVisaModal,
       visa,
       visaBody,
+      vlFromBody,
+      vlToBody,
       enabledLoader,
       showEditMode,
+      showCOEForm,
+      showListForm,
+      vlFrom,
+      vlTo
     } = this.state
 
     return (
@@ -136,37 +155,62 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
           />
         }
         {
-          enabledLoader ?
-        <center className = { 'circular-loader-center' }>
-          <CircularLoader
-            show = { enabledLoader }
+          enabledLoader &&
+          <center className = { 'circular-loader-center' }>
+            <CircularLoader
+              show = { enabledLoader }
+            />
+          </center>
+        }
+        {
+          showListForm &&
+          <div className = { 'main-grid' }>
+            <div></div>
+            <div>
+              <h2 className = { 'text-align-center font-size-24px' }>My Documents</h2>
+              <br/>
+              <Card className = { 'card-padding cursor-pointer' }
+              onClick = { () => this.setState({ showCOEForm: true, showListForm: false }) }>
+                <h2>Certificate Of Employment Form</h2>
+              </Card>
+              <Card className = { 'card-padding cursor-pointer' }>
+                <h2>BIR 2316</h2>
+              </Card>
+            </div>
+            <div></div>
+          </div>
+        }
+        {
+          showCOEForm &&
+          <CertificateOfEmploymentFormComponent
+            showEditMode = { showEditMode }
+            onContinue = { () => this.presenter.validateInput() }
+            onEdit = { (e) => {
+              if(e) {
+                this.presenter.submitCoe()
+              } else {
+                 this.setState({ showEditMode : e })
+              }
+            } }
+            typeOfCoe= { typeOfCoe}
+            typeOfCoeBody = { typeOfCoeBody }
+            purposeBody = { purposeBody }
+            purpose = { purpose }
+            visaBody = { visaBody }
+            visa = { visa }
+            vlFrom = { vlFrom }
+            vlTo = { vlTo }
+            vlFromFunc = { (resp) => this.presenter.setStoredVLFrom(resp) }
+            vlToFunc = { (resp) => this.presenter.setStoredVLTo(resp) }
+            showTypeModalFunc = { () =>
+              this.setState({ showTypeModal : true }) }
+            showPurposeModalFunc = { () =>
+              this.setState({ showPurposeModal : true }) }
+            showVisaModalFunc = { () =>
+              this.setState({ showVisaModal : true }) }
+            backToList = { () =>
+              this.setState({ showCOEForm: false, showListForm: true })}
           />
-          <h2>Please wait...</h2>
-        </center> :
-
-        <CertificateOfEmploymentFormComponent
-          showEditMode = { showEditMode }
-          onContinue = { () => this.presenter.validateInput() }
-          onEdit = { (e) => {
-            if(e) {
-              this.presenter.submitCoe()
-            } else {
-               this.setState({ showEditMode : e })
-            }
-          } }
-          typeOfCoe= { typeOfCoe}
-          typeOfCoeBody = { typeOfCoeBody }
-          purposeBody = { purposeBody }
-          purpose = { purpose }
-          visaBody = { visaBody }
-          visa = { visa }
-          showTypeModalFunc = { () =>
-            this.setState({ showTypeModal : true }) }
-          showPurposeModalFunc = { () =>
-            this.setState({ showPurposeModal : true }) }
-          showVisaModalFunc = { () =>
-            this.setState({ showVisaModal : true }) }
-        />
         }
       </div>
     )
