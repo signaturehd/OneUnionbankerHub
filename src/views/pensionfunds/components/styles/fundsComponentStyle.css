@@ -6,6 +6,11 @@
   border-radius: 30px;
 }
 
+.pension-chart-grid-3x {
+  display: grid;
+  grid-template-columns: .1fr 1fr .1fr;
+}
+
 .funds-grid-row-details {
   display: grid;
   grid-template-rows: .3fr .3fr;
