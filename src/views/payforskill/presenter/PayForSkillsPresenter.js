@@ -13,7 +13,6 @@ import moment from 'moment'
 
 /* Variables */
 let storedDateOfCompletion = '', storedProgramObject = '', storedAttachments = [], storedAccreditationObject = ''
-let storedOthers = ''
 
 export default class PayForSkillsPresenter {
   constructor (container) {
@@ -46,11 +45,6 @@ export default class PayForSkillsPresenter {
     this.view.setAccreditingBody(data)
   }
 
-  setStoredOthers (data) {
-    storedOthers = data
-    this.view.setStoredOthers(data)
-  }
-
   getPaySkills () {
     this.view.checkLoader(true)
     this.getProgramsInteractor.execute()
@@ -77,11 +71,6 @@ export default class PayForSkillsPresenter {
       program : {
         id : data.program.id,
         name : data.program.name,
-        amount : data.program.amount,
-        accreditingBodyId: data.program.accreditingBodyId,
-        remark: data.program.remark,
-        id: data.program.id,
-        numberOfAttachment : data.program.numberOfAttachment
       }
     }
     return objectParam
@@ -125,107 +114,51 @@ export default class PayForSkillsPresenter {
       }
     )
 
-    if(storedAccreditationObject && storedAccreditationObject.accre.toLowerCase() !== 'others') {
-      if(storedProgramObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please select programs',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedDateOfCompletion === '' || storedDateOfCompletion === null) {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please select Date of Completion',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedAccreditationObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please select Accreditation Body',
-          type: 'warning',
-          duration: 5000,
-        }))
-      }else if (!storedAttachments.length) {
-         store.dispatch(NotifyActions.addNotify({
-            title : 'Pay For Skills' ,
-            message : 'Attachments is required',
-            type : 'warning',
-            duration : 5000
-          })
-        )
-      } else if (validateAttachments) {
-        storedAttachments && storedAttachments.map(
-          (attachment, key) => {
-            if(!attachment.file) {
-              store.dispatch(NotifyActions.addNotify({
-                 title : 'My Pay For Skills',
-                 message : attachment.name + ' is required',
-                 type : 'warning',
-                 duration : 5000
-               })
-             )
-            }
+    if(storedProgramObject === '') {
+      store.dispatch(NotifyActions.addNotify({
+        title: 'Pay For Skills',
+        message : 'Please select programs',
+        type: 'warning',
+        duration: 5000,
+      }))
+    } else if(storedDateOfCompletion === '') {
+      store.dispatch(NotifyActions.addNotify({
+        title: 'Pay For Skills',
+        message : 'Please select Date of Completion',
+        type: 'warning',
+        duration: 5000,
+      }))
+    } else if(storedAccreditationObject === '') {
+      store.dispatch(NotifyActions.addNotify({
+        title: 'Pay For Skills',
+        message : 'Please select Accreditation Body',
+        type: 'warning',
+        duration: 5000,
+      }))
+    }else if (!storedAttachments.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Pay For Skills' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 5000
+        })
+      )
+    } else if (validateAttachments) {
+      storedAttachments && storedAttachments.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'My Pay For Skills',
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 5000
+             })
+           )
           }
-        )
-      } else {
-        this.view.setEditable(true)
-      }
+        }
+      )
     } else {
-      if(storedProgramObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please select programs',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedDateOfCompletion === '' || storedDateOfCompletion === null) {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please select Date of Completion',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedAccreditationObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please select Accreditation Body',
-          type: 'warning',
-          duration: 5000,
-        }))
-      }  else if(storedOthers === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Pay For Skills',
-          message : 'Please Specify if others',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if (!storedAttachments.length) {
-         store.dispatch(NotifyActions.addNotify({
-            title : 'Pay For Skills' ,
-            message : 'Attachments is required',
-            type : 'warning',
-            duration : 5000
-          })
-        )
-      } else if (validateAttachments) {
-        storedAttachments && storedAttachments.map(
-          (attachment, key) => {
-            if(!attachment.file) {
-              store.dispatch(NotifyActions.addNotify({
-                 title : 'My Pay For Skills',
-                 message : attachment.name + ' is required',
-                 type : 'warning',
-                 duration : 5000
-               })
-             )
-            }
-          }
-        )
-      } else {
-        this.view.setEditable(true)
-      }
+      this.view.setEditable(true)
     }
   }
 
@@ -236,7 +169,7 @@ export default class PayForSkillsPresenter {
       storedProgramObject.id,
       moment(storedDateOfCompletion).format('YYYY-MM-DD'),
       storedAccreditationObject.id,
-      storedOthers,
+      storedAccreditationObject.id === 21 ? storedAccreditationObject.accre : '',
       storedAttachments
     ))
     .subscribe(data => {
@@ -253,8 +186,6 @@ export default class PayForSkillsPresenter {
      storedDateOfCompletion = ''
      storedAccreditationObject = ''
      storedAccreditationObject = ''
-     storedOthers = ''
-     this.view.setEditable(false)
     }, error => {
       this.view.checkLoader(false)
     })

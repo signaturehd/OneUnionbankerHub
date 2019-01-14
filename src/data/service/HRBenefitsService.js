@@ -347,6 +347,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addBookRequestCancel (token, objectParam) {
+    return this.apiClient.post('v1/books/requests/cancel', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* News */
   getNews (token) {
     return this.apiClient.get('v1/news', {
@@ -2047,12 +2053,8 @@ export default class HRBenefitsService {
      processorType : laptopLeaseParam.processorType,
      operatingSystem : laptopLeaseParam.operatingSystem,
      systemMemory : laptopLeaseParam.systemMemory,
-     vendor: laptopLeaseParam.vendor,
-     or: {
-       number : laptopLeaseParam.orNumber,
-       date: laptopLeaseParam.orDate
-     }
    }
+
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
@@ -2069,7 +2071,6 @@ export default class HRBenefitsService {
 
    const validate = laptopLeaseParam.id === 1 ? true : false
    let objectParam = validate ? bankToPurchaseObject : employeeToPurchaseObject
-
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
@@ -2507,4 +2508,29 @@ export default class HRBenefitsService {
     })
   }
 
+/* Pension Funds */
+
+  getPensionFundsDocuments (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  getPensionFunds (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  submitPensionPin (token, pin) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  confirmPensionDocumentsCode (token, code) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
 }

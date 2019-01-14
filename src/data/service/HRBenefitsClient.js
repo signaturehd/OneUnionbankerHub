@@ -252,6 +252,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addBookRequestCancel (token, objectParam) {
+    return this.service.addBookRequestCancel(token, objectParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
@@ -1616,6 +1621,18 @@ export default class HRBenefitsClient {
 
   submitCoe (token, bodyParam) {
     return this.service.submitCoe(token, bodyParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  /* Pension Funds */
+
+  getPensionFunds (token) {
+    return this.service.getPensionFunds(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsDocuments (token) {
+    return this.service.getPensionFundsDocuments (token)
     .pipe(ServiceErrorOperator())
   }
 }

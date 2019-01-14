@@ -14,8 +14,8 @@ export default (
   systemMemory,
   qoutation,
   orNumber,
+  vendor,
   orDate,
-  vendor
 ) => ({
   id,
   brand,
@@ -32,6 +32,6 @@ export default (
   systemMemory,
   attachments: qoutation,
   orNumber,
+  vendor,
   orDate,
-  vendor
 })
