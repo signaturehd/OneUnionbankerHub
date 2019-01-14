@@ -1616,4 +1616,9 @@ export default class HRBenefitsClient {
     return this.service.getRewardsDNAMoment(token, id)
       .pipe(ServiceErrorOperator())
   }
+
+  getRewardAwards (token) {
+    return this.service.getRewardAwards(token)
+      .pipe(ServiceErrorOperator())
+  }
 }

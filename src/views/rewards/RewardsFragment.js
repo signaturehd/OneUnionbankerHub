@@ -13,14 +13,23 @@ class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
 		super(props)
 	}
+
 	componentDidMount () {
 		this.props.setSelectedNavigation(9)
+		this.presenter.getRewardAwards()
 	}
 
+	setRecognizedRewards (recognizedAwards) {
+		this.setState({ recognizedAwards })
+	}
 
 	render () {
 		const { history, profileHasCOC } = this.props
-		const { accountNumber, showAccountNumberModal } = this.state
+		const {
+			accountNumber,
+			showAccountNumberModal,
+			recognizedAwards
+		} = this.state
 
 
 		const myrewards1 = [{
@@ -64,7 +73,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			rightText: '33, 000 points',
 		}]
 
-
 		return (
 			<div className={'myreward-grid-container'}>
 				<div className={'myrewards-container'} >
@@ -89,7 +97,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					}
 
 					<div className={'myreward-orange-color'}>
-
 						<span className={'myreward-orange-text align-left'}> My Reward </span>
 						<span className={'myreward-orange-text align-right'}> 20,000 </span>
 					</div>
@@ -129,8 +136,8 @@ class RewardsRecognitionFragment extends BaseMVPView {
 							<Card className="myrewards-container-component">
 								<img className={'myrewards-card-image '} src={staticImage} />
 								<div className={'myrewards-grid myrewards-card-image-text'}>
-									<span class="align-left" >{value.leftText}</span>
-									<span class="align-right" >{value.rightText}</span>
+									<span className = { 'align-left  font-size-16px font-weight-lighter' }>{value.leftText}</span>
+									<span class="align-right  font-size-16px font-weight-lighter" >{value.rightText}</span>
 								</div>
 							</Card>
 						))

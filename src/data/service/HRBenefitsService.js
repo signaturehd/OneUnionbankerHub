@@ -2486,4 +2486,10 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  getRewardAwards (token, id) {
+    return this.apiClient.get(`v1/rewards/awards`, {
+      headers : { token }
+    })
+  }
 }
