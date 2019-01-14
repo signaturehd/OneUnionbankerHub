@@ -228,11 +228,8 @@ class BenefitsFragment extends BaseMVPView {
         <div>
           {
           enabledAccountNumberLoader ?
-            <center>
-              <h4>Please wait while we validating the Account Number</h4>
-              <br/>
-              <CircularLoader show={ true }/>
-            </center>
+            <CircularLoader
+               show={ true }/>
             :
               <div>
                 <h2 className = { 'font-weight-bold' }>UnionBank Account Enrollment</h2>
@@ -380,13 +377,7 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <LoansFragment { ...props } />}/>
               {
                 enableLoader ?
-                <Modal>
-                  <h4>Please wait while validating your Employee Number</h4>
-                  <br/>
-                  <center>
-                    <CircularLoader show={ enableLoader }/>
-                  </center>
-                </Modal>
+                <CircularLoader show={ enableLoader }/>
                 :
                 <Route exact path='/mybenefits/benefits/carlease'
                   render={ props => <CarLeaseFragment

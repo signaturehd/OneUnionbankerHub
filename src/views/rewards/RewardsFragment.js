@@ -6,21 +6,29 @@ import ConnectView from '../../utils/ConnectView'
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/myrewards.css'
-import staticImage from './styles/ubp-bg.png'
-/* import Redeem from './fragments/redeem/redeem' */
+import RewardRedeemFragment from './fragments/RewardRedeemFragments'
 
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
 		super(props)
 	}
+
 	componentDidMount () {
 		this.props.setSelectedNavigation(9)
+		this.presenter.getRewardAwards()
 	}
 
+	setRecognizedRewards (recognizedAwards) {
+		this.setState({ recognizedAwards })
+	}
 
 	render () {
 		const { history, profileHasCOC } = this.props
-		const { accountNumber, showAccountNumberModal } = this.state
+		const {
+			accountNumber,
+			showAccountNumberModal,
+			recognizedAwards
+		} = this.state
 
 
 		const myrewards1 = [{
@@ -45,7 +53,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			path: '/myrewards/staraward',
 		}]
 
-		const redeem = [{
+		const redeemData  = [{
 			id: 0,
 			staticImage: '',
 			leftText: '10% OFF in Zalora',
@@ -63,7 +71,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			leftText: '30% OFF in Valora',
 			rightText: '33, 000 points',
 		}]
-
 
 		return (
 			<div className={'myreward-grid-container'}>
@@ -89,7 +96,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					}
 
 					<div className={'myreward-orange-color'}>
-
 						<span className={'myreward-orange-text align-left'}> My Reward </span>
 						<span className={'myreward-orange-text align-right'}> 20,000 </span>
 					</div>
@@ -123,18 +129,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					</div>
 				</div>
 				<div>
-					<h2 className={'header-margin-default text-align-left'}>Redeem</h2>
-					{
-						redeem.map((value, idx) => (
-							<Card className="myrewards-container-component">
-								<img className={'myrewards-card-image '} src={staticImage} />
-								<div className={'myrewards-grid myrewards-card-image-text'}>
-									<span class="align-left" >{value.leftText}</span>
-									<span class="align-right" >{value.rightText}</span>
-								</div>
-							</Card>
-						))
-					}
+				<RewardRedeemFragment redeemData = {redeemData} />
 				</div>
 			</div>
 		)

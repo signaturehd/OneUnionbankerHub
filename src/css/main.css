@@ -59,7 +59,12 @@ p {
   -webkit-transform: rotate(135deg);
 }
 
-.back-arrow {
+.top-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.bottom-arrow {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
@@ -272,6 +277,16 @@ p {
 
 .float-right {
   float: right;
+}
+
+/* Text Alignment Spacing */
+
+.letter-spacing-1 {
+  letter-spacing: .1pc;
+}
+
+.letter-spacing-2 {
+  letter-spacing: .2pc;
 }
 
 /* Default color */

@@ -33,14 +33,24 @@ class CertificateOfEmploymentFormComponent extends Component {
       typeOfCoeBody,
       visa,
       visaBody,
+      vlFrom,
+      vlTo,
+      vlFromFunc,
+      vlToFunc,
       onContinue,
-      onEdit
+      onEdit,
+      backToList
   	} = this.props
 
     return (
       <div className = {'coe-container'} >
         <div className = { 'coe-grid-column-2' }>
-          <div></div>
+          <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { () => backToList() }>
+            </i>
+          </div>
           <div className={ 'coe-form-coed' }>
             <h4 className = { 'font-size-24px font-weight-bold' }>Certificate of Employment Form</h4>
             <br/>
@@ -66,14 +76,29 @@ class CertificateOfEmploymentFormComponent extends Component {
               {
                 purposeBody &&
                 purposeBody.id === 37 &&
-                <GenericInput
-                  errorMessage = { '' }
-                  text = { 'VISA' }
-                  disabled = { showEditMode }
-                  readOnly
-                  value = { visaBody && visaBody.visa }
-                  onClick = { () => showVisaModalFunc() }
+                <div>
+                  <GenericInput
+                    errorMessage = { '' }
+                    text = { 'VISA' }
+                    disabled = { showEditMode }
+                    readOnly
+                    value = { visaBody && visaBody.visa }
+                    onClick = { () => showVisaModalFunc() }
                   />
+                  <h2 className = { 'font-size-14px' }>Vacation Leave</h2>
+                  <div className = { 'grid-global' }>
+                    <DatePicker
+                      text = { 'From' }
+                      selected = { vlFrom }
+                      onChange = { (e) => vlFromFunc(e) }
+                    />
+                    <DatePicker
+                      text = { 'To' }
+                      selected = { vlTo }
+                      onChange = { (e) => vlToFunc(e) }
+                    />
+                  </div>
+                </div>
               }
               <br/>
               <Line/>

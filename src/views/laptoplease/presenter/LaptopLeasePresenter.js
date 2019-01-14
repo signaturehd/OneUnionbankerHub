@@ -101,12 +101,7 @@ export default class LaptopLeasePresenter {
 
   setVendor (vendor) {
     storedVendor = vendor
-    this.view.setVendor(storedVendor)
-  }
-
-  setCostOfAmount (amount) {
-    storedCostOfAmount = amount
-    this.view.setCostOfAmount(amount)
+    this.view.setVendor(vendor)
   }
 
   resetValue () {
@@ -129,7 +124,7 @@ export default class LaptopLeasePresenter {
   }
 
   validateLaptopLease () {
-    this.view.showCircularLoader()
+    this.view.showLoading()
     this.validateLaptopLeaseInteractor.execute()
     .map(data => {
       let arrayOption = []
@@ -154,16 +149,16 @@ export default class LaptopLeasePresenter {
       this.view.isLaptopLeaseValidate(data.isValid)
       this.view.setDeliveryOptionList(data.deliveryOptions)
       this.view.setAttachment(data.attachments)
-      this.view.hideCircularLoader()
+      this.view.hideLoading()
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.hideLoading()
       this.view.navigate()
     })
   }
 
   validateSubmission (getCardOptionId) {
     try {
-      if(getCardOptionId.toString() === '0') {
+      if(getCardOptionId.toString() === '1') {
         store.dispatch(NotifyActions.resetNotify())
         if (storedAmount === '' || storedAmount < 1) {
            store.dispatch(NotifyActions.addNotify({
@@ -287,7 +282,23 @@ export default class LaptopLeasePresenter {
             duration : 2000
           })
         )
-       } else {
+      } else if (storedAmount === '' || storedAmount < 1) {
+         store.dispatch(NotifyActions.addNotify({
+            title: 'Laptop Lease',
+            message : 'Estimated Cost must be greater than 0',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (storedTerms === '') {
+        store.dispatch(NotifyActions.addNotify({
+           title: 'Laptop Lease',
+           message : 'Please specify your payment method',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
           this.view.validateInput()
         }
       }
@@ -298,7 +309,7 @@ export default class LaptopLeasePresenter {
 
   addLaptopLease (getCardOptionId) {
     try {
-      this.view.showCircularLoader()
+      this.view.showLoading()
       this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
         getCardOptionId,
         storedLaptopBrand,
@@ -315,12 +326,14 @@ export default class LaptopLeasePresenter {
         storedSystemMemory,
         storedFile,
         storedOrNumber,
-        moment(storedOrDate).format('MM/DD/YYYY')))
+        storedVendor,
+        moment(storedOrDate).format('MM/DD/YYYY'))
+      )
       .subscribe(data => {
         this.view.noticeOfUndertaking(data)
-        this.view.hideCircularLoader()
+        this.view.hideLoading()
         }, e => {
-        this.view.hideCircularLoader()
+        this.view.hideLoading()
       })
     } catch (e) {
       console.log(e)

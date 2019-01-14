@@ -41,6 +41,7 @@ class CelebrateDNAFragment extends BaseMVPView {
           const { accountNumber, showAccountNumberModal, rewardDNA } = this.state
           console.log(rewardDNA)
           return (
+<<<<<<< HEAD
             <div className = {'celebrate-container'}>
 
               <div className={'text-align-center'}>
@@ -91,6 +92,14 @@ class CelebrateDNAFragment extends BaseMVPView {
                       </GenericButton>
 
                     </div>
+=======
+            <div>
+                  <h1>Celebrate DNA</h1>
+                  <p>{ rewardDNA.award }</p>
+                  <p>{ rewardDNA.points }</p>
+                  <GenericButton text={'Button'} onclick={''}>
+                  </GenericButton>
+>>>>>>> 7f5b6a5866f948a931be7527e3a43a3404ed6526
             </div>
 
           )

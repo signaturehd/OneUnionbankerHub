@@ -8,7 +8,7 @@
 }
 
 .appbar-style-color {
-  background-color: #424242;
+  background-color: #fff;
 }
 
 .appbar-default-menu {
@@ -250,6 +250,11 @@
 
 .appbar-learning-icon:hover {
   background-image: url('../../../../../images/SIDE MENU/My Learning - Orange.png');
+  background-position: center;
+}
+
+.appbar-future-icon {
+  background-image: url('../../../../../images/SIDE MENU/FUND2-ORANGE .png');
   background-position: center;
 }
 

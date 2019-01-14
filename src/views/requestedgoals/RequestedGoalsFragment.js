@@ -43,6 +43,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
+      status : 'personal',
       enabledLoader : false,
       submitLoader: false,
       taskLoader: false,
@@ -143,7 +144,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getGoals()
+    this.presenter.getGoals(this.state.status)
     // this.scrollFunction()
   }
 
@@ -403,8 +404,19 @@ class RequestedGoalsFragment extends BaseMVPView {
      taskArray.length === count ? true : false
   }
 
-  checkIfShowMarkAsCompleted(show) {
-    this.setState({ showMarkAsCompleted: show })
+  checkIfShowMarkAsCompleted(approvalStatus, isCompleted) {
+    let boolCompleted = false
+
+    if(approvalStatus === 2) {
+      !isCompleted ?
+      boolCompleted = true
+      :
+      boolCompleted = false
+    }
+    else {
+      boolCompleted = false
+    }
+    return boolCompleted
   }
 
   commentRateFunc (ratings) {
@@ -458,6 +470,7 @@ class RequestedGoalsFragment extends BaseMVPView {
 
   render () {
     const {
+      status,
       enabledLoader,
       submitLoader,
       taskLoader,
@@ -861,7 +874,9 @@ class RequestedGoalsFragment extends BaseMVPView {
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  this.setState({ ifYesCompleted: false, showMarkAsCompleted: isCompleted === 1 ? true : false, showRemarksText : false })
+                  this.setState({ ifYesCompleted: false,
+                    showMarkAsCompleted: this.checkIfShowMarkAsCompleted(approvalStatus, isCompleted),
+                    showRemarksText : false })
                 }
                }
                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }

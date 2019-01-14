@@ -12,7 +12,7 @@ import moment from 'moment'
 
 /* Variables */
 let storedTypeOFCoeObject = '', storedPurposeObject = '', storedVisaObject = ''
-let storedApprovedVLFrom = '', storedApprovedVLTo = ''
+let storedApprovedVLFrom = '', storedApprovedVLTo = '', storedVLTo = '', storedVLFrom = ''
 
 let withSalary = [
   {
@@ -48,6 +48,16 @@ export default class CertificateOfEmploymentPresenter {
   setStoredPurposeObject (data) {
     storedPurposeObject = data
     this.view.setPurposeBody(data)
+  }
+
+  setStoredVLFrom (data) {
+    storedVLFrom = data
+    this.view.setVLFromBody(data)
+  }
+
+  setStoredVLTo (data) {
+    storedVLTo = data
+    this.view.setVLToBody(data)
   }
 
   getCoeSalary () {
@@ -138,6 +148,20 @@ export default class CertificateOfEmploymentPresenter {
           type: 'warning',
           duration: 5000,
         }))
+      } else if(storedVLFrom === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VL Date From field',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVLTo === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VL Date To field',
+          type: 'warning',
+          duration: 5000,
+        }))
       } else {
         this.view.setEditable(true)
       }
@@ -150,6 +174,8 @@ export default class CertificateOfEmploymentPresenter {
       storedPurposeObject.id,
       storedVisaObject.id,
       storedTypeOFCoeObject.type,
+      storedVLFrom,
+      storedVLTo
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
@@ -163,6 +189,8 @@ export default class CertificateOfEmploymentPresenter {
      storedPurposeObject =''
      storedTypeOFCoeObject =''
      storedVisaObject =''
+     storedVLFrom =''
+     storedVLTo =''
      this.view.navigateLearning()
     }, error => {
       this.view.checkLoader(false)

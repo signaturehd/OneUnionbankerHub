@@ -377,13 +377,9 @@ class LoginView extends BaseMVPView {
                   <br/>
                   {
                     resetLoader ?
-                    <center className = { 'login-loader' }>
-                      <br/><br/><br/><br/>
-                      <h2>Please wait while we we&#39;re validating the information.</h2>
-                      <br/>
-                      <br/>
-                      <CircularLoader show = { resetLoader }/>
-                    </center>
+                    <CircularLoader
+                      validateLoading = { false }
+                      show = { resetLoader }/>
                     :
                     <LoginComponent
                       requestEmailFunc = { () =>
@@ -496,9 +492,16 @@ class LoginView extends BaseMVPView {
                 </span>
                 {
                   disabled ?
-                  <center className = { 'login-loader' }>
-                    <CircularLoader show = { true }/>
-                  </center>              :
+                  <div style = {{ marginBottom: '12px'}}>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <CircularLoader
+                    validateLoading = { false }
+                    show = { true }/>
+                  <br/>
+                  <br/>
+                  </div>        :
                   <div>
                     <GenericButton
                       disabled = { disabled }

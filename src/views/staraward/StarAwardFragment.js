@@ -16,6 +16,7 @@ class StarAwardFragment extends BaseMVPView {
         super(props)
       }
       componentDidMount () {
+        this.presenter.getRewardAwards()
         this.props.setSelectedNavigation(9)
       }
 
