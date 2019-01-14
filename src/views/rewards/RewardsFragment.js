@@ -6,8 +6,7 @@ import ConnectView from '../../utils/ConnectView'
 import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/myrewards.css'
-import staticImage from './styles/ubp-bg.png'
-/* import Redeem from './fragments/redeem/redeem' */
+import RewardRedeemFragment from './fragments/RewardRedeemFragments'
 
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
@@ -54,7 +53,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			path: '/myrewards/staraward',
 		}]
 
-		const redeem = [{
+		const redeemData  = [{
 			id: 0,
 			staticImage: '',
 			leftText: '10% OFF in Zalora',
@@ -130,18 +129,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					</div>
 				</div>
 				<div>
-					<h2 className={'header-margin-default text-align-left'}>Redeem</h2>
-					{
-						redeem.map((value, idx) => (
-							<Card className="myrewards-container-component">
-								<img className={'myrewards-card-image '} src={staticImage} />
-								<div className={'myrewards-grid myrewards-card-image-text'}>
-									<span className = { 'align-left  font-size-16px font-weight-lighter' }>{value.leftText}</span>
-									<span class="align-right  font-size-16px font-weight-lighter" >{value.rightText}</span>
-								</div>
-							</Card>
-						))
-					}
+				<RewardRedeemFragment redeemData = {redeemData} />
 				</div>
 			</div>
 		)
