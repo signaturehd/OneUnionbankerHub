@@ -25,13 +25,13 @@ class LibraryFragment extends BaseMVPView {
       showRating : false,
       showBook : false,
       showBorrowed : false,
-      showRecommendation : false,
       showBorrowedFiltered : false,
       searchString : '',
       pageNumber : null,
       borrowedPageNumber: null,
       refresh : 0,
       booksCommentList : [],
+      showConfirmation : false,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -80,14 +80,15 @@ class LibraryFragment extends BaseMVPView {
     }
   }
 
-  showRecommendation (recommended, totalCount) {
-    if (this.state.recommended.length === 0) {
-      this.setState({ recommended })
+  showRecommendation (recommend, totalCount) {
+    const { recommended } = this.state
+    if (recommended.length === 0) {
+      this.setState({ recommended: recommend })
     } else {
-      if(totalCount === this.state.recommended.length) {
+      if(totalCount === recommended.length) {
       } else {
-        const updateRecommendedBooks = [...this.state.recommended]
-        updateRecommendedBooks.push(...recommended)
+        const updateRecommendedBooks = [...recommended]
+        updateRecommendedBooks.push(recommend)
         this.setState({ recommended: updateRecommendedBooks })
       }
     }
@@ -142,6 +143,10 @@ class LibraryFragment extends BaseMVPView {
     this.presenter.getBooksComments(bookId, pageNumber, '')
   }
 
+  hideConfirmation () {
+    this.setState({ showConfirmation : false })
+  }
+
   render () {
     const {
       filteredBook,
@@ -154,6 +159,7 @@ class LibraryFragment extends BaseMVPView {
       pageNumber,
       borrowedPageNumber,
       booksCommentList,
+      showConfirmation,
     } = this.state
 
     const filteredBooks = books
@@ -214,7 +220,12 @@ class LibraryFragment extends BaseMVPView {
                     <Route path = '/mylearning/books/history'
                       render = { props =>
                         <BookBorrowedFragment
+                          showConfirmation = { showConfirmation }
                           presenter = { this.presenter }
+                          confirmation = { (id) => this.presenter.addBookRequestCancel(id) }
+                          cancelRequest = { (showConfirmation) => {
+                            this.setState({ showConfirmation })
+                          } }
                           borrowed = { borrowed }/>
                         }/>
                     <Route path = '/mylearning/books/all'

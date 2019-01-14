@@ -1,5 +1,6 @@
 import GetBooksInteractor from '../../../domain/interactor/library/GetBooksInteractor'
 import AddBookRatingInteractor from '../../../domain/interactor/library/AddBookRatingInteractor'
+import AddBookRequestCancelInteractor from '../../../domain/interactor/library/AddBookRequestCancelInteractor'
 import GetBooksBorrowedInteractor from '../../../domain/interactor/library/GetBooksBorrowedInteractor'
 import GetBooksCommentsInteractor from '../../../domain/interactor/library/GetBooksCommentsInteractor'
 import ReserveBookInteractor from '../../../domain/interactor/library/ReserveBookInteractor'
@@ -16,6 +17,7 @@ import store from '../../../store'
 export default class LibraryPresenter {
   constructor (container) {
     this.getBooksInteractor = new GetBooksInteractor(container.get('HRBenefitsClient'))
+    this.addBookRequestCancelInteractor = new AddBookRequestCancelInteractor(container.get('HRBenefitsClient'))
     this.addBookInteractor = new AddBookRatingInteractor(container.get('HRBenefitsClient'))
     this.getBooksBorrowedInteractor = new GetBooksBorrowedInteractor(container.get('HRBenefitsClient'))
     this.getBooksCommentsInteractor = new GetBooksCommentsInteractor(container.get('HRBenefitsClient'))
@@ -23,7 +25,6 @@ export default class LibraryPresenter {
     this.getRecommendationInteractor = new GetRecommendationInteractor(container.get('HRBenefitsClient'))
     this.getTransactionImage = container.get('FileClient')
   }
-
 
   setView (view) {
     this.view = view
@@ -106,7 +107,7 @@ export default class LibraryPresenter {
             title : 'Book Rating',
             message : data.message,
             type : 'success',
-            duration : 2000
+            duration : 5000
           })
         )
       },
@@ -134,5 +135,24 @@ export default class LibraryPresenter {
         this.view.hideLoading()
       }
     )
+  }
+
+  addBookRequestCancel (id) {
+    this.view.showLoading()
+    this.addBookRequestCancelInteractor.execute({'id': id})
+    .subscribe(data => {
+      this.view.hideLoading()
+      this.view.hideConfirmation()
+      this.view.getBooks()
+      store.dispatch(NotifyActions.addNotify({
+          title : 'Book Request Cancellation',
+          message : data.message,
+          type : 'success',
+          duration : 2000
+        })
+      )
+    }, error => {
+       this.view.hideLoading()
+    })
   }
 }
