@@ -81,7 +81,7 @@ class BIR2316CardComponent extends Component {
 }
 
 BIR2316CardComponent.propTypes = {
-  payslipList : PropTypes.array,
+  birArrayList : PropTypes.array,
   viewMore : PropTypes.func,
   viewMoreText : PropTypes.string,
   viewLess : PropTypes.func,
