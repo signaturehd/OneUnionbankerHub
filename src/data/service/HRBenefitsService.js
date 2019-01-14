@@ -2047,12 +2047,8 @@ export default class HRBenefitsService {
      processorType : laptopLeaseParam.processorType,
      operatingSystem : laptopLeaseParam.operatingSystem,
      systemMemory : laptopLeaseParam.systemMemory,
-     vendor: laptopLeaseParam.vendor,
-     or: {
-       number : laptopLeaseParam.orNumber,
-       date: laptopLeaseParam.orDate
-     }
    }
+   
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
@@ -2069,7 +2065,6 @@ export default class HRBenefitsService {
 
    const validate = laptopLeaseParam.id === 1 ? true : false
    let objectParam = validate ? bankToPurchaseObject : employeeToPurchaseObject
-
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(

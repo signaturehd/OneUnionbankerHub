@@ -4,6 +4,7 @@ export default class AddLaptopLeaseInteractor {
   }
 
   execute (addLaptopLeaseParam) {
+    
     return this.client.addLaptopLease(
       this.client.getToken(),
       this.client.getAccountToken(),
