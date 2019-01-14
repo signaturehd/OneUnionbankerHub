@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/teamGoal.css'
 
-class RequestedGoalsComponent extends Component {
+class TeamGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -148,8 +148,8 @@ class RequestedGoalsComponent extends Component {
   }
 }
 
-RequestedGoalsComponent.propTypes = {
+TeamGoalsComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default RequestedGoalsComponent
+export default TeamGoalsComponent

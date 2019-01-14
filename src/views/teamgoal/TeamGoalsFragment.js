@@ -19,6 +19,7 @@ import {
 } from '../../ub-components/'
 
 import TeamGoalsComponent from './components/TeamGoalsComponent'
+import SquadGoalsComponent from './components/SquadGoalsComponent'
 import AddTeamGoalsFormComponent from './components/AddTeamGoalsFormComponent'
 import TasksListComponent from './components/TasksListComponent'
 import CommentsListComponent from './components/CommentsListComponent'
@@ -83,6 +84,14 @@ class TeamGoalsFragment extends BaseMVPView {
       goalType : '',
       goalTypeErrorMessage : '',
       participantErrorMessage : '',
+      selectedId: '',
+      selectedTitle: '',
+      selectedDescription: '',
+      selectedName: '',
+      selectedImageUrl: '',
+      selectedMembers: [],
+      memberId: '',
+      memberArray: [],
       commentArray: [],
       taskArray: [],
       teamGoalsArray : [],
@@ -117,8 +126,8 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    // this.presenter.getTeamGoals(2, this.state.teamType)
-    // this.presenter.getSquadGoals(this.state.squadType)
+    this.presenter.getTeamGoals(this.state.teamType)
+    this.presenter.getSquadGoals(this.state.squadType)
     // this.scrollFunction()
   }
 
@@ -140,6 +149,10 @@ class TeamGoalsFragment extends BaseMVPView {
 
   getHistoryList (historyArray) {
       this.setState({ historyArray })
+  }
+
+  getMembersList (memberArray) {
+      this.setState({ memberArray })
   }
 
   submit (requestId, isApprove, rejectedRemarks) {
@@ -237,6 +250,7 @@ class TeamGoalsFragment extends BaseMVPView {
 
   onSubmit() {
     const {
+      teamType,
       goalTitle,
       description,
       startDate,
@@ -263,6 +277,7 @@ class TeamGoalsFragment extends BaseMVPView {
     }
     else {
       this.presenter.addTeamGoals (
+        teamType,
         participantArray,
         goalTitle,
         description,
@@ -342,7 +357,13 @@ class TeamGoalsFragment extends BaseMVPView {
       showForm: false,
       showApprovalForm : false,
       showTaskOption: false,
-      showCommentOption: false
+      showCommentOption: false,
+      selectedId: '',
+      selectedTitle: '',
+      selectedDescription: '',
+      selectedName: '',
+      selectedImageUrl: '',
+      selectedMembers: []
     })
   }
 
@@ -354,6 +375,20 @@ class TeamGoalsFragment extends BaseMVPView {
       }
     })
     return count
+  }
+
+  checkedMember(id, participantArray) {
+    const tempArray = [...participantArray]
+    let idExist = 0
+    participantArray.map((memberId, key) =>
+      memberId === id && idExist++
+    )
+    if(idExist === 0) {
+      tempArray.push(id)
+    } else {
+      tempArray.pop(id)
+    }
+    this.setState({ participantArray: tempArray })
   }
 
   render () {
@@ -410,8 +445,16 @@ class TeamGoalsFragment extends BaseMVPView {
       priorityArray,
       goalTypeArray,
       historyArray,
+      memberId,
+      memberArray,
       participantArray,
-      participantErrorMessage
+      participantErrorMessage,
+      selectedId,
+      selectedTitle,
+      selectedDescription,
+      selectedName,
+      selectedImageUrl,
+      selectedMembers
     } = this.state
 
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
@@ -419,6 +462,7 @@ class TeamGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
+
     return (
     <div>
       { super.render() }
@@ -525,6 +569,7 @@ class TeamGoalsFragment extends BaseMVPView {
               }
             }
             onSubmit = { () => this.onSubmit() }
+            getMembersGoals = { () => this.presenter.getMembersGoals(teamType) }
             goalTitle = { goalTitle }
             goalTitleErrorMessage = { goalTitleErrorMessage }
             goalTitleFunc = { (resp) => this.goalTitleFunc(resp) }
@@ -542,6 +587,9 @@ class TeamGoalsFragment extends BaseMVPView {
             goalType = { goalType }
             goalTypeId = { goalTypeId }
             goalTypeErrorMessage = { goalTypeErrorMessage }
+            memberId = { memberId }
+            memberArray = { memberArray }
+            checkedMember = { (id) => this.checkedMember(id, participantArray) }
             participantArray = { participantArray }
             participantErrorMessage = { participantErrorMessage }
             showPriorityModal = { showPriorityModal }
@@ -627,35 +675,25 @@ class TeamGoalsFragment extends BaseMVPView {
               :
               squadGoalsArray.length !== 0 ?
               squadGoalsArray.map((resp, key) =>
-                <TeamGoalsComponent
-                  employeeName = { resp.name }
-                  imageUrl = { resp.imageUrl }
-                  cardHolder = { resp.goalDetails }
+                <SquadGoalsComponent
+                  squadName = { resp.name }
+                  description = { resp.description }
+                  productOwner = { resp.productOwner }
+                  memberDetails = { resp.memberDetails }
                   priorityFunc = { (resp) => this.priorityFunc(resp) }
                   onSelected = { (
-                    details,
-                    goalId,
-                    goalTitle,
-                    description,
-                    startDate,
-                    dueDate,
-                    priorityName,
-                    approvalStatus,
-                    goalTypeId
+                    selectedTitle,
+                    selectedDescription,
+                    selectedMembers
                   ) => {
                     this.setState({
-                      goalId,
-                      goalTitle,
-                      description,
-                      startDate,
-                      dueDate,
-                      priorityName,
-                      approvalStatus,
-                      goalTypeId
+                      selectedTitle,
+                      selectedDescription,
+                      selectedMembers
                      })
-                    this.presenter.getGoalTask(goalId)
-                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                    // this.presenter.getGoalTask(goalId)
+                    // this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                    // this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
                   }
                  }
                  onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
@@ -667,142 +705,37 @@ class TeamGoalsFragment extends BaseMVPView {
             </div>
             <div ref = { 'main-div' } className = { 'padding-10px' }>
               <Card className = { 'padding-10px' }>
-                <div className = { 'grid-percentage' }>
-                  <div>
-                    <h2 className = { `margin-5px text-align-left font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
-                      <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount }</h2>
-                    <h2 className = { 'margin-5px text-align-left font-size-12px font-weight-lighter' }>
-                      <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
-                  </div>
-                  <div className = { 'text-align-center padding-10px' }>
-                    <Progress
-                      type = { 'circle' }
-                      height = { 80 }
-                      width = { 80 }
-                      percent = { percentageTask ? parseInt(percentageTask) : 0 } />
-                  </div>
-                  <div className = { 'text-align-right' }>
-                    {
-                      goalTypeId === 1 ?
-                      <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Performance</span></h2>
-                      :
-                      <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
-                    }
-                  </div>
-                </div>
-                <br/>
-                <Line/>
                 <div className = { 'padding-10px' }>
                   <div className = { 'header-column' }>
-                    <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                    <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ selectedTitle ? selectedTitle : 'Title' }</h2>
                     <h2></h2>
                   </div>
-                  <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+                  <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ selectedDescription ? selectedDescription : 'Description' }</h2>
                 </div>
                 {
-                  approvalStatus === 2 &&
+                  selectedTitle &&
                   <div>
                   <br/>
                   <Line/>
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
                       <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Members</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }></h2>
                       </div>
                       <h2></h2>
                     </div>
                     {
-                      taskLoader ?
-                      <center>
-                        <CircularLoader show = { taskLoader }/>
-                      </center>
+                      selectedMembers ?
+                      selectedMembers.map((details, key) =>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.name }</h2>
+                      )
                       :
-                      taskArray.length !== 0 ?
-                        <TasksListComponent
-                          cardHolder = { taskArray }
-                          onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
-                            taskId,
-                            taskDescription,
-                            isCompleted,
-                            showTaskOption: true
-                          }) }
-                        />
-                      :
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                      <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>
                     }
                   </div>
-                  <Line/>
-                  <div className = { 'padding-10px' }>
-                    <div className = { 'header-column' }>
-                      <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Reviews</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
-                      </div>
-                      <br/>
-                    </div>
-                    {
-                      commentArray.length !==0 ?
-                        commentArray.commentDetails.map((resp, key) =>(
-                          <CommentsListComponent
-                          cardHolder = { resp }
-                          commentId = { resp.id }
-                          employeeNumber = { employeeNumber }
-                          respEmployeeNumber = { resp.employeeNumber }
-                          goalComment = { resp.description }
-                          employeeName = { resp.employeeName }
-                          deleteCommentFunc = { (commentId, goalId) =>
-                            this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
-                          updateComment = { (commentId, goalEditComment) =>
-                            this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
-                          />
-                        )
-                        )
-                      :
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
-                    }
-                    <br/>
-                    <div className = { 'comment-grid align-items-center'}>
-                      <GenericInput
-                        text = { 'Write a comment' }
-                        value = { goalComment }
-                        onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                        errorMessage = { goalCommentErrorMessage }
-                      />
-                      {
-                        commentLoader ?
-
-                        <center>
-                          <CircularLoader show = { commentLoader }/>
-                        </center> :
-                        <GenericButton
-                          text = { 'Post' }
-                          className = { 'profile-button-small' }
-                          onClick = { () => this.submitComment() }
-                        />
-                      }
-                    </div>
-                    </div>
                   </div>
                 }
-                <Line/>
-                <div className = { 'padding-10px' }>
-                  <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
-                  {
-                    historyArray.length !==0 ?
-                      historyArray.goalDetails.map((resp, key) =>(
-                        <HistoryListComponent
-                        cardHolder = { resp }
-                        action = { resp.action }
-                        dateTime = { resp.dateTime }
-                        />
-                      )
-                      )
-                    :
-                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
-                  }
-                </div>
               </Card>
             </div>
           </div>

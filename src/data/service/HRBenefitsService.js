@@ -2419,7 +2419,7 @@ export default class HRBenefitsService {
     })
   }
 
-  getTeamGoals (token, status, goalType) {
+  getTeamGoals (token, goalType) {
     return this.apiClient.get(`v1/goals/goals?goalType=${goalType}`, {
       headers: { token }
     })
@@ -2444,13 +2444,19 @@ export default class HRBenefitsService {
   }
 
   addTeamGoals (token, teamGoalsParam) {
-    return this.apiClient.post('v1/goals/squad', teamGoalsParam, {
+    return this.apiClient.post(`v1/goals?goalType=${teamGoalsParam.goalType}`, teamGoalsParam.body, {
       headers: { token }
     })
   }
 
   getSquadGoals (token, goalType) {
-    return this.apiClient.get(`v1/goals/goals?goalType=${goalType}`, {
+    return this.apiClient.get(`v1/goals/members?goalType=${goalType}`, {
+      headers: { token }
+    })
+  }
+
+  getMembersGoals (token, goalType) {
+    return this.apiClient.get(`v1/goals/members?goalType=${goalType}`, {
       headers: { token }
     })
   }

@@ -1567,8 +1567,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getTeamGoals (token, status, goalType) {
-    return this.service.getTeamGoals(token, status, goalType)
+  getTeamGoals (token, goalType) {
+    return this.service.getTeamGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1594,6 +1594,11 @@ export default class HRBenefitsClient {
 
   getSquadGoals (token, goalType) {
     return this.service.getSquadGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getMembersGoals (token, goalType) {
+    return this.service.getMembersGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
