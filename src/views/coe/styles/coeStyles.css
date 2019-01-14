@@ -20,11 +20,11 @@
   grid-template-columns: 1fr 0fr;
 }
 
-.affirmation-seemore-button {
+.bir-seemore-button {
   background-image: url('../../../images/icons/ic_next.png');
 }
 
-.affirmation-icon {
+.bir-icon {
   background-size: contain;
   cursor: pointer;
   background-color: transparent;

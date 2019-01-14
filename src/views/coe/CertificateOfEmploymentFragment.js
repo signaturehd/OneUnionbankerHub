@@ -185,7 +185,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
               onClick = { () => this.setState({ showCOEForm: true, showListForm: false }) }>
                 <div className = { 'div-grid' }>
                   <h2 className = { 'font-weight-bold' }>Certificate Of Employment Form</h2>
-                  <span className = { 'affirmation-icon affirmation-seemore-button text-align-right' }/>
+                  <span className = { 'bir-icon bir-seemore-button text-align-right' }/>
                 </div>
               </Card>
               <h2 className = { 'text-align-left font-size-14px color-gray' }>Government Documents</h2>
@@ -193,7 +193,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
               onClick = { () => this.setState({ showBIR2316: true, showListForm: false }) }>
               <div className = { 'div-grid' }>
                 <h2 className = { 'font-weight-bold' }>BIR 2316</h2>
-                <span className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
+                <span className = { 'bir-icon bir-seemore-button float-right' }/>
               </div>
               </Card>
               <h2 className = { 'text-align-left font-size-14px color-gray' }>Compliance Documents</h2>
@@ -201,7 +201,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
               onClick = { () => this.setState({ showBIR2316: true, showListForm: false }) }>
               <div className = { 'div-grid' }>
                 <h2 className = { 'font-weight-bold' }>Code of Conduct</h2>
-                <span className = { 'affirmation-icon affirmation-seemore-button float-right' }/>
+                <span className = { 'bir-icon bir-seemore-button float-right' }/>
               </div>
               </Card>
             </div>
