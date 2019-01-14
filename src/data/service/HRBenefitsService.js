@@ -2048,7 +2048,7 @@ export default class HRBenefitsService {
      operatingSystem : laptopLeaseParam.operatingSystem,
      systemMemory : laptopLeaseParam.systemMemory,
    }
-   
+
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
@@ -2492,6 +2492,32 @@ export default class HRBenefitsService {
 
   submitCoe (token, bodyParam) {
     return this.rootClient.post(`v1/coe`, bodyParam.body, {
+      headers : { token }
+    })
+  }
+
+  /* Pension Funds */
+
+  getPensionFundsDocuments (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  getPensionFunds (token) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  submitPensionPin (token, pin) {
+    return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  confirmPensionDocumentsCode (token, code) {
+    return this.apiClient.get('v1/phension', {
       headers : { token }
     })
   }

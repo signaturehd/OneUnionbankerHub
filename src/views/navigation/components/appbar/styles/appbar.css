@@ -253,6 +253,11 @@
   background-position: center;
 }
 
+.appbar-future-icon {
+  background-image: url('../../../../../images/SIDE MENU/FUND2-ORANGE .png');
+  background-position: center;
+}
+
 .appbar-background-menu {
   background-image: url('../../../../../images/WEB and LOGO/Orange Wallpaper.jpg');
   width: 100%;

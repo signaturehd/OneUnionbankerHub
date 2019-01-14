@@ -1614,6 +1614,18 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  // PensionFunds
+
+  getPensionFunds (token) {
+    return this.service.getPensionFunds(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsDocuments (token) {
+    return this.service.getPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
+
   // Reward Goals
   getRewardsDNAMoment (token, id) {
     return this.service.getRewardsDNAMoment(token, id)
