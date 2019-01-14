@@ -11,6 +11,7 @@ import {
 } from '../../ub-components/'
 
 import CertificateOfEmploymentFormComponent from './components/CertificateOfEmploymentFormComponent'
+import BIR2316CardComponent from './components/BIR2316CardComponent'
 import './styles/coeStyles.css'
 class CertificateOfEmploymentFragment extends BaseMVPView {
   constructor (props) {
@@ -23,8 +24,12 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
       enabledLoader : false,
       showCOEForm : false,
       showListForm : true,
+      showBIR2316: false,
       vlFrom : '',
-      vlTo : ''
+      vlTo : '',
+      index : 3,
+      viewMoreText : 'View more',
+      birArrayList: []
     }
   }
 
@@ -96,8 +101,12 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
       showEditMode,
       showCOEForm,
       showListForm,
+      showBIR2316,
       vlFrom,
-      vlTo
+      vlTo,
+      index,
+      viewMoreText,
+      birArrayList
     } = this.state
 
     return (
@@ -167,14 +176,33 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
           <div className = { 'main-grid' }>
             <div></div>
             <div>
-              <h2 className = { 'text-align-center font-size-24px' }>My Documents</h2>
+              <h2 className = { 'text-align-center font-size-24px font-weight-bold margin-bottom-10px' }>My Documents</h2>
+              <h2 className = { 'text-align-center font-size-14px' }>List of your documents in one place.</h2>
               <br/>
+              <br/>
+              <h2 className = { 'text-align-left font-size-14px color-gray' }>Request for your Certificate of Employment</h2>
               <Card className = { 'card-padding cursor-pointer' }
               onClick = { () => this.setState({ showCOEForm: true, showListForm: false }) }>
-                <h2>Certificate Of Employment Form</h2>
+                <div className = { 'div-grid' }>
+                  <h2 className = { 'font-weight-bold' }>Certificate Of Employment Form</h2>
+                  <span className = { 'bir-icon bir-seemore-button text-align-right' }/>
+                </div>
               </Card>
-              <Card className = { 'card-padding cursor-pointer' }>
-                <h2>BIR 2316</h2>
+              <h2 className = { 'text-align-left font-size-14px color-gray' }>Government Documents</h2>
+              <Card className = { 'card-padding cursor-pointer' }
+              onClick = { () => this.setState({ showBIR2316: true, showListForm: false }) }>
+              <div className = { 'div-grid' }>
+                <h2 className = { 'font-weight-bold' }>BIR 2316</h2>
+                <span className = { 'bir-icon bir-seemore-button float-right' }/>
+              </div>
+              </Card>
+              <h2 className = { 'text-align-left font-size-14px color-gray' }>Compliance Documents</h2>
+              <Card className = { 'card-padding cursor-pointer' }
+              onClick = { () => this.setState({ showBIR2316: true, showListForm: false }) }>
+              <div className = { 'div-grid' }>
+                <h2 className = { 'font-weight-bold' }>Code of Conduct</h2>
+                <span className = { 'bir-icon bir-seemore-button float-right' }/>
+              </div>
               </Card>
             </div>
             <div></div>
@@ -210,6 +238,21 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
               this.setState({ showVisaModal : true }) }
             backToList = { () =>
               this.setState({ showCOEForm: false, showListForm: true })}
+          />
+        }
+        {
+          showBIR2316 &&
+          <BIR2316CardComponent
+            index = { index }
+            viewMoreText = { viewMoreText }
+            viewMore = { () => this.setState({ index : payslipList.length, viewMoreText : 'View less' }) }
+            viewLess = { () => this.setState({ index : 3, viewMoreText : 'View more' }) }
+            birArrayList={ birArrayList }
+            onSubmit={ (date) =>
+                  {this.selectedDate(empId, date) , this.setState({ showPayslipDetails : true })}
+             }
+            backToList = { () =>
+             this.setState({ showBIR2316: false, showListForm: true })}
           />
         }
       </div>

@@ -101,7 +101,7 @@ export default class LaptopLeasePresenter {
 
   setVendor (vendor) {
     storedVendor = vendor
-    this.view.setVendor(storedVendor)
+    this.view.setVendor(vendor)
   }
 
   resetValue () {
@@ -282,7 +282,23 @@ export default class LaptopLeasePresenter {
             duration : 2000
           })
         )
-       } else {
+      } else if (storedAmount === '' || storedAmount < 1) {
+         store.dispatch(NotifyActions.addNotify({
+            title: 'Laptop Lease',
+            message : 'Estimated Cost must be greater than 0',
+            type : 'warning',
+            duration : 2000
+          })
+        )
+      } else if (storedTerms === '') {
+        store.dispatch(NotifyActions.addNotify({
+           title: 'Laptop Lease',
+           message : 'Please specify your payment method',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+     } else {
           this.view.validateInput()
         }
       }
@@ -310,8 +326,8 @@ export default class LaptopLeasePresenter {
         storedSystemMemory,
         storedFile,
         storedOrNumber,
-        moment(storedOrDate).format('MM/DD/YYYY')),
-        storedVendor
+        storedVendor,
+        moment(storedOrDate).format('MM/DD/YYYY'))
       )
       .subscribe(data => {
         this.view.noticeOfUndertaking(data)
