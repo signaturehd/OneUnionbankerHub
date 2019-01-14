@@ -492,9 +492,16 @@ class LoginView extends BaseMVPView {
                 </span>
                 {
                   disabled ?
+                  <div style = {{ marginBottom: '12px'}}>
+                  <br/>
+                  <br/>
+                  <br/>
                   <CircularLoader
-                    validateLoading = { true }
-                    show = { true }/>         :
+                    validateLoading = { false }
+                    show = { true }/>
+                  <br/>
+                  <br/>
+                  </div>        :
                   <div>
                     <GenericButton
                       disabled = { disabled }

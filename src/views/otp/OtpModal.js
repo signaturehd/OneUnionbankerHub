@@ -64,12 +64,9 @@ class OtpModal extends BaseMVPView {
         >
         {
           disableSubmit || disableResend ?
-          <center>
-            <h3>{ text }</h3>
-            <br/>
-            <br/>
-            <CircularLoader show={true}/>
-          </center>          :
+            <CircularLoader
+              validateLoading = { true }
+              show={true}/>         :
           <center>
             <div className = { 'grid-global-row' }>
               <div>

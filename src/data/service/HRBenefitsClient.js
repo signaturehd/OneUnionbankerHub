@@ -1613,4 +1613,16 @@ export default class HRBenefitsClient {
     return this.service.submitCoe(token, bodyParam)
     .pipe(ServiceErrorOperator())
   }
+
+  /* Pension Funds */
+
+  getPensionFunds (token) {
+    return this.service.getPensionFunds(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsDocuments (token) {
+    return this.service.getPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
 }
