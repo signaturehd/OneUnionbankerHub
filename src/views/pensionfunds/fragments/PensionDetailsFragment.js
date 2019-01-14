@@ -11,6 +11,7 @@ import '../styles/fundsStyle.css'
 import PensionDetailsComponent from '../components/PensionDetailsComponent'
 import PensionFundsPaymentHistoryComponent from '../components/PensionFundsPaymentHistoryComponent'
 import PensionFundsChartComponent from '../components/PensionFundsChartComponent'
+import PensionCharTabsComponent from '../components/PensionCharTabsComponent'
 
 import { format } from '../../../utils/numberUtils'
 
@@ -21,6 +22,8 @@ class PensionDetailsFragment extends Component {
 
   render () {
     const {
+      tabsId,
+      tabsIdFunc,
       pensionFundsData
     } = this.props
 
@@ -38,8 +41,16 @@ class PensionDetailsFragment extends Component {
             </div>
           </div>
           <br/>
-        <h4 className = { 'font-weight-lighter font-size-25px' }>Unit Summary</h4>
           <br/>
+          <h4 className = { 'letter-spacing-2 font-weight-lighter font-size-25px' }>Unit Summary</h4>
+          <br/>
+          <div className = { 'grid-global' }>
+            <PensionCharTabsComponent
+              tabsId = { tabsId }
+              tabsIdFunc = { (tabsId) => tabsIdFunc(tabsId) }
+              />
+            <div></div>
+          </div>
           <PensionFundsChartComponent />
         </div>
         <div>

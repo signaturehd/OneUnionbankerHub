@@ -23,6 +23,7 @@ class PensionFundsFragment extends BaseMVPView {
       loader : false,
       stepperStatus: 1,
       showCodeModal: false,
+      tabsId : 'week'
     }
   }
 
@@ -54,7 +55,8 @@ class PensionFundsFragment extends BaseMVPView {
       pensionFundsDocumentsData,
       stepperStatus,
       codeText,
-      showCodeModal
+      showCodeModal,
+      tabsId
     } = this.state
 
     return (
@@ -77,7 +79,10 @@ class PensionFundsFragment extends BaseMVPView {
             <div>
               {
                 stepperStatus === 4 ?
-                <PensionDetailsFragment pensionFundsData = { pensionFundsData } /> :
+                <PensionDetailsFragment
+                  tabsId = { tabsId }
+                  tabsIdFunc = { (tabsId) => this.setState({ tabsId }) }
+                  pensionFundsData = { pensionFundsData } /> :
                 <PensionFundsDocumentsFragment
                   statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
                   statusCodeReturnFunc = { (stepperStatus) => this.setState({ stepperStatus }) }

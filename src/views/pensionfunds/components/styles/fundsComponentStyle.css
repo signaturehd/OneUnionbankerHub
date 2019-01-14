@@ -6,9 +6,24 @@
   border-radius: 30px;
 }
 
+.funds-tabs-component {
+  display: inline-flex;
+}
+
+.funds-tab-selected {
+  background-color: #ff8a00;
+  color: #fff;
+  padding: 5px 0px;
+}
+
+.funds-tab {
+  background-color: #80808014;
+  padding: 5px 0px;
+}
+
 .pension-chart-grid-3x {
   display: grid;
-  grid-template-columns: .1fr 1fr .1fr;
+  grid-template-columns: 1fr .2fr;
 }
 
 .funds-grid-row-details {

@@ -29,15 +29,15 @@ class PensionFundsChartComponent extends Component {
           pointHighlightFill: "white",
           backgroundColor: "rgb(255,102,0)",
           pointHighlightStroke: "white",
-          data: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+          data: [2, 20, 10, 2, 25, 28, 17, 25, 10, 29]
         },
       ]
     }
     return (
       <div className = { 'pension-chart-grid-3x' }>
-        <div></div>
         <div>
           <LineChart
+            id = { 'oneunionbankerhub-chart' }
             width = { 'auto' }
             data = { data }/>
         </div>
