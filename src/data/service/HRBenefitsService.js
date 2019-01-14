@@ -2048,7 +2048,7 @@ export default class HRBenefitsService {
      operatingSystem : laptopLeaseParam.operatingSystem,
      systemMemory : laptopLeaseParam.systemMemory,
    }
-   console.log(laptopLeaseParam)
+   
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
