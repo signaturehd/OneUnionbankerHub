@@ -37,6 +37,8 @@ class TeamGoalsFragment extends BaseMVPView {
   constructor(props) {
     super(props)
     this.state = {
+      teamStatus: 'team',
+      squadStatus: 'squad',
       enabledLoader : false,
       submitLoader: false,
       taskLoader: false,
@@ -84,6 +86,7 @@ class TeamGoalsFragment extends BaseMVPView {
       commentArray: [],
       taskArray: [],
       teamGoalsArray : [],
+      squadGoalsArray : [],
       historyArray : [],
       participantArray : [],
       priorityArray : [
@@ -114,12 +117,17 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getTeamGoals(2)
+    this.presenter.getTeamGoals(this.state.teamStatus)
+    this.presenter.getSquadGoals(this.state.squadStatus)
     // this.scrollFunction()
   }
 
   getTeamGoals(teamGoalsArray) {
     this.setState({ teamGoalsArray })
+  }
+
+  getSquadGoals(squadGoalsArray) {
+    this.setState({ squadGoalsArray })
   }
 
   getTasklist (taskArray) {
@@ -350,6 +358,8 @@ class TeamGoalsFragment extends BaseMVPView {
 
   render () {
     const {
+      teamStatus,
+      squadStatus,
       enabledLoader,
       submitLoader,
       taskLoader,
@@ -396,6 +406,7 @@ class TeamGoalsFragment extends BaseMVPView {
       taskArray,
       commentArray,
       teamGoalsArray,
+      squadGoalsArray,
       priorityArray,
       goalTypeArray,
       historyArray,
@@ -614,8 +625,8 @@ class TeamGoalsFragment extends BaseMVPView {
                 <CircularLoader show = { enabledLoader }/>
               </center>
               :
-              teamGoalsArray.length !== 0 ?
-              teamGoalsArray.map((resp, key) =>
+              squadGoalsArray.length !== 0 ?
+              squadGoalsArray.map((resp, key) =>
                 <TeamGoalsComponent
                   employeeName = { resp.name }
                   imageUrl = { resp.imageUrl }

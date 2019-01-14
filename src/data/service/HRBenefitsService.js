@@ -2030,11 +2030,11 @@ export default class HRBenefitsService {
      releasingCenter,
      laptopLeaseParam) {
    const formData = new FormData()
-   const object = {
+   const bankToPurchaseObject = {
      accountNumber,
      releasingCenter,
      benefitId: '16',
-     type: laptopLeaseParam.id === 0 ? 1 : 2,
+     type: laptopLeaseParam.id === 1 ? 1 : 2,
      brand: laptopLeaseParam.brand,
      model: laptopLeaseParam.model,
      screenSize: laptopLeaseParam.screenSize,
@@ -2047,18 +2047,30 @@ export default class HRBenefitsService {
      processorType : laptopLeaseParam.processorType,
      operatingSystem : laptopLeaseParam.operatingSystem,
      systemMemory : laptopLeaseParam.systemMemory,
+   }
+   
+   const employeeToPurchaseObject = {
+     accountNumber,
+     releasingCenter,
+     benefitId: '16',
+     type: laptopLeaseParam.id === 1 ? 1 : 2,
+     term: laptopLeaseParam.terms,
+     estimatedCost : laptopLeaseParam.estimatedAmount,
+     vendor: laptopLeaseParam.vendor,
      or: {
        number : laptopLeaseParam.orNumber,
        date: laptopLeaseParam.orDate
      }
    }
 
+   const validate = laptopLeaseParam.id === 1 ? true : false
+   let objectParam = validate ? bankToPurchaseObject : employeeToPurchaseObject
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
      formData.append('qoutation', resp.file)
    ))
-   formData.append('body', JSON.stringify(object))
+   formData.append('body', JSON.stringify(objectParam))
    return this.apiClient.post('v1/leases/laptop',  formData, {
      headers : { token }
    })
@@ -2257,8 +2269,8 @@ export default class HRBenefitsService {
   }
   /* My Goals */
 
-  getGoals (token) {
-    return this.apiClient.get('v1/goals', {
+  getGoals (token, status) {
+    return this.apiClient.get(`v1/goals?status=${status}`, {
       headers: { token }
     })
   }
@@ -2403,7 +2415,7 @@ export default class HRBenefitsService {
   }
 
   getTeamGoals (token, status) {
-    return this.apiClient.get(`v1/goals/reports?status=${status}`, {
+    return this.apiClient.get(`v1/goals/goals?status=${status}`, {
       headers: { token }
     })
   }
@@ -2426,10 +2438,14 @@ export default class HRBenefitsService {
     })
   }
 
-  /* Team Goals */
-
   addTeamGoals (token, teamGoalsParam) {
     return this.apiClient.post('v1/goals/squad', teamGoalsParam, {
+      headers: { token }
+    })
+  }
+
+  getSquadGoals (token, status) {
+    return this.apiClient.get(`v1/goals/goals?status=${status}`, {
       headers: { token }
     })
   }

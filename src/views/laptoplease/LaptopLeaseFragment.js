@@ -136,11 +136,11 @@ class LaptopLeaseFragment extends BaseMVPView {
   }
 
   /* Loader*/
-  hideCircularLoader () {
+  hideLoading () {
     this.setState({ enabledLoader : false })
   }
 
-  showCircularLoader () {
+  showLoading () {
     this.setState({ enabledLoader : true })
   }
 
@@ -338,11 +338,11 @@ class LaptopLeaseFragment extends BaseMVPView {
                   {
                     enabledLoader ?
                      <center className={ 'circular-loader-center' }>
-                       <CircularLoader show={ this.state.enabledLoader }/>
+                       <CircularLoader show={ enabledLoader }/>
                      </center> :
                      <div>
                        {
-                         getCardOptionId === 0 ?
+                         getCardOptionId === 1 ?
                          <FormComponent
                             getCardOptionId = { getCardOptionId }
                             showEditMode = { showEditMode }
@@ -380,14 +380,16 @@ class LaptopLeaseFragment extends BaseMVPView {
                          <LaptopLeaseEmpToPurchaseComponent
                            getCardOptionId = { getCardOptionId }
                            vendor = { vendor }
+                           terms = { termsName }
                            showEditMode = { showEditMode }
                            vendorFunc = { (e) => this.presenter.setVendor(e) }
                            orDate = { orDate }
+                           showTerms = { () => this.setState({ showTermsSelection: true }) }
                            orDateFunc = { (e) => this.presenter.setOrDate(e) }
                            orNumber = { orNumber }
                            orNumberFunc = { (e) => this.presenter.setOrNumber(e) }
-                           costAquisition = { costAquisition }
-                           costAquisitionFunc = { (e) => this.presenter.setcostAquisition(this.checkIfDigitRegex(e)) }
+                           costAquisition = { amount }
+                           costAquisitionFunc = { (e) => this.presenter.setAmount(controller.checkedAmount(e)) }
                            laptopLeaseAttachment = { laptopLeaseAttachment }
                            setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
                            onContinue={ () => this.presenter.validateSubmission(getCardOptionId) }
