@@ -347,6 +347,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addBookRequestCancel (token, objectParam) {
+    return this.apiClient.post('v1/books/requests/cancel', objectParam, {
+      headers : { token }
+    })
+  }
+
   /* News */
   getNews (token) {
     return this.apiClient.get('v1/news', {
@@ -2048,7 +2054,7 @@ export default class HRBenefitsService {
      operatingSystem : laptopLeaseParam.operatingSystem,
      systemMemory : laptopLeaseParam.systemMemory,
    }
-   
+
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
