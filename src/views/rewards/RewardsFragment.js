@@ -7,6 +7,7 @@ import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/myrewards.css'
 import RewardRedeemFragment from './fragments/RewardRedeemFragments'
+import RewardSearchComponent from './components/RewardSearchComponent'
 
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
@@ -30,6 +31,23 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			recognizedAwards
 		} = this.state
 
+		const membersData = [{
+			id : 0,
+			name: 'test',
+			details : [{test: 'name'}, {test: 'name'}]
+		},{
+			id : 1,
+			name: 'test 1',
+			details : [{test: 'name'}, {test: 'name'}]
+		},{
+			id : 2,
+			name: 'test 2',
+			details : [{test: 'name'}, {test: 'name'}]
+		},{
+			id : 3,
+			name: 'test 3',
+			details : [{test: 'name'}, {test: 'name'}]
+		}]
 
 		const myrewards1 = [{
 			id: 0,
@@ -130,6 +148,8 @@ class RewardsRecognitionFragment extends BaseMVPView {
 				</div>
 				<div>
 				<RewardRedeemFragment redeemData = {redeemData} />
+				<br/>
+				<RewardSearchComponent  membersData = { membersData }/>
 				</div>
 			</div>
 		)
