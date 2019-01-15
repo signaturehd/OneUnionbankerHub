@@ -7,6 +7,7 @@ import { InputModal, Card, GenericButton } from '../../ub-components'
 
 import './styles/myrewards.css'
 import RewardRedeemFragment from './fragments/RewardRedeemFragments'
+import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
 
 class RewardsRecognitionFragment extends BaseMVPView {
@@ -96,19 +97,49 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			rightText: '33, 000 points',
 		}]
 
+		const awardData  = [{
+			id: 0,
+			title: 'Celebrate a DNA Moment',
+			details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
+			styleName : 'myawards-image myawards-image-1',
+			value : 'Values:',
+			valuesDetails : 'Integrity, Magis, Ubuntu',
+			principles : 'Distinguishing beliefs/principles:' ,
+			principlesDetails : 'Forward-thinking, Agile, Open and Innovative',
+		},
+		{
+			id: 1,
+			title: 'U Are Recognized',
+			details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
+			styleName : 'myawards-image myawards-image-2',
+			value : null,
+			valuesDetails : null,
+			principles : null,
+			principlesDetails : null,
+		},
+		{
+			id: 2,
+			title: 'Star Award',
+			details: 'Short Star Award details',
+			styleName : 'myawards-image myawards-image-3 ',
+			value : null,
+			valuesDetails : null,
+			principles : null,
+			principlesDetails : null,
+
+		}]
+
 		return (
 			<div>
 				{
 					selectedAwards  ?
-
 					<div>
-						<GenericButton
-							text = { 'back' }
-							onClick = { () => this.setState({ selectedAwards: false }) }
-							/>
-						test
-						 id :{ selectedId }
-						 status: { selectedAwards }
+
+						 <AwardFragment
+						 	selectedId = { selectedId }
+						  awardData = { awardData }
+							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }/>
+
 					</div>
 					 :
 					<div className={'myreward-grid-container'}>

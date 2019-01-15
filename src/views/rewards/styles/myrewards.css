@@ -175,3 +175,78 @@ padding-bottom: 3px;
   overflow: auto;
 }
 /* rex */
+.myawards-image {
+  margin-left: auto;
+  margin-right: auto;
+  display:block;
+  width: 230px;
+  height: 230px;
+  max-width: 230px;
+  max-height: 230px;
+  margin-bottom: 10px;
+}
+
+.myawards-image-1 {
+  background-image: url('../../../images/dna.png');
+  mask-image: url('../../../images/dna.png');
+  -webkit-background-size: cover;
+}
+
+.myawards-image-2 {
+  background-image: url('../../../images/URECOGNIZE.png');
+  mask-image: url('../../../images/URECOGNIZE.png');
+  -webkit-background-size: cover;
+}
+
+.myawards-image-3 {
+  background-image: url('../../../images/STAR.png');
+  mask-image: url('../../../images/STAR.png');
+  -webkit-background-size: cover;
+}
+
+.celebrate-container{
+	display: grid;
+  grid-template-columns: .2fr 1fr .2fr;
+
+}
+
+.celebrate-main-item{
+	grid-column: 2/3;
+}
+
+.celebrate-container-space{
+	padding-top: 20px;
+}
+
+.celebrate-padding-bottom{
+	padding-bottom: 5px;
+}
+
+.celebrate-margin-bottom{
+	margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.celebrate-margin-bottom2{
+	margin-bottom: 20px;
+}
+
+.celebrate-button-center{
+	background-color: orange;
+	border-radius: 10px;
+	color: white;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.celebrate-aligned-center{
+	text-align: center;
+}
+
+.celebrate-h1-margin{
+	margin: 30px;
+}
+
+.celebrate-p-margin{
+	margin: 0px;
+}

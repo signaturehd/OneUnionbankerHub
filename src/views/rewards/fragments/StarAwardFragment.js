@@ -8,7 +8,7 @@ import Presenter from './../presenter/StarAwardPresenter'
 
 
 import { InputModal, Card, GenericButton,GenericInput ,GenericTextBox ,List } from '../../../ub-components'
-import './../styles/RewardStyle.css'
+import './../styles/myrewards.css'
 import staticImage   from '../../../images/URECOGNIZE.png'
 
 
