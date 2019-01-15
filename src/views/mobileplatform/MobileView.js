@@ -19,10 +19,9 @@ import './styles/mobileStyle.css'
 class MobileView extends BaseMVPView {
   constructor (props) {
     super(props)
-  }
-
-  componentDidMount () {
-
+    this.state = {
+      iosUserGuide : false,
+    }
   }
 
   render () {
@@ -30,11 +29,15 @@ class MobileView extends BaseMVPView {
       platformUsed
     } = this.props
 
+    const {
+      iosUserGuide
+    } = this.state
+
     const bodyStyle = {
       backgroundImage: `url(${require('../../images/mobileview/bg.png')})`,
       backgroundSize: 'cover',
       padding: '0',
-      height: 'fit-content',
+      height: `${iosUserGuide ? '-webkit-fill-available' : 'fit-content'}`,
       width: '-webkit-fill-available',
       margin: '0',
     }
@@ -48,47 +51,58 @@ class MobileView extends BaseMVPView {
           <div></div>
           <div>
             <MobileHeaderComponent
+              iosUserGuide = { iosUserGuide }
               platformUsed = { platformUsed }
+              iosUserGuideFunc = { (iosUserGuide) => this.setState({ iosUserGuide }) }
               />
-            <img
-              src = { require('../../images/mobileview/login phone.png') }
-              style = {{
-                height: '100%',
-                width : '100%'
-              }}/>
-            <MobileFeaturesComponent />
-            <br/>
-            <MobileNewsFeedComponent />
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <MobileMyLearningComponent />
-            <br/>
-            <br/>
-            <MobileTeamGoalsComponent/>
-            <br/>
-            <br/>
-            <MobileOnboardingComponents/>
-            <br/>
-            <br/>
-            <MobileDiscountComponent/>
-            <br/>
-            <br/>
-            <br/>
-            <center>
-              <h4
-                style = {{
-                  fontSize : '12pt'
-                }}
-                className = { 'font-weight-normal unionbank-color mobile-view-label-detail' }>Check our Data Privacy Statement</h4>
-              <br/>
-              <h2
-                style = {{
-                  fontSize : '8pt'
-                }}
-                className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Copyright 2018 Union Bank of the Philippines</h2>
-            </center>
+            <div>
+              {
+                iosUserGuide ?
+                <div></div>
+                :
+                <div>
+                  <img
+                    src = { require('../../images/mobileview/login phone.png') }
+                    style = {{
+                      height: '100%',
+                      width : '100%'
+                    }}/>
+                  <MobileFeaturesComponent />
+                  <br/>
+                  <MobileNewsFeedComponent />
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <MobileMyLearningComponent />
+                  <br/>
+                  <br/>
+                  <MobileTeamGoalsComponent/>
+                  <br/>
+                  <br/>
+                  <MobileOnboardingComponents/>
+                  <br/>
+                  <br/>
+                  <MobileDiscountComponent/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <center>
+                    <h4
+                      style = {{
+                        fontSize : '12pt'
+                      }}
+                      className = { 'font-weight-normal unionbank-color mobile-view-label-detail' }>Check our Data Privacy Statement</h4>
+                    <br/>
+                    <h2
+                      style = {{
+                        fontSize : '8pt'
+                      }}
+                      className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>&#169; 2018 Union Bank of the Philippines</h2>
+                  </center>
+                </div>
+              }
+            </div>
           </div>
           <div></div>
         </div>

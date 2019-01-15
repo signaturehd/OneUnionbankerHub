@@ -167,6 +167,16 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  /* Selected Pin Code */
+
+  setPinCode (status) {
+    this.sessionProvider.setPinCode(status)
+  }
+
+  getPinCode () {
+    return this.sessionProvider.getPinCode()
+  }
+
   setPreEmploymentStatus (preEmploymentStatus) {
     this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
   }

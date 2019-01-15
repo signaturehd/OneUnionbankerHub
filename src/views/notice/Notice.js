@@ -31,6 +31,15 @@ class Notice extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    try {
+      this.presenter.getPinCode()
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   isAgree (tranId, isAgree, benId) {
     this.setState({ tranId, isAgree, benId })
   }
@@ -49,6 +58,10 @@ class Notice extends BaseMVPView {
 
   circularLoader (enabledLoader) {
     this.setState({ enabledLoader })
+  }
+
+  setPinCodeStatus (showPinCodeModal) {
+    this.setState({ showPinCodeModal })
   }
 
   render () {
