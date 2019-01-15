@@ -119,6 +119,7 @@ class NavigationView extends BaseMVPView {
       hasFilledOut: '',
       preEmploymentStatus: null,
       isLineManager : false,
+      isPO : false,
       employeeNumber : '',
       profileDisplay : 'none',
       profillePosition: '',
@@ -138,6 +139,7 @@ class NavigationView extends BaseMVPView {
     this.setState({
       profile : profile.employee,
       isLineManager: profile.isLineManager,
+      isPO: profile.isPO,
       profillePosition: profile.employee.position,
       employeeNumber: profile.employee.employeeNumber
     })
@@ -252,6 +254,7 @@ class NavigationView extends BaseMVPView {
       hasFilledOut,
       preEmploymentStatus,
       isLineManager,
+      isPO,
       employeeNumber,
       profillePosition,
       storeWidth
@@ -476,6 +479,7 @@ class NavigationView extends BaseMVPView {
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }
                     isLineManager = { isLineManager }
+                    isPO = { isPO }
                     employeeNumber = { employeeNumber }/> } />
                 <Route path = '/feedback' render = { props =>
                   <FeedbackFragment { ...props }

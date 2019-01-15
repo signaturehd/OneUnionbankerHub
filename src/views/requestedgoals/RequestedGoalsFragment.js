@@ -12,6 +12,7 @@ import {
   GenericInput,
   SingleInputModal,
   CircularLoader,
+  GenericLoader,
   DatePicker,
   Card,
   Line,
@@ -67,6 +68,8 @@ class RequestedGoalsFragment extends BaseMVPView {
       showMarkAsCompleted: false,
       ifYesCompleted: false,
       showRemarksText: false,
+      isTeamGoal: 0,
+      isSquadGoal: 0,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -283,7 +286,8 @@ class RequestedGoalsFragment extends BaseMVPView {
         moment(startDate).format('YYYY-MM-DD'),
         moment(dueDate).format('YYYY-MM-DD'),
         priorityId,
-        goalTypeId
+        goalTypeId,
+        personal
       )
     }
   }
@@ -313,7 +317,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       onEditTask ?
       this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
       :
-      this.presenter.addGoalTask(goalId, taskDescription)
+      this.presenter.addGoalTask(personal, goalId, taskDescription)
       this.setState({ addTask:false, taskDescription: '' })
     }
   }
@@ -324,7 +328,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
     else {
-      this.presenter.addGoalComment(goalId, goalComment, pageNumber, pageItem)
+      this.presenter.addGoalComment(personal, goalId, goalComment, pageNumber, pageItem)
       this.setState({ goalComment: '', goalCommentErrorMessage: '' })
 
     }
@@ -531,7 +535,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       businessOutcome,
       businessOutcomeErrorMessage,
       showRemarksText,
-      remarksText
+      remarksText,
+      isTeamGoal,
+      isSquadGoal
     } = this.state
 
     const {
@@ -866,6 +872,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     approvalStatus,
                     goalTypeId,
                     isTeamGoal,
+                    isSquadGoal,
                     isCompleted,
                     ratings: parseFloat(ratings),
                     showRemarksText: false,
@@ -895,6 +902,13 @@ class RequestedGoalsFragment extends BaseMVPView {
                 }
                 <div className = { 'grid-percentage' }>
                   <div className = { 'text-align-center padding-10px' }>
+                    {
+                      isTeamGoal ?
+                      <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Team Goal</h2>
+                      :
+                      isSquadGoal &&
+                      <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Squad Goal</h2>
+                    }
                     {
                       approvalStatus === 2 ?
                       <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold color-Medium' }>Approved</h2>
@@ -1069,7 +1083,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     {
                       taskLoader ?
                       <center>
-                        <CircularLoader show = { taskLoader }/>
+                        <GenericLoader show = { taskLoader }/>
                       </center>
                       :
                       taskArray.length !== 0 ?
@@ -1131,7 +1145,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                         {
                           commentLoader ?
                           <center>
-                            <CircularLoader  show = { commentLoader }/>
+                            <GenericLoader show = { commentLoader }/>
                           </center>
                           :
                           <GenericButton

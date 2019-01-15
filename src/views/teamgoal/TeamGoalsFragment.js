@@ -457,7 +457,14 @@ class TeamGoalsFragment extends BaseMVPView {
       selectedMembers
     } = this.state
 
-    const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
+    const {
+      onClose,
+      showRequestCoachForm,
+      showRequestCoachFunc,
+      employeeNumber,
+      isLineManager,
+      isPO
+     } = this.props
 
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
@@ -616,91 +623,101 @@ class TeamGoalsFragment extends BaseMVPView {
           </div>
           <div className = { 'grid-main' }>
             <div>
-            <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Team Goals</h2>
-            <Line/>
-            <br/>
             {
-              enabledLoader ?
-              <center>
-                <CircularLoader show = { enabledLoader }/>
-              </center>
-              :
-              teamGoalsArray.length !== 0 ?
-              teamGoalsArray.map((resp, key) =>
-                <TeamGoalsComponent
-                  employeeName = { resp.name }
-                  imageUrl = { resp.imageUrl }
-                  cardHolder = { resp.goalDetails }
-                  priorityFunc = { (resp) => this.priorityFunc(resp) }
-                  onSelected = { (
-                    details,
-                    goalId,
-                    goalTitle,
-                    description,
-                    startDate,
-                    dueDate,
-                    priorityName,
-                    approvalStatus,
-                    goalTypeId
-                  ) => {
-                    this.setState({
-                      goalId,
-                      goalTitle,
-                      description,
-                      startDate,
-                      dueDate,
-                      priorityName,
-                      approvalStatus,
-                      goalTypeId
-                     })
-                    this.presenter.getGoalTask(goalId)
-                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  }
-                 }
-                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
-                />
-              )
-              :
-              <center><h2>No record</h2></center>
+              <div>
+                <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Team Goals</h2>
+                <Line/>
+                <br/>
+                {
+                  isLineManager &&
+                    enabledLoader ?
+                    <center>
+                      <CircularLoader show = { enabledLoader }/>
+                    </center>
+                    :
+                    teamGoalsArray.length !== 0 ?
+                    teamGoalsArray.map((resp, key) =>
+                      <TeamGoalsComponent
+                        employeeName = { resp.name }
+                        imageUrl = { resp.imageUrl }
+                        cardHolder = { resp.goalDetails }
+                        priorityFunc = { (resp) => this.priorityFunc(resp) }
+                        onSelected = { (
+                          details,
+                          goalId,
+                          goalTitle,
+                          description,
+                          startDate,
+                          dueDate,
+                          priorityName,
+                          approvalStatus,
+                          goalTypeId
+                        ) => {
+                          this.setState({
+                            goalId,
+                            goalTitle,
+                            description,
+                            startDate,
+                            dueDate,
+                            priorityName,
+                            approvalStatus,
+                            goalTypeId
+                           })
+                          this.presenter.getGoalTask(goalId)
+                          this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                          this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                        }
+                       }
+                       onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                      />
+                    )
+                    :
+                    <center><h2>No record</h2></center>
+                }
+              </div>
             }
-            <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Squad Goals</h2>
-            <Line/>
-            <br/>
             {
-              enabledLoader ?
-              <center>
-                <CircularLoader show = { enabledLoader }/>
-              </center>
-              :
-              squadGoalsArray.length !== 0 ?
-              squadGoalsArray.map((resp, key) =>
-                <SquadGoalsComponent
-                  squadName = { resp.name }
-                  description = { resp.description }
-                  productOwner = { resp.productOwner }
-                  memberDetails = { resp.memberDetails }
-                  priorityFunc = { (resp) => this.priorityFunc(resp) }
-                  onSelected = { (
-                    selectedTitle,
-                    selectedDescription,
-                    selectedMembers
-                  ) => {
-                    this.setState({
-                      selectedTitle,
-                      selectedDescription,
-                      selectedMembers
-                     })
-                    // this.presenter.getGoalTask(goalId)
-                    // this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                    // this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  }
-                 }
-                 onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
-                />
-              )
-              :
-              <center><h2>No record</h2></center>
+              isPO &&
+              <div>
+                <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Squad Goals</h2>
+                <Line/>
+                <br/>
+                {
+                  enabledLoader ?
+                  <center>
+                    <CircularLoader show = { enabledLoader }/>
+                  </center>
+                  :
+                  squadGoalsArray.length !== 0 ?
+                  squadGoalsArray.map((resp, key) =>
+                    <SquadGoalsComponent
+                      squadName = { resp.name }
+                      description = { resp.description }
+                      productOwner = { resp.productOwner }
+                      memberDetails = { resp.memberDetails }
+                      priorityFunc = { (resp) => this.priorityFunc(resp) }
+                      onSelected = { (
+                        selectedTitle,
+                        selectedDescription,
+                        selectedMembers
+                      ) => {
+                        this.setState({
+                          selectedTitle,
+                          selectedDescription,
+                          selectedMembers
+                         })
+                        // this.presenter.getGoalTask(goalId)
+                        // this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                        // this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                      }
+                     }
+                     onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                    />
+                  )
+                  :
+                  <center><h2>No record</h2></center>
+                }
+              </div>
             }
             </div>
             <div ref = { 'main-div' } className = { 'padding-10px' }>

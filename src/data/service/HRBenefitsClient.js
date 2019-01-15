@@ -1527,8 +1527,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalTask (token, goalId, taskDescription) {
-    return this.service.addGoalTask(token,  goalId, taskDescription)
+  addGoalTask (token, goalTaskParam) {
+    return this.service.addGoalTask(token, goalTaskParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1537,8 +1537,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalComment (token, goalId, goalComment) {
-    return this.service.addGoalComment(token,  goalId, goalComment)
+  addGoalComment (token, goalCommentParam) {
+    return this.service.addGoalComment(token, goalCommentParam)
     .pipe(ServiceErrorOperator())
   }
 

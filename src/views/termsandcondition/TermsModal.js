@@ -47,18 +47,20 @@ class TermsModal extends BaseMVPView {
           <div dangerouslySetInnerHTML = {{ __html: terms }}/>
           <br/>
           <br/>
-          <GenericButton text= "Agree"
-            onClick={ () => {
-                this.setState({ disableSubmit : true, text : `Please wait while we're submitting your Response` })
-                this.presenter.agreeTerms()
-              }
-            }
-            disabled = {disableSubmit}
-           />
-          <GenericButton text= "Disagree"
+          <div className = { 'grid-global' }>
+            <GenericButton text= "Disagree"
             onClick={ () => this.disagreeTerms() }
             disabled = {disableSubmit}
-          />
+            />
+            <GenericButton text= "Agree"
+              onClick={ () => {
+                  this.setState({ disableSubmit : true, text : `Please wait while we're submitting your Response` })
+                  this.presenter.agreeTerms()
+                }
+              }
+              disabled = {disableSubmit}
+             />
+          </div>
         </div>
       }
       </Modal>

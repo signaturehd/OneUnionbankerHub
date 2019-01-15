@@ -2293,7 +2293,7 @@ export default class HRBenefitsService {
       type: requestedGoalsParam.goalTypeId
     }
 
-    return this.apiClient.post('v1/goals/personal', objectParam, {
+    return this.apiClient.post('v1/goals?goalType=personal', objectParam, {
       headers : { token }
     })
   }
@@ -2340,13 +2340,8 @@ export default class HRBenefitsService {
     })
   }
 
-  addGoalTask (token, goalId, taskDescription) {
-    const objectParam = {
-      id: goalId,
-      description: taskDescription
-    }
-
-    return this.apiClient.post('v1/goals/tasks', objectParam, {
+  addGoalTask (token, goalTaskParam) {
+    return this.apiClient.post(`v1/goals/tasks?goalType=${goalTaskParam.goalType}`, goalTaskParam.body, {
       headers : { token }
     })
   }
@@ -2357,13 +2352,8 @@ export default class HRBenefitsService {
     })
   }
 
-  addGoalComment (token, goalId, goalComment) {
-    const objectParam = {
-      id: goalId,
-      description: goalComment
-    }
-
-    return this.apiClient.post('v1/goals/comments', objectParam, {
+  addGoalComment (token, goalCommentParam) {
+    return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body, {
       headers : { token }
     })
   }
