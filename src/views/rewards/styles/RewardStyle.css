@@ -1,0 +1,41 @@
+.celebrate-container{
+	display: grid;
+  grid-template-columns: auto 435px auto;
+
+}
+
+.main-item{
+	grid-column: 2/3;
+}
+
+.celebrate-container-space{
+	padding-top: 20px;
+}
+
+.celebrate-padding-bottom{
+	padding-bottom: 5px;
+}
+
+.celebrate-margin-bottom{
+	margin-bottom: 20px;
+}
+
+.celebrate-button-center{
+	background-color: orange;
+	border-radius: 10px;
+	color: white;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.celebrate-aligned-center{
+	text-align: center;
+}
+
+.celebrate-h1-margin{
+	margin: 30px;
+}
+
+.celebrate-p-margin{
+	margin: 0px;
+}
