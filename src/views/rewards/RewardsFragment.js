@@ -200,7 +200,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 						<div>
 						<RewardRedeemFragment redeemData = {redeemData} />
 						<br/>
-						<RewardSearchComponent  membersData = { membersData }/>
+						<RewardSearchComponent
+							type = { 'suggestion' }
+							sendDataList = { (e) => console.log(e) }
+							listData = { membersData }/>
 						</div>
 					</div>
 				}

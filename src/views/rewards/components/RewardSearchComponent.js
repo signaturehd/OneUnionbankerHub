@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, GenericInput } from '../../../ub-components'
-
+import PropTypes from 'prop-types'
 
 class RewardSearchComponent extends Component {
   constructor (props) {
@@ -27,18 +27,20 @@ class RewardSearchComponent extends Component {
 
   render () {
     const {
-      membersData,
+      listData,
       hint,
+      type,
+      sendDataList,
     } = this.props
 
     const {
       searchString
     } = this.state
 
-    let memberList = membersData
+    let list = listData
     const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
-      memberList = membersData.filter(membersData => membersData.name.toLowerCase().match(search))
+      list = listData.filter(listData => listData.name.toLowerCase().match(search))
     }
 
     return (
@@ -56,35 +58,41 @@ class RewardSearchComponent extends Component {
           <div>
             <h4 className = { 'font-weight-lighter font-size-10px' }>Suggestions</h4>
             <div style = {{
-                backgroundColor : 'transparent',
-                padding: '5px',
-                display: 'grid',
-                gridTemplateColumns: 'auto auto auto',
-                columnGap: '1%',
-              }}>
-              {
-                memberList.map((resp) =>
-                  <h4
-                    style = {{
-                      borderRadius: '5px',
-                      backgroundColor: '#ffa000',
-                      textAlign: 'center',
-                      color : '#fff',
-                      marginBottom: '1px',
-                      marginRight: '1px',
-                    }}
-                    className = { 'cursor-pointer font-weight-lighter font-size-12px' }>
-                    { resp.name }
-                  </h4>
-                )
-              }
-            </div>
+              backgroundColor : 'transparent',
+              padding: '5px',
+              display: 'grid',
+              gridTemplateColumns: 'auto auto auto',
+              columnGap: '1%',
+            }}>
+            {
+              list.map((resp) =>
+                <h4
+                  onClick = { () => sendDataList(resp) }
+                  style = {{
+                    borderRadius: '5px',
+                    backgroundColor: '#ffa000',
+                    textAlign: 'center',
+                    color : '#fff',
+                    marginBottom: '3px',
+                    marginRight: '1px',
+                  }}
+                  className = { 'cursor-pointer font-weight-lighter font-size-12px' }>
+                  { resp.name }
+                </h4>
+              )
+            }
           </div>
+        </div>
         }
       </div>
     )
   }
 }
 
+RewardSearchComponent.propTypes = {
+  hint: PropTypes.string,
+  sendDataList: PropTypes.func,
+  type : PropTypes.string,
+}
 
 export default RewardSearchComponent
