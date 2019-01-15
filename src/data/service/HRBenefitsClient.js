@@ -252,6 +252,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  addBookRequestCancel (token, objectParam) {
+    return this.service.addBookRequestCancel(token, objectParam)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)

@@ -21,7 +21,7 @@ class BookBorrowedCard extends Component {
   }
 
   render () {
-    const { detail, onClick, rateBook, quantity } = this.props
+    const { detail, onClick, rateBook, quantity, date } = this.props
     const { rating } = this.state
     const  styles = {
       cardHeader : {
