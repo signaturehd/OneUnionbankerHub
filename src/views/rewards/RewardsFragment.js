@@ -12,6 +12,10 @@ import RewardSearchComponent from './components/RewardSearchComponent'
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
 		super(props)
+		this.state = {
+			selectedAwards: false,
+			selectedId: null,
+		}
 	}
 
 	componentDidMount () {
@@ -28,7 +32,9 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		const {
 			accountNumber,
 			showAccountNumberModal,
-			recognizedAwards
+			recognizedAwards,
+			selectedId,
+			selectedAwards
 		} = this.state
 
 		const membersData = [{
@@ -91,66 +97,82 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		}]
 
 		return (
-			<div className={'myreward-grid-container'}>
-				<div className={'myrewards-container'} >
-					<div>
-						<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
-						<p> Gather and redeem your points</p>
-					</div>
-					{
-						showAccountNumberModal &&
-						<InputModal
-							isDismisable={true}
-							onClose={() => this.setState({ showAccountNumberModal: false })}
-							onChange={e => this.setState({ accountNumber: e.target.value })}
-							placeholder={'Account Number'}
-							type={'text'}
-							onSubmit={e => {
-								e.preventDefault()
-								this.presenter.validateAccountNumber(accountNumber)
-							}
-							}
-						/>
-					}
-
-					<div className={'myreward-orange-color'}>
-						<span className={'myreward-orange-text align-left'}> My Reward </span>
-						<span className={'myreward-orange-text align-right'}> 20,000 </span>
-					</div>
+			<div>
+				{
+					selectedAwards  ?
 
 					<div>
-						<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
-						<h6> Celebrate those who own the future and drive innovation </h6>
+						<GenericButton
+							text = { 'back' }
+							onClick = { () => this.setState({ selectedAwards: false }) }
+							/>
+						test
+						 id :{ selectedId }
+						 status: { selectedAwards }
 					</div>
-					<div className={'myrewards-adjustment'}>
-						<div className={'myrewards-card-container'}>
+					 :
+					<div className={'myreward-grid-container'}>
+						<div className={'myrewards-container'} >
+							<div>
+								<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
+								<p> Gather and redeem your points</p>
+							</div>
 							{
-								myrewards1.map((value, idx) => (
-									<Card
-										className={'myrewards-card'}
-										onClick={() =>
-											history.push(value.path)
-										}
-										key={idx}>
-										<div className={'rewards-column-grid'}>
-											<div
-												className={value.styleName}
-												text={value.title} >
-											</div>
-											<p className={'myrewards-option-cards font-weight-bold'}>{value.title}</p>
-											<p className={'myrewards-option-cards-details'}>{value.details}</p>
-										</div>
-									</Card>
-								))
+								showAccountNumberModal &&
+								<InputModal
+									isDismisable={true}
+									onClose={() => this.setState({ showAccountNumberModal: false })}
+									onChange={e => this.setState({ accountNumber: e.target.value })}
+									placeholder={'Account Number'}
+									type={'text'}
+									onSubmit={e => {
+										e.preventDefault()
+										this.presenter.validateAccountNumber(accountNumber)
+									}
+									}
+								/>
 							}
+
+							<div className={'myreward-orange-color'}>
+								<span className={'myreward-orange-text align-left'}> My Reward </span>
+								<span className={'myreward-orange-text align-right'}> 20,000 </span>
+							</div>
+
+							<div>
+								<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
+								<h6> Celebrate those who own the future and drive innovation </h6>
+							</div>
+							<div className={'myrewards-adjustment'}>
+								<div className={'myrewards-card-container'}>
+									{
+										myrewards1.map((value, idx) => (
+											<Card
+												className={'myrewards-card'}
+												onClick={() =>
+													this.setState({ selectedAwards : true, selectedId: value.id })
+												}
+												key={idx}>
+												<div className={'rewards-column-grid'}>
+													<div
+														className={value.styleName}
+														text={value.title} >
+													</div>
+													<p className={'myrewards-option-cards font-weight-bold'}>{value.title}</p>
+													<p className={'myrewards-option-cards-details'}>{value.details}</p>
+												</div>
+											</Card>
+										))
+									}
+								</div>
+							</div>
+						</div>
+						<div>
+						<RewardRedeemFragment redeemData = {redeemData} />
+						<br/>
+						<RewardSearchComponent  membersData = { membersData }/>
 						</div>
 					</div>
-				</div>
-				<div>
-				<RewardRedeemFragment redeemData = {redeemData} />
-				<br/>
-				<RewardSearchComponent  membersData = { membersData }/>
-				</div>
+				}
 			</div>
 		)
 	}

@@ -6,7 +6,8 @@ class RewardSearchComponent extends Component {
   constructor (props) {
     super(props)
       this.state = {
-        searchString : ''
+        searchString : '',
+        storedData: []
       }
       this.updateSearch = this.updateSearch.bind(this)
   }
@@ -15,9 +16,19 @@ class RewardSearchComponent extends Component {
     this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
+  receiveData (data) {
+    const newData = [...storedData]
+    newData.push({
+      data: data
+    })
+    this.setState({ storedData :  newData })
+    this.props.sendData(storedData)
+  }
+
   render () {
     const {
-      membersData
+      membersData,
+      hint,
     } = this.props
 
     const {
@@ -37,14 +48,38 @@ class RewardSearchComponent extends Component {
           className = { 'newsSearchBar' }
           refCallback = { 'search' }
           type = { 'text' }
-          hint = { 'Search News' }
+          hint = { `${ hint ? hint : '' }` }
           value = { searchString }
           onChange = { this.updateSearch } />
         {
-          memberList &&
-          memberList.map((resp) =>
-            <h2>{ resp.name }</h2>
-          )
+          searchString &&
+          <div>
+            <h4 className = { 'font-weight-lighter font-size-10px' }>Suggestions</h4>
+            <div style = {{
+                backgroundColor : 'transparent',
+                padding: '5px',
+                display: 'grid',
+                gridTemplateColumns: 'auto auto auto',
+                columnGap: '1%',
+              }}>
+              {
+                memberList.map((resp) =>
+                  <h4
+                    style = {{
+                      borderRadius: '5px',
+                      backgroundColor: '#ffa000',
+                      textAlign: 'center',
+                      color : '#fff',
+                      marginBottom: '1px',
+                      marginRight: '1px',
+                    }}
+                    className = { 'cursor-pointer font-weight-lighter font-size-12px' }>
+                    { resp.name }
+                  </h4>
+                )
+              }
+            </div>
+          </div>
         }
       </div>
     )
