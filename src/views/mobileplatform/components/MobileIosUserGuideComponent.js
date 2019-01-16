@@ -39,17 +39,20 @@ class MobileIosUserGuideComponent extends Component {
                 </div>
                 <br/>
                 <div className = { 'text-align-left' }>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-9px' }>Step 1: Launch Settings from your home screen</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-9px' }>Step 2: Select General</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-9px' }>Step 3: Scroll down and select Device Management</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-9px' }>Step 4: Select UNIONBANK OF THE PHILIPPINES</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-9px' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 1: Launch Settings from your home screen</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 2: Select General</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 3: Scroll down and select Device Management</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 4: Select UNIONBANK OF THE PHILIPPINES</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
                 </div>
                 <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>As we move further in the development process of One</h4>
                 <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>UnionBanker Hub, we understand that having this app</h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>available on Apple Store would be the more</h4>
-                <br/>
+                <h4
+                  style = {{
+                    marginBottom: '10px'
+                  }}
+                  className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>available on Apple Store would be the more</h4>
                 <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>Currently we are dedicating the full efforts of our</h4>
                 <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>development team towards a release in the Apple Store</h4>
                 <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>by August 2018 or sooner.</h4>
@@ -60,18 +63,26 @@ class MobileIosUserGuideComponent extends Component {
                   src = { require('../../../images/mobileview/user guide.png') }
                   style = {{
                     height: '100%',
-                    width : '100%'
+                    width : '60%'
                   }}/>
               </div>
             </div>
           </div>
-          <center>
+          <div>
             <br/>
-            <br/>
-            <i
+            <div
               onClick = { () => iosUserGuideFunc(false) }
-              className = { 'back-arrow' }/> <h4 className = { 'unionbank-white-color font-weight-lighter' }>Back</h4>
-          </center>
+              style = {{
+                display: 'grid',
+                gridTemplateColumns: '.08fr auto',
+              }}>
+              <div>
+                <i
+                  className = { 'back-arrow' }/>
+              </div>
+              <h4 className = { 'unionbank-color font-weight-lighter font-size-16px align-items-center' }>Back</h4>
+            </div>
+          </div>
         </div>
       </div>
     )
