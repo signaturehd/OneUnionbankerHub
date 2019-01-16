@@ -13,8 +13,8 @@ class MobileMyLearningComponent extends Component {
       <div
         style = {{
           display: 'grid',
-          gridTemplateColumns: '1fr .5fr',
-          padding: '0px 20px 0px 5px',
+          gridTemplateColumns: 'auto auto',
+          padding: '0px 20px 0px 0px',
         }}>
         <img
           src = { require('../../../images/mobileview/my learning.png') }
@@ -23,13 +23,12 @@ class MobileMyLearningComponent extends Component {
             width : '100%'
           }}/>
           <div className = { 'text-align-right margin-auto' }>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Borrow a book?</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Listen to a Podcast?</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Enroll to training?</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Develop yourself</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>through </h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>through
-              <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }> My Learning.</b>
+            <h4 className = { 'font-size-15px font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Borrow a book?</h4>
+            <h4 className = { 'font-size-15px font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Listen to a Podcast?</h4>
+            <h4 className = { 'font-size-15px font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Enroll to training?</h4>
+            <h4 className = { 'font-size-15px font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Develop yourself</h4>
+            <h4 className = { 'font-size-15px font-weight-lighter unionbank-white-color mobile-view-label-detail' }>through
+              <b className = { 'font-size-15px font-weight-lighter unionbank-color mobile-view-label-detail' }> My Learning.</b>
             </h4>
           </div>
       </div>

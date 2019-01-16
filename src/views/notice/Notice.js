@@ -31,6 +31,15 @@ class Notice extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    try {
+      this.presenter.getPinCode()
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   isAgree (tranId, isAgree, benId) {
     this.setState({ tranId, isAgree, benId })
   }
@@ -49,6 +58,10 @@ class Notice extends BaseMVPView {
 
   circularLoader (enabledLoader) {
     this.setState({ enabledLoader })
+  }
+
+  setPinCodeStatus (showPinCodeModal) {
+    this.setState({ showPinCodeModal })
   }
 
   render () {
@@ -90,6 +103,11 @@ class Notice extends BaseMVPView {
           )
         }
         {
+          enabledLoader &&
+          <CircularLoader
+            show = { enabledLoader }/>
+        }
+        {
           showDisagreeModal &&
           <Modal>
             <center>
@@ -103,8 +121,8 @@ class Notice extends BaseMVPView {
                 <GenericButton
                   text = { 'Yes' }
                   onClick = { () => {
-                    this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true, showDisagreeModal: false })
-                    this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
+                    this.setState({ isDimissable : true, disableSubmit: true, showDisagreeModal: false })
+                    this.presenter.updateNotice(noticeResponse.transactionId.toString(), 0, benefitId, '')
                   } }
                 />
               </div>
@@ -112,7 +130,7 @@ class Notice extends BaseMVPView {
           </Modal>
         }
         {
-          showPinCodeModal &&
+          !showPinCodeModal &&
           <NoticePinModal
             onSubmitAgreement = { (code) => this.isAgreementConfirm(tranId, isAgree, benId, code) }
             enabledLoader = { enabledLoader }
@@ -134,8 +152,13 @@ class Notice extends BaseMVPView {
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () => {
                   try {
-                    this.setState({ disableSubmit: true, showPinCodeModal : true  })
-                    this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
+                    if(showPinCodeModal) {
+                      this.setState({ disableSubmit: true, showPinCodeModal : true  })
+                      this.presenter.updateNotice(noticeResponse.transactionId.toString(), 1, benefitId, '')
+                    } else {
+                      this.setState({ disableSubmit: true })
+                      this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
+                    }
                   } catch (e) {
                     console.log(e)
                   }

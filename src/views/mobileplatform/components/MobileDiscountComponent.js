@@ -23,8 +23,8 @@ class MobileDiscountComponent extends Component {
           <div
             className = { 'text-align-left margin-auto' }>
             <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }>Get discounts</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>by checking our PHENOM,</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>our expensive corporate</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>by checking out PHENOM,</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>our exclusive corporate</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>perks program.</h4>
           </div>
           <img
