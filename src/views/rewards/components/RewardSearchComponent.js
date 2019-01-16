@@ -22,7 +22,7 @@ class RewardSearchComponent extends Component {
       data: data
     })
     this.setState({ storedData :  newData })
-    this.props.sendData(storedData)
+    this.props.sendDataList(storedData)
   }
 
   render () {
@@ -67,7 +67,7 @@ class RewardSearchComponent extends Component {
             {
               list.map((resp) =>
                 <h4
-                  onClick = { () => sendDataList(resp) }
+                  onClick = { () => this.receiveData(resp) }
                   style = {{
                     borderRadius: '5px',
                     backgroundColor: '#ffa000',

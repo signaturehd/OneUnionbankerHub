@@ -39,8 +39,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		const { history, profileHasCOC } = this.props
 		const {
 			rewardPoints,
-			accountNumber,
-			showAccountNumberModal,
 			recognizedAwards,
 			selectedId,
 			selectedAwards
@@ -149,27 +147,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					</div>
 					 :
 					<div className={'myreward-grid-container'}>
+						<div></div>
 						<div className={'myrewards-container'} >
 							<div>
 								<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
 								<p> Gather and redeem your points</p>
 							</div>
-							{
-								showAccountNumberModal &&
-								<InputModal
-									isDismisable={true}
-									onClose={() => this.setState({ showAccountNumberModal: false })}
-									onChange={e => this.setState({ accountNumber: e.target.value })}
-									placeholder={'Account Number'}
-									type={'text'}
-									onSubmit={e => {
-										e.preventDefault()
-										this.presenter.validateAccountNumber(accountNumber)
-									}
-									}
-								/>
-							}
-
 							<div className={'myreward-orange-color'}>
 								<img
 									height = { '20' }
@@ -204,17 +187,18 @@ class RewardsRecognitionFragment extends BaseMVPView {
 											</Card>
 										))
 									}
+
+      						<RewardSearchComponent
+      							type = { 'suggestion' }
+      							sendDataList = { (e) => console.log(e) }
+      							listData = { membersData }/>
 								</div>
 							</div>
 						</div>
-						<div>
-						<RewardRedeemFragment redeemData = {redeemData} />
-						<br/>
-						<RewardSearchComponent
-							type = { 'suggestion' }
-							sendDataList = { (e) => console.log(e) }
-							listData = { membersData }/>
-						</div>
+						{
+							// <RewardRedeemFragment redeemData = {redeemData} />
+						}
+						<div></div>
 					</div>
 				}
 			</div>

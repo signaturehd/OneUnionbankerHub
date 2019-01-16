@@ -4,7 +4,7 @@
 
 .myreward-grid-container {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: .05fr auto .05fr;
   grid-column-gap: 3em;
   margin-left: 40px;
   margin-right: 60px;
@@ -12,7 +12,6 @@
 
 .myreward-textcolor-white{
   text-decoration-color: white;
-
 }
 
 /*jom*/
@@ -126,10 +125,8 @@
   -webkit-background-size: cover;
   padding-right: 40px;
   padding-left: 40px;
-  width: 250px;
+  width: 90%;
   height: 250px;
-  max-width: 250px;
-  max-height: 250px;
   border-radius: 10px;
 }
 
@@ -139,10 +136,8 @@
   -webkit-background-size: cover;
   padding-right: 40px;
   padding-left: 40px;
-  width: 250px;
+  width: 90%;
   height: 250px;
-  max-width: 250px;
-  max-height: 250px;
   border-radius: 10px;
 }
 
@@ -152,10 +147,8 @@
   -webkit-background-size: cover;
   padding-right: 40px;
   padding-left: 40px;
-  width: 250px;
+  width: 90%;
   height: 250px;
-  max-width: 250px;
-  max-height: 250px;
   border-radius: 10px;
 }
 
@@ -227,8 +220,8 @@
 }
 
 .myawards-image-1 {
-  background-image: url('../../../images/rewards/dna.png');
-  mask-image: url('../../../images/rewards/dna.png');
+  background-image: url('../../../images/rewards/dnaimage.png');
+  mask-image: url('../../../images/rewards/dnaimage.png');
   -webkit-background-size: cover;
 }
 
