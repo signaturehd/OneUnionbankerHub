@@ -34,17 +34,14 @@ export default class RewardsPresenter {
     }
     else {
       this.view.showLoading()
-      this.submitAwardsInteractor.execute(SubmitAwardsParam(employeeName, employeeMessage))
+      this.submitAwardsInteractor.execute(SubmitAwardsParam(selectedId, ["16","17"], employeeMessage))
       .subscribe (data=> {
-        store.dispatch(NotifyActions.addnotify({
-          message: 'You have to create a remarks first.',
-          type: 'warning',
-          duration: 2000
-        }))
+        this.view.showSuccessMessage(data)
         this.view.hideLoading()
       }, e => {
         this.view.hideLoading()
       })
+
     }
   }
 

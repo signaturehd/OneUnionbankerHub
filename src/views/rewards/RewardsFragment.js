@@ -4,6 +4,7 @@ import Presenter from './presenter/RewardsPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import { InputModal, Card, GenericButton } from '../../ub-components'
+import NoticeResponseModal from '../notice/NoticeResponseModal'
 
 import './styles/myrewards.css'
 import RewardRedeemFragment from './fragments/RewardRedeemFragments'
@@ -11,6 +12,11 @@ import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
 
 import { format } from '../../utils/numberUtils'
+import {
+  RequiredValidation,
+  Validator,
+  RequiredAlphabetValidation
+} from '../../utils/validate'
 
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
@@ -18,7 +24,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		this.state = {
 			selectedAwards: false,
 			selectedId: null,
+			showNoticeModal: false,
+			employeeName: '',
+			orNumberErrorMessage: '',
 		}
+		this.confirmation = this.confirmation.bind(this)
+		this.validator = this.validator.bind(this)
 	}
 
 	componentDidMount () {
@@ -35,7 +46,32 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		this.setState({ rewardPoints })
 	}
 
+	showSuccessMessage (successMessage) {
+		this.setState({ successMessage, showNoticeModal: true })
+	}
+
+	validateAlphabet (e) {
+		const validate = func.checkedvalidateAlphabet(e)
+		this.setState({ employeeName : validate, orNumberErrorMessage : '' })
+	}
+
+	validator (input) {
+    return new RequiredValidation().isValid(input)
+  }
+
+	confirmation () {
+		const {
+			employeeName
+		} = this.state
+		if (!this.validator(orNumberText)) {
+      this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
+		} else {
+		 this.setState({ showNoticeModal : true })
+	 }
+	}
+
 	submitAwards () {
+		alert(click)
 		const {
 			selectedId,
 			employeeName,
@@ -48,7 +84,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			employeeMessage
 		)
 	}
-
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -58,7 +93,11 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			selectedAwards,
 			submitAwards,
 			employeeName,
-			employeeMessage
+			employeeMessage,
+			successMessage,
+			showNoticeModal,
+			orNumberText,
+			orNumberErrorMessage,
 		} = this.state
 
 		const membersData = [{
@@ -80,21 +119,21 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		}]
 
 		const myrewards1 = [{
-			id: 0,
+			id: 1,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
 			details: 'Short Description',
 			path: '/myrewards/celebratedna',
 		},
 		{
-			id: 1,
+			id: 2,
 			styleName: 'myrewards-cards-2 myrewards-option-default font-weight-bold',
 			title: 'U Are Recognized',
 			details: 'Short Description',
 			path: '/myrewards/uarerecognized',
 		},
 		{
-			id: 2,
+			id: 3,
 			styleName: 'myrewards-cards-3 myrewards-option-default font-weight-bold',
 			title: 'Star Award',
 			details: 'Recognized a UnionBanker',
@@ -121,7 +160,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		}]
 
 		const awardData  = [{
-			id: 0,
+			id:1 ,
 			title: 'Celebrate a DNA Moment',
 			details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
 			styleName : 'myawards-image myawards-image-1',
@@ -131,7 +170,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			principlesDetails : 'Forward-thinking, Agile, Open and Innovative',
 		},
 		{
-			id: 1,
+			id: 2,
 			title: 'U Are Recognized',
 			details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
 			styleName : 'myawards-image myawards-image-2',
@@ -141,7 +180,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			principlesDetails : null,
 		},
 		{
-			id: 2,
+			id: 3,
 			title: 'Star Award',
 			details: 'Short Star Award details',
 			styleName : 'myawards-image myawards-image-3 ',
@@ -151,9 +190,19 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			principlesDetails : null,
 
 		}]
-
 		return (
 			<div>
+			{
+				showNoticeModal &&
+				<NoticeResponseModal
+				noticeResponse = { successMessage }
+				onClose = { () =>
+					this.setState({
+						showNoticeModal: false,
+						selectedAwards: false,
+						employeeName: '',
+						employeeMessage: '' }) }/>
+			}
 				{
 					selectedAwards  ?
 					<div>
@@ -163,11 +212,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
 						 	selectedId = { selectedId }
 						  awardData = { awardData }
 							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
-							onSubmitAwards = { ()=> this.submitAwards() }
+							onSubmitAwards = { () => this.submitAwards() }
+							employeeName = { employeeName }
 							employeeMessage = { employeeMessage }
-							setEmployeeName = { (employeeName) => this.setState(employeeName) }
-							setEmployeeMessage = { (employeeMessage) => this.setState(employeeMessage) }/>
-
+							setEmployeeName = { (employeeName) => this.setState({employeeName}) }
+							setEmployeeMessage = { (employeeMessage) => this.setState({employeeMessage}) }
+							orNumberErrorMessage = { orNumberErrorMessage }/>
 					</div>
 					 :
 					<div className={'myreward-grid-container'}>
@@ -185,7 +235,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 								<h4 className={'myreward-orange-text align-left font-weight-lighter'}>My Reward </h4>
 								<h4 className={'myreward-orange-text align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
 							</div>
-
 							<div>
 								<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
 								<h6> Celebrate those who own the future and drive innovation </h6>

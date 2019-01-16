@@ -15,8 +15,10 @@ class Award extends Component {
       employeeMessage,
       setEmployeeName,
       onSubmitAwards,
+      employeeName,
       membersData,
       membersDataFunc,
+      orNumberErrorMessage
     } = this.props
 
     return (
@@ -27,24 +29,23 @@ class Award extends Component {
             onClick = { () => selectedAwards(false) }>
           </i>
         </div>
-      <div className = {'celebrate-main-item'}>
-      {
-        awardData.map((value, key) =>
-          (
-            value.id === selectedId &&
-            <div className = {'text-align-center'}>
-              <div
-                className={ value.styleName }
-                text={ '' } >
-              </div>
-              <h1>{value.title}</h1>
-              <h4 className = {'text-align-justify celebrate-margin-bottom font-weight-lighter font-size-18px'}>{value.details}</h4>
-              <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.principles}</h4>
-              <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.principlesDetails}</h4>
-              <h4 className = {'text-align-justify font-weight-bold font-size-14px'}>{value.value}</h4>
-              <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.valuesDetails}</h4>
-              <br/>
-            </div>
+        <div className = {'celebrate-main-item'}>
+          {
+            awardData.map((value, key) =>
+              (
+                value.id === selectedId &&
+                <div className = {'text-align-center'}>
+                  <div
+                    className={ value.styleName }
+                    text={ '' } >
+                  </div>
+                  <h1>{value.title}</h1>
+                  <h4 className = {'text-align-justify celebrate-margin-bottom text-weight-bolder'}>{value.details}</h4>
+                  <h4 className = {'text-align-justify text-weight-bolder'}>{value.principles}</h4>
+                  <h4 className = {'text-align-justify'}>{value.principlesDetails}</h4>
+                  <h4 className = {'text-align-justify text-weight-bolder'}>{value.value}</h4>
+                  <h4 className = {'text-align-justify celebrate-margin-bottom2'}>{value.valuesDetails}</h4>
+                </div>
           ))
         }
         <div>
@@ -69,7 +70,7 @@ class Award extends Component {
           <GenericButton
             text={ 'Submit' }
             className={ 'celebrate-button-center ' }
-            onClick={ () => onSubmitAwards}/>
+            onClick={ () => onSubmitAwards()}/>
         </div>
       </div>
     </div>
