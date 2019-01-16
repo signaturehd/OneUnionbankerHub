@@ -19,6 +19,10 @@
   padding-right: 40px;
 }
 
+.mobile-view-ios-components {
+  padding-left: 30px;
+}
+
 .mobile-view-header-grid-detail {
   display: grid;
   grid-template-rows: auto auto auto auto;
@@ -54,7 +58,7 @@
 .mobile-view-appstore-detail {
   background-size: 120px;
   background-repeat: no-repeat;
-  height: 80px;
+  height: 40px;
   margin-top: 22px;
   width: auto;
 }
