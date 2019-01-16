@@ -158,11 +158,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					selectedAwards  ?
 					<div>
 						 <AwardFragment
+						  membersData = { membersData }
+						  membersDataFunc = { (e) => console.log(e) }
 						 	selectedId = { selectedId }
 						  awardData = { awardData }
 							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
 							onSubmitAwards = { ()=> this.submitAwards() }
-							employeeName = { employeeName }
 							employeeMessage = { employeeMessage }
 							setEmployeeName = { (employeeName) => this.setState(employeeName) }
 							setEmployeeMessage = { (employeeMessage) => this.setState(employeeMessage) }/>
@@ -210,11 +211,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 											</Card>
 										))
 									}
-
-      						<RewardSearchComponent
-      							type = { 'suggestion' }
-      							sendDataList = { (e) => console.log(e) }
-      							listData = { membersData }/>
 								</div>
 							</div>
 						</div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, GenericInput } from '../../../ub-components'
+import { Card, GenericInput, Checkbox } from '../../../ub-components'
 import PropTypes from 'prop-types'
 
 class RewardSearchComponent extends Component {
@@ -17,11 +17,9 @@ class RewardSearchComponent extends Component {
   }
 
   receiveData (data) {
-    const newData = [...storedData]
-    newData.push({
-      data: data
-    })
-    this.setState({ storedData :  newData })
+    const newData = [...this.state.storedData]
+    newData.push(data)
+    this.setState({ storedData : newData })
     this.props.sendDataList(storedData)
   }
 
@@ -34,7 +32,8 @@ class RewardSearchComponent extends Component {
     } = this.props
 
     const {
-      searchString
+      searchString,
+      storedData
     } = this.state
 
     let list = listData
@@ -56,33 +55,72 @@ class RewardSearchComponent extends Component {
         {
           searchString &&
           <div>
-            <h4 className = { 'font-weight-lighter font-size-10px' }>Suggestions</h4>
-            <div style = {{
-              backgroundColor : 'transparent',
-              padding: '5px',
-              display: 'grid',
-              gridTemplateColumns: 'auto auto auto',
-              columnGap: '1%',
-            }}>
             {
-              list.map((resp) =>
-                <h4
-                  onClick = { () => this.receiveData(resp) }
-                  style = {{
-                    borderRadius: '5px',
-                    backgroundColor: '#ffa000',
-                    textAlign: 'center',
-                    color : '#fff',
-                    marginBottom: '3px',
-                    marginRight: '1px',
-                  }}
-                  className = { 'cursor-pointer font-weight-lighter font-size-12px' }>
-                  { resp.name }
-                </h4>
-              )
+              type  === 'suggestion' ?
+              <div>
+                <h4 className = { 'font-weight-lighter font-size-10px' }>Suggestions</h4>
+                <div style = {{
+                  backgroundColor : 'transparent',
+                  padding: '5px',
+                  display: 'grid',
+                  gridTemplateColumns: 'auto auto auto',
+                  columnGap: '1%',
+                }}>
+                {
+                  list.map((resp) =>
+                    <h4
+                      onClick = { () => this.receiveData(resp) }
+                      style = {{
+                        borderRadius: '5px',
+                        backgroundColor: '#ffa000',
+                        textAlign: 'center',
+                        color : '#fff',
+                        marginBottom: '3px',
+                        marginRight: '1px',
+                      }}
+                      className = { 'cursor-pointer font-weight-lighter font-size-12px' }>
+                      { resp.name }
+                    </h4>
+                  )
+                }
+              </div>
+            </div>
+            :
+            <div>
+              <h4 className = { 'font-weight-lighter font-size-10px' }>Search Results</h4>
+              <div style = {{
+                backgroundColor : 'transparent',
+                padding: '5px',
+                columnGap: '1%',
+              }}>
+              {
+                list.map((resp) =>
+
+                  <div
+                    onClick = { () => this.receiveData(resp) }
+                    style = {{
+                      borderRadius: '20px',
+                      backgroundColor: '#f0f0f0',
+                      textAlign: 'left',
+                      marginBottom: '10px',
+                      padding: '10px',
+                      display: 'grid',
+                      gridTemplateColumns: 'auto .1fr',
+                    }}>
+                    <h4
+                      className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
+                      { resp.name }
+                    </h4>
+                    <div className = { 'text-align-right' }>
+                      <Checkbox/>
+                    </div>
+                  </div>
+                )
+              }
+            </div>
+          </div>
             }
           </div>
-        </div>
         }
       </div>
     )

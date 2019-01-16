@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Card } from '../../../ub-components'
 import { GenericButton, GenericInput } from '../../../ub-components'
 
+import RewardSearchComponent from '../components/RewardSearchComponent'
+
 class Award extends Component {
 
   render () {
@@ -12,67 +14,65 @@ class Award extends Component {
       setEmployeeMessage,
       employeeMessage,
       setEmployeeName,
-      employeeName,
-      onSubmitAwards
+      onSubmitAwards,
+      membersData,
+      membersDataFunc,
     } = this.props
 
     return (
       <div className = {'celebrate-container'}>
-        <div>
+        <div className = { 'text-align-right' }>
           <i
             className = { 'back-arrow' }
             onClick = { () => selectedAwards(false) }>
           </i>
         </div>
-        <div className = {'celebrate-main-item'}>
-          {
-            awardData.map((value, key) =>
-              (
-                value.id === selectedId &&
-                <div className = {'text-align-center'}>
-                  <div
-                    className={ value.styleName }
-                    text={ '' } >
-                  </div>
-                  <h1>{value.title}</h1>
-                  <h4 className = {'text-align-justify celebrate-margin-bottom text-weight-bolder'}>{value.details}</h4>
-                  <h4 className = {'text-align-justify text-weight-bolder'}>{value.principles}</h4>
-                  <h4 className = {'text-align-justify'}>{value.principlesDetails}</h4>
-                  <h4 className = {'text-align-justify text-weight-bolder'}>{value.value}</h4>
-                  <h4 className = {'text-align-justify celebrate-margin-bottom2'}>{value.valuesDetails}</h4>
-                </div>
-              ))
-            }
-            <div>
-              <GenericInput
-                className={'celebrate-textbox '}
-                hint={'Search employees name'}
-                value={ employeeName }
-                defaultValue={ employeeName }
-                onChange={ (e) => setEmployeeName(e.target.value)}>
-              </GenericInput>
+      <div className = {'celebrate-main-item'}>
+      {
+        awardData.map((value, key) =>
+          (
+            value.id === selectedId &&
+            <div className = {'text-align-center'}>
+              <div
+                className={ value.styleName }
+                text={ '' } >
+              </div>
+              <h1>{value.title}</h1>
+              <h4 className = {'text-align-justify celebrate-margin-bottom font-weight-lighter font-size-18px'}>{value.details}</h4>
+              <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.principles}</h4>
+              <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.principlesDetails}</h4>
+              <h4 className = {'text-align-justify font-weight-bold font-size-14px'}>{value.value}</h4>
+              <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.valuesDetails}</h4>
+              <br/>
             </div>
-            <div>
-              <h4 className={'celebrate-container-space'}>Who will I award this to?</h4>
-            </div>
-            <div className={ 'celebrate-container-space ' }>
-              <h4 className={'celebrate-margin-bottom'}>Write a personal message of gratitude for this award's recipients.</h4>
-              <GenericInput
-                type={ 'textarea' }
-                resize={150}
-                value={ employeeMessage }
-                defaultValue={ employeeMessage }
-                onChange={ (e) => setEmployeeMessage(e.target.value) }>
-              </GenericInput>
-            </div>
-            <div className={'text-align-center '}>
-              <GenericButton
-                text={ 'Submit' }
-                className={ 'celebrate-button-center ' }
-                onClick={ () => onSubmitAwards}/>
-            </div>
-          </div>
+          ))
+        }
+        <div>
+				<RewardSearchComponent
+					sendDataList = { (e) => membersDataFunc(e) }
+					listData = { membersData }/>
         </div>
+        <div>
+          <h4 className={'celebrate-container-space'}>Who will I award this to?</h4>
+        </div>
+        <div className={ 'celebrate-container-space ' }>
+          <h4 className={'celebrate-margin-bottom'}>Write a personal message of gratitude for this award's recipients.</h4>
+          <GenericInput
+            type={ 'textarea' }
+            resize={150}
+            value={ employeeMessage }
+            defaultValue={ employeeMessage }
+            onChange={ (e) => setEmployeeMessage(e.target.value) }>
+          </GenericInput>
+        </div>
+        <div className={'text-align-center '}>
+          <GenericButton
+            text={ 'Submit' }
+            className={ 'celebrate-button-center ' }
+            onClick={ () => onSubmitAwards}/>
+        </div>
+      </div>
+    </div>
     )
   }
 }
