@@ -6,6 +6,7 @@ const RELEASING_CENTER = 'RELEASING_CENTER'
 const WIZARD_VALIDATION = 'WIZARD_VALIDATION'
 const PROFILE = 'PROFILE'
 const EMPLOYMENT_STATUS = 'EMPLOYMENT_STATUS'
+const NOTICE_PIN = 'NOTICE_PIN'
 
 export default class SessionProvider {
   constructor () {
@@ -15,7 +16,6 @@ export default class SessionProvider {
   setToken (token = '') {
     this.storage.setItem(TOKEN, token)
   }
-
 
   getToken () {
     return this.storage.getItem(TOKEN) || ''
@@ -43,6 +43,14 @@ export default class SessionProvider {
 
   getAccountToken () {
     return this.storage.getItem(ACCOUNT_TOKEN) || ''
+  }
+
+  setPinCode (status = false) {
+    this.storage.setItem(NOTICE_PIN, status)
+  }
+
+  getPinCode () {
+    return this.storage.getItem(NOTICE_PIN) || ''
   }
 
   setAccountNumber (accountNumber = '') {

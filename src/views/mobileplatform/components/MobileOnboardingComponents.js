@@ -28,7 +28,7 @@ class MobileOnboardingComponents extends Component {
             }}/>
           <div
             className = { 'text-align-right margin-auto' }>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Experience a unique guide</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Experience a unique</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>digital on-boarding so</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>you're ready to</h4>
             <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }>#OwnTheFuture!</h4>
