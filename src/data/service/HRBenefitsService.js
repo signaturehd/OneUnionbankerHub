@@ -2546,4 +2546,10 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  submitAwards (token, objectParam) {
+    return this.rootClient.post(`v1/rewards`, objectParam.body, {
+      headers : { token }
+    })
+  }
 }

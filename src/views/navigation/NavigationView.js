@@ -18,9 +18,6 @@ import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
 /*Rewards and Recognition */
 import RewardsRecognitionFragment from '../rewards/RewardsFragment'
-import CelebrateDNAFragment from '../rewards/fragments/CelebrateDNAFragment'
-import UAreRecognizedFragment from '../rewards/fragments/UAreRecognizedFragment'
-import StarAwardFragment from '../rewards/fragments/StarAwardFragment'
 
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
@@ -493,15 +490,6 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/phenom' render = { props =>
                   <PhenomFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route exact path='/myrewards/celebratedna' render={props =>
-                  <CelebrateDNAFragment {...props}
-                    setSelectedNavigation={this.setSelectedNavigation} />} />
-                <Route exact path='/myrewards/uarerecognized' render={props =>
-                  <UAreRecognizedFragment {...props}
-                    setSelectedNavigation={this.setSelectedNavigation} />} />
-                <Route exact path='/myrewards/staraward' render={props =>
-                  <StarAwardFragment {...props}
-                    setSelectedNavigation={this.setSelectedNavigation} />} />
                 <Route path = '/myrewards' render = { props =>
                   <RewardsRecognitionFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />

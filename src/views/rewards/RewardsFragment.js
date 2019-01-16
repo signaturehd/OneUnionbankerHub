@@ -35,13 +35,30 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		this.setState({ rewardPoints })
 	}
 
+	submitAwards () {
+		const {
+			selectedId,
+			employeeName,
+			employeeMessage,
+		} = this.state
+
+		this.presenter.submitAwards(
+			selectedId,
+			employeeName,
+			employeeMessage
+		)
+	}
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
 			rewardPoints,
 			recognizedAwards,
 			selectedId,
-			selectedAwards
+			selectedAwards,
+			submitAwards,
+			employeeName,
+			employeeMessage
 		} = this.state
 
 		const membersData = [{
@@ -140,10 +157,16 @@ class RewardsRecognitionFragment extends BaseMVPView {
 				{
 					selectedAwards  ?
 					<div>
-					 <AwardFragment
-					 	selectedId = { selectedId }
-					  awardData = { awardData }
-						selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }/>
+						 <AwardFragment
+						 	selectedId = { selectedId }
+						  awardData = { awardData }
+							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
+							onSubmitAwards = { ()=> this.submitAwards() }
+							employeeName = { employeeName }
+							employeeMessage = { employeeMessage }
+							setEmployeeName = { (employeeName) => this.setState(employeeName) }
+							setEmployeeMessage = { (employeeMessage) => this.setState(employeeMessage) }/>
+
 					</div>
 					 :
 					<div className={'myreward-grid-container'}>
