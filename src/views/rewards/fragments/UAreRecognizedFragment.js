@@ -9,7 +9,7 @@ import Presenter from './../presenter/UAreRecognizedPresenter'
 
 import { InputModal, Card, GenericButton,GenericInput ,GenericTextBox ,List } from '../../../ub-components'
 import './../styles/myrewards.css'
-import staticImage   from '../../../images/URECOGNIZE.png'
+import staticImage   from '../../../images/rewards/URECOGNIZE.png'
 
 class UAreRecognizedFragment extends BaseMVPView {
       constructor (props) {

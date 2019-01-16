@@ -1641,4 +1641,9 @@ export default class HRBenefitsClient {
     return this.service.getRewardAwards(token)
       .pipe(ServiceErrorOperator())
   }
+
+  getRewardPoints (token) {
+    return this.service.getRewardPoints(token)
+      .pipe(ServiceErrorOperator())
+  }
 }

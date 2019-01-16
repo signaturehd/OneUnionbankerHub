@@ -2540,4 +2540,10 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  getRewardPoints (token) {
+    return this.apiClient.get('v1/rewards?', {
+      headers : { token }
+    })
+  }
 }

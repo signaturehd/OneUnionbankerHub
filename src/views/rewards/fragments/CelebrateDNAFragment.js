@@ -9,7 +9,7 @@ import Presenter from './../presenter/CelebrateDNAPresenter'
 
 import { InputModal, Card, GenericButton,GenericInput,GenericTextBox,List } from '../../../ub-components'
 import './../styles/myrewards.css'
-import staticImage   from '../../../images/DNA.png'
+import staticImage   from '../../../images/rewards/DNA.png'
 
 class CelebrateDNAFragment extends BaseMVPView {
   constructor (props) {

@@ -3,7 +3,6 @@ import { Card } from '../../../ub-components'
 
 import staticImage from '../../../images/ubp-bg.png'
 
-
 class Redeem extends Component {
 
   render () {

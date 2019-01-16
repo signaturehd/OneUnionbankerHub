@@ -2,12 +2,14 @@ import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
 import GetRewardsAwardsInteractor from '../../../domain/interactor/rewards/GetRewardsAwardsInteractor'
+import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRewardPointsInteractor'
 
 let storedRecognizedAwards = []
 
 export default class RewardsPresenter {
   constructor (container) {
     this.getRewardsAwardsInteractor = new GetRewardsAwardsInteractor(container.get('HRBenefitsClient'))
+    this.getRewardPointsInteractor = new GetRewardPointsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -27,4 +29,12 @@ export default class RewardsPresenter {
     })
   }
 
+  getRewardPoints () {
+    this.getRewardPointsInteractor.execute()
+    .subscribe(data => {
+      this.view.setRewardPoints(data.points)
+    }, error => {
+
+    })
+  }
 }

@@ -10,6 +10,8 @@ import RewardRedeemFragment from './fragments/RewardRedeemFragments'
 import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
 
+import { format } from '../../utils/numberUtils'
+
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
 		super(props)
@@ -22,15 +24,21 @@ class RewardsRecognitionFragment extends BaseMVPView {
 	componentDidMount () {
 		this.props.setSelectedNavigation(9)
 		this.presenter.getRewardAwards()
+		this.presenter.getRewardPoints()
 	}
 
 	setRecognizedRewards (recognizedAwards) {
 		this.setState({ recognizedAwards })
 	}
 
+	setRewardPoints (rewardPoints) {
+		this.setState({ rewardPoints })
+	}
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
+			rewardPoints,
 			accountNumber,
 			showAccountNumberModal,
 			recognizedAwards,
@@ -65,14 +73,14 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		},
 		{
 			id: 1,
-			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
+			styleName: 'myrewards-cards-2 myrewards-option-default font-weight-bold',
 			title: 'U Are Recognized',
 			details: 'Short Description',
 			path: '/myrewards/uarerecognized',
 		},
 		{
 			id: 2,
-			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
+			styleName: 'myrewards-cards-3 myrewards-option-default font-weight-bold',
 			title: 'Star Award',
 			details: 'Recognized a UnionBanker',
 			path: '/myrewards/staraward',
@@ -134,12 +142,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 				{
 					selectedAwards  ?
 					<div>
-
-						 <AwardFragment
-						 	selectedId = { selectedId }
-						  awardData = { awardData }
-							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }/>
-
+					 <AwardFragment
+					 	selectedId = { selectedId }
+					  awardData = { awardData }
+						selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }/>
 					</div>
 					 :
 					<div className={'myreward-grid-container'}>
@@ -166,7 +172,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
 							<div className={'myreward-orange-color'}>
 								<span className={'myreward-orange-text align-left'}> My Reward </span>
-								<span className={'myreward-orange-text align-right'}> 20,000 </span>
+								<span className={'myreward-orange-text align-right'}>{ rewardPoints && format(rewardPoints) }</span>
 							</div>
 
 							<div>

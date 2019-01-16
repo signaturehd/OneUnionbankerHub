@@ -9,7 +9,7 @@ import Presenter from './../presenter/StarAwardPresenter'
 
 import { InputModal, Card, GenericButton,GenericInput ,GenericTextBox ,List } from '../../../ub-components'
 import './../styles/myrewards.css'
-import staticImage   from '../../../images/URECOGNIZE.png'
+import staticImage   from '../../../images/rewards/URECOGNIZE.png'
 
 
 class StarAwardFragment extends BaseMVPView {
