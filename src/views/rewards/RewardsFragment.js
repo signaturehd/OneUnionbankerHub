@@ -171,8 +171,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
 							}
 
 							<div className={'myreward-orange-color'}>
-								<span className={'myreward-orange-text align-left'}> My Reward </span>
-								<span className={'myreward-orange-text align-right'}>{ rewardPoints && format(rewardPoints) }</span>
+								<img
+									height = { '20' }
+									width = { '20' }
+									src = { require('../../images/rewards/Rewards-Orange.png') }/>
+								<h4 className={'myreward-orange-text align-left font-weight-lighter'}>My Reward </h4>
+								<h4 className={'myreward-orange-text align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
 							</div>
 
 							<div>
