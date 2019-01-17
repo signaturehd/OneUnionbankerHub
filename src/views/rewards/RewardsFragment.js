@@ -32,6 +32,9 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		this.props.setSelectedNavigation(9)
 		this.presenter.getRewardAwards()
 		this.presenter.getRewardPoints()
+    this.presenter.getRewardList()
+    this.presenter.getAwardData()
+    this.presenter.getRedeemData()
 	}
 
 	setRecognizedRewards (recognizedAwards) {
@@ -52,7 +55,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
   setValidateAlphabet (employeeMessage) {
     this.setState({ employeeMessage })
-    console.log(employeeMessage)
   }
 
 	sendData () {
@@ -80,6 +82,18 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ membersData })
   }
 
+  setAwardData (awardData) {
+    this.setState({ awardData })
+  }
+
+  setRewardList (rewardList) {
+    this.setState({ rewardList })
+  }
+
+  setRedeemData (redeemData) {
+    this.setState({ redeemData })
+  }
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -97,82 +111,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
       searchString,
       membersData,
       enabledCircularLoader,
-      employeeList
+      employeeList,
+      rewardList,
+      awardData,
+      redeemData
 		} = this.state
 
-		const myrewards1 = [{
-			id: 2,
-			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
-			title: 'Celebrate a DNA Moment',
-			details: 'Short Description',
-			path: '/myrewards/celebratedna',
-		},
-		{
-			id: 1,
-			styleName: 'myrewards-cards-2 myrewards-option-default font-weight-bold',
-			title: 'U Are Recognized',
-			details: 'Short Description',
-			path: '/myrewards/uarerecognized',
-		},
-		{
-			id: 3,
-			styleName: 'myrewards-cards-3 myrewards-option-default font-weight-bold',
-			title: 'Star Award',
-			details: 'Recognized a UnionBanker',
-			path: '/myrewards/staraward',
-		}]
-
-		const redeemData  = [{
-			id: 0,
-			staticImage: '',
-			leftText: '10% OFF in Zalora',
-			rightText: '13, 000 points',
-		},
-		{
-			id: 1,
-			staticImage: '',
-			leftText: '20% OFF in Carola',
-			rightText: '23, 000 points',
-		},
-		{
-			id: 2,
-			staticImage: '',
-			leftText: '30% OFF in Valora',
-			rightText: '33, 000 points',
-		}]
-
-		const awardData  = [{
-			id:2 ,
-			title: 'Celebrate a DNA Moment',
-			details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
-			styleName : 'myawards-image myawards-image-1',
-			value : 'Values:',
-			valuesDetails : 'Integrity, Magis, Ubuntu',
-			principles : 'Distinguishing beliefs/principles:' ,
-			principlesDetails : 'Forward-thinking, Agile, Open and Innovative',
-		},
-		{
-			id: 1,
-			title: 'U Are Recognized',
-			details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
-			styleName : 'myawards-image myawards-image-2',
-			value : null,
-			valuesDetails : null,
-			principles : null,
-			principlesDetails : null,
-		},
-		{
-			id: 3,
-			title: 'Star Award',
-			details: 'Short Star Award details',
-			styleName : 'myawards-image myawards-image-3 ',
-			value : null,
-			valuesDetails : null,
-			principles : null,
-			principlesDetails : null,
-
-		}]
-    console.log(employeeMessage)
 		return (
 			<div>
 			{
@@ -246,7 +190,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       <div className={'myrewards-adjustment'}>
                         <div className={'myrewards-card-container'}>
                           {
-                            myrewards1.map((value, idx) => (
+                            rewardList&&rewardList.map((value, idx) => (
                               <Card
                                 className={'myrewards-card'}
                                 onClick={() =>

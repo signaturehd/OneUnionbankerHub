@@ -47,6 +47,85 @@ export default class RewardsPresenter {
     this.view.setEmployeeList(data)
   }
 
+  getAwardData() {
+    const awardData  = [{
+      id:2 ,
+      title: 'Celebrate a DNA Moment',
+      details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
+      styleName : 'myawards-image myawards-image-1',
+      value : 'Values:',
+      valuesDetails : 'Integrity, Magis, Ubuntu',
+      principles : 'Distinguishing beliefs/principles:' ,
+      principlesDetails : 'Forward-thinking, Agile, Open and Innovative',
+    },
+    {
+      id: 1,
+      title: 'U Are Recognized',
+      details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
+      styleName : 'myawards-image myawards-image-2',
+      value : null,
+      valuesDetails : null,
+      principles : null,
+      principlesDetails : null,
+    },
+    {
+      id: 3,
+      title: 'Star Award',
+      details: 'Short Star Award details',
+      styleName : 'myawards-image myawards-image-3 ',
+      value : null,
+      valuesDetails : null,
+      principles : null,
+      principlesDetails : null,
+
+    }]
+    this.view.setAwardData(awardData)
+  }
+
+  getRedeemData() {
+    const redeemData  = [{
+      id: 0,
+      staticImage: '',
+      leftText: '10% OFF in Zalora',
+      rightText: '13, 000 points',
+    },
+    {
+      id: 1,
+      staticImage: '',
+      leftText: '20% OFF in Carola',
+      rightText: '23, 000 points',
+    },
+    {
+      id: 2,
+      staticImage: '',
+      leftText: '30% OFF in Valora',
+      rightText: '33, 000 points',
+    }]
+    this.view.setRedeemData(redeemData)
+  }
+
+  getRewardList () {
+    const rewardList = [{
+      id: 2,
+      styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
+      title: 'Celebrate a DNA Moment',
+      details: 'Short Description',
+    },
+    {
+      id: 1,
+      styleName: 'myrewards-cards-2 myrewards-option-default font-weight-bold',
+      title: 'U Are Recognized',
+      details: 'Short Description',
+    },
+    {
+      id: 3,
+      styleName: 'myrewards-cards-3 myrewards-option-default font-weight-bold',
+      title: 'Star Award',
+      details: 'Recognized a UnionBanker'
+    }]
+    this.view.setRewardList(rewardList)
+  }
+
   getEmployeeList (data) {
     const updateEmployee = [...storedEmployeeList]
 

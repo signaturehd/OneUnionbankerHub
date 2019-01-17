@@ -14,7 +14,7 @@ class Redeem extends Component {
       <div>
         <h2 className={'header-margin-default text-align-left'}>Redeem</h2>
         {
-          redeemData.map((value, idx) => (
+          redeemData&&redeemData.map((value, idx) => (
             <Card
                className="myrewards-container-component">
               <img className={'myrewards-card-image '} src={staticImage} />
