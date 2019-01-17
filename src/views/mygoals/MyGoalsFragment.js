@@ -261,10 +261,7 @@ class MyGoalsFragment extends BaseMVPView {
                       this.props.history.push('/mygoals/team')
                     }
                   }/>
-                  {
-                    isLineManager &&
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team Goals</label>
-                  }
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Reporting Goals</label>
 
                   <input
                     className = { 'mygoal-input-tab' }

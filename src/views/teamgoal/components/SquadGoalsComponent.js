@@ -35,6 +35,7 @@ class SquadGoalsComponent extends Component {
   render () {
     const {
       memberDetails,
+      squadId,
       squadName,
       description,
       productOwner,
@@ -46,6 +47,7 @@ class SquadGoalsComponent extends Component {
       {
           <Card className = { 'margin-10px cursor-pointer' }
             onClick = { () => onSelected(
+              squadId,
               squadName,
               description,
               memberDetails

@@ -33,7 +33,10 @@ class AddTeamGoalsFormComponent extends Component {
   }
 
   componentDidMount() {
-    this.props.getMembersGoals()
+    this.props.showSquadGoal ?
+    this.props.getMembersGoals('squad')
+    :
+    this.props.getMembersGoals('team')
   }
 
   render () {
@@ -67,7 +70,8 @@ class AddTeamGoalsFormComponent extends Component {
       checkedMember,
       onCancel,
       onSubmit,
-      onEdit
+      onEdit,
+      showSquadGoal
     } = this.props
 
     const { index, viewMoreText } = this.state

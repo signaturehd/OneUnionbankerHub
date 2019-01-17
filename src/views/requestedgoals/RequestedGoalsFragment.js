@@ -906,8 +906,13 @@ class RequestedGoalsFragment extends BaseMVPView {
                       isTeamGoal ?
                       <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Team Goal</h2>
                       :
-                      isSquadGoal &&
+                      <h2></h2>
+                    }
+                    {
+                      isSquadGoal ?
                       <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Squad Goal</h2>
+                      :
+                      <h2></h2>
                     }
                     {
                       approvalStatus === 2 ?
@@ -1173,7 +1178,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                       )
                       )
                     :
-                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
                   }
                 </div>
               </Card>

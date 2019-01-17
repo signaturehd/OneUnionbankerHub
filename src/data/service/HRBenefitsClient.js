@@ -1527,8 +1527,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  approveGoal (token, goalId, isApprove, rejectedRemarks) {
-    return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
+  approveGoal (token, approvalGoalsParam) {
+    return this.service.approveGoal(token, approvalGoalsParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1607,6 +1607,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addSquadGoals (token, squadGoalsParam) {
+    return this.service.addSquadGoals(token, squadGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   getSquadGoals (token, goalType) {
     return this.service.getSquadGoals(token, goalType)
     .pipe(ServiceErrorOperator())
@@ -1614,6 +1619,11 @@ export default class HRBenefitsClient {
 
   getMembersGoals (token, goalType) {
     return this.service.getMembersGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getDirectReportGoals (token) {
+    return this.service.getDirectReportGoals(token)
     .pipe(ServiceErrorOperator())
   }
 
