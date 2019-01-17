@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, GenericInput, Checkbox } from '../../../ub-components'
+import { Card, GenericInput, Checkbox, GenericLoader } from '../../../ub-components'
 import PropTypes from 'prop-types'
 
 class RewardSearchComponent extends Component {
@@ -12,7 +12,6 @@ class RewardSearchComponent extends Component {
   }
 
   updateSearch (e) {
-    console.log(e)
     this.props.onChangeData(e.target.value.substr(0 , 20))
   }
 
@@ -23,8 +22,9 @@ class RewardSearchComponent extends Component {
   receiveData (data) {
     const newData = [...this.state.storedData]
     newData.push(data)
+    console.log(data)
     this.setState({ storedData : newData })
-    this.props.sendDataList(storedData)
+    this.props.sendDataList(newData)
   }
 
   render () {
@@ -35,7 +35,8 @@ class RewardSearchComponent extends Component {
       sendDataList,
       onChangeData,
       searchString,
-      searchFunc
+      searchFunc,
+      enabledCircularLoader
     } = this.props
 
     const {
@@ -59,7 +60,7 @@ class RewardSearchComponent extends Component {
           type = { 'text' }
           hint = { `${ hint ? hint : '' }` }
           value = { searchString }
-          onChange = { () => this.updateSearch(e) }
+          onChange = { (e) => this.updateSearch(e) }
           onKeyPress = { (e) => {
             if(e.which === 13) {
               searchFunc()
@@ -84,7 +85,9 @@ class RewardSearchComponent extends Component {
                   list &&
                   list.map((resp) =>
                     <h4
-                      onClick = { () => this.receiveData(resp) }
+                      onClick = { () => {console.log('test')
+                        this.receiveData(resp)
+                      } }
                       style = {{
                         borderRadius: '5px',
                         backgroundColor: '#ffa000',
@@ -109,33 +112,46 @@ class RewardSearchComponent extends Component {
                 columnGap: '1%',
               }}>
               {
-                list &&
-                list.map((resp) =>
-                <div
-                  onClick = { () => this.receiveData(resp) }
-                  style = {{
-                    borderRadius: '20px',
-                    backgroundColor: 'rgba(243, 238, 238, 0.63)',
-                    textAlign: 'left',
-                    marginBottom: '10px',
-                    padding: '10px 0px 10px 20px',
-                    display: 'grid',
-                    gridTemplateColumns: 'auto .01fr',
-                    alignItems: 'center',
-                  }}>
-                  <h4
-                    className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
-                    { resp.name }
-                  </h4>
-                  <div className = { 'text-align-right' }>
-                    <Checkbox/>
-                  </div>
+                enabledCircularLoader ?
+                <center>
+                  <br/>
+                  <GenericLoader show = { enabledCircularLoader }/>
+                </center>
+                :
+                <div>
+                  {
+                    list &&
+                    list.map((resp) =>
+                    <div
+                      style = {{
+                        borderRadius: '20px',
+                        backgroundColor: 'rgba(243, 238, 238, 0.63)',
+                        textAlign: 'left',
+                        marginBottom: '10px',
+                        padding: '10px 0px 10px 20px',
+                        display: 'grid',
+                        gridTemplateColumns: 'auto .01fr',
+                        alignItems: 'center',
+                      }}>
+                      <h4
+                        className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
+                        { resp.name }
+                      </h4>
+                      <div
+                        onClick = { () =>
+                          this.receiveData(resp)
+                        }
+                        className = { 'text-align-right' }>
+                        <Checkbox />
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              }
             </div>
           </div>
-            }
-          </div>
+          }
+        </div>
         }
       </div>
     )
@@ -146,6 +162,11 @@ RewardSearchComponent.propTypes = {
   hint: PropTypes.string,
   sendDataList: PropTypes.func,
   type : PropTypes.string,
+  enabledCircularLoader : PropTypes.bool,
+}
+
+RewardSearchComponent.defaultProps= {
+  enabledCircularLoader : false
 }
 
 export default RewardSearchComponent

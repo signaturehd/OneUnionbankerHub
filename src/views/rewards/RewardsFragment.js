@@ -93,6 +93,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.presenter.getEligibleInRewards(searchString)
   }
 
+  showLoadingCircular (enabledCircularLoader) {
+    this.setState({ enabledCircularLoader })
+  }
+
   setEmployeeList (membersData) {
     this.setState({ membersData })
   }
@@ -113,6 +117,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
       enabledLoader,
       searchString,
       membersData,
+      enabledCircularLoader,
 		} = this.state
 
 		const myrewards1 = [{
@@ -212,6 +217,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 					selectedAwards  ?
 					<div>
 						 <AwardFragment
+              enabledCircularLoader = { enabledCircularLoader }
               searchString = { searchString }
               onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
               searchFunc = { () => this.searchData(searchString) }

@@ -21,7 +21,8 @@ class Award extends Component {
       orNumberErrorMessage,
       onChangeDataFunc,
       searchFunc,
-      searchString
+      searchString,
+      enabledCircularLoader 
     } = this.props
 
     return (
@@ -57,6 +58,7 @@ class Award extends Component {
         <div>
         <br/>
 				<RewardSearchComponent
+          enabledCircularLoader = { enabledCircularLoader }
           searchString = { searchString }
           searchFunc = { () => searchFunc() }
           onChangeData = { (e) =>
