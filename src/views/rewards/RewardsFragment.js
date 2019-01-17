@@ -28,7 +28,8 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			enabledLoader: false,
 			searchString: '',
 			orNumberErrorMessage: '',
-      employeeName: 'test'
+      employeeName: 'test',
+      enabledCircularLoader : false,
 		}
 		this.confirmation = this.confirmation.bind(this)
 		this.validator = this.validator.bind(this)
@@ -118,6 +119,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
       searchString,
       membersData,
       enabledCircularLoader,
+      employeeList
 		} = this.state
 
 		const myrewards1 = [{
@@ -206,83 +208,96 @@ class RewardsRecognitionFragment extends BaseMVPView {
   						employeeMessage: '' })
           }/>
   			}
-        {
-          enabledLoader &&
+        <div>
+          <div>
+            {
+              enabledLoader ?
 
-          <CircularLoader
-            show = { enabledLoader }
-            />
-        }
-				{
-					selectedAwards  ?
-					<div>
-						 <AwardFragment
-              enabledCircularLoader = { enabledCircularLoader }
-              searchString = { searchString }
-              onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
-              searchFunc = { () => this.searchData(searchString) }
-						  membersData = { membersData }
-						  membersDataFunc = { (data) => console.log(data) }
-						 	selectedId = { selectedId }
-						  awardData = { awardData }
-							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
-							onSubmitAwards = { () => this.sendData() }
-							employeeName = { employeeName }
-							employeeMessage = { employeeMessage }
-							setEmployeeName = { (employeeName) => this.setState({employeeName}) }
-							setEmployeeMessage = { (employeeMessage) => this.setState({employeeMessage}) }
-							orNumberErrorMessage = { orNumberErrorMessage }/>
-					</div>
-					 :
-					<div className={'myreward-grid-container'}>
-						<div></div>
-						<div className={'myrewards-container'} >
-							<div>
-								<h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
-								<p> Gather and redeem your points</p>
-							</div>
-							<div className={'myreward-orange-color'}>
-								<img
-									height = { '20' }
-									width = { '20' }
-									src = { require('../../images/rewards/Rewards-Orange.png') }/>
-								<h4 className={'myreward-orange-text align-left font-weight-lighter'}>My Reward </h4>
-								<h4 className={'myreward-orange-text text-align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
-							</div>
-							<div>
-								<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
-								<h6> Celebrate those who own the future and drive innovation </h6>
-							</div>
-							<div className={'myrewards-adjustment'}>
-								<div className={'myrewards-card-container'}>
-									{
-										myrewards1.map((value, idx) => (
-											<Card
-												className={'myrewards-card'}
-												onClick={() =>
-													this.setState({ selectedAwards : true, selectedId: value.id })
-												}
-												key={idx}>
-												<div className={'rewards-column-grid'}>
-													<div
-														className={value.styleName}
-														text={value.title} >
-													</div>
-													<p className={'myrewards-option-cards font-weight-bold'}>{value.title}</p>
-													<p className={'myrewards-option-cards-details'}>{value.details}</p>
-												</div>
-											</Card>
-										))
-									}
-								</div>
-							</div>
-						</div>
-						{
-							// <RewardRedeemFragment redeemData = {redeemData} />
-						}
-						<div></div>
-					</div>
-				}
+              <CircularLoader
+                validateLoading = { true }
+                show = { enabledLoader }
+                />
+
+              :
+              <div>
+                {
+                  selectedAwards  ?
+                  <div>
+                     <AwardFragment
+                      employeeList = { employeeList }
+                      enabledCircularLoader = { enabledCircularLoader }
+                      searchString = { searchString }
+                      onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
+                      searchFunc = { () => this.searchData(searchString) }
+                      membersData = { membersData }
+                      membersDataFunc = { (data) => {
+                        this.setState({ employeeList : data })
+                        this.presenter.setEmployeeId(data)
+                      } }
+                      selectedId = { selectedId }
+                      awardData = { awardData }
+                      selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
+                      onSubmitAwards = { () => this.sendData() }
+                      employeeName = { employeeName }
+                      employeeMessage = { employeeMessage }
+                      setEmployeeName = { (employeeName) => this.setState({employeeName}) }
+                      setEmployeeMessage = { (employeeMessage) => this.setState({employeeMessage}) }
+                      orNumberErrorMessage = { orNumberErrorMessage }/>
+                  </div>
+                   :
+                  <div className={'myreward-grid-container'}>
+                    <div></div>
+                    <div className={'myrewards-container'} >
+                      <div>
+                        <h2 className={'header-margin-default text-align-left '}>My Rewards</h2>
+                        <p> Gather and redeem your points</p>
+                      </div>
+                      <div className={'myreward-orange-color'}>
+                        <img
+                          height = { '20' }
+                          width = { '20' }
+                          src = { require('../../images/rewards/Rewards-Orange.png') }/>
+                        <h4 className={'myreward-orange-text align-left font-weight-lighter'}>My Reward </h4>
+                        <h4 className={'myreward-orange-text text-align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
+                      </div>
+                      <div>
+                        <h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
+                        <h6> Celebrate those who own the future and drive innovation </h6>
+                      </div>
+                      <div className={'myrewards-adjustment'}>
+                        <div className={'myrewards-card-container'}>
+                          {
+                            myrewards1.map((value, idx) => (
+                              <Card
+                                className={'myrewards-card'}
+                                onClick={() =>
+                                  this.setState({ selectedAwards : true, selectedId: value.id })
+                                }
+                                key={idx}>
+                                <div className={'rewards-column-grid'}>
+                                  <div
+                                    className={value.styleName}
+                                    text={value.title} >
+                                  </div>
+                                  <p className={'myrewards-option-cards font-weight-bold'}>{value.title}</p>
+                                  <p className={'myrewards-option-cards-details'}>{value.details}</p>
+                                </div>
+                              </Card>
+                            ))
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    {
+                      // <RewardRedeemFragment redeemData = {redeemData} />
+                    }
+                    <div></div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
 			</div>
 		)
 	}

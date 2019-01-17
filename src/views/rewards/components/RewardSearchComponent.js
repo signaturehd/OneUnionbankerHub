@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { Card, GenericInput, Checkbox, GenericLoader } from '../../../ub-components'
 import PropTypes from 'prop-types'
 
+let storeData = []
+
 class RewardSearchComponent extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      storedData: [],
-      employeeName: 'dawd'
-    }
   }
 
   updateSearch (e) {
@@ -20,11 +18,28 @@ class RewardSearchComponent extends Component {
   }
 
   receiveData (data) {
-    const newData = [...this.state.storedData]
-    newData.push(data)
-    console.log(data)
-    this.setState({ storedData : newData })
-    this.props.sendDataList(newData)
+    const {
+      listData
+    } = this.props
+    const updateList = [...storeData]
+    listData.map((resp, key) => {
+      if(data.id.toString() === resp.id.toString()) {
+        updateList.push({
+          id: resp.id,
+          name: resp.name,
+          isChecked : !resp.isChecked ? true : false
+        })
+      } else {
+        updateList.push({
+          id: resp.id,
+          name: resp.name,
+          isChecked : resp.isChecked
+        })
+      }
+    })
+    this.setState({ storeData : updateList })
+    storeData = updateList
+    this.props.sendDataList(storeData)
   }
 
   render () {
@@ -38,10 +53,6 @@ class RewardSearchComponent extends Component {
       searchFunc,
       enabledCircularLoader
     } = this.props
-
-    const {
-      storedData
-    } = this.state
 
     let list = listData
     const search = searchString.trim().toLowerCase()
@@ -85,9 +96,9 @@ class RewardSearchComponent extends Component {
                   list &&
                   list.map((resp) =>
                     <h4
-                      onClick = { () => {console.log('test')
+                      onClick = { () =>
                         this.receiveData(resp)
-                      } }
+                      }
                       style = {{
                         borderRadius: '5px',
                         backgroundColor: '#ffa000',
@@ -118,11 +129,12 @@ class RewardSearchComponent extends Component {
                   <GenericLoader show = { enabledCircularLoader }/>
                 </center>
                 :
-                <div>
+                <div className = { 'grid-global-column-x3' }>
                   {
                     list &&
-                    list.map((resp) =>
+                    list.map((resp, key) =>
                     <div
+                      ket = { key }
                       style = {{
                         borderRadius: '20px',
                         backgroundColor: 'rgba(243, 238, 238, 0.63)',
@@ -137,12 +149,13 @@ class RewardSearchComponent extends Component {
                         className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
                         { resp.name }
                       </h4>
-                      <div
-                        onClick = { () =>
-                          this.receiveData(resp)
-                        }
-                        className = { 'text-align-right' }>
-                        <Checkbox />
+                      <div className = { 'text-align-right' }>
+                        <Checkbox
+                          checked = { resp.isChecked }
+                          onChange = { () =>
+                            this.receiveData(resp)
+                          }
+                        />
                       </div>
                     </div>
                   )}

@@ -7,61 +7,8 @@ import SubmitAwardsInteractor from '../../../domain/interactor/rewards/SubmitAwa
 import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRewardPointsInteractor'
 import SubmitAwardsParam from '../../../domain/param/SubmitAwardsParam'
 
-let storedRecognizedAwards = [], storedEmployeeList = []
+let storedRecognizedAwards = [], storedEmployeeList = [], storedId = []
 
-let mockData = {
-
-"squads":
-[
-
-{
-
-    "id": 63,
-
-    "name": "Squad Name 1"
-
-},
-
-    {
-
-    "id": 64,
-    "name": "Squad Name 2"
-}
-
-],
-"squadMembers":
-[
-
-{
-
-    "id": 26,
-
-    "name": 'Juan Dela Cruz'
-    },
-
-{
-
-    "id": 25,
-    "name": 'Maria Reyes 1'
-    }
-],
-"directReports":
-[
-
-    {
-
-    "id": 23,
-
-    "name": 'Juan Dela Cruz'
-    },
-
-{
-
-    "id": 24,
-    "name": 'Maria Reyes'
-    }
-]
-}
 export default class RewardsPresenter {
   constructor (container) {
     this.getEligibleInRewardsInteractor = new GetEligibleInRewardsInteractor(container.get('HRBenefitsClient'))
@@ -81,12 +28,17 @@ export default class RewardsPresenter {
 
   checkedId (id) {
     storedEmployeeList.map((resp) => {
-      if(id.toString() !== resp.id.toString()) {
-        return true
-      } else {
+      if(id.toString() === resp.id.toString()) {
         return false
+      } else {
+        return true
       }
     })
+  }
+
+  reconstructEmployeeList (data) {
+    storedEmployeeList = data
+    this.view.setEmployeeList(data)
   }
 
   getEmployeeList (data) {
@@ -96,27 +48,29 @@ export default class RewardsPresenter {
       updateEmployee.push({
         id: resp.id,
         name: resp.name,
+        isChecked: false,
       })
     })
     data.squads.map((resp) => {
       updateEmployee.push({
         id: resp.id,
         name: resp.name,
+        isChecked: false,
       })
     })
     data.squadMembers.map((resp) => {
       updateEmployee.push({
         id: resp.id,
         name: resp.name,
+        isChecked: false,
       })
     })
     storedEmployeeList = updateEmployee
-
     this.view.setEmployeeList(storedEmployeeList)
   }
 
   getEligibleInRewards (data) {
-    this.getEmployeeList(mockData)
+    storedEmployeeList = ''
     this.view.showLoadingCircular(true)
     this.getEligibleInRewardsInteractor.execute(data)
     .subscribe(data => {
@@ -138,15 +92,31 @@ export default class RewardsPresenter {
     }
     else {
       this.view.showLoading(true)
-      this.submitAwardsInteractor.execute(SubmitAwardsParam(selectedId, ["16","17"], employeeMessage))
+      this.submitAwardsInteractor.execute(SubmitAwardsParam(selectedId, storedId, employeeMessage))
       .subscribe (data=> {
         this.view.showSuccessMessage(data)
         this.view.showLoading(false)
+        this.resetData()
       }, e => {
         this.view.showLoading(false)
       })
 
     }
+  }
+
+  resetData () {
+    storedId = []
+    storedEmployeeList = []
+  }
+
+  setEmployeeId (data) {
+    const listId = [...storedId]
+    data.map((resp) => {
+      if(resp.isChecked === true) {
+        listId.push(resp.id)
+      }
+    })
+    storedId = listId
   }
 
   getRewardAwards () {

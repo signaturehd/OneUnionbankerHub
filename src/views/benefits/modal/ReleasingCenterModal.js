@@ -43,7 +43,6 @@ class ReleasingCenterModal extends Component {
             ))
           )          :
           <CircularLoader
-            message = { 'Releasing Center is Loading Please wait' }
             show={true}/>
         }
         </div>

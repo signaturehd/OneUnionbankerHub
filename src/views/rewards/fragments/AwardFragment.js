@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card } from '../../../ub-components'
-import { GenericButton, GenericInput } from '../../../ub-components'
+import { GenericButton, GenericInput, Checkbox  } from '../../../ub-components'
 
 import RewardSearchComponent from '../components/RewardSearchComponent'
 
@@ -22,9 +22,10 @@ class Award extends Component {
       onChangeDataFunc,
       searchFunc,
       searchString,
-      enabledCircularLoader 
+      enabledCircularLoader,
+      employeeList
     } = this.props
-
+    console.log(employeeList)
     return (
       <div className = {'celebrate-container'}>
         <div className = { 'text-align-right' }>
@@ -69,6 +70,38 @@ class Award extends Component {
         </div>
         <div>
           <h4 className={'celebrate-container-space'}>Who will I award this to?</h4>
+          <br/>
+          <div>
+          {
+            employeeList &&
+            employeeList.map((resp, key) =>
+              resp.isChecked === true &&
+              <div
+                ket = { key }
+                style = {{
+                  borderRadius: '20px',
+                  backgroundColor: '#ff8a00',
+                  textAlign: 'left',
+                  marginBottom: '10px',
+                  padding: '10px 0px 10px 20px',
+                  display: 'grid',
+                  color: '#fff',
+                  gridTemplateColumns: 'auto .01fr',
+                  alignItems: 'center',
+                }}>
+                <h4
+                  className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
+                  { resp.name }
+                </h4>
+                <div className = { 'text-align-right' }>
+                  <Checkbox
+                    checked = { resp.isChecked }
+                    onChange = { () => {}}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className={ 'celebrate-container-space ' }>
           <h4 className={'celebrate-margin-bottom'}>Write a personal message of gratitude for this award's recipients.</h4>

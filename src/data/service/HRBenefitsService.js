@@ -2528,6 +2528,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getPensionValidate (token) {
+    return this.apiClient.get('v1/eligibility ', {
+      headers : { token }
+    })
+  }
+
   // Reward and Goals
   getRewardsDNAMoment (token, id) {
     return this.apiClient.get(`v1/rewards?awardId=${ id }`, {
