@@ -94,7 +94,7 @@ class DrawerAppBar extends Component {
     },{
       id: 17,
       name: 'Rewards & Recognition',
-      imageStyle : 'goals',
+      imageStyle : 'rewards',
       action : () => history.push('/myrewards'),
     },{
       id: 14,

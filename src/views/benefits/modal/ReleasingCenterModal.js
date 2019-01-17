@@ -43,6 +43,7 @@ class ReleasingCenterModal extends Component {
             ))
           )          :
           <CircularLoader
+            validateLoading = { true }
             show={true}/>
         }
         </div>
