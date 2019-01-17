@@ -1507,8 +1507,8 @@ export default class HRBenefitsClient {
   }
 
   /* My Goals */
-  getGoals (token, status) {
-    return this.service.getGoals(token, status)
+  getGoals (token, goalType) {
+    return this.service.getGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1537,8 +1537,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalTask (token, goalId, taskDescription) {
-    return this.service.addGoalTask(token,  goalId, taskDescription)
+  addGoalTask (token, goalTaskParam) {
+    return this.service.addGoalTask(token, goalTaskParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1547,8 +1547,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalComment (token, goalId, goalComment) {
-    return this.service.addGoalComment(token,  goalId, goalComment)
+  addGoalComment (token, goalCommentParam) {
+    return this.service.addGoalComment(token, goalCommentParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1582,8 +1582,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getTeamGoals (token, status) {
-    return this.service.getTeamGoals(token, status)
+  getTeamGoals (token, goalType) {
+    return this.service.getTeamGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1607,8 +1607,13 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getSquadGoals (token, status) {
-    return this.service.getSquadGoals(token, status)
+  getSquadGoals (token, goalType) {
+    return this.service.getSquadGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getMembersGoals (token, goalType) {
+    return this.service.getMembersGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
