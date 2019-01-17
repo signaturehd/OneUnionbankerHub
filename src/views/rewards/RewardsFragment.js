@@ -12,11 +12,6 @@ import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
 
 import { format } from '../../utils/numberUtils'
-import {
-  RequiredValidation,
-  Validator,
-  RequiredAlphabetValidation
-} from '../../utils/validate'
 
 class RewardsRecognitionFragment extends BaseMVPView {
 	constructor (props) {
@@ -31,8 +26,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
       employeeName: 'test',
       enabledCircularLoader : false,
 		}
-		this.confirmation = this.confirmation.bind(this)
-		this.validator = this.validator.bind(this)
 	}
 
 	componentDidMount () {
@@ -53,29 +46,14 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		this.setState({ successMessage, showNoticeModal: true })
 	}
 
-	validateAlphabet (e) {
-		const validate = func.checkedvalidateAlphabet(e)
-		this.setState({ employeeName : validate, orNumberErrorMessage : '' })
-	}
-
-	validator (input) {
-    return new RequiredValidation().isValid(input)
-  }
-
   showLoading (enabledLoader) {
     this.setState({ enabledLoader })
   }
 
-	confirmation () {
-		const {
-			employeeName
-		} = this.state
-		if (!this.validator(orNumberText)) {
-      this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
-		} else {
-		  this.setState({ showNoticeModal : true })
-	 }
-	}
+  setValidateAlphabet (employeeMessage) {
+    this.setState({ employeeMessage })
+    console.log(employeeMessage)
+  }
 
 	sendData () {
 		const {
@@ -194,6 +172,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			principlesDetails : null,
 
 		}]
+    console.log(employeeMessage)
 		return (
 			<div>
 			{
@@ -241,7 +220,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       employeeName = { employeeName }
                       employeeMessage = { employeeMessage }
                       setEmployeeName = { (employeeName) => this.setState({employeeName}) }
-                      setEmployeeMessage = { (employeeMessage) => this.setState({employeeMessage}) }
+                      setEmployeeMessage = { (e) => this.presenter.validateAlphabet(e) }
                       orNumberErrorMessage = { orNumberErrorMessage }/>
                   </div>
                    :

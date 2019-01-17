@@ -6,6 +6,7 @@ import GetRewardsAwardsInteractor from '../../../domain/interactor/rewards/GetRe
 import SubmitAwardsInteractor from '../../../domain/interactor/rewards/SubmitAwardsInteractor'
 import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRewardPointsInteractor'
 import SubmitAwardsParam from '../../../domain/param/SubmitAwardsParam'
+import * as AwardsFunction from '../function/AwardsFunction'
 
 let storedRecognizedAwards = [], storedEmployeeList = [], storedId = []
 
@@ -34,6 +35,11 @@ export default class RewardsPresenter {
         return true
       }
     })
+  }
+
+  validateAlphabet (e) {
+    const validate = AwardsFunction.checkedValidatedAlphabet(e)
+    this.view.setValidateAlphabet(validate)
   }
 
   reconstructEmployeeList (data) {
@@ -84,7 +90,15 @@ export default class RewardsPresenter {
   submitAwards (selectedId, employeeName, employeeMessage) {
     if (!employeeName) {
       store.dispatch(NotifyActions.addNotify({
-        title: 'Celebrate a DNA Moment',
+        title: 'Required',
+        message: 'You have to choose an employee first.',
+        type: 'warning',
+        duration: 5000
+      }))
+    }
+    else if (!employeeMessage) {
+      store.dispatch(NotifyActions.addNotify({
+        title: 'Required',
         message: 'You have to choose an employee first.',
         type: 'warning',
         duration: 5000

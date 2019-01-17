@@ -3,13 +3,7 @@ import {
   RequiredAlphabetValidation
 } from '../../../utils/validate'
 
-import moment from 'moment'
-
-export function checkedValidated () {
-
-}
-
 export function checkedValidatedAlphabet (alphabet) {
-  return new RequiredAlphabetValidation().isValid(alphabet) ?
+  return new RequiredAlphabetValidation().isValidAddress(alphabet) ?
     alphabet : ''
 }
