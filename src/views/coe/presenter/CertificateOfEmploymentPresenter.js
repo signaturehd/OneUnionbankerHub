@@ -23,10 +23,10 @@ let withSalary = [
     name : 'Without Salary'
   }, {
     id : 3,
-    name: 'Approve VL'
+    name: 'With Salary w/ Approved Vacation Leave'
   }, {
     id: 4,
-    name : 'Available VL'
+    name : 'With Salary w/ Available Vacation Leave'
   }
 ]
 
