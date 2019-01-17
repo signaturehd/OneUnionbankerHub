@@ -85,17 +85,28 @@ class CertificateOfEmploymentFormComponent extends Component {
                     value = { visaBody && visaBody.visa }
                     onClick = { () => showVisaModalFunc() }
                   />
+                </div>
+              }
+              {
+                typeOfCoeBody &&
+                typeOfCoeBody.id === 3 &&
+                <div>
                   <h2 className = { 'font-size-14px' }>Vacation Leave</h2>
                   <div className = { 'grid-global' }>
                     <DatePicker
+                      minDate = { moment() }
                       text = { 'From' }
                       selected = { vlFrom }
-                      onChange = { (e) => vlFromFunc(e) }
+                      onChange = { (e) => {
+                        vlFromFunc(e)
+                      } }
                     />
                     <DatePicker
                       text = { 'To' }
                       selected = { vlTo }
-                      onChange = { (e) => vlToFunc(e) }
+                      onChange = { (e) => {
+                        vlToFunc(e)
+                      } }
                     />
                   </div>
                 </div>

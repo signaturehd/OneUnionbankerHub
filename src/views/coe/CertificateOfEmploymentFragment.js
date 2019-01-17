@@ -167,6 +167,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
           enabledLoader &&
           <center className = { 'circular-loader-center' }>
             <CircularLoader
+              validateLoading = { true }
               show = { enabledLoader }
             />
           </center>

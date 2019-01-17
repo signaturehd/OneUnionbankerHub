@@ -25,7 +25,7 @@ class Award extends Component {
       enabledCircularLoader,
       employeeList
     } = this.props
-    console.log(employeeList)
+
     return (
       <div className = {'celebrate-container'}>
         <div className = { 'text-align-right' }>

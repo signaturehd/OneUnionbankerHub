@@ -21,6 +21,12 @@ let withSalary = [
   }, {
     id : 1,
     name : 'Without Salary'
+  }, {
+    id : 3,
+    name: 'Approve VL'
+  }, {
+    id: 4,
+    name : 'Available VL'
   }
 ]
 
@@ -126,7 +132,6 @@ export default class CertificateOfEmploymentPresenter {
         this.view.setEditable(true)
       }
     } else {
-      console.log(storedPurposeObject)
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
@@ -174,8 +179,8 @@ export default class CertificateOfEmploymentPresenter {
       storedPurposeObject.id,
       storedVisaObject.id,
       storedTypeOFCoeObject.type,
-      storedVLFrom,
-      storedVLTo
+      moment(storedVLFrom).format('MM/DD/YYYY'),
+      moment(storedVLTo).format('MM/DD/YYYY')
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
@@ -186,11 +191,11 @@ export default class CertificateOfEmploymentPresenter {
          duration : 7000
        })
      )
-     storedPurposeObject =''
-     storedTypeOFCoeObject =''
-     storedVisaObject =''
-     storedVLFrom =''
-     storedVLTo =''
+     this.setStoredVisaObject('')
+     this.setStoredTypeOFCoeObject('')
+     this.setStoredPurposeObject('')
+     this.setStoredVLFrom('')
+     this.setStoredVLTo('')
      this.view.navigateLearning()
     }, error => {
       this.view.checkLoader(false)
