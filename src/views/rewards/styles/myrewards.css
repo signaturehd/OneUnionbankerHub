@@ -201,11 +201,11 @@
 .myawards-image {
   margin-left: auto;
   margin-right: auto;
-  display:block;
-  width: 230px;
-  height: 230px;
-  max-width: 230px;
-  max-height: 230px;
+  display: block;
+  width: 120px;
+  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
   margin-bottom: 10px;
 }
 
@@ -268,8 +268,8 @@
 	background-color: orange;
 	border-radius: 10px;
 	color: white;
-	padding-left: 100px;
-	padding-right: 100px;
+	padding-left: 60px;
+	padding-right: 60px;
 }
 
 .celebrate-aligned-center{

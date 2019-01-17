@@ -102,13 +102,8 @@ class DrawerAppBar extends Component {
       imageStyle : 'goals',
       action : () => history.push('/mygoals'),
     },{
-      id: 9,
-      name: 'My Compliance',
-      imageStyle : 'compliance',
-      action : () => history.push('/mycompliance'),
-    },{
       id: 7,
-      name: 'My COE',
+      name: 'My Documents',
       imageStyle : 'coe',
       action : () => history.push('/coe'),
     },{

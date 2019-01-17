@@ -18,7 +18,10 @@ class Award extends Component {
       employeeName,
       membersData,
       membersDataFunc,
-      orNumberErrorMessage
+      orNumberErrorMessage,
+      onChangeDataFunc,
+      searchFunc,
+      searchString
     } = this.props
 
     return (
@@ -32,24 +35,33 @@ class Award extends Component {
         <div className = {'celebrate-main-item'}>
           {
             awardData.map((value, key) =>
-              (
-                value.id === selectedId &&
-                <div className = {'text-align-center'}>
-                  <div
-                    className={ value.styleName }
-                    text={ '' } >
-                  </div>
-                  <h1>{value.title}</h1>
-                  <h4 className = {'text-align-justify celebrate-margin-bottom text-weight-bolder'}>{value.details}</h4>
-                  <h4 className = {'text-align-justify text-weight-bolder'}>{value.principles}</h4>
-                  <h4 className = {'text-align-justify'}>{value.principlesDetails}</h4>
-                  <h4 className = {'text-align-justify text-weight-bolder'}>{value.value}</h4>
-                  <h4 className = {'text-align-justify celebrate-margin-bottom2'}>{value.valuesDetails}</h4>
+            (
+              value.id === selectedId &&
+              <div className = {'text-align-center'}>
+                <div
+                  className={ value.styleName }
+                  text={ '' } >
                 </div>
-          ))
+                <h4 className = { 'font-size-30px' }>{value.title}</h4>
+                <br/>
+                <h4 className = {'text-align-justify celebrate-margin-bottom font-weight-lighter font-size-16px'}>{value.details}</h4>
+                <h4 className = {'text-align-justify font-weight-bold font-size-15px'}>{value.principles}</h4>
+                <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.principlesDetails}</h4>
+                <br/>
+                <h4 className = {'text-align-justify font-weight-bold font-size-14px'}>{value.value}</h4>
+                <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.valuesDetails}</h4>
+              </div>
+            )
+          )
         }
         <div>
+        <br/>
 				<RewardSearchComponent
+          searchString = { searchString }
+          searchFunc = { () => searchFunc() }
+          onChangeData = { (e) =>
+            onChangeDataFunc(e)
+          }
 					sendDataList = { (e) => membersDataFunc(e) }
 					listData = { membersData }/>
         </div>

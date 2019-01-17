@@ -2552,4 +2552,10 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  getEligibleInRewards (token, string) {
+    return this.apiClient.get(`v1/rewards/candidates?keyword=${ string }`, {
+      headers : { token }
+    })
+  }
 }

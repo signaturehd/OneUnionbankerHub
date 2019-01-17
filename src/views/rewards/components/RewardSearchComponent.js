@@ -5,15 +5,19 @@ import PropTypes from 'prop-types'
 class RewardSearchComponent extends Component {
   constructor (props) {
     super(props)
-      this.state = {
-        searchString : '',
-        storedData: []
-      }
-      this.updateSearch = this.updateSearch.bind(this)
+    this.state = {
+      storedData: [],
+      employeeName: 'dawd'
+    }
   }
 
   updateSearch (e) {
-    this.setState({ searchString: e.target.value.substr(0 , 20) })
+    console.log(e)
+    this.props.onChangeData(e.target.value.substr(0 , 20))
+  }
+
+  searchFunc () {
+    this.props.searchFunc()
   }
 
   receiveData (data) {
@@ -29,17 +33,21 @@ class RewardSearchComponent extends Component {
       hint,
       type,
       sendDataList,
+      onChangeData,
+      searchString,
+      searchFunc
     } = this.props
 
     const {
-      searchString,
       storedData
     } = this.state
 
     let list = listData
     const search = searchString.trim().toLowerCase()
-    if (search.length > 0) {
-      list = listData.filter(listData => listData.name.toLowerCase().match(search))
+    if(list && list.length !== 0) {
+      if (search.length > 0) {
+        list = listData && listData.filter(listData => listData && listData.name.toLowerCase().match(search))
+      }
     }
 
     return (
@@ -51,7 +59,13 @@ class RewardSearchComponent extends Component {
           type = { 'text' }
           hint = { `${ hint ? hint : '' }` }
           value = { searchString }
-          onChange = { this.updateSearch } />
+          onChange = { () => this.updateSearch(e) }
+          onKeyPress = { (e) => {
+            if(e.which === 13) {
+              searchFunc()
+            }
+          } }
+          />
         {
           searchString &&
           <div>
@@ -67,6 +81,7 @@ class RewardSearchComponent extends Component {
                   columnGap: '1%',
                 }}>
                 {
+                  list &&
                   list.map((resp) =>
                     <h4
                       onClick = { () => this.receiveData(resp) }
@@ -94,29 +109,29 @@ class RewardSearchComponent extends Component {
                 columnGap: '1%',
               }}>
               {
+                list &&
                 list.map((resp) =>
-
-                  <div
-                    onClick = { () => this.receiveData(resp) }
-                    style = {{
-                      borderRadius: '20px',
-                      backgroundColor: '#f0f0f0',
-                      textAlign: 'left',
-                      marginBottom: '10px',
-                      padding: '10px',
-                      display: 'grid',
-                      gridTemplateColumns: 'auto .1fr',
-                    }}>
-                    <h4
-                      className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
-                      { resp.name }
-                    </h4>
-                    <div className = { 'text-align-right' }>
-                      <Checkbox/>
-                    </div>
+                <div
+                  onClick = { () => this.receiveData(resp) }
+                  style = {{
+                    borderRadius: '20px',
+                    backgroundColor: 'rgba(243, 238, 238, 0.63)',
+                    textAlign: 'left',
+                    marginBottom: '10px',
+                    padding: '10px 0px 10px 20px',
+                    display: 'grid',
+                    gridTemplateColumns: 'auto .01fr',
+                    alignItems: 'center',
+                  }}>
+                  <h4
+                    className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
+                    { resp.name }
+                  </h4>
+                  <div className = { 'text-align-right' }>
+                    <Checkbox/>
                   </div>
-                )
-              }
+                </div>
+              )}
             </div>
           </div>
             }

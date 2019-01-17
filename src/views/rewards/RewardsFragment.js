@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Presenter from './presenter/RewardsPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
-import { InputModal, Card, GenericButton } from '../../ub-components'
+import { Card, GenericButton, CircularLoader } from '../../ub-components'
 import NoticeResponseModal from '../notice/NoticeResponseModal'
 
 import './styles/myrewards.css'
@@ -25,8 +25,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			selectedAwards: false,
 			selectedId: null,
 			showNoticeModal: false,
-			employeeName: '',
+			enabledLoader: false,
+			searchString: '',
 			orNumberErrorMessage: '',
+      employeeName: 'test'
 		}
 		this.confirmation = this.confirmation.bind(this)
 		this.validator = this.validator.bind(this)
@@ -59,6 +61,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
     return new RequiredValidation().isValid(input)
   }
 
+  showLoading (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
 	confirmation () {
 		const {
 			employeeName
@@ -66,24 +72,31 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		if (!this.validator(orNumberText)) {
       this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
 		} else {
-		 this.setState({ showNoticeModal : true })
+		  this.setState({ showNoticeModal : true })
 	 }
 	}
 
-	submitAwards () {
-		alert(click)
+	sendData () {
 		const {
 			selectedId,
 			employeeName,
 			employeeMessage,
 		} = this.state
-
 		this.presenter.submitAwards(
 			selectedId,
 			employeeName,
 			employeeMessage
 		)
 	}
+
+  searchData (searchString) {
+    this.presenter.getEligibleInRewards(searchString)
+  }
+
+  setEmployeeList (membersData) {
+    this.setState({ membersData })
+  }
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -91,42 +104,26 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			recognizedAwards,
 			selectedId,
 			selectedAwards,
-			submitAwards,
 			employeeName,
 			employeeMessage,
 			successMessage,
 			showNoticeModal,
 			orNumberText,
 			orNumberErrorMessage,
+      enabledLoader,
+      searchString,
+      membersData,
 		} = this.state
 
-		const membersData = [{
-			id : 0,
-			name: 'test',
-			details : [{test: 'name'}, {test: 'name'}]
-		},{
-			id : 1,
-			name: 'test 1',
-			details : [{test: 'name'}, {test: 'name'}]
-		},{
-			id : 2,
-			name: 'test 2',
-			details : [{test: 'name'}, {test: 'name'}]
-		},{
-			id : 3,
-			name: 'test 3',
-			details : [{test: 'name'}, {test: 'name'}]
-		}]
-
 		const myrewards1 = [{
-			id: 1,
+			id: 2,
 			styleName: 'myrewards-cards-1 myrewards-option-default font-weight-bold',
 			title: 'Celebrate a DNA Moment',
 			details: 'Short Description',
 			path: '/myrewards/celebratedna',
 		},
 		{
-			id: 2,
+			id: 1,
 			styleName: 'myrewards-cards-2 myrewards-option-default font-weight-bold',
 			title: 'U Are Recognized',
 			details: 'Short Description',
@@ -160,7 +157,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		}]
 
 		const awardData  = [{
-			id:1 ,
+			id:2 ,
 			title: 'Celebrate a DNA Moment',
 			details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
 			styleName : 'myawards-image myawards-image-1',
@@ -170,7 +167,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			principlesDetails : 'Forward-thinking, Agile, Open and Innovative',
 		},
 		{
-			id: 2,
+			id: 1,
 			title: 'U Are Recognized',
 			details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
 			styleName : 'myawards-image myawards-image-2',
@@ -195,24 +192,35 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			{
 				showNoticeModal &&
 				<NoticeResponseModal
-				noticeResponse = { successMessage }
-				onClose = { () =>
-					this.setState({
-						showNoticeModal: false,
-						selectedAwards: false,
-						employeeName: '',
-						employeeMessage: '' }) }/>
-			}
+  				noticeResponse = { successMessage }
+  				onClose = { () =>
+  					this.setState({
+  						showNoticeModal: false,
+  						selectedAwards: false,
+  						employeeName: '',
+  						employeeMessage: '' })
+          }/>
+  			}
+        {
+          enabledLoader &&
+
+          <CircularLoader
+            show = { enabledLoader }
+            />
+        }
 				{
 					selectedAwards  ?
 					<div>
 						 <AwardFragment
+              searchString = { searchString }
+              onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
+              searchFunc = { () => this.searchData(searchString) }
 						  membersData = { membersData }
-						  membersDataFunc = { (e) => console.log(e) }
+						  membersDataFunc = { (data) => console.log(data) }
 						 	selectedId = { selectedId }
 						  awardData = { awardData }
 							selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
-							onSubmitAwards = { () => this.submitAwards() }
+							onSubmitAwards = { () => this.sendData() }
 							employeeName = { employeeName }
 							employeeMessage = { employeeMessage }
 							setEmployeeName = { (employeeName) => this.setState({employeeName}) }
@@ -233,7 +241,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 									width = { '20' }
 									src = { require('../../images/rewards/Rewards-Orange.png') }/>
 								<h4 className={'myreward-orange-text align-left font-weight-lighter'}>My Reward </h4>
-								<h4 className={'myreward-orange-text align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
+								<h4 className={'myreward-orange-text text-align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
 							</div>
 							<div>
 								<h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>

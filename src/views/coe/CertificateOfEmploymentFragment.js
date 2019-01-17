@@ -198,7 +198,10 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
               </Card>
               <h2 className = { 'text-align-left font-size-14px color-gray' }>Compliance Documents</h2>
               <Card className = { 'card-padding cursor-pointer' }
-              onClick = { () => this.setState({ showBIR2316: true, showListForm: false }) }>
+              onClick = { () => {
+                // this.setState({ showBIR2316: true, showListForm: false })
+                this.props.history.push('/mycompliance')
+              } }>
               <div className = { 'div-grid' }>
                 <h2 className = { 'font-weight-bold' }>Code of Conduct</h2>
                 <span className = { 'bir-icon bir-seemore-button float-right' }/>
