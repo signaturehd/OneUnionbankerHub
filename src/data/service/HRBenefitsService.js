@@ -2341,7 +2341,7 @@ export default class HRBenefitsService {
   }
 
   getGoalTask (token, goalId) {
-    return this.apiClient.get(`v1/goals/tasks?goalId=${goalId}`, {
+    return this.apiClient.get(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
       headers: { token }
     })
   }
@@ -2361,13 +2361,13 @@ export default class HRBenefitsService {
   updateGoalTask(token, goalId, taskDescription, isCompleted) {
     let updateGoal
     if (taskDescription) {
-      updateGoal = this.apiClient.put(`v1/goals/tasks/${goalId}`, {
+      updateGoal = this.apiClient.put(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
         description: taskDescription
       }, {
         headers : { token }
       })
     } else if (isCompleted !== null) {
-      updateGoal = this.apiClient.post(`v1/goals/tasks/${goalId}`, {
+      updateGoal = this.apiClient.post(`v1/goals/${goalId}/completion?goalType=personal`, {
         isCompleted
       }, {
         headers : { token }

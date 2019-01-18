@@ -263,7 +263,8 @@ class RequestedGoalsFragment extends BaseMVPView {
       startDate,
       dueDate,
       priorityId,
-      goalTypeId
+      goalTypeId,
+      personal
     } = this.state
 
     if(!goalTitle) {
@@ -309,7 +310,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitTask() {
-    const { goalId, taskId, taskDescription, onEditTask, isCompleted } = this.state
+    const { goalId, taskId, taskDescription, onEditTask, isCompleted, personal } = this.state
     if(!taskDescription) {
       this.setState({ taskDescriptionErrorMessage: 'Required field' })
     }
@@ -323,7 +324,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitComment() {
-    const { goalId, goalComment, pageNumber, pageItem } = this.state
+    const { goalId, goalComment, pageNumber, pageItem, personal } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
@@ -412,7 +413,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     let boolCompleted = false
 
     if(approvalStatus === 2) {
-      !isCompleted ?
+      isCompleted ?
       boolCompleted = true
       :
       boolCompleted = false
@@ -565,7 +566,6 @@ class RequestedGoalsFragment extends BaseMVPView {
         submitLoader &&
         <Modal>
           <center>
-            <h2>Please wait...</h2>
             <CircularLoader show = { submitLoader } />
           </center>
         </Modal>

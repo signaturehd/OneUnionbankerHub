@@ -1,4 +1,4 @@
-export default (goalId, isApprove, rejectedRemarks) => ({
+export default (goalType, goalId, isApprove, rejectedRemarks) => ({
   goalType,
   body : {
     id: goalId,
