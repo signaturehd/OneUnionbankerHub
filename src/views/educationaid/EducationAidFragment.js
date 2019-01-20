@@ -315,7 +315,7 @@ class EducationAidFragment extends BaseMVPView {
   }
 
   navigate () {
-    // this.props.history.push('/mybenefits/benefits/education')
+    this.props.history.push('/mybenefits/benefits/education')
   }
 
   render () {
