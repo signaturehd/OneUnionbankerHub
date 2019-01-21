@@ -84,6 +84,10 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
     this.props.history.push('/coe')
   }
 
+  backToList () {
+    this.setState({ showListForm : true, showCOEForm: false, showBIR2316 : false })
+  }
+
   render () {
     const {
       purpose,
