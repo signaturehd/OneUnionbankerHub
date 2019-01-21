@@ -66,6 +66,7 @@ class Award extends Component {
             onChangeDataFunc(e)
           }
 					sendDataList = { (e) => membersDataFunc(e) }
+          className = { 'myrewards-input' }
 					listData = { membersData }/>
         </div>
         <div>

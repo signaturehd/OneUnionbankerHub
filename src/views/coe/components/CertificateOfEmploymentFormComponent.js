@@ -102,6 +102,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                       } }
                     />
                     <DatePicker
+                      minDate = { vlFrom }
                       text = { 'To' }
                       selected = { vlTo }
                       onChange = { (e) => {
