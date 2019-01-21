@@ -258,6 +258,11 @@
   background-position: center;
 }
 
+.appbar-rewards-icon {
+  background-image: url('../../../../../images/drawer/Rewards-Orange.png');
+  background-position: center;
+}
+
 .appbar-background-menu {
   background-image: url('../../../../../images/WEB and LOGO/Orange Wallpaper.jpg');
   width: 100%;

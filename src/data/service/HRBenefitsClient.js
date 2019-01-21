@@ -1507,8 +1507,8 @@ export default class HRBenefitsClient {
   }
 
   /* My Goals */
-  getGoals (token, status) {
-    return this.service.getGoals(token, status)
+  getGoals (token, goalType) {
+    return this.service.getGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1537,8 +1537,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalTask (token, goalId, taskDescription) {
-    return this.service.addGoalTask(token,  goalId, taskDescription)
+  addGoalTask (token, goalTaskParam) {
+    return this.service.addGoalTask(token, goalTaskParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1547,8 +1547,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalComment (token, goalId, goalComment) {
-    return this.service.addGoalComment(token,  goalId, goalComment)
+  addGoalComment (token, goalCommentParam) {
+    return this.service.addGoalComment(token, goalCommentParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1582,8 +1582,8 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getTeamGoals (token, status) {
-    return this.service.getTeamGoals(token, status)
+  getTeamGoals (token, goalType) {
+    return this.service.getTeamGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1607,8 +1607,13 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getSquadGoals (token, status) {
-    return this.service.getSquadGoals(token, status)
+  getSquadGoals (token, goalType) {
+    return this.service.getSquadGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getMembersGoals (token, goalType) {
+    return this.service.getMembersGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1629,7 +1634,7 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  /* Pension Funds */
+  // PensionFunds
 
   getPensionFunds (token) {
     return this.service.getPensionFunds(token)
@@ -1638,6 +1643,37 @@ export default class HRBenefitsClient {
 
   getPensionFundsDocuments (token) {
     return this.service.getPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionValidate (token) {
+    return this.service.getPensionValidate(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  // Reward Goals
+  getRewardsDNAMoment (token, id) {
+    return this.service.getRewardsDNAMoment(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardAwards (token) {
+    return this.service.getRewardAwards(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardPoints (token) {
+    return this.service.getRewardPoints(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitAwards (token, objectParam) {
+    return this.service.submitAwards(token, objectParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getEligibleInRewards (token, string) {
+    return this.service.getEligibleInRewards(token, string)
     .pipe(ServiceErrorOperator())
   }
 }

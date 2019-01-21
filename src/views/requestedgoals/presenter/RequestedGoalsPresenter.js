@@ -16,6 +16,8 @@ import AddRatingGoalsInteractor from '../../../domain/interactor/goals/AddRating
 
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
 import addRatingGoalsParam from '../../../domain/param/AddRatingGoalsParam'
+import goalCommentParam from '../../../domain/param/AddGoalCommentParam'
+import goalTaskParam from '../../../domain/param/AddGoalTaskParam'
 import markParam from '../../../domain/param/MarkAsCompletedGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
@@ -45,9 +47,9 @@ export default class RequestCoachPresenter {
     this.view = view
   }
 
-  getGoals (status) {
+  getGoals (goalType) {
     this.view.showCircularLoader()
-    this.getRequestedGoalsInteractor.execute(status)
+    this.getRequestedGoalsInteractor.execute(goalType)
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.getRequestedGoals(data)
@@ -106,7 +108,8 @@ export default class RequestCoachPresenter {
     startDate,
     dueDate,
     priorityId,
-    goalTypeId
+    goalTypeId,
+    personal
   ){
       this.view.showSubmitLoader()
       this.addRequestedGoalsInteractor.execute(requestedGoalsParam(
@@ -120,7 +123,7 @@ export default class RequestCoachPresenter {
       )
       .subscribe (
         data => {
-          this.getGoals()
+          this.getGoals(personal)
           this.view.hideSubmitLoader()
           this.view.noticeResponse(data)
           this.view.resetValue()
@@ -132,13 +135,16 @@ export default class RequestCoachPresenter {
   }
 
   addGoalTask (
+    goalType,
     goalId,
     taskDescription
   ){
     this.view.showSubmitLoader()
-    this.addGoalTaskInteractor.execute(
-      goalId,
-      taskDescription
+    this.addGoalTaskInteractor.execute(goalTaskParam(
+        goalType,
+        goalId,
+        taskDescription
+      )
     )
     .do(data => {
       this.getGoalTask(storedGoalId)
@@ -182,15 +188,18 @@ export default class RequestCoachPresenter {
   }
 
   addGoalComment (
+    personal,
     goalId,
     goalComment,
     pageNumber,
     pageItem
   ){
     this.view.showCommentLoader(true)
-    this.addGoalCommentInteractor.execute(
-      goalId,
-      goalComment
+    this.addGoalCommentInteractor.execute(goalCommentParam(
+        personal,
+        goalId,
+        goalComment
+      )
     )
     .do(data => {
       this.getGoalComment(storedGoalId, pageNumber, pageItem)

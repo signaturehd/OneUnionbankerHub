@@ -2276,7 +2276,7 @@ export default class HRBenefitsService {
   /* My Goals */
 
   getGoals (token, status) {
-    return this.apiClient.get(`v1/goals?status=${status}`, {
+    return this.apiClient.get(`v1/goals?goalType=${status}`, {
       headers: { token }
     })
   }
@@ -2293,7 +2293,7 @@ export default class HRBenefitsService {
       type: requestedGoalsParam.goalTypeId
     }
 
-    return this.apiClient.post('v1/goals/personal', objectParam, {
+    return this.apiClient.post('v1/goals?goalType=personal', objectParam, {
       headers : { token }
     })
   }
@@ -2340,13 +2340,8 @@ export default class HRBenefitsService {
     })
   }
 
-  addGoalTask (token, goalId, taskDescription) {
-    const objectParam = {
-      id: goalId,
-      description: taskDescription
-    }
-
-    return this.apiClient.post('v1/goals/tasks', objectParam, {
+  addGoalTask (token, goalTaskParam) {
+    return this.apiClient.post(`v1/goals/tasks?goalType=${goalTaskParam.goalType}`, goalTaskParam.body, {
       headers : { token }
     })
   }
@@ -2357,13 +2352,8 @@ export default class HRBenefitsService {
     })
   }
 
-  addGoalComment (token, goalId, goalComment) {
-    const objectParam = {
-      id: goalId,
-      description: goalComment
-    }
-
-    return this.apiClient.post('v1/goals/comments', objectParam, {
+  addGoalComment (token, goalCommentParam) {
+    return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body, {
       headers : { token }
     })
   }
@@ -2420,8 +2410,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getTeamGoals (token, status) {
-    return this.apiClient.get(`v1/goals/goals?status=${status}`, {
+  getTeamGoals (token, goalType) {
+    return this.apiClient.get(`v1/goals/goals?goalType=${goalType}`, {
       headers: { token }
     })
   }
@@ -2445,13 +2435,19 @@ export default class HRBenefitsService {
   }
 
   addTeamGoals (token, teamGoalsParam) {
-    return this.apiClient.post('v1/goals/squad', teamGoalsParam, {
+    return this.apiClient.post(`v1/goals?goalType=${teamGoalsParam.goalType}`, teamGoalsParam.body, {
       headers: { token }
     })
   }
 
-  getSquadGoals (token, status) {
-    return this.apiClient.get(`v1/goals/goals?status=${status}`, {
+  getSquadGoals (token, goalType) {
+    return this.apiClient.get(`v1/goals/members?goalType=${goalType}`, {
+      headers: { token }
+    })
+  }
+
+  getMembersGoals (token, goalType) {
+    return this.apiClient.get(`v1/goals/members?goalType=${goalType}`, {
       headers: { token }
     })
   }
@@ -2502,7 +2498,7 @@ export default class HRBenefitsService {
     })
   }
 
-/* Pension Funds */
+  /* Pension Funds */
 
   getPensionFundsDocuments (token) {
     return this.apiClient.get('v1/phension', {
@@ -2524,6 +2520,43 @@ export default class HRBenefitsService {
 
   confirmPensionDocumentsCode (token, code) {
     return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  getPensionValidate (token) {
+    return this.apiClient.get('v1/eligibility ', {
+      headers : { token }
+    })
+  }
+
+  // Reward and Goals
+  getRewardsDNAMoment (token, id) {
+    return this.apiClient.get(`v1/rewards?awardId=${ id }`, {
+      headers : { token }
+    })
+  }
+
+  getRewardAwards (token, id) {
+    return this.apiClient.get(`v1/rewards/awards`, {
+      headers : { token }
+    })
+  }
+
+  getRewardPoints (token) {
+    return this.apiClient.get('v1/rewards?', {
+      headers : { token }
+    })
+  }
+
+  submitAwards (token, objectParam) {
+    return this.apiClient.post(`v1/rewards`, objectParam.body, {
+      headers : { token }
+    })
+  }
+
+  getEligibleInRewards (token, string) {
+    return this.apiClient.get(`v1/rewards/candidates?keyword=${ string }`, {
       headers : { token }
     })
   }

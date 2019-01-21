@@ -51,20 +51,7 @@ class RequestedGoalsComponent extends Component {
                     <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
                   }
                 </div>
-                <div className = { 'header-column-1 cursor-pointer' } onClick = { () =>
-                  onSelected(
-                    resp.id,
-                    resp.title,
-                    resp.description,
-                    resp.startDate,
-                    resp.endDate,
-                    priorityFunc(resp.priority),
-                    resp.approvalStatus,
-                    resp.type,
-                    resp.isTeamGoal,
-                    resp.isCompleted,
-                    resp.rating && resp.rating ? resp.rating : 0.0
-                  ) }>
+                <div className = { 'header-column-1 cursor-pointer' } >
                   <div>
                     <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                     {
@@ -121,7 +108,15 @@ class RequestedGoalsComponent extends Component {
             <Card className = { 'margin-10px' }>
               <div className = { 'padding-15' }>
                 <div className = { 'header-column' }>
-                  <span/>
+                  {
+                    resp.isTeamGoal ?
+                    <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold' }>Team Goal</h2>
+                    :
+                    resp.isSquadGoal ?
+                    <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold' }>Squad Goal</h2>
+                    :
+                    <span/>
+                  }
                   {
                     resp.approvalStatus !== 5 &&
                     <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
@@ -138,6 +133,7 @@ class RequestedGoalsComponent extends Component {
                     resp.approvalStatus,
                     resp.type,
                     resp.isTeamGoal,
+                    resp.isSquadGoal,
                     resp.isCompleted,
                     resp.rating && resp.rating ? resp.rating : 0.0
                   ) }>

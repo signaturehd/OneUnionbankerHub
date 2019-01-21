@@ -3,7 +3,7 @@ export default class GetRequestedGoalsInteractor {
     this.client = client
   }
 
-  execute (status) {
-    return this.client.getGoals(this.client.getToken(), status)
+  execute (goalType) {
+    return this.client.getGoals(this.client.getToken(), goalType)
   }
 }

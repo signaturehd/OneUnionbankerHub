@@ -26,6 +26,14 @@ class AddTeamGoalsFormComponent extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      index: 5,
+      viewMoreText : 'View More'
+    }
+  }
+
+  componentDidMount() {
+    this.props.getMembersGoals()
   }
 
   render () {
@@ -48,15 +56,22 @@ class AddTeamGoalsFormComponent extends Component {
       goalType,
       goalTypeId,
       goalTypeErrorMessage,
+      memberId,
+      memberArray,
       participantArray,
       participantErrorMessage,
       editMode,
       showGoalTypeModal,
       showGoalTypeModalFunc,
+      getMembersGoals,
+      checkedMember,
       onCancel,
       onSubmit,
       onEdit
     } = this.props
+
+    const { index, viewMoreText } = this.state
+    const isVisible = (memberArray && memberArray.length > 5) ? '' : 'hide'
 
     return (
       <div className = { 'goal-container' }>
@@ -122,9 +137,30 @@ class AddTeamGoalsFormComponent extends Component {
                 participantErrorMessage &&
                 <span className = {'error-message'}>participantErrorMessage</span>
               }
-              <Card className = { 'margin-10px padding-15' }>
-                <h2 className = { 'text-align-left font-size-14px text-weight-lighter' }>Sample Employee Name</h2>
-              </Card>
+              {
+                memberArray.length !== 0 &&
+                memberArray.slice(0, index).map((member, key) =>
+                    <Card className = { 'padding-5px' }>
+                      <Checkbox
+                        label = { member.name }
+                        onChange = { () => checkedMember(member.id, participantArray) }/>
+                    </Card>
+                )
+              }
+              <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${ isVisible }` }
+              onClick = {
+                () => {
+                  if(index === memberArray.length)
+                  this.setState({ index : 5, viewMoreText : 'View more' })
+                  else
+                  this.setState({ index : memberArray.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+              </button>
             </div>
             <div></div>
             </div>
@@ -156,7 +192,8 @@ class AddTeamGoalsFormComponent extends Component {
 }
 
 AddTeamGoalsFormComponent.propTypes = {
-  onSendPageNumberToView : PropTypes.func
+  onSendPageNumberToView : PropTypes.func,
+  getMembersGoals : PropTypes.func
 }
 
 export default AddTeamGoalsFormComponent

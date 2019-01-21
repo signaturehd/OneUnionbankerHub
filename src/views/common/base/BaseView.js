@@ -50,7 +50,9 @@ class BaseView extends Component {
 
     return (
       <div>
-        <CircularLoader show = { loader }/>
+        <CircularLoader
+          validateLoading = { true }
+          show = { loader }/>
         <div className = { 'notify-container' }>
         {
           notify &&

@@ -200,7 +200,7 @@ class MyGoalsFragment extends BaseMVPView {
   }
 
   render () {
-    const { isLineManager, employeeNumber } = this.props
+    const { isLineManager, isPO, employeeNumber } = this.props
     const {
       enabledLoader,
       showNoticeResponseModal,
@@ -296,6 +296,8 @@ class MyGoalsFragment extends BaseMVPView {
                     showTeamGoal ?
                     <TeamGoalsFragment
                       employeeNumber = { employeeNumber }
+                      isLineManager = { isLineManager }
+                      isPO = { isPO }
                     />
                     :
                     <RequestedGoalsFragment
