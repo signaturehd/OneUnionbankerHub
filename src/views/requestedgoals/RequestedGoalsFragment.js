@@ -473,6 +473,29 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
   }
 
+  checkPoints(goalsArray) {
+    let performanceRate = 0
+    let developementalRate = 0
+    let totalPoints = 0
+    if(goalsArray.length !== 0) {
+      goalsArray.map((details, key) =>
+      {
+        if(details.isCompleted) {
+          details.type === 1 ?
+          performanceRate++
+          :
+          details.type === 2 &&
+          developementalRate++
+        }
+      })
+      totalPoints = (performanceRate * 0.95) + (developementalRate * 0.05)
+
+      return totalPoints !== 0 ? totalPoints.toFixed(2) : 'No'
+    } else {
+      return 'No'
+    }
+  }
+
   render () {
     const {
       personal,
@@ -809,35 +832,45 @@ class RequestedGoalsFragment extends BaseMVPView {
         <div>
         <br/>
           <div className = { 'grid-filter margin-left' }>
-            <div className = { 'text-align-left margin-right grid-global' }>
-              <GenericInput
-                text = { 'Filter by status' }
-                className = { 'global-button profile-button-medium font-size-11px' }
-                value = { filterName }
-                onClick = { () => {
-                  this.setState({ showFilterModal: true })
-                } }
-              />
+            <div className = { 'text-align-left margin-right grid-points-main' }>
+              <div>
+                <Card className = { 'padding-10px grid-points' }>
+                  <span className = { 'icon-check icon-points-img text-align-left' }/>
+                  <h2 className = { 'font-size-14px text-align-left' }>My Points</h2>
+                  <h2 className = { 'font-size-14px text-align-center' }>{ this.checkPoints(goalsArray) } Available Points</h2>
+                </Card>
+                <GenericInput
+                  text = { 'Filter by status' }
+                  className = { 'global-button profile-button-medium font-size-11px' }
+                  value = { filterName }
+                  onClick = { () => {
+                    this.setState({ showFilterModal: true })
+                  } }
+                />
+              </div>
               <div></div>
             </div>
-            <div className = { 'text-align-right margin-right grid-global' }>
-              <GenericButton
-                text = { 'Add Goal' }
-                className = { 'global-button profile-button-medium font-size-11px' }
-                onClick = { () => {
-                  this.resetValue()
-                  this.setState({ showForm: true })
-                } }
-              />
-              <GenericButton
-                text = { 'Request for Coaching' }
-                className = { 'global-button profile-button-medium font-size-11px' }
-                onClick = { () => showRequestCoachFunc(true)}
-              />
+            <div className = { 'text-align-right margin-right' }>
+              <div></div>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Add Goal' }
+                  className = { 'global-button profile-button-medium font-size-11px' }
+                  onClick = { () => {
+                    this.resetValue()
+                    this.setState({ showForm: true })
+                  } }
+                />
+                <GenericButton
+                  text = { 'Request for Coaching' }
+                  className = { 'global-button profile-button-medium font-size-11px' }
+                  onClick = { () => showRequestCoachFunc(true)}
+                />
+              </div>
             </div>
           </div>
           <div className = { 'grid-main' }>
-            <div>
+          <div>
             {
               enabledLoader ?
               <center>

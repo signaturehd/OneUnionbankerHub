@@ -68,9 +68,11 @@ class AddTeamGoalsFormComponent extends Component {
       showGoalTypeModalFunc,
       getMembersGoals,
       checkedMember,
+      squadMembers,
       onCancel,
       onSubmit,
       onEdit,
+      squadId,
       showSquadGoal
     } = this.props
 
@@ -142,6 +144,16 @@ class AddTeamGoalsFormComponent extends Component {
                 <span className = {'error-message'}>participantErrorMessage</span>
               }
               {
+                squadId ?
+                squadMembers.length !== 0 &&
+                squadMembers.slice(0, index).map((member, key) =>
+                    <Card className = { 'padding-5px' }>
+                      <Checkbox
+                        label = { member.name }
+                        onChange = { () => checkedMember(member.id, participantArray) }/>
+                    </Card>
+                )
+                :
                 memberArray.length !== 0 &&
                 memberArray.slice(0, index).map((member, key) =>
                     <Card className = { 'padding-5px' }>

@@ -4,7 +4,6 @@ export default class AddGoalTaskInteractor {
   }
 
   execute (goalTaskParam) {
-    console.log('interactor')
     return this.client.addGoalTask(this.client.getToken(), goalTaskParam)
   }
 }

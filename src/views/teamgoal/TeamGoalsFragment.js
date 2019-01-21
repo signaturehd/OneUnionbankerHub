@@ -639,6 +639,7 @@ class TeamGoalsFragment extends BaseMVPView {
             onEdit = { () => this.onEdit() }
             showSquadGoal = { showSquadGoal }
             squadId = { selectedId }
+            squadMembers = { selectedMembers }
           />
         :
         <div>

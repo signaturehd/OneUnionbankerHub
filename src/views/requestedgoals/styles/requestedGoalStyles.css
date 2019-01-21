@@ -49,6 +49,16 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.grid-points-main {
+  display: grid;
+  grid-template-columns: 1fr .1fr;
+}
+
+.grid-points {
+  display: grid;
+  grid-template-columns: .5fr 1fr 1fr;
+}
+
 .color-Low {
   color: #4CAF50;
 }
@@ -67,6 +77,10 @@
 
 .icon-add-img {
   background-image: url('../../../images/icons/icons-add-36.png')
+}
+
+.icon-points-img {
+  background-image: url('../../../images/icons/icons8-trophy-50.png')
 }
 
 .header-column {

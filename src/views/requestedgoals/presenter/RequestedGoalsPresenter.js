@@ -140,7 +140,6 @@ export default class RequestCoachPresenter {
     taskDescription
   ){
     this.view.showSubmitLoader()
-    console.log('presenter')
     this.addGoalTaskInteractor.execute(goalTaskParam(
         goalType,
         goalId,
