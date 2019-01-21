@@ -79,7 +79,7 @@ class Award extends Component {
               <div
                 ket = { key }
                 style = {{
-                  borderRadius: '20px',
+                  borderRadius: '5px',
                   backgroundColor: '#ff8a00',
                   textAlign: 'left',
                   marginBottom: '10px',
@@ -94,10 +94,6 @@ class Award extends Component {
                   { resp.name }
                 </h4>
                 <div className = { 'text-align-right' }>
-                  <Checkbox
-                    checked = { resp.isChecked }
-                    onChange = { () => {}}
-                  />
                 </div>
               </div>
             )}

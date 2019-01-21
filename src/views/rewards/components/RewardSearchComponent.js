@@ -21,7 +21,9 @@ class RewardSearchComponent extends Component {
     const {
       listData
     } = this.props
+
     const updateList = [...storeData]
+
     listData.map((resp, key) => {
       if(data.id.toString() === resp.id.toString()) {
         updateList.push({
@@ -37,7 +39,6 @@ class RewardSearchComponent extends Component {
         })
       }
     })
-    this.setState({ storeData : updateList })
     storeData = updateList
     this.props.sendDataList(storeData)
   }
@@ -136,25 +137,24 @@ class RewardSearchComponent extends Component {
                     <div
                       ket = { key }
                       style = {{
-                        borderRadius: '20px',
-                        backgroundColor: 'rgba(243, 238, 238, 0.63)',
+                        borderRadius: '5px',
+                        border: '1px solid #f6f3f3',
+                        backgroundColor: 'rgb(254, 254, 254)',
                         textAlign: 'left',
                         marginBottom: '10px',
-                        padding: '10px 0px 10px 20px',
+                        padding: '15px 0px 15px 20px',
                         display: 'grid',
                         gridTemplateColumns: 'auto .01fr',
                         alignItems: 'center',
                       }}>
                       <h4
-                        className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
+                        className = { 'align-items-center cursor-pointer font-weight-lighter font-size-12px' }>
                         { resp.name }
                       </h4>
                       <div className = { 'text-align-right' }>
                         <Checkbox
-                          checked = { resp.isChecked }
-                          onChange = { () =>
-                            this.receiveData(resp)
-                          }
+                          selected = { resp.isChecked }
+                          onClick = { () => this.receiveData(resp) }
                         />
                       </div>
                     </div>
