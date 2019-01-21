@@ -38,6 +38,7 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.state = {
       cardOptionComponent : true,
       enabledLoader : false,
+      showLaptopModel : false,
       showNoticeModal : false,
       showNoticeResponseModal : false,
       noticeResponse : null,
@@ -77,40 +78,8 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ amount })
   }
 
-  setColor (color) {
-    this.setState({ color })
-  }
-
-  setLaptopBrand (laptopBrand) {
-    this.setState({ laptopBrand })
-  }
-
   setLaptopModel (laptopModel) {
     this.setState({ laptopModel })
-  }
-
-  setScreenSize (screenSize) {
-    this.setState({ screenSize })
-  }
-
-  setHardDriveCapacity (hardDriveCapacity) {
-    this.setState({ hardDriveCapacity })
-  }
-
-  setGraphicsCard (graphicsCard) {
-    this.setState({ graphicsCard })
-  }
-
-  setProcessorType (processorType) {
-    this.setState({ processorType })
-  }
-
-  setOperatingSystem (operatingSystem) {
-    this.setState({ operatingSystem })
-  }
-
-  setSystemMemory (systemMemory) {
-    this.setState({ systemMemory })
   }
 
   setDeliveryOption (deliveryOption) {
@@ -179,6 +148,10 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ costAquisition })
   }
 
+  setLaptopModelList (laptopModelDetails) {
+    this.setState({ laptopModelDetails })
+  }
+
   resetValue () {
     this.setState({ showEditMode : false })
     this.presenter.resetValue()
@@ -188,11 +161,11 @@ class LaptopLeaseFragment extends BaseMVPView {
     const {
       terms,
       amount,
-      color,
       deliveryOption,
       deliveryOptionList,
       deliveryOptionName,
       file,
+      showLaptopModel,
       showDeliveryOptions,
       showNoticeModal,
       showNoticeResponseModal,
@@ -204,20 +177,16 @@ class LaptopLeaseFragment extends BaseMVPView {
       termsId,
       termsName,
       noticeResponse,
-      laptopBrand,
       laptopModel,
-      screenSize,
       getCardOptionId,
       cardOptionComponent,
-      graphicsCard,
-      hardDriveCapacity,
-      processorType,
-      operatingSystem,
-      systemMemory ,
       orNumber,
       orDate,
       vendor,
       costAquisition,
+      laptopModelDetails,
+      laptopDetailsName,
+      selectedLaptopDetails
     } = this.state
 
     const { history }=this.props
@@ -282,6 +251,26 @@ class LaptopLeaseFragment extends BaseMVPView {
                 onClose = { () => this.setState({ showDeliveryOptions : false }) }
               />
             }
+            {
+              showLaptopModel &&
+              <SingleInputModal
+                label = { 'Laptop Model' }
+                inputArray = { laptopModelDetails && laptopModelDetails }
+                multipleContentArray = { (laptopDetails) => {
+                    this.setState({
+                      laptopDetailsId: laptopDetails.id,
+                      laptopDetailsName: laptopDetails.name,
+                      selectedLaptopDetails: laptopDetails.details,
+                      showLaptopModel : false,
+                    })
+                    console.log(laptopDetails.details)
+                    this.presenter.setLaptopModel(laptopDetails)
+                  }
+                }
+                selectedArray = { () => {} }
+                onClose = { () => this.setState({ showLaptopModel : false }) }
+              />
+            }
 
             {
               showTermsSelection &&
@@ -338,39 +327,27 @@ class LaptopLeaseFragment extends BaseMVPView {
                   {
                     enabledLoader ?
                      <center className={ 'circular-loader-center' }>
-                       <CircularLoader show={ enabledLoader }/>
+                       <CircularLoader
+                         validateLoading = { true }
+                         show={ enabledLoader }/>
                      </center> :
                      <div>
                        {
                          getCardOptionId === 1 ?
                          <FormComponent
+                            selectedLaptopDetails = { selectedLaptopDetails }
+                            laptopDetailsName = { laptopDetailsName }
                             getCardOptionId = { getCardOptionId }
                             showEditMode = { showEditMode }
                             setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
-                            setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
-                            setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
-                            setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
-                            setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
+                            setLaptopModel = { () => this.setState({ showLaptopModel : true }) }
                             showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
                             showTerms = { () => this.setState({ showTermsSelection: true }) }
                             deliveryOptionName = { deliveryOptionName }
                             laptopLeaseAttachment = { laptopLeaseAttachment }
                             amount = { amount }
-                            color = { color }
                             terms = { termsName }
-                            laptopBrand = { laptopBrand }
                             laptopModel = { laptopModel }
-                            screenSize = { screenSize }
-                            graphicsCard = { graphicsCard }
-                            showGraphicsCard = { (e) => this.presenter.setGraphicsCard(e) }
-                            hardDriveCapacity = { hardDriveCapacity }
-                            showHardDriveCapacity = { (e) => this.presenter.setHardDriveCapacity(e) }
-                            processorType = { processorType }
-                            showProcessorType = { (e) => this.presenter.setProcessorType(e) }
-                            operatingSystem = { operatingSystem }
-                            showOperatingSystem = { (e) => this.presenter.setOperatingSystem(e) }
-                            systemMemory = { systemMemory }
-                            showSystemMemory = { (e) => this.presenter.setSystemMemory(e) }
                             setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
                             onContinue={ () => this.presenter.validateSubmission(getCardOptionId) }
                             onEdit = { () => this.setState({ showEditMode : false })  }

@@ -11,8 +11,7 @@ import { NotifyActions } from '../../../actions'
 
 import moment from 'moment'
 
-let storedAmount = '', storedTerms = '', storedColor = '', storedDeliveryOption = '', storedLaptopBrand = '', storedLaptopModel = '', storedScreenSize = '', storedFile
-let storedGraphicsCard = '', storedHardDriveCapacity = '', storedProcessorType = '', storedOperatingSystem = '', storedSystemMemory = ''
+let storedAmount = '', storedTerms = '', storedDeliveryOption = '', storedLaptopModel = '',  storedFile
 let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = ''
 
 export default class LaptopLeasePresenter {
@@ -25,11 +24,6 @@ export default class LaptopLeasePresenter {
     this.view = view
   }
 
-  setColor (color) {
-    storedColor = color
-    this.view.setColor(color)
-  }
-
   setAmount (amount) {
     storedAmount = amount
     this.view.setAmount(amount)
@@ -40,44 +34,9 @@ export default class LaptopLeasePresenter {
     this.view.setTerms(terms)
   }
 
-  setLaptopBrand (laptopBrand) {
-    storedLaptopBrand = laptopBrand
-    this.view.setLaptopBrand(laptopBrand)
-  }
-
   setLaptopModel (laptopModel) {
     storedLaptopModel = laptopModel
     this.view.setLaptopModel(laptopModel)
-  }
-
-  setScreenSize (screenSize) {
-    storedScreenSize = screenSize
-    this.view.setScreenSize(screenSize)
-  }
-
-  setHardDriveCapacity (hardDrive) {
-    storedHardDriveCapacity = hardDrive
-    this.view.setHardDriveCapacity(hardDrive)
-  }
-
-  setGraphicsCard (graphicsCard) {
-    storedGraphicsCard = graphicsCard
-    this.view.setGraphicsCard(graphicsCard)
-  }
-
-  setProcessorType (processorType) {
-    storedProcessorType = processorType
-    this.view.setProcessorType(processorType)
-  }
-
-  setOperatingSystem (operatingSystem) {
-    storedOperatingSystem = operatingSystem
-    this.view.setOperatingSystem(operatingSystem)
-  }
-
-  setSystemMemory (systemMemory) {
-    storedSystemMemory = systemMemory
-    this.view.setSystemMemory(systemMemory)
   }
 
   setFile (file) {
@@ -107,17 +66,10 @@ export default class LaptopLeasePresenter {
   resetValue () {
     this.view.setLaptopBrand('')
     this.view.setLaptopModel('')
-    this.view.setScreenSize('')
-    this.view.setColor('')
     this.view.setAmount('')
     this.view.setTerms('')
     this.view.setVendor('')
     this.view.setDeliveryOption('')
-    this.view.setGraphicsCard('')
-    this.view.setHardDriveCapacity('')
-    this.view.setOperatingSystem('')
-    this.view.setProcessorType('')
-    this.view.setSystemMemory('')
     this.view.setFile('')
     this.view.setOrDate('')
     this.view.setOrNumber('')
@@ -128,6 +80,8 @@ export default class LaptopLeasePresenter {
     this.validateLaptopLeaseInteractor.execute()
     .map(data => {
       let arrayOption = []
+      let laptopDetailsOption = []
+      let attachmetsOption = []
       data &&
       data.deliveryOptions.map((resp, key) => (
         arrayOption.push({
@@ -136,18 +90,40 @@ export default class LaptopLeasePresenter {
         })
       ))
 
-      return data = {
-        attachments: [{
-          name: 'Laptop Quotation'
-        }],
-        isValid: data.isValid == 1 ? true : false,
-        deliveryOptions: arrayOption
-      }
+      data &&
+      data.attachments.map((resp, key) => (
+        attachmetsOption.push({
+          id: key,
+          name: resp
+        })
+      ))
 
+      data &&
+      data.laptopDetails.map((resp, key) => (
+        laptopDetailsOption.push({
+          id: resp.id,
+          name: resp.name,
+          details: {
+            specification: resp.specification,
+            supplier: resp.supplier,
+            unitPrice: resp.unitPrice,
+            warranty: resp.warranty
+          }
+        })
+      ))
+
+      return data = {
+        attachments: attachmetsOption,
+        isValid: data.isValid === 1 ? true : false,
+        deliveryOptions: arrayOption,
+        laptopDetails: laptopDetailsOption,
+      }
     })
     .subscribe(data => {
+      console.log(data)
       this.view.isLaptopLeaseValidate(data.isValid)
       this.view.setDeliveryOptionList(data.deliveryOptions)
+      this.view.setLaptopModelList(data.laptopDetails)
       this.view.setAttachment(data.attachments)
       this.view.hideLoading()
     }, error => {
@@ -168,92 +144,22 @@ export default class LaptopLeasePresenter {
               duration : 2000
             })
           )
-        } else if (!storedLaptopBrand) {
-            store.dispatch(NotifyActions.addNotify({
-                message : 'Laptop Brand is Required',
-                type : 'warning',
-                duration : 2000
-              })
-            )
-        } else if (!storedLaptopModel){
+        } else if (!storedLaptopModel.name){
             store.dispatch(NotifyActions.addNotify({
               message : 'Laptop Model is Required',
               type : 'warning',
               duration : 2000
             })
           )
-        } else if (!storedScreenSize){
+        }  else if (storedDeliveryOption === '') {
             store.dispatch(NotifyActions.addNotify({
-              message : 'Laptop Screen Size is Required',
-              type : 'warning',
-              duration : 2000
-            })
-          )
-        } else if (storedColor === '') {
-        store.dispatch(NotifyActions.addNotify({
-           title: 'Laptop Lease',
-           message : 'Please specify the color of laptop',
-           type : 'warning',
-           duration : 2000
-         })
+             title: 'Laptop Lease',
+             message : 'Please choose the destination of item',
+             type : 'warning',
+             duration : 2000
+           })
          )
-       } else if (storedTerms === '') {
-         store.dispatch(NotifyActions.addNotify({
-            title: 'Laptop Lease',
-            message : 'Please specify your payment method',
-            type : 'warning',
-            duration : 2000
-          })
-        )
-      } else if (storedGraphicsCard === '') {
-        store.dispatch(NotifyActions.addNotify({
-           title: 'Laptop Lease',
-           message : 'Please specify the Graphics Card',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-     } else if (storedHardDriveCapacity === '') {
-       store.dispatch(NotifyActions.addNotify({
-          title: 'Laptop Lease',
-          message : 'Please specify the capacity of Hard Drive',
-          type : 'warning',
-          duration : 2000
-        })
-      )
-    } else if (storedProcessorType === '') {
-      store.dispatch(NotifyActions.addNotify({
-         title: 'Laptop Lease',
-         message : 'Please specify the type of Processor',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    } else if (storedOperatingSystem === '') {
-      store.dispatch(NotifyActions.addNotify({
-         title: 'Laptop Lease',
-         message : 'Please specify the Operating System',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    } else if (storedSystemMemory === '') {
-      store.dispatch(NotifyActions.addNotify({
-         title: 'Laptop Lease',
-         message : 'Please specify the System Memory',
-         type : 'warning',
-         duration : 2000
-       })
-     )
-    } else if (storedDeliveryOption === '') {
-        store.dispatch(NotifyActions.addNotify({
-           title: 'Laptop Lease',
-           message : 'Please choose the destination of item',
-           type : 'warning',
-           duration : 2000
-         })
-       )
-      } else {
+        } else {
           this.view.validateInput()
         }
       } else {
@@ -312,18 +218,10 @@ export default class LaptopLeasePresenter {
       this.view.showLoading()
       this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
         getCardOptionId,
-        storedLaptopBrand,
         storedLaptopModel,
-        storedScreenSize,
-        storedColor,
         storedAmount,
         storedTerms,
         storedDeliveryOption,
-        storedGraphicsCard,
-        storedHardDriveCapacity,
-        storedProcessorType,
-        storedOperatingSystem,
-        storedSystemMemory,
         storedFile,
         storedOrNumber,
         storedVendor,
