@@ -2504,7 +2504,7 @@ export default class HRBenefitsService {
     })
   }
 
-/* Pension Funds */
+  /* Pension Funds */
 
   getPensionFundsDocuments (token) {
     return this.apiClient.get('v1/phension', {
@@ -2526,6 +2526,43 @@ export default class HRBenefitsService {
 
   confirmPensionDocumentsCode (token, code) {
     return this.apiClient.get('v1/phension', {
+      headers : { token }
+    })
+  }
+
+  getPensionValidate (token) {
+    return this.apiClient.get('v1/eligibility ', {
+      headers : { token }
+    })
+  }
+
+  // Reward and Goals
+  getRewardsDNAMoment (token, id) {
+    return this.apiClient.get(`v1/rewards?awardId=${ id }`, {
+      headers : { token }
+    })
+  }
+
+  getRewardAwards (token, id) {
+    return this.apiClient.get(`v1/rewards/awards`, {
+      headers : { token }
+    })
+  }
+
+  getRewardPoints (token) {
+    return this.apiClient.get('v1/rewards?', {
+      headers : { token }
+    })
+  }
+
+  submitAwards (token, objectParam) {
+    return this.apiClient.post(`v1/rewards`, objectParam.body, {
+      headers : { token }
+    })
+  }
+
+  getEligibleInRewards (token, string) {
+    return this.apiClient.get(`v1/rewards/candidates?keyword=${ string }`, {
       headers : { token }
     })
   }

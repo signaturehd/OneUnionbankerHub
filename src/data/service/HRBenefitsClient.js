@@ -1644,7 +1644,7 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  /* Pension Funds */
+  // PensionFunds
 
   getPensionFunds (token) {
     return this.service.getPensionFunds(token)
@@ -1653,6 +1653,37 @@ export default class HRBenefitsClient {
 
   getPensionFundsDocuments (token) {
     return this.service.getPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionValidate (token) {
+    return this.service.getPensionValidate(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  // Reward Goals
+  getRewardsDNAMoment (token, id) {
+    return this.service.getRewardsDNAMoment(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardAwards (token) {
+    return this.service.getRewardAwards(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardPoints (token) {
+    return this.service.getRewardPoints(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitAwards (token, objectParam) {
+    return this.service.submitAwards(token, objectParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getEligibleInRewards (token, string) {
+    return this.service.getEligibleInRewards(token, string)
     .pipe(ServiceErrorOperator())
   }
 }
