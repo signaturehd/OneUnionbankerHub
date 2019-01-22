@@ -113,8 +113,6 @@ export default class CertificateOfEmploymentPresenter {
   }
 
   validateInput () {
-    console.log(storedVLFrom)
-    console.log(storedVLTo)
     if(storedPurposeObject && storedPurposeObject.purpose !== 37) {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
