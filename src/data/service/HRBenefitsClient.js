@@ -1676,4 +1676,10 @@ export default class HRBenefitsClient {
     return this.service.getEligibleInRewards(token, type, string)
     .pipe(ServiceErrorOperator())
   }
+
+  // Bir2316 My Documents
+  getBir2316List (token) {
+    return this.service.getBir2316List(token)
+    .pipe(ServiceErrorOperator())
+  }
 }
