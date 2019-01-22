@@ -203,7 +203,6 @@ class SettingsFragment extends BaseMVPView {
       profileImage
     } = this.props
 
-    console.log(profile)
     return (
       <div className={ 'profile-container' }>
         { super.render() }
