@@ -151,10 +151,10 @@ export default class RewardsPresenter {
     this.view.setEmployeeList(storedEmployeeList)
   }
 
-  getEligibleInRewards (data) {
+  getEligibleInRewards (type, data) {
     storedEmployeeList = []
     this.view.showLoadingCircular(true)
-    this.getEligibleInRewardsInteractor.execute(data)
+    this.getEligibleInRewardsInteractor.execute(type, data)
     .subscribe(data => {
       this.view.showLoadingCircular(false)
       this.getEmployeeList(data)

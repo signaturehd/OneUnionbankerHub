@@ -1672,8 +1672,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getEligibleInRewards (token, string) {
-    return this.service.getEligibleInRewards(token, string)
+  getEligibleInRewards (token, type, string) {
+    return this.service.getEligibleInRewards(token, type, string)
     .pipe(ServiceErrorOperator())
   }
 }

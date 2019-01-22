@@ -2555,7 +2555,7 @@ export default class HRBenefitsService {
     })
   }
 
-  getEligibleInRewards (token, string) {
+  getEligibleInRewards (token, type, string) {
     return this.apiClient.get(`v1/rewards/candidates?keyword=${ string }`, {
       headers : { token }
     })

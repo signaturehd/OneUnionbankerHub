@@ -27,15 +27,6 @@
   min-width: 100%;
 }
 
-.dentalreimbursement-image-view {
-  position: relative;
-  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
-  background-size: 50px;
-  width: -webkit-fill-available;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 20px;
-}
 .dentalreimbursement-image-layer {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;

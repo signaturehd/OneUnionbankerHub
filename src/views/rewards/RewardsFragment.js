@@ -151,7 +151,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       enabledCircularLoader = { enabledCircularLoader }
                       searchString = { searchString }
                       onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
-                      searchFunc = { () => this.searchData(searchString) }
+                      searchFunc = { () => this.searchData(selectedId, searchString) }
                       membersData = { membersData }
                       membersDataFunc = { (data) => {
                         this.setState({ employeeList : data })

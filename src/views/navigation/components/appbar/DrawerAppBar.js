@@ -127,36 +127,36 @@ class DrawerAppBar extends Component {
       id: 0,
       name: 'Home',
       imageStyle : 'news',
-      imageActive: require('../../../../images/NAVIGATION BAR/HOME - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/HOME - Grey.png'),
+      imageActive: require('../../../../images/drawer/home-orange.png'),
+      imageInactive: require('../../../../images/drawer/home-grey.png'),
       action : () => history.push('/'),
     },{
       id: 1,
       name: 'My Benefits',
       imageStyle : 'benefits',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Benefits - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Benefits - Grey.png'),
+      imageActive: require('../../../../images/drawer/my-benefits-orange.png'),
+      imageInactive: require('../../../../images/drawer/my-benefits-grey.png'),
       action : () => history.push('/mybenefits')
     },{
       id: 8,
       name: 'My Pay',
       imageStyle : 'pay',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Pay - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Pay - Grey.png'),
+      imageActive: require('../../../../images/drawer/my-pay-orange.png'),
+      imageInactive: require('../../../../images/drawer/my-pay-grey.png'),
       action : () => history.push('/payslip')
     },{
       id: 4,
       name: 'My Learning',
       imageStyle : 'learning',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Learning - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Learning - Grey.png'),
+      imageActive: require('../../../../images/drawer/my-learning-orange.png'),
+      imageInactive: require('../../../../images/drawer/my-learning-grey.png'),
       action : () => history.push('/mylearning'),
     },{
       id: 6,
       name: 'Feedback',
       imageStyle : 'feedback',
-      imageActive: require('../../../../images/NAVIGATION BAR/Feedback - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/Feedback - Grey.png'),
+      imageActive: require('../../../../images/drawer/feedback-grey.png'),
+      imageInactive: require('../../../../images/drawer/feedback-grey.png'),
       action : () => history.push('/feedback'),
     }]
 
@@ -229,7 +229,7 @@ class DrawerAppBar extends Component {
                             className = { `viewmore tooltip ` }>
                               <img
                                 style = {{
-                                  height : 50,
+                                  height : 35,
                                 }}
                                 src={ `${ selected === resp.id ? resp.imageActive : resp.imageInactive }` }
                               />
