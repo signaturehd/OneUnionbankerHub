@@ -58,7 +58,6 @@ class CertificateOfEmploymentFormComponent extends Component {
             <br/>
             <div className={ 'coe-form-coed-body' }>
               <GenericInput
-                errorMessage = { '' }
                 text = { 'Type Of Certificate' }
                 disabled = { showEditMode }
                 readOnly
@@ -66,7 +65,6 @@ class CertificateOfEmploymentFormComponent extends Component {
                 onClick = { () => showTypeModalFunc() }
                 />
               <GenericInput
-                errorMessage = { '' }
                 text = { 'Purpose' }
                 disabled = { showEditMode }
                 readOnly
@@ -78,7 +76,6 @@ class CertificateOfEmploymentFormComponent extends Component {
                 purposeBody.id === 37 &&
                 <div>
                   <GenericInput
-                    errorMessage = { '' }
                     text = { 'VISA' }
                     disabled = { showEditMode }
                     readOnly
@@ -102,6 +99,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                       } }
                     />
                     <DatePicker
+                      minDate = { vlFrom }
                       text = { 'To' }
                       selected = { vlTo }
                       onChange = { (e) => {

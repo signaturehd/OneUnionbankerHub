@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import '../styles/birStyle.css'
 import {  Card } from '../../../ub-components/'
 
 class Bir2316Components extends Component {
-
   constructor (props) {
     super(props)
   }

@@ -356,7 +356,7 @@ class LoginView extends BaseMVPView {
             otpMessage = { otpMessage }
             username = { username }
             sendTerms = { (accepted, terms) => this.setState({ showTermsAndCondition : !accepted, showOtpModal : false, terms }) }
-            transactionType = { 1 } /> // TODO, move this static '2' to proper file on domain
+            transactionType = { 2 } /> // TODO, move this static '2' to proper file on domain
         }
         {
           showTermsAndCondition &&
