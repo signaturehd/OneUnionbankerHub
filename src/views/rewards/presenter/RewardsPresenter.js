@@ -128,43 +128,31 @@ export default class RewardsPresenter {
 
   getEmployeeList (data) {
     const updateEmployee = [...storedEmployeeList]
+    if(data.directReports.length !== 0) {
+      data.directReports.map((resp) => {
+        updateEmployee.push({
+          id: resp.id,
+          name: resp.name,
+          isChecked: false,
+        })
+      })
+    }
 
-    data.directReports.map((resp) => {
-      updateEmployee.push({
-        id: resp.id,
-        name: resp.name,
-        isChecked: false,
+    if(data.squadMembers.length !== 0) {
+      data.squadMembers.map((resp) => {
+        updateEmployee.push({
+          id: resp.id,
+          name: resp.name,
+          isChecked: false,
+        })
       })
-    })
-    data.squads.map((resp) => {
-      updateEmployee.push({
-        id: resp.id,
-        name: resp.name,
-        isChecked: false,
-      })
-    })
-    data.squadMembers.map((resp) => {
-      updateEmployee.push({
-        id: resp.id,
-        name: resp.name,
-        isChecked: false,
-      })
-    })
-    storedEmployeeList = [{
-      id: 0,
-      name: 'U',
-      isChecked: true
-    }]
+    }
+    storedEmployeeList = updateEmployee
     this.view.setEmployeeList(storedEmployeeList)
   }
 
   getEligibleInRewards (data) {
-    storedEmployeeList = ''
-    this.getEmployeeList([{
-      id: 0,
-      name: 'U',
-      isChecked: true
-    }])
+    storedEmployeeList = []
     this.view.showLoadingCircular(true)
     this.getEligibleInRewardsInteractor.execute(data)
     .subscribe(data => {
