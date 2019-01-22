@@ -1,3 +1,10 @@
+.bir2316list-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 20px;
+  column-gap: 2%;
+}
+
 .bir2316list-grid-column {
   display: grid;
   grid-template-columns: .05fr auto;
@@ -23,10 +30,10 @@
 
 
 @media (max-width : 786px) {
-  .bir2316list-grid-column {
+  .bir2316list-card-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-column-gap: 20px;
+    column-gap: 2%;
   }
 }
 

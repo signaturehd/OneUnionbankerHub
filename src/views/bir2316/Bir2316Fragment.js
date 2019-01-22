@@ -48,6 +48,10 @@ class Bir2316Fragment extends BaseMVPView {
 
   render () {
     const {
+      backToList
+    } = this.props
+    
+    const {
       employeeId,
       index,
       viewMoreText

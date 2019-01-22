@@ -1,4 +1,12 @@
-/* benefits */
+.mycompliance-grid-container-x3 {
+  display: grid;
+  grid-template-columns: .1fr auto .1fr;
+}
+
+.mycompliance-header-grid {
+  display: grid;
+  grid-template-columns: .1fr auto;
+}
 
 .mycompliance-card-adjustment {
   margin: 3px 3px;
