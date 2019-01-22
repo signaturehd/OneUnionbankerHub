@@ -228,7 +228,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
                  this.setState({ showEditMode : e })
               }
             } }
-            typeOfCoe= { typeOfCoe}
+            typeOfCoe= { typeOfCoe }
             typeOfCoeBody = { typeOfCoeBody }
             purposeBody = { purposeBody }
             purpose = { purpose }
@@ -239,7 +239,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
             vlFromFunc = { (resp) => {
               this.presenter.setStoredVLFrom(resp)
               this.setState({ vlTo : '' })
-            }}
+            } }
             vlToFunc = { (resp) => this.presenter.setStoredVLTo(resp) }
             showTypeModalFunc = { () =>
               this.setState({ showTypeModal : true }) }
@@ -248,7 +248,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
             showVisaModalFunc = { () =>
               this.setState({ showVisaModal : true }) }
             backToList = { () =>
-              this.setState({ showCOEForm: false, showListForm: true })}
+              this.setState({ showCOEForm: false, showListForm: true }) }
           />
         }
         {

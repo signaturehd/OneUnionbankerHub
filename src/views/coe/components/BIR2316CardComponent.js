@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import './styles/coeComponentStyle.css'
 import {  Card } from '../../../ub-components/'
-
 // import PayslipDetailsModal from '../modals/PayslipDetailsModal'
 
 class BIR2316CardComponent extends Component {
@@ -45,7 +43,7 @@ class BIR2316CardComponent extends Component {
                 } >
                 <div className={ 'bir-grid-card-container' }>
                   <div>
-                    <span className={ ' bir-icon-forms bir-icon' }/>
+                    <span className={ 'bir-icon-forms bir-icon' }/>
                   </div>
                   <div>
                     <h2 className={ 'bir-label' }>
