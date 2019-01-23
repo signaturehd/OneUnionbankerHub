@@ -39,11 +39,6 @@
   height: 100%;
 }
 
-.grid-filter {
-  display: grid;
-  grid-template-columns: 1fr .5fr 1fr;
-}
-
 .color-Low {
   color: #4CAF50;
 }
