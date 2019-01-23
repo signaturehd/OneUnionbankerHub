@@ -1,6 +1,7 @@
 import GetForApprovalGoalsInteractor from '../../../domain/interactor/goals/GetForApprovalGoalsInteractor'
 import AddRequestedGoalsInteractor from '../../../domain/interactor/goals/AddRequestedGoalsInteractor'
 import ApproveGoalsInteractor from '../../../domain/interactor/goals/ApproveGoalsInteractor'
+import approvalGoalsParam from '../../../domain/param/AddApprovalGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -26,9 +27,9 @@ export default class MyGoalsPresenter {
     })
   }
 
-  approveGoal (goalId, isApprove, rejectedRemarks) {
+  approveGoal (goalType, goalId, isApprove, rejectedRemarks) {
     this.view.showCircularLoader()
-    this.approveGoalsInteractor.execute(goalId, isApprove, rejectedRemarks)
+    this.approveGoalsInteractor.execute(approvalGoalsParam(goalType, goalId, isApprove, rejectedRemarks))
     .subscribe(
       data => {
         this.view.hideCircularLoader()

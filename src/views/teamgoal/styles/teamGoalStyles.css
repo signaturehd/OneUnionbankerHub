@@ -39,16 +39,6 @@
   height: 100%;
 }
 
-.grid-filter {
-  display: grid;
-  grid-template-columns: 1fr .5fr 1fr;
-}
-
-.grid-percentage {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
 .color-Low {
   color: #4CAF50;
 }
@@ -62,7 +52,7 @@
 }
 
 .color-gray {
-  color: #5a5a5a;
+  color: #546E7A;
 }
 
 .icon-edit-img {
@@ -88,4 +78,62 @@
 .comment-grid {
   display: grid;
   grid-template-columns: 1fr .5fr;
+}
+
+/* tabs */
+
+.team-tabs-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.teamgoal-input-tab:checked + label {
+  color: #ff8a00;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 50px;
+  margin-right: 20px;
+  border: 1px solid #ff8a00;
+}
+
+.teamgoal-input-tab + label {
+  color: #546E7A;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 50px;
+  margin-right: 20px;
+  border: 1px solid #546E7A;
+}
+
+@media screen and (max-width : 768px) {
+  .teamgoal-tabs-container {
+    margin: auto;
+    text-align: center;
+  }
+
+  label {
+    font-size: 9px !important;
+  }
+
+  .teamgoal-input-tab + label {
+    color: #546E7A;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border: 1px solid #546E7A;
+  }
+
+  .teamgoal-input-tab:checked + label {
+    color: #ff8a00;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border: 1px solid #ff8a00;
+  }
+}
+
+.teamgoal-input-tab {
+  display: none;
 }

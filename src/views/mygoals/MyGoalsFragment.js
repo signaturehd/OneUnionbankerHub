@@ -62,6 +62,8 @@ class MyGoalsFragment extends BaseMVPView {
       goalType : '',
       approvalStatus: '',
       rejectedRemarks: '',
+      filterId: 0,
+      filterName: '',
       goalsArray : [],
       approvalArray : [],
       priorityArray : [
@@ -86,6 +88,20 @@ class MyGoalsFragment extends BaseMVPView {
         {
           id: 2,
           name: 'Developemental'
+        }
+      ],
+      filterArray : [
+        {
+          id: 0,
+          name: 'All'
+        },
+        {
+          id: 1,
+          name: 'Requested'
+        },
+        {
+          id: 2,
+          name: 'Approved'
         }
       ]
     }
@@ -210,15 +226,33 @@ class MyGoalsFragment extends BaseMVPView {
       showPriorityModal,
       showGoalTypeModal,
       editMode,
+      filterId,
+      filterName,
       forApproval,
       showApprovalForm,
       priorityArray,
+      filterArray,
       showRequestCoachForm,
-      showTeamGoal
+      showTeamGoal,
+      showFilterModal
     } = this.state
 
     return (
       <div>
+        {
+          showFilterModal &&
+          <SingleInputModal
+            label = { 'Select status' }
+            inputArray = { filterArray }
+            selectedArray = { (filterId, filterName) => this.setState({
+                filterId,
+                filterName,
+                showFilterModal: false
+              })
+            }
+            onClose = { () => this.setState({ showFilterModal: false }) }
+          />
+        }
         {
           showRequestCoachForm ?
           <RequestCoachFragment
@@ -237,82 +271,96 @@ class MyGoalsFragment extends BaseMVPView {
                 </div>
               </div>
               <br/>
-              <div className = { 'mygoal-tabs-container' }>
-                <input
-                  className = { 'mygoal-input-tab' }
-                  id = { 'mygoal-tab1' }
-                  type = { 'radio' }
-                  name = { 'tabs' }
-                  defaultChecked = { true }
-                  onClick = { () => {
-                      this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
-                      this.props.history.push('/mygoals/request')
-                    }
-                  }/>
-                <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab1'>Individual Goals</label>
-
-                <input
-                  className = { 'mygoal-input-tab' }
-                  id = { 'mygoal-tab2' }
-                  type = { 'radio' }
-                  name = { 'tabs' }
-                  onClick = { () => {
-                      this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
-                      this.props.history.push('/mygoals/team')
-                    }
-                  }/>
-                  {
-                    isLineManager &&
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team Goals</label>
-                  }
-
-                  <input
-                    className = { 'mygoal-input-tab' }
-                    id = { 'mygoal-tab3' }
-                    type = { 'radio' }
-                    name = { 'tabs' }
+              <div className = { 'grid-filter' }>
+                <div>
+                  <GenericInput
+                    text = { 'Filter by status' }
+                    className = { 'global-button profile-button-medium font-size-11px' }
+                    value = { filterName }
                     onClick = { () => {
+                      this.setState({ showFilterModal: true })
+                    } }
+                  />
+                </div>
+                <div></div>
+                <div className = { 'grid-tabs' }>
+                  <div></div>
+                  <div className = { 'mygoal-tabs-container' }>
+                    <input
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab1' }
+                      type = { 'radio' }
+                      name = { 'tabs' }
+                      defaultChecked = { true }
+                      onClick = { () => {
+                        this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
+                        this.props.history.push('/mygoals/request')
+                      }
+                    }/>
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab1'>Individual Goals</label>
+
+                    <input
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab2' }
+                      type = { 'radio' }
+                      name = { 'tabs' }
+                      onClick = { () => {
+                        this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
+                        this.props.history.push('/mygoals/team')
+                      }
+                    }/>
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Reporting Goals</label>
+
+                    <input
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab3' }
+                      type = { 'radio' }
+                      name = { 'tabs' }
+                      onClick = { () => {
                         this.setState({ forApproval : true })
                         this.props.history.push('/mygoals/approved')
                       }
                     }/>
-                  {
-                    isLineManager &&
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Approval</label>
-                  }
-                <section>
-                  <Switch>
+                    {
+                      isLineManager &&
+                      <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Approval</label>
+                    }
+                    <section>
+                    <Switch>
                     <Route exact path='/mygoals/request/RequestedGoalsFragment'
-                      render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                    render={ props => <RequestedGoalsFragment { ...props } /> }/>
                     <Route exact path='/mygoals/team/TeamGoalsFragment'
-                      render={ props => <TeamGoalsFragment { ...props } /> }/>
+                    render={ props => <TeamGoalsFragment { ...props } /> }/>
                     <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
-                      render={ props => <ApprovedGoalsComponent { ...props } /> }/>
-                   </Switch>
-                </section>
-
-                {
-                  !forApproval ?
-                    showTeamGoal ?
-                    <TeamGoalsFragment
-                      employeeNumber = { employeeNumber }
-                      isLineManager = { isLineManager }
-                      isPO = { isPO }
-                    />
-                    :
-                    <RequestedGoalsFragment
-                      employeeNumber = { employeeNumber }
-                      isLineManager = { isLineManager }
-                      showRequestCoachForm = { showRequestCoachForm }
-                      showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
-                  :
-                  <ApprovalGoalsFragment/>
-                }
+                    render={ props => <ApprovedGoalsComponent { ...props } /> }/>
+                    </Switch>
+                    </section>
+                  </div>
+                  <div></div>
+                </div>
               </div>
+              {
+                !forApproval ?
+                showTeamGoal ?
+                <TeamGoalsFragment
+                employeeNumber = { employeeNumber }
+                isLineManager = { isLineManager }
+                isPO = { isPO }
+                />
+                :
+                <RequestedGoalsFragment
+                filterId = { filterId }
+                employeeNumber = { employeeNumber }
+                isLineManager = { isLineManager }
+                showRequestCoachForm = { showRequestCoachForm }
+                showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
+                :
+                <ApprovalGoalsFragment/>
+              }
             </div>
           </div>
         }
-        </div>
+      </div>
     )
   }
 }
