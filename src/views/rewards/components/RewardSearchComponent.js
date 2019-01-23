@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { Card, GenericInput, Checkbox, GenericLoader } from '../../../ub-components'
 import PropTypes from 'prop-types'
 
-let storeData = []
-
 class RewardSearchComponent extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      index : 3,
+      viewMoreText : 'View more',
+    }
   }
 
   updateSearch (e) {
@@ -18,29 +20,7 @@ class RewardSearchComponent extends Component {
   }
 
   receiveData (data) {
-    const {
-      listData
-    } = this.props
-
-    const updateList = [...storeData]
-
-    listData.map((resp, key) => {
-      if(data.id.toString() === resp.id.toString()) {
-        updateList.push({
-          id: resp.id,
-          name: resp.name,
-          isChecked : !resp.isChecked ? true : false
-        })
-      } else {
-        updateList.push({
-          id: resp.id,
-          name: resp.name,
-          isChecked : resp.isChecked
-        })
-      }
-    })
-    storeData = updateList
-    this.props.sendDataList(storeData)
+    this.props.sendDataList(data)
   }
 
   render () {
@@ -54,14 +34,26 @@ class RewardSearchComponent extends Component {
       searchFunc,
       enabledCircularLoader
     } = this.props
+    const {
+      index,
+      viewMoreText
+    } = this.state
 
     let list = listData
     const search = searchString.trim().toLowerCase()
     if(list && list.length !== 0) {
       if (search.length > 0) {
-        list = listData && listData.filter(listData => listData && listData.name.toLowerCase().match(search))
+        list = listData && listData.filter(listData =>
+          listData &&
+          listData.name && listData.name.toLowerCase().match(search) ||
+          listData.firstName && listData.firstName.toLowerCase().match(search) ||
+          listData.lastName && listData.lastName.toLowerCase().match(search) ||
+          listData.employeeNumber && listData.employeeNumber.toLowerCase().match(search)
+        )
       }
     }
+
+    const isVisible = (list && list.length > 4) ? '' : 'hide'
 
     return (
       <div>
@@ -132,11 +124,13 @@ class RewardSearchComponent extends Component {
                 :
                 <div className = { 'grid-global-column-x3' }>
                   {
-                    list &&
-                    list.map((resp, key) =>
-                    <div
-                      ket = { key }
+                    list ?
+                    list.slice(0, index).map((resp, key) =>
+                    <Card
+                      onClick = { () => this.receiveData(resp) }
+                      key = { key }
                       style = {{
+                        cursor: 'pointer',
                         borderRadius: '5px',
                         border: '1px solid #f6f3f3',
                         backgroundColor: 'rgb(254, 254, 254)',
@@ -152,13 +146,29 @@ class RewardSearchComponent extends Component {
                         { resp.name }
                       </h4>
                       <div className = { 'text-align-right' }>
-                        <Checkbox
-                          selected = { resp.isChecked }
-                          onClick = { () => this.receiveData(resp) }
-                        />
                       </div>
-                    </div>
-                  )}
+                    </Card>
+                    )
+                    :
+                   <div>
+                     <h4 className = { 'font-weight-lighter  font-size-12px' }>No Results Found.</h4>
+                   </div>
+                  }
+                  <br/>
+                  <button
+                    type = { 'button' }
+                    className = { `viewmore tooltip ${isVisible}` }
+                    onClick = {
+                      () => {
+                        if(index === list.length)
+                          this.setState({ index : 3, viewMoreText : 'View more' })
+                        else
+                          this.setState({ index : list.length, viewMoreText : 'View less' })
+                      }
+                    }>
+                    <img src={ require('../../../images/icons/horizontal.png') } />
+                    <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                  </button>
                 </div>
               }
             </div>

@@ -22,8 +22,9 @@ class Award extends Component {
       onChangeDataFunc,
       searchFunc,
       searchString,
+      employeeList,
       enabledCircularLoader,
-      employeeList
+      deleteEmployeeToList,
     } = this.props
 
     return (
@@ -65,7 +66,9 @@ class Award extends Component {
           onChangeData = { (e) =>
             onChangeDataFunc(e)
           }
-					sendDataList = { (e) => membersDataFunc(e) }
+					sendDataList = { (e) => {
+            membersDataFunc(e)
+          } }
           className = { 'myrewards-input' }
 					listData = { membersData }/>
         </div>
@@ -77,7 +80,7 @@ class Award extends Component {
             employeeList &&
             employeeList.map((resp, key) =>
               resp.isChecked === true &&
-              <div
+              <Card
                 ket = { key }
                 style = {{
                   borderRadius: '5px',
@@ -95,8 +98,15 @@ class Award extends Component {
                   { resp.name }
                 </h4>
                 <div className = { 'text-align-right' }>
+                  <img
+                    className = { 'close-button-global' }
+                    src = { require('../../../images/x-circle-global.png') }
+                    onClick = { () => {
+                      deleteEmployeeToList(key, resp.id)
+                    }}
+                  />
                 </div>
-              </div>
+              </Card>
             )}
           </div>
         </div>

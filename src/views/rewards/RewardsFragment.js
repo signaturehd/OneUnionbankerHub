@@ -71,7 +71,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 	}
 
   searchData (searchString) {
-    this.presenter.getEligibleInRewards(searchString)
+    this.presenter.getEligibleInRewards(this.state.selectedId, searchString)
   }
 
   showLoadingCircular (enabledCircularLoader) {
@@ -80,6 +80,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
   setEmployeeList (membersData) {
     this.setState({ membersData })
+  }
+
+  storedEmployeeList (employeeList) {
+    this.setState({ employeeList })
   }
 
   setAwardData (awardData) {
@@ -111,10 +115,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
       searchString,
       membersData,
       enabledCircularLoader,
-      employeeList,
       rewardList,
       awardData,
-      redeemData
+      redeemData,
+			employeeList
 		} = this.state
 
 		return (
@@ -147,19 +151,21 @@ class RewardsRecognitionFragment extends BaseMVPView {
                   selectedAwards  ?
                   <div>
                      <AwardFragment
-                      employeeList = { employeeList }
+											employeeList = { employeeList }
                       enabledCircularLoader = { enabledCircularLoader }
                       searchString = { searchString }
                       onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
-                      searchFunc = { () => this.searchData(selectedId, searchString) }
+                      searchFunc = { () => this.searchData(searchString) }
                       membersData = { membersData }
+											deleteEmployeeToList = { (key, id) =>
+												this.presenter.setDeleteEmployeeToList(key, id, selectedId) }
                       membersDataFunc = { (data) => {
-                        this.setState({ employeeList : data })
-                        this.presenter.setEmployeeId(data)
+												this.presenter.receiveEmployeeListData(data, membersData, employeeList)
+                        // this.presenter.setEmployeeId(data)
                       } }
                       selectedId = { selectedId }
                       awardData = { awardData }
-                      selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
+                      selectedAwards = { (selectedAwards) => this.setState({selectedAwards, searchString : ''}) }
                       onSubmitAwards = { () => this.sendData() }
                       employeeName = { employeeName }
                       employeeMessage = { employeeMessage }
