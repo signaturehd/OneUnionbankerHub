@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-
 import {
   Modal,
   Line,
   GenericButton,
   GenericInput,
   MultipleAttachments,
-  SingleInputModal
-} from '../../../ub-components/'
+  SingleInputModal,
+  Card
+} from '../../../../ub-components/'
 
-import '../modals/styles/contactModal.css'
-
-class SettingsProfilePersonalInfoComponent extends Component {
+class PersonalInfoFragment extends Component {
 
   constructor (props) {
     super(props)
@@ -92,11 +90,11 @@ class SettingsProfilePersonalInfoComponent extends Component {
 
 
     return (
-      <div className={ 'profile-others-card' }>
+      <Card className={ 'profile-others-card padding-profileFragment' }>
         <div className={ 'profile-padding' }>
           <div className = { 'grid-global' }>
             <div>
-              <h2 className={ 'unionbank-color font-weight-normal' }>
+              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
                 Personal Information
               </h2>
               <div>
@@ -113,7 +111,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                       </div>
                       <div className={ 'font-size-16px' }>
                         <a>
-                          { profile.employeeNumber ?  profile.employeeNumber : '(Not Yet Provided)' }
+                          { profile && profile.employeeNumber ?  profile.employeeNumber : '(Not Yet Provided)' }
                         </a>
                       </div>
                     </div>
@@ -147,7 +145,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                       </div>
                       <div className={ 'font-size-16px' }>
                         <a>
-                          { profile.birthDate ?  profile.birthDate : '(Not Yet Provided)' }
+                          { profile && profile.birthDate ?  profile.birthDate : '(Not Yet Provided)' }
                         </a>
                       </div>
                     </div>
@@ -164,7 +162,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                       </div>
                       <div className={ 'font-size-16px' }>
                         <a>
-                          { profile.gender ?  profile.gender : '(Not Yet Provided)' }
+                          { profile && profile.gender ?  profile.gender : '(Not Yet Provided)' }
                         </a>
                       </div>
                     </div>
@@ -219,7 +217,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                           </div>
                           <div className={ 'font-size-16px' }>
                             <a>
-                              { profile.civilstatus ?  profile.civilstatus : '(Not Yet Provided)' }
+                              { profile && profile.civilstatus ?  profile.civilstatus : '(Not Yet Provided)' }
                             </a>
                             </div>
                           </div>
@@ -243,14 +241,14 @@ class SettingsProfilePersonalInfoComponent extends Component {
                             </div>
                             <div className={ 'font-size-16px' }>
                               <a>
-                                { profile.address ?  profile.address : '(Not Yet Provided)' }
+                                { profile && profile.address ?  profile.address : '(Not Yet Provided)' }
                               </a>
                             </div>
                           </div>
                           {
                             // <span
-                            // onClick = { () => this.setState({ updateAddress : true }) }
-                            // className = { 'alignment-center profile-icon-settings editIconImage' }/>
+                            //   onClick = { () => this.setState({ updateAddress : true }) }
+                            //   className = { 'alignment-center profile-icon-settings editIconImage' }/>
                           }
                         </div>
                       </div> :
@@ -309,7 +307,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
               </div>
             </div>
             <div>
-              <h2 className={ 'unionbank-color font-weight-normal' }>
+              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
                 Company Information
               </h2>
               <br/>
@@ -376,7 +374,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                     </div>
                     <div className={ 'font-size-16px' }>
                       <a>
-                        { profile.location ?  profile.location : '(Not Yet Provided)' }
+                        { profile && profile.location ?  profile.location : '(Not Yet Provided)' }
                       </a>
                     </div>
                   </div>
@@ -393,7 +391,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                     </div>
                     <div className={ 'font-size-16px' }>
                       <a>
-                        { profile.dateHired ?  profile.dateHired : '(Not Yet Provided)' }
+                        { profile && profile.dateHired ?  profile.dateHired : '(Not Yet Provided)' }
                       </a>
                     </div>
                   </div>
@@ -410,7 +408,7 @@ class SettingsProfilePersonalInfoComponent extends Component {
                     </div>
                     <div className={ 'font-size-16px' }>
                       <a>
-                        { profile.regularizationDate ?  profile.regularizationDate : '(Not Yet Provided)' }
+                        { profile && profile.regularizationDate ?  profile.regularizationDate : '(Not Yet Provided)' }
                       </a>
                     </div>
                   </div>
@@ -419,12 +417,12 @@ class SettingsProfilePersonalInfoComponent extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     )
   }
 }
 
-SettingsProfilePersonalInfoComponent.propTypes={
+PersonalInfoFragment.propTypes={
 }
 
-export default SettingsProfilePersonalInfoComponent
+export default PersonalInfoFragment

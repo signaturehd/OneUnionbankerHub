@@ -84,6 +84,14 @@
   background-image: url('../../../../images/icons/IdCardOrange.png');
 }
 
+.badgeStringComponent {
+  background-image: url('../../../../images/icons/ic_prating.png');
+}
+
+.pointStringComponent {
+  background-image: url('../../../../images/rewards/Rewards-Orange.png');
+}
+
 .employeeContact {
   background-image: url('../../../../images/My Profile.png');
 }

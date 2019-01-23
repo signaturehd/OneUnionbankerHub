@@ -18,3 +18,12 @@
   height: auto;
   background-size: cover;
 }
+
+.padding-profileFragment{
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.padding-profileFragment-name{
+  margin-top: 20px;
+}
