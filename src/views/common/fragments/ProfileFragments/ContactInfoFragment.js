@@ -81,7 +81,7 @@ class ContactInfoFragment extends Component {
         <div className= { 'grid-global' }>
           <div>
             <div className={ 'contact-info-grid' }>
-              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
                 Contact Information
               </h2>
               <br/>
@@ -98,7 +98,7 @@ class ContactInfoFragment extends Component {
                         <div className={ 'font-size-17px contact-title' }>
                           <h2>Email</h2>
                         </div>
-                        <div className={ 'font-size-16px' }>
+                        <div className={ 'font-size-14px' }>
                           <GenericInput
                             errorMessage = { emailTextErrorMessage }
                             hint = { 'Enter Email Address' }
@@ -132,7 +132,7 @@ class ContactInfoFragment extends Component {
                         <div className={ 'font-size-17px contact-title' }>
                           <h2>Email</h2>
                         </div>
-                        <div className={ 'font-size-16px' }>
+                        <div className={ 'font-size-14px' }>
                           <a>{ profileEmail ? profileEmail : '(Not Yet Provided)' }</a>
                         </div>
                       </div>
@@ -192,7 +192,7 @@ class ContactInfoFragment extends Component {
                       <div className={ 'font-size-17px contact-title' }>
                         <h2>Mobile Number</h2>
                       </div>
-                      <div className={ 'font-size-16px' }>
+                      <div className={ 'font-size-14px' }>
                         <a>+{ profileNumber ? profileNumber : '(Not Yet Provided)' }</a>
                       </div>
                     </div>

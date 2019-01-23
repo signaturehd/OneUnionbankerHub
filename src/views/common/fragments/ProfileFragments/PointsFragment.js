@@ -28,7 +28,7 @@ class PointsFragment extends Component {
         <div className={ 'profile-padding' }>
           <div className = { 'grid-global' }>
             <div>
-              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
                 Badges and Points
               </h2>
               <div>
@@ -43,7 +43,7 @@ class PointsFragment extends Component {
                       <div className={ 'font-size-17px contact-title' }>
                         <h2>Badges </h2>
                       </div>
-                      <div className={ 'font-size-16px' }>
+                      <div className={ 'font-size-14px' }>
                         <a>
                           { badgeString ?
                             badgeString :
@@ -66,7 +66,7 @@ class PointsFragment extends Component {
                       <div className={ 'font-size-17px contact-title' }>
                         <h2>Points </h2>
                       </div>
-                      <div className={ 'font-size-16px' }>
+                      <div className={ 'font-size-14px' }>
                         <a>
                           { pointString ?
                             pointString :

@@ -31,7 +31,7 @@ class DescriptionFragment extends Component {
         <div className={ 'profile-padding' }>
           <div className = { 'grid-global' }>
             <div className = { 'grid-global' }>
-              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
                 Description
               </h2>
               <div className = { 'text-align-right' }>

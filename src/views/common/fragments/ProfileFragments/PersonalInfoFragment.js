@@ -94,7 +94,7 @@ class PersonalInfoFragment extends Component {
         <div className={ 'profile-padding' }>
           <div className = { 'grid-global' }>
             <div>
-              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
                 Personal Information
               </h2>
               <div>
@@ -307,7 +307,7 @@ class PersonalInfoFragment extends Component {
               </div>
             </div>
             <div>
-              <h2 className={ 'unionbank-color font-weight-normal padding-profileFragment-name' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
                 Company Information
               </h2>
               <br/>
