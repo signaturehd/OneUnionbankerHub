@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import BaseMVPView from '../../common/base/BaseMVPView'
 
-import Presenter from '../presenter/ApprovalGoalsPresenter'
-
 import {
   Modal,
   GenericButton,
@@ -22,9 +20,9 @@ import { format } from '../../../utils/numberUtils'
 import moment from 'moment'
 
 import { Progress } from 'react-sweet-progress'
-import './styles/approval.css'
+import './styles/teamGoal.css'
 
-class ApprovalGoalsComponent extends Component {
+class DirectReportGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -35,7 +33,7 @@ class ApprovalGoalsComponent extends Component {
   }
 
   navigate () {
-    this.props.history.push('/mygoals')
+    this.props.history.push('/mylearning')
   }
 
   render () {
@@ -44,32 +42,15 @@ class ApprovalGoalsComponent extends Component {
       employeeName,
       imageUrl,
       priorityFunc,
-      showApprovalFormFunc,
-      goalId,
-      goalTitle,
-      approvalStatus,
-      description,
-      priorityId,
-      startDate,
-      dueDate,
-      goalTypeId,
-      showRejectRemarksModal,
-      showRejectRemarksFunc,
-      onApprovalSubmit,
-      onClose,
-      rejectedRemarks,
-      rejectedRemarksFunc
+      onSelected
     } = this.props
 
-    const {
-      index,
-      viewMoreText
-    } = this.state
-
+    const { index, viewMoreText } = this.state
     const isVisible = (cardHolder && cardHolder.length > 1) ? '' : 'hide'
 
     return (
-      <div>
+      <div className = { 'padding-15px' }>
+      {
         <div>
           <div className = { 'employee-column' }>
             <img src = { require('../../../images/1uhub.png') } width = { '60px' } height = { '50px' }/>
@@ -79,33 +60,51 @@ class ApprovalGoalsComponent extends Component {
             cardHolder &&
             cardHolder.slice(0, index).map((details, key) =>
 
-              <Card className = { 'margin-10px' }
-                onClick = { () => showApprovalFormFunc(
-                  employeeName,
+              <Card className = { 'margin-10px cursor-pointer' }
+                onClick = { () => onSelected(
+                  details,
                   details.id,
                   details.title,
-                  details.approvalStatus,
                   details.description,
-                  details.priority,
                   details.startDate,
                   details.endDate,
+                  priorityFunc(details.priority),
+                  details.status,
                   details.type
                 ) }>
                 <div className = { 'padding-15' }>
                   <div className = { 'header-column-1' }>
                     <div>
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ details.title }</h2>
-                    {
-                      // <Progress
-                      //   width = { 65 }
-                      //   height = { 65 }
-                      //   percent = { 80 }
-                      //   className = { 'margin-5px' }
-                      // />
-                    }
+                      {
+                        // <Progress
+                        //   width = { 65 }
+                        //   height = { 65 }
+                        //   percent = { 80 }
+                        //   className = { 'margin-5px' }
+                        // />
+                      }
                     </div>
                     <div>
-                      <h2 className = { 'text-align-right font-size-12px font-weight-bold color-gray' }>{ details.status }</h2>
+                      {
+                        details.approvalStatus === 2 ?
+                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
+                        :
+                          details.approvalStatus === 3 ?
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                          :
+                          details.approvalStatus === 1 ?
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
+                          :
+                          details.approvalStatus === 4 ?
+                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
+                          :
+                          details.approvalStatus === 5 ?
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                          :
+                          details.approvalStatus === 6 &&
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                      }
                       <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                     </div>
 
@@ -143,13 +142,14 @@ class ApprovalGoalsComponent extends Component {
             <span className={ 'tooltiptext' }>{ viewMoreText }</span>
           </button>
         </div>
+      }
       </div>
     )
   }
 }
 
-ApprovalGoalsComponent.propTypes = {
+DirectReportGoalsComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ApprovalGoalsComponent
+export default DirectReportGoalsComponent

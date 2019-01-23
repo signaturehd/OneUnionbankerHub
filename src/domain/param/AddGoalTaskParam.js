@@ -1,4 +1,4 @@
-export default (goalType, goalId, description) => ({
+export default (goalType, id, description) => ({
   goalType,
   body : {
     id,

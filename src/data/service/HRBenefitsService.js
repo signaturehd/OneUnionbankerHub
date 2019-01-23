@@ -2311,19 +2311,13 @@ export default class HRBenefitsService {
   }
 
   getForApprovalGoals (token) {
-    return this.apiClient.get('v1/goals/reports', {
+    return this.apiClient.get('v1/goals/reports?status=&type=&goalType=personal', {
       headers: { token }
     })
   }
 
-  approveGoal (token, goalId, isApprove, rejectedRemarks) {
-    const objectParam = {
-      id: goalId,
-      status: isApprove,
-      remarks: rejectedRemarks
-    }
-
-    return this.apiClient.post('v1/goals/approval', objectParam, {
+  approveGoal (token, approvalGoalsParam) {
+    return this.apiClient.post(`v1/goals/approval?goalType=${approvalGoalsParam.goalType}`, approvalGoalsParam.body, {
       headers : { token }
     })
   }
@@ -2347,7 +2341,7 @@ export default class HRBenefitsService {
   }
 
   getGoalTask (token, goalId) {
-    return this.apiClient.get(`v1/goals/tasks?goalId=${goalId}`, {
+    return this.apiClient.get(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
       headers: { token }
     })
   }
@@ -2367,13 +2361,13 @@ export default class HRBenefitsService {
   updateGoalTask(token, goalId, taskDescription, isCompleted) {
     let updateGoal
     if (taskDescription) {
-      updateGoal = this.apiClient.put(`v1/goals/tasks/${goalId}`, {
+      updateGoal = this.apiClient.put(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
         description: taskDescription
       }, {
         headers : { token }
       })
     } else if (isCompleted !== null) {
-      updateGoal = this.apiClient.post(`v1/goals/tasks/${goalId}`, {
+      updateGoal = this.apiClient.post(`v1/goals/${goalId}/completion?goalType=personal`, {
         isCompleted
       }, {
         headers : { token }
@@ -2411,7 +2405,7 @@ export default class HRBenefitsService {
   }
 
   getTeamGoals (token, goalType) {
-    return this.apiClient.get(`v1/goals/goals?goalType=${goalType}`, {
+    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=2,6`, {
       headers: { token }
     })
   }
@@ -2440,6 +2434,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addSquadGoals (token, squadGoalsParam) {
+    return this.apiClient.post(`v1/goals?goalType=${squadGoalsParam.goalType}`, squadGoalsParam.body, {
+      headers: { token }
+    })
+  }
+
   getSquadGoals (token, goalType) {
     return this.apiClient.get(`v1/goals/members?goalType=${goalType}`, {
       headers: { token }
@@ -2448,6 +2448,12 @@ export default class HRBenefitsService {
 
   getMembersGoals (token, goalType) {
     return this.apiClient.get(`v1/goals/members?goalType=${goalType}`, {
+      headers: { token }
+    })
+  }
+
+  getDirectReportGoals (token) {
+    return this.apiClient.get('v1/goals/reports?goalType=personal&type=1&status=2', {
       headers: { token }
     })
   }
