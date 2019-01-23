@@ -20,8 +20,8 @@ class ExperienceComponent extends Component {
 
     return (
       <div>
-        <Card className={ 'profile-common-card' }>
-          <h2 className={ 'unionbank-color font-weight-normal' }> Work & Experience </h2>
+        <Card className={ 'profile-common-card padding-profileFragment-name' }>
+          <h2 className={ 'unionbank-color-grey font-weight-normal' }> Work & Experience </h2>
           <br/>
             {
               profileExperience ?
