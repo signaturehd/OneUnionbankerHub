@@ -193,32 +193,98 @@ export default class RewardsPresenter {
     }
   }
 
-  receiveEmployeeListData (data, membersData, employeeList) {
-    storedEmployeeList = []
-    try {
-      let updateList = [...storedEmployeeList]
-      let selectedList = [...storedUpdatedList]
-      const employeeId = data.id
-      membersData && membersData.map((resp, key) => {
-        if(employeeId === resp.id) {
+  setSelectAllEmployee (employeeAllIsChecked, membersData, selectedId) {
+    const isCheck = !employeeAllIsChecked ? true : false
+    let updateList = [...storedEmployeeList]
+    let selectedList = [...storedUpdatedList]
+    membersData && membersData.map((resp, key) => {
+      if(selectedId === 2) {
+        if(isCheck) {
           selectedList.push({
             id: resp.id,
             name: resp.name,
-            isChecked : !resp.isChecked ? true : false
-          })
-        } else {
-          updateList.push({
-            id: resp.id,
-            name: resp.name,
-            isChecked : resp.isChecked
+            isChecked : employeeAllIsChecked
           })
         }
-      })
-      storedEmployeeList = updateList
-      storedUpdatedList = selectedList
-      this.view.setEmployeeList(storedEmployeeList)
-      this.view.storedEmployeeList(selectedList)
-      storedEmployeeList = []
+      } else {
+        selectedList.push({
+          id: resp.id,
+          name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+          isChecked : employeeAllIsChecked,
+          lastName: resp.lastName,
+          firstName: resp.firstName,
+          employeeNumber: resp.employeeNumber,
+        })
+      }
+    })
+    storedEmployeeList = updateList
+    storedUpdatedList = selectedList
+
+
+    //
+    // this.view.setAllEmployeeSelectBool(isCheck)
+    // this.view.setEmployeeList(storedEmployeeList)
+    // this.view.storedEmployeeList(storedUpdatedList)
+  }
+
+  receiveEmployeeListData (data, membersData, employeeList, selectedId) {
+    storedEmployeeList = []
+    try {
+      if(selectedId === 2) {
+        let updateList = [...storedEmployeeList]
+        let selectedList = [...storedUpdatedList]
+        const employeeId = data.id
+        membersData && membersData.map((resp, key) => {
+          if(employeeId === resp.id) {
+            selectedList.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked : !resp.isChecked ? true : false
+            })
+          } else {
+            updateList.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked : resp.isChecked
+            })
+          }
+        })
+        storedEmployeeList = updateList
+        storedUpdatedList = selectedList
+        this.view.setEmployeeList(storedEmployeeList)
+        this.view.storedEmployeeList(selectedList)
+        storedEmployeeList = []
+      } else {
+        let updateList = [...storedEmployeeList]
+        let selectedList = [...storedUpdatedList]
+        const employeeId = data.id
+        membersData && membersData.map((resp, key) => {
+          if(employeeId === resp.id) {
+            selectedList.push({
+              id: resp.id,
+              name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+              isChecked : !resp.isChecked ? true : false,
+              lastName: resp.lastName,
+              firstName: resp.firstName,
+              employeeNumber: resp.employeeNumber,
+            })
+          } else {
+            updateList.push({
+              id: resp.id,
+              name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+              isChecked : resp.isChecked,
+              lastName: resp.lastName,
+              firstName: resp.firstName,
+              employeeNumber: resp.employeeNumber,
+            })
+          }
+        })
+        storedEmployeeList = updateList
+        storedUpdatedList = selectedList
+        this.view.setEmployeeList(storedEmployeeList)
+        this.view.storedEmployeeList(selectedList)
+        storedEmployeeList = []
+      }
     } catch (e) {
       console.log(e)
     }

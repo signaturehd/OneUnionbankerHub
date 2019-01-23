@@ -6,7 +6,7 @@ class RewardSearchComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      index : 3,
+      index : 4,
       viewMoreText : 'View more',
     }
   }
@@ -125,30 +125,34 @@ class RewardSearchComponent extends Component {
                 <div className = { 'grid-global-column-x3' }>
                   {
                     list ?
-                    list.slice(0, index).map((resp, key) =>
-                    <Card
-                      onClick = { () => this.receiveData(resp) }
-                      key = { key }
-                      style = {{
-                        cursor: 'pointer',
-                        borderRadius: '5px',
-                        border: '1px solid #f6f3f3',
-                        backgroundColor: 'rgb(254, 254, 254)',
-                        textAlign: 'left',
-                        marginBottom: '10px',
-                        padding: '15px 0px 15px 20px',
-                        display: 'grid',
-                        gridTemplateColumns: 'auto .01fr',
-                        alignItems: 'center',
-                      }}>
-                      <h4
-                        className = { 'align-items-center cursor-pointer font-weight-lighter font-size-12px' }>
-                        { resp.name }
-                      </h4>
-                      <div className = { 'text-align-right' }>
-                      </div>
-                    </Card>
-                    )
+                    <div className = { 'grid-global' }>
+                      {
+                        list.slice(0, index).map((resp, key) =>
+                        <Card
+                          onClick = { () => this.receiveData(resp) }
+                          key = { key }
+                          style = {{
+                            cursor: 'pointer',
+                            borderRadius: '5px',
+                            border: '1px solid #f6f3f3',
+                            backgroundColor: 'rgb(254, 254, 254)',
+                            textAlign: 'left',
+                            marginBottom: '10px',
+                            padding: '10px 0px 10px 10px',
+                            display: 'grid',
+                            gridTemplateColumns: 'auto .01fr',
+                            alignItems: 'center',
+                          }}>
+                          <h4
+                            className = { 'align-items-center cursor-pointer font-weight-lighter font-size-12px' }>
+                            { resp.name }
+                          </h4>
+                          <div className = { 'text-align-right' }>
+                          </div>
+                        </Card>
+                        )
+                      }
+                    </div>
                     :
                    <div>
                      <h4 className = { 'font-weight-lighter  font-size-12px' }>No Results Found.</h4>

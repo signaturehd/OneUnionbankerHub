@@ -25,6 +25,8 @@ class Award extends Component {
       employeeList,
       enabledCircularLoader,
       deleteEmployeeToList,
+      selectAllIsChecked,
+      selectAllEmployee,
     } = this.props
 
     return (
@@ -59,6 +61,18 @@ class Award extends Component {
         }
         <div>
         <br/>
+        {
+          membersData &&
+          <div className = { 'awards-grid-select-option' }>
+            <div></div>
+            <h4 className = { 'font-size-10px font-weight-lighter' }>Select all</h4>
+            <Checkbox
+              selected = { selectAllIsChecked }
+              onChange = { () => selectAllEmployee() }
+              text = { 'Select All' }
+            />
+          </div>
+        }
 				<RewardSearchComponent
           enabledCircularLoader = { enabledCircularLoader }
           searchString = { searchString }
@@ -75,7 +89,7 @@ class Award extends Component {
         <div>
           <h4 className={'celebrate-container-space'}>Who will I award this to?</h4>
           <br/>
-          <div>
+        <div className = { 'grid-global' }>
           {
             employeeList &&
             employeeList.map((resp, key) =>
@@ -87,14 +101,14 @@ class Award extends Component {
                   backgroundColor: '#ff8a00',
                   textAlign: 'left',
                   marginBottom: '10px',
-                  padding: '10px 0px 10px 20px',
+                  padding: '1px 0px 1px 1px',
                   display: 'grid',
                   color: '#fff',
                   gridTemplateColumns: 'auto .01fr',
                   alignItems: 'center',
                 }}>
                 <h4
-                  className = { 'align-items-center cursor-pointer font-weight-lighter font-size-16px' }>
+                  className = { 'align-items-center cursor-pointer font-weight-lighter font-size-12px' }>
                   { resp.name }
                 </h4>
                 <div className = { 'text-align-right' }>

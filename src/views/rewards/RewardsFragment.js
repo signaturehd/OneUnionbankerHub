@@ -25,6 +25,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			orNumberErrorMessage: '',
       employeeName: 'test',
       enabledCircularLoader : false,
+			selectAllIsChecked: false
 		}
 	}
 
@@ -98,6 +99,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ redeemData })
   }
 
+	setAllEmployeeSelectBool (selectAllIsChecked) {
+		this.setState({ selectAllIsChecked })
+	}
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -118,7 +123,8 @@ class RewardsRecognitionFragment extends BaseMVPView {
       rewardList,
       awardData,
       redeemData,
-			employeeList
+			employeeList,
+			selectAllIsChecked
 		} = this.state
 
 		return (
@@ -160,12 +166,14 @@ class RewardsRecognitionFragment extends BaseMVPView {
 											deleteEmployeeToList = { (key, id) =>
 												this.presenter.setDeleteEmployeeToList(key, id, selectedId) }
                       membersDataFunc = { (data) => {
-												this.presenter.receiveEmployeeListData(data, membersData, employeeList)
+												this.presenter.receiveEmployeeListData(data, membersData, employeeList, selectedId)
                         // this.presenter.setEmployeeId(data)
                       } }
                       selectedId = { selectedId }
+											selectAllIsChecked = { selectAllIsChecked }
                       awardData = { awardData }
-                      selectedAwards = { (selectedAwards) => this.setState({selectedAwards, searchString : ''}) }
+											selectAllEmployee = { () => this.presenter.setSelectAllEmployee(selectAllIsChecked, membersData, selectedId) }
+                      selectedAwards = { (selectedAwards) => this.setState({ selectedAwards, searchString : '' }) }
                       onSubmitAwards = { () => this.sendData() }
                       employeeName = { employeeName }
                       employeeMessage = { employeeMessage }
