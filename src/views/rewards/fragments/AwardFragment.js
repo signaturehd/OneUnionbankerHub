@@ -50,11 +50,11 @@ class Award extends Component {
                 <h4 className = { 'font-size-30px' }>{value.title}</h4>
                 <br/>
                 <h4 className = {'text-align-justify celebrate-margin-bottom font-weight-lighter font-size-16px'}>{value.details}</h4>
-                <h4 className = {'text-align-justify font-weight-bold font-size-15px'}>{value.principles}</h4>
-                <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.principlesDetails}</h4>
+                <h4 className = {'text-align-justify font-weight-bold font-size-13px'}>{value.principles}</h4>
+                <h4 className = {'text-align-justify font-weight-lighter font-size-12px'}>{value.principlesDetails}</h4>
                 <br/>
-                <h4 className = {'text-align-justify font-weight-bold font-size-14px'}>{value.value}</h4>
-                <h4 className = {'text-align-justify font-weight-lighter font-size-14px'}>{value.valuesDetails}</h4>
+                <h4 className = {'text-align-justify font-weight-bold font-size-13px'}>{value.value}</h4>
+                <h4 className = {'text-align-justify font-weight-lighter font-size-12px'}>{value.valuesDetails}</h4>
               </div>
             )
           )
@@ -68,8 +68,9 @@ class Award extends Component {
             <h4 className = { 'font-size-10px font-weight-lighter' }>Select all</h4>
             <Checkbox
               selected = { selectAllIsChecked }
-              onChange = { () => selectAllEmployee() }
-              text = { 'Select All' }
+              onChange = { () =>
+                selectAllEmployee()
+              }
             />
           </div>
         }
@@ -87,7 +88,7 @@ class Award extends Component {
 					listData = { membersData }/>
         </div>
         <div>
-          <h4 className={'celebrate-container-space'}>Who will I award this to?</h4>
+          <h4 className={'celebrate-container-space font-size-14px'}>Who will I award this to?</h4>
           <br/>
         <div className = { 'grid-global' }>
           {
@@ -125,7 +126,7 @@ class Award extends Component {
           </div>
         </div>
         <div className={ 'celebrate-container-space ' }>
-          <h4 className={'celebrate-margin-bottom'}>Write a personal message of gratitude for this award's recipients.</h4>
+          <h4 className={'celebrate-margin-bottom font-size-14px'}>Write a personal message of gratitude for this award's recipients.</h4>
           <GenericInput
             type={ 'textarea' }
             resize={150}

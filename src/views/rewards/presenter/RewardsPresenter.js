@@ -194,36 +194,38 @@ export default class RewardsPresenter {
   }
 
   setSelectAllEmployee (employeeAllIsChecked, membersData, selectedId) {
-    const isCheck = !employeeAllIsChecked ? true : false
-    let updateList = [...storedEmployeeList]
-    let selectedList = [...storedUpdatedList]
-    membersData && membersData.map((resp, key) => {
-      if(selectedId === 2) {
-        if(isCheck) {
-          selectedList.push({
-            id: resp.id,
-            name: resp.name,
-            isChecked : employeeAllIsChecked
-          })
-        }
-      } else {
-        selectedList.push({
-          id: resp.id,
-          name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
-          isChecked : employeeAllIsChecked,
-          lastName: resp.lastName,
-          firstName: resp.firstName,
-          employeeNumber: resp.employeeNumber,
-        })
-      }
-    })
-    storedEmployeeList = updateList
-    storedUpdatedList = selectedList
-
-
+    // console.log(employeeAllIsChecked, membersData)
+    // let updateList = [...storedEmployeeList]
+    // let selectedList = [...storedUpdatedList]
+    // const isCheck = !employeeAllIsChecked ? true : false
+    // console.log(membersData)
+    // membersData && membersData.map((resp, key) => {
+    //   if(selectedId === 2) {
+    //     if(isCheck) {
+    //       updateList.splice(key, 1)
+    //     } else {
+    //       selectedList.push({
+    //         id: resp.id,
+    //         name: resp.name,
+    //         isChecked : isCheck
+    //       })
+    //     }
+    //   } else {
+    //     selectedList.push({
+    //       id: resp.id,
+    //       name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+    //       isChecked : employeeAllIsChecked,
+    //       lastName: resp.lastName,
+    //       firstName: resp.firstName,
+    //       employeeNumber: resp.employeeNumber,
+    //     })
+    //   }
+    // })
+    // storedUpdatedList = selectedList
+    // storedEmployeeList = updateList
     //
     // this.view.setAllEmployeeSelectBool(isCheck)
-    // this.view.setEmployeeList(storedEmployeeList)
+    // this.view.setEmployeeList(storedUpdatedList)
     // this.view.storedEmployeeList(storedUpdatedList)
   }
 

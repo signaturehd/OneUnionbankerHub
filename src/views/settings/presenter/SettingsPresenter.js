@@ -62,6 +62,7 @@ export default class SettingsPresenter {
          console.log(e)
        }
      }, e => {
+       this.view.hideLoading()
        this.view.showProfileBackground(e.message)
        this.view.showProfile(e.message.employee)
        this.view.showRank(e.message.rank)
