@@ -3,6 +3,11 @@
   grid-template-columns: 1fr 2fr 1fr
 }
 
+.coe-main-grid {
+  display: grid;
+  grid-template-columns: .5fr 2.5fr .5fr
+}
+
 .card-padding {
   padding: 15px;
 }
@@ -16,6 +21,11 @@
 }
 
 .div-grid {
+  display: grid;
+  grid-template-columns: 1fr 0fr;
+}
+
+.coe-div-grid {
   display: grid;
   grid-template-columns: 1fr 0fr;
 }

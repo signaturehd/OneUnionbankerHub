@@ -197,6 +197,7 @@ export default class CertificateOfEmploymentPresenter {
      this.setStoredVLFrom('')
      this.setStoredVLTo('')
      this.view.navigateLearning()
+     this.view.backToList()
     }, error => {
       this.view.checkLoader(false)
     })

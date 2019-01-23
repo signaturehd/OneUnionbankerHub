@@ -84,6 +84,10 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
     this.props.history.push('/coe')
   }
 
+  backToList () {
+    this.setState({ showListForm : true, showCOEForm: false, showBIR2316 : false })
+  }
+
   render () {
     const {
       purpose,
@@ -174,26 +178,26 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
         }
         {
           showListForm &&
-          <div className = { 'main-grid' }>
+          <div className = { 'coe-main-grid' }>
             <div></div>
             <div>
               <h2 className = { 'text-align-center font-size-24px font-weight-bold margin-bottom-10px' }>My Documents</h2>
               <h2 className = { 'text-align-center font-size-14px' }>List of your documents in one place.</h2>
               <br/>
               <br/>
-              <h2 className = { 'text-align-left font-size-14px color-gray' }>Request for your Certificate of Employment</h2>
+              <h2 className = { 'text-align-left font-size-14px color-gray' }>Request for your COE</h2>
               <Card className = { 'card-padding cursor-pointer' }
               onClick = { () => this.setState({ showCOEForm: true, showListForm: false }) }>
-                <div className = { 'div-grid' }>
-                  <h2 className = { 'font-weight-bold' }>Certificate Of Employment Form</h2>
+                <div className = { 'coe-div-grid' }>
+                  <h2 className = { '' }>Certificate Of Employment Form</h2>
                   <span className = { 'bir-icon bir-seemore-button text-align-right' }/>
                 </div>
               </Card>
               <h2 className = { 'text-align-left font-size-14px color-gray' }>Government Documents</h2>
               <Card className = { 'card-padding cursor-pointer' }
               onClick = { () => this.setState({ showBIR2316: true, showListForm: false }) }>
-              <div className = { 'div-grid' }>
-                <h2 className = { 'font-weight-bold' }>BIR 2316</h2>
+              <div className = { 'coe-div-grid' }>
+                <h2 className = { '' }>BIR 2316</h2>
                 <span className = { 'bir-icon bir-seemore-button float-right' }/>
               </div>
               </Card>
@@ -203,8 +207,8 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
                 // this.setState({ showBIR2316: true, showListForm: false })
                 this.props.history.push('/mycompliance')
               } }>
-              <div className = { 'div-grid' }>
-                <h2 className = { 'font-weight-bold' }>Code of Conduct</h2>
+              <div className = { 'coe-div-grid' }>
+                <h2 className = { '' }>Code of Conduct</h2>
                 <span className = { 'bir-icon bir-seemore-button float-right' }/>
               </div>
               </Card>
@@ -224,7 +228,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
                  this.setState({ showEditMode : e })
               }
             } }
-            typeOfCoe= { typeOfCoe}
+            typeOfCoe= { typeOfCoe }
             typeOfCoeBody = { typeOfCoeBody }
             purposeBody = { purposeBody }
             purpose = { purpose }
@@ -232,7 +236,10 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
             visa = { visa }
             vlFrom = { vlFrom }
             vlTo = { vlTo }
-            vlFromFunc = { (resp) => this.presenter.setStoredVLFrom(resp) }
+            vlFromFunc = { (resp) => {
+              this.presenter.setStoredVLFrom(resp)
+              this.setState({ vlTo : '' })
+            } }
             vlToFunc = { (resp) => this.presenter.setStoredVLTo(resp) }
             showTypeModalFunc = { () =>
               this.setState({ showTypeModal : true }) }
@@ -241,7 +248,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
             showVisaModalFunc = { () =>
               this.setState({ showVisaModal : true }) }
             backToList = { () =>
-              this.setState({ showCOEForm: false, showListForm: true })}
+              this.setState({ showCOEForm: false, showListForm: true }) }
           />
         }
         {
