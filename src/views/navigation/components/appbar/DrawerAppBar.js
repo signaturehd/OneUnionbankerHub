@@ -92,20 +92,25 @@ class DrawerAppBar extends Component {
       imageStyle : 'travel',
       action : () => history.push('/mytravel'),
     },{
+      id: 17,
+      name: 'Rewards & Recognition',
+      imageStyle : 'rewards',
+      action : () => history.push('/myrewards'),
+    },{
       id: 14,
       name: 'My Goals & Performance',
       imageStyle : 'goals',
       action : () => history.push('/mygoals'),
     },{
-      id: 9,
-      name: 'My Compliance',
-      imageStyle : 'compliance',
-      action : () => history.push('/mycompliance'),
-    },{
       id: 7,
-      name: 'My COE',
+      name: 'My Documents',
       imageStyle : 'coe',
       action : () => history.push('/coe'),
+    },{
+      id: 15,
+      name: 'My Future',
+      imageStyle : 'future',
+      action : () => history.push('/pensionfunds'),
     },{
       id: 1,
       name: 'FAQs',
@@ -197,7 +202,9 @@ class DrawerAppBar extends Component {
     }
 
     return (
-      <AppBar>
+      <AppBar
+        className = { 'appbar-style-color' }
+      >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
             <div>
@@ -209,7 +216,7 @@ class DrawerAppBar extends Component {
             }
               <img
                 style={ style.navbar }
-                src={ require('../../../../images/WEB and LOGO/UBP Logo 2.png') }
+                src={ require('../../../../images/mobileview/UBP Logo 2.png') }
                 className={'_img-ub-logo'}/>
             </div>
             <div

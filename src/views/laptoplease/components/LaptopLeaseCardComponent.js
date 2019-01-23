@@ -30,6 +30,16 @@ class LaptopLeaseCardComponent extends Component {
       color,
       showTerms,
       terms,
+      graphicsCard,
+      showGraphicsCard,
+      hardDriveCapacity,
+      showHardDriveCapacity,
+      processorType,
+      showProcessorType,
+      operatingSystem,
+      showOperatingSystem,
+      systemMemory ,
+      showSystemMemory ,
       showEditMode,
       onSubmit,
       onEdit,
@@ -46,10 +56,14 @@ class LaptopLeaseCardComponent extends Component {
       setLaptopBrand,
       setLaptopModel,
       setScreenSize,
+      getCardOptionId
     } = this.props
 
     return (
       <div className={'carview-container'}>
+        <center>
+          (Bank to purchase)
+        </center>
         <div className={ 'car-grid-column-2' }>
           <div></div>
           <div className={ 'car-form-card' }>
@@ -111,7 +125,46 @@ class LaptopLeaseCardComponent extends Component {
                 readOnly
                 onClick = { () => showTerms() }
                 value = { terms }
-
+                />
+              <GenericInput
+                placeholder = { 'Graphics Card' }
+                errorMessage = { '' }
+                disabled = { showEditMode }
+                text = { 'Graphics Card' }
+                onChange = { (e) => showGraphicsCard(e.target.value) }
+                value = { graphicsCard }
+                />
+              <GenericInput
+                placeholder = { 'Hard Drive Capacity' }
+                errorMessage = { '' }
+                disabled = { showEditMode }
+                text = { 'Hard Drive Capacity' }
+                onChange = { (e) => showHardDriveCapacity(e.target.value) }
+                value = { hardDriveCapacity }
+                />
+              <GenericInput
+                placeholder = { 'Processor Type' }
+                errorMessage = { '' }
+                disabled = { showEditMode }
+                text = { 'Processor Type' }
+                onChange = { (e) => showProcessorType(e.target.value) }
+                value = { processorType }
+                />
+              <GenericInput
+                placeholder = { 'Operationg System' }
+                errorMessage = { '' }
+                disabled = { showEditMode }
+                text = { 'Operationg System' }
+                onChange = { (e) => showOperatingSystem(e.target.value) }
+                value = { operatingSystem }
+                />
+              <GenericInput
+                placeholder = { 'System Memory' }
+                errorMessage = { '' }
+                disabled = { showEditMode }
+                text = { 'System Memory' }
+                onChange = { (e) => showSystemMemory(e.target.value) }
+                value = { systemMemory }
                 />
               <GenericInput
                 value = { deliveryOptionName }

@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Card, Line, FloatingActionButton, MultipleAttachments, Modal, GenericButton } from '../../../ub-components/'
-import SettingsProfileDescriptions from './SettingsProfileDescriptions'
-import SettingsProfilePersonalInfoComponent from './SettingsProfilePersonalInfoComponent'
-import SettingsContactInfoComponent from './SettingsContactInfoComponent'
 import SettingsPinCardComponent from './SettingsPinCardComponent'
 
 import DependentsModal from '../modals/DependentsModal'
@@ -12,6 +9,10 @@ import StaffAccountsModal from '../modals/StaffAccountsModal'
 import ChangePINModal from '../modals/ChangePINModal'
 import DevicesModal from '../modals/SettingDevicesModal'
 
+import PersonalInfoFragment from '../../common/fragments/ProfileFragments/PersonalInfoFragment'
+import ContactInfoFragment from '../../common/fragments/ProfileFragments/ContactInfoFragment'
+import DescriptionFragment from '../../common/fragments/ProfileFragments/DescriptionFragment'
+import PointsFragment from '../../common/fragments/ProfileFragments/PointsFragment'
 import SkillsFragment from '../../common/fragments/ProfileFragments/SkillsFragment'
 import ExperienceFragment from '../../common/fragments/ProfileFragments/ExperienceFragment'
 import CertificateFragment from '../../common/fragments/ProfileFragments/CertificateFragment'
@@ -20,6 +21,8 @@ import EducationFragment from '../../common/fragments/ProfileFragments/Education
 import ExifOrientationImg  from 'react-exif-orientation-img'
 
 import './styles/profileSettings.css'
+import '../modals/styles/contactModal.css'
+
 
 class SettingsProfileCardComponent extends Component {
 
@@ -80,7 +83,6 @@ class SettingsProfileCardComponent extends Component {
       showPinSettingsComponentFunc,
       showPinComponentFunc,
     } = this.props
-
     const style = {
       backgroundImage : `url(${profileImage && profileImage})`,
       backgroundRepeat : 'no-repeat',
@@ -103,6 +105,7 @@ class SettingsProfileCardComponent extends Component {
 
     const profileInitial = profile && profile.fullname ? profile.fullname : 'Empty Empty'
     let splitUserInitial = profileInitial.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'')
+
 
     return (
     <div>
@@ -131,7 +134,7 @@ class SettingsProfileCardComponent extends Component {
             enabledStaffLoader = { enabledStaffLoader }
             staffLoader = { staffLoader }
             staffAccounts = { staffAccounts }
-            employeeNumber = { profile.employeeNumber }
+            employeeNumber = { profile && profile.employeeNumber }
             name = { profile && profile.fullname }
             showSuccessModal = { showSuccessModal }
             getForConfirmation = { () => getForConfirmation() }
@@ -271,64 +274,56 @@ class SettingsProfileCardComponent extends Component {
                 </div>
               </div>
             </div>
-            <div className={ 'profile-padding' }>
-              <br/><Line/><br/>
-            </div>
-            {
-              showPinComponent ?
-              <SettingsPinCardComponent
-                showPinSettingsComponent = { showPinSettingsComponent }
-                uniqueNewPIN = { uniqueNewPIN }
-                uniqueOldPIN = { uniqueOldPIN }
-                enabledLoader = { enabledLoader }
-                showPinComponentFunc = { (e) => showPinComponentFunc(e) }
-                showPinSettingsComponentFunc = { (e) => showPinSettingsComponentFunc(e) }
-                onSubmitPinCode = { (uniqueOldPIN, uniqueNewPIN) => changePinSendToFragment(uniqueOldPIN, uniqueNewPIN) }
-                showChangePinComponent = { showChangePinComponent }
-                showUnlockPinComponent = { showUnlockPinComponent }
-                uniqueNewPINFunc = { (e) => uniqueNewPINFunc(e) }
-                uniqueOldPINFunc = { (e) => uniqueOldPINFunc(e) }
-                showChangePinComponentFunc = { (e) => showChangePinComponentFunc(e) }
-                showUnlockPinComponentFunc = { () => showUnlockPinComponentFunc() }
-                showRegisteredDevicesFunc = { () => showDevicesModalFunc(true) }
-              />
-                :
-              <SettingsProfilePersonalInfoComponent
-                accountNumber={ accountNumber }
-                profile={ profile && profile}
-                updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
-                onUpdateCivilStatusFunc = { (e) => this.props.onUpdateCivilStatus(e) }
-                lineManager={ lineManager && lineManager.fullName }
-                rank={ rank && rank.rank }
-              />
-            }
-            <div className={ 'profile-padding' }>
-              <br/><Line/><br/>
-            </div>
-            <div>
-              <SettingsContactInfoComponent
-                profileName={ profile && profile.fullname }
-                profileEmail={ profile && profile.email }
-                profileNumber={ profile && profile.contactNumber }
-                onUpdateEmailAddressFunc = { (e) => this.props.onUpdateEmailAddress(e) }
-                onUpdateMobileNumberFunc = { (e) => this.props.onUpdateMobileNumber(e) }
-              />
-            </div>
-            <div className={ 'profile-padding' }>
-              <br/><Line/><br/>
-            </div>
-            <div>
-              <SettingsProfileDescriptions
-                onUpdateDescription = { () => onUpdateDescription() }
-                descriptionTextFunc = { (e) => descriptionTextFunc(e) }
-                onChangeToEditMode = { (e) => onChangeToEditMode(e) }
-                descriptionText = { descriptionText }
-                descriptionEditMode = { descriptionEditMode }
-                profileDescriptions={ profile && profile.description }
-                profileRatings={ profile && profile.performanceRating }
-              />
-            </div>
           </Card>
+          <PointsFragment
+            profileBackground={ profileBackground && profileBackground }
+            badgesAndPoints={ profileBackground &&
+              profileBackground.badgesAndPoints }
+          />
+          {
+            showPinComponent ?
+            <SettingsPinCardComponent
+              showPinSettingsComponent = { showPinSettingsComponent }
+              uniqueNewPIN = { uniqueNewPIN }
+              uniqueOldPIN = { uniqueOldPIN }
+              enabledLoader = { enabledLoader }
+              showPinComponentFunc = { (e) => showPinComponentFunc(e) }
+              showPinSettingsComponentFunc = { (e) => showPinSettingsComponentFunc(e) }
+              onSubmitPinCode = { (uniqueOldPIN, uniqueNewPIN) => changePinSendToFragment(uniqueOldPIN, uniqueNewPIN) }
+              showChangePinComponent = { showChangePinComponent }
+              showUnlockPinComponent = { showUnlockPinComponent }
+              uniqueNewPINFunc = { (e) => uniqueNewPINFunc(e) }
+              uniqueOldPINFunc = { (e) => uniqueOldPINFunc(e) }
+              showChangePinComponentFunc = { (e) => showChangePinComponentFunc(e) }
+              showUnlockPinComponentFunc = { () => showUnlockPinComponentFunc() }
+              showRegisteredDevicesFunc = { () => showDevicesModalFunc(true) }
+            />
+              :
+            <PersonalInfoFragment
+              accountNumber={ accountNumber }
+              profile={ profile && profile}
+              updateAddressFunc = { (e, e1) => this.props.updateAddressOption(e, e1) }
+              onUpdateCivilStatusFunc = { (e) => this.props.onUpdateCivilStatus(e) }
+              lineManager={ lineManager && lineManager.fullName }
+              rank={ rank && rank.rank }
+            />
+          }
+          <ContactInfoFragment
+            profileName={ profile && profile.fullname }
+            profileEmail={ profile && profile.email }
+            profileNumber={ profile && profile.contactNumber }
+            onUpdateEmailAddressFunc = { (e) => this.props.onUpdateEmailAddress(e) }
+            onUpdateMobileNumberFunc = { (e) => this.props.onUpdateMobileNumber(e) }
+          />
+          <DescriptionFragment
+            onUpdateDescription = { () => onUpdateDescription() }
+            descriptionTextFunc = { (e) => descriptionTextFunc(e) }
+            onChangeToEditMode = { (e) => onChangeToEditMode(e) }
+            descriptionText = { descriptionText }
+            descriptionEditMode = { descriptionEditMode }
+            profileDescriptions={ profile && profile.description }
+            profileRatings={ profile && profile.performanceRating }
+          />
           <ExperienceFragment
             profileExperience={ profileBackground && profileBackground.employments }
             />

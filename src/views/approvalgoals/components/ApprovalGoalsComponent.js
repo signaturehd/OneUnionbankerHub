@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import BaseMVPView from '../../common/base/BaseMVPView'
 
-import Presenter from '../presenter/MyGoalsPresenter'
+import Presenter from '../presenter/ApprovalGoalsPresenter'
 
 import {
   Modal,
@@ -22,9 +22,9 @@ import { format } from '../../../utils/numberUtils'
 import moment from 'moment'
 
 import { Progress } from 'react-sweet-progress'
-import './styles/myGoalStyles.css'
+import './styles/approval.css'
 
-class ApprovedGoalsComponent extends Component {
+class ApprovalGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -69,7 +69,7 @@ class ApprovedGoalsComponent extends Component {
     const isVisible = (cardHolder && cardHolder.length > 1) ? '' : 'hide'
 
     return (
-      <div className = { 'grid-main' }>
+      <div>
         <div>
           <div className = { 'employee-column' }>
             <img src = { require('../../../images/1uhub.png') } width = { '60px' } height = { '50px' }/>
@@ -105,22 +105,7 @@ class ApprovedGoalsComponent extends Component {
                     }
                     </div>
                     <div>
-                      {
-                        details.approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
-                        :
-                          details.approvalStatus === 3 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
-                          :
-                          details.approvalStatus === 1 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
-                          :
-                          details.approvalStatus === 4 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
-                          :
-                          details.approvalStatus === 5 &&
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
-                      }
+                      <h2 className = { 'text-align-right font-size-12px font-weight-bold color-gray' }>{ details.status }</h2>
                       <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                     </div>
 
@@ -158,78 +143,13 @@ class ApprovedGoalsComponent extends Component {
             <span className={ 'tooltiptext' }>{ viewMoreText }</span>
           </button>
         </div>
-        <div>
-          <div className = { 'padding-10px' }>
-            <Card className = { 'padding-10px' }>
-            <div className = { 'grid-global padding' }>
-              <div>
-                <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>{employeeName}</h2>
-                <h2 className = { 'font-size-12px text-align-left font-weight-bold' }>{goalTitle}</h2>
-                <h2 className = { 'font-size-12px text-align-left font-weight-lighter' }>{moment(startDate).format('MMM DD, YYYY')} to {moment(dueDate).format('MMM DD, YYYY')}</h2>
-                <br/>
-                <h2 className = { 'font-size-14px font-weight-lighter text-align-left' }>Goal description:</h2>
-                <h2 className = { 'font-size-12px font-weight-lighter text-align-left' }>{ description }</h2>
-              </div>
-              <div>
-                <h2 className = { 'font-size-12px font-weight-lighter text-align-right' }><span className = { 'border' }>{ goalTypeId ? goalTypeId === 1 ? 'Performance' : 'Developemental' : 'x' }</span></h2>
-              </div>
-            </div>
-            {
-              showRejectRemarksModal &&
-              <Modal
-              isDismisable = { true }
-              onClose = { () => onClose() }>
-                <GenericInput
-                  text = { 'Remarks' }
-                  value = { rejectedRemarks }
-                  onChange = { (e) => rejectedRemarksFunc(e.target.value) }
-                />
-                <center>
-                <div className = { 'grid-global' }>
-                  <div>
-                    <GenericButton
-                    text = { 'Close' }
-                    onClick = { () => onClose() }/>
-                  </div>
-                  <div>
-                    <GenericButton
-                    text = { 'Submit' }
-                    onClick = { () => {
-                      onApprovalSubmit(goalId, 3, rejectedRemarks)
-                      onClose()
-                    }
-                   }/>
-                  </div>
-                </div>
-                </center>
-              </Modal>
-            }
-            <center>
-              <div className = { 'grid-global padding' }>
-                <div>
-                  <GenericButton
-                  text = { 'Reject' }
-                  className = { 'button-reject profile-button-small' }
-                  onClick = { () => showRejectRemarksFunc() }/>
-                </div>
-                <div>
-                  <GenericButton
-                  text = { 'Approve' }
-                  className = { 'button-approve profile-button-small' }
-                  onClick = { () => onApprovalSubmit(goalId, 2, '') }/>
-                </div>
-              </div>
-            </center>
-            </Card>
-          </div>
-        </div>
       </div>
     )
   }
 }
 
-ApprovedGoalsComponent.propTypes = {
+ApprovalGoalsComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default ApprovedGoalsComponent
+export default ApprovalGoalsComponent

@@ -10,14 +10,19 @@
 .title-view {
   margin : 25px auto;
 }
-section {
-  display: none;
-  padding: 20px 0 0;
-  border-top: 1px solid #ddd;
+
+.library-container-content {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
 }
 
-.input-tab {
+.library-input-tab {
   display: none !important;
+}
+
+
+section {
+  padding: 20px 0 0;
 }
 
 label {
@@ -44,35 +49,38 @@ label:hover {
   cursor: pointer;
 }
 
-.input-tab:checked + label {
-  color: #000;
-  border-bottom: 4px solid #ffa800;
+.library-input-tab:checked + label {
+  color: #ff8a00;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #ff8a00;
+  border-top: 1px solid #ff8a00;
+  border-left: 1px solid #ff8a00;
+  border-right: 1px solid #ff8a00;
 }
 
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content2,
-#tab3:checked ~ #content3 {
+.library-input-tab + label {
+  color: #546E7A;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #546E7A;
+  border-top: 1px solid #546E7A;
+  border-left: 1px solid #546E7A;
+  border-right: 1px solid #546E7A;
+}
+
+#library-tab1:checked ~ #content1,
+#library-tab2:checked ~ #content2,
+#library-tab3:checked ~ #content3 {
   display: block;
   padding-left: 30px;
   padding-right: 30px;
 }
 
-@media screen and (max-width: 650px) {
-  label {
-    font-size: 0;
-  }
-  label:before {
-    margin: 0;
-    font-size: 18px;
-  }
-
-}
-
-@media screen and (max-width: 400px) {
-  label {
-    padding: 15px;
-  }
-}
 .booksSearchBar {
   width: 40%;
   border-left: 0;

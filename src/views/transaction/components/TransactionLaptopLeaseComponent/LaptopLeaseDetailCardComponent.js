@@ -42,6 +42,30 @@ class LaptopLeaseDetailCardComponent extends Component {
               <br/>
             </div>
           </div>
+          {
+            acccountNumber &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+              <div>
+                <h2>
+                  { acccountNumber }
+                </h2>
+                <br/>
+              </div>
+            </div>
+          }
+          {
+            releasingCenter &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
+              <div>
+                <h2>
+                  { releasingCenter }
+                </h2>
+                <br/>
+              </div>
+            </div>
+          }
           <br/>
           <LaptopLeaseOtherDetailCardComponent
             detailsLaptopLease = { details.details }

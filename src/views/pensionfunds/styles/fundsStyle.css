@@ -1,0 +1,73 @@
+.funds-fragment {
+  display: grid;
+  grid-template-columns: .03fr 1fr .03fr;
+}
+
+
+.funds-documents-background1 {
+  background: url('../../../images/funds/risk-text-website.png') center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.funds-documents-background2 {
+  background: url('../../../images/funds/rules-text-web.png') center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.funds-documents-background3 {
+  background: url('../../../images/funds/disclosure-text-website.png') center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.funds-grid-content {
+  display: grid;
+  grid-template-columns: .6fr .4fr;
+}
+
+.funds-grid-content-x3 {
+  display: grid;
+  grid-template-columns: .03fr 1fr .03fr;
+}
+
+.funds-grid-content-detail {
+  display: grid;
+  grid-template-columns: .7fr .35fr;
+}
+
+@media screen and (max-width : 768px) {
+  .funds-grid-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .funds-grid-content-detail {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.funds-documens-card-grid {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
+.funds-documents-grid-x3 {
+  display: grid;
+  grid-template-rows: .1fr 1fr .1fr;
+}
+
+.funds-grid-header-content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}

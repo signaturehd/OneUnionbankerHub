@@ -36,7 +36,7 @@ class SettingsPinCardComponent extends Component {
     } = this.props
 
     return (
-      <div className={ 'profile-others-card' }>
+      <Card className={ 'profile-others-card' }>
         <div className={ 'profile-padding' }>
           <div>
             <h2 className={ 'unionbank-color font-weight-normal' }>
@@ -109,7 +109,7 @@ class SettingsPinCardComponent extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     )
   }
 }

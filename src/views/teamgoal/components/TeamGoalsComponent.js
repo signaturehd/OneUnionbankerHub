@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/teamGoal.css'
 
-class RequestedGoalsComponent extends Component {
+class TeamGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -38,71 +38,43 @@ class RequestedGoalsComponent extends Component {
 
   render () {
     const {
-      cardHolder,
-      employeeName,
-      imageUrl,
+      teamId,
+      teamTitle,
+      description,
+      startDate,
+      dueDate,
+      priorityId,
+      typeId,
+      participants,
       priorityFunc,
       onSelected
     } = this.props
 
     const { index, viewMoreText } = this.state
-    const isVisible = (cardHolder && cardHolder.length > 1) ? '' : 'hide'
+    const isVisible = (participants && participants.length > 1) ? '' : 'hide'
 
     return (
       <div className = { 'padding-15px' }>
       {
         <div>
-          <div className = { 'employee-column' }>
-            <img src = { require('../../../images/1uhub.png') } width = { '60px' } height = { '50px' }/>
-            <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>{employeeName}</h2>
-          </div>
           {
-            cardHolder &&
-            cardHolder.slice(0, index).map((details, key) =>
+            participants &&
+            participants.map((details, key) =>
 
               <Card className = { 'margin-10px cursor-pointer' }
                 onClick = { () => onSelected(
-                  details,
-                  details.id,
-                  details.title,
-                  details.description,
-                  details.startDate,
-                  details.endDate,
-                  priorityFunc(details.priority),
-                  details.status,
-                  details.type
+                  teamTitle,
+                  description,
+                  participants
                 ) }>
                 <div className = { 'padding-15' }>
                   <div className = { 'header-column-1' }>
                     <div>
-                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ details.title }</h2>
-                      {
-                        // <Progress
-                        //   width = { 65 }
-                        //   height = { 65 }
-                        //   percent = { 80 }
-                        //   className = { 'margin-5px' }
-                        // />
-                      }
+                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ teamTitle }</h2>
+
                     </div>
                     <div>
-                      {
-                        details.approvalStatus === 2 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Approved</h2>
-                        :
-                          details.approvalStatus === 3 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
-                          :
-                          details.approvalStatus === 1 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
-                          :
-                          details.approvalStatus === 4 ?
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
-                          :
-                          details.approvalStatus === 5 &&
-                          <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
-                      }
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
+
                     </div>
 
                   </div>
@@ -111,11 +83,11 @@ class RequestedGoalsComponent extends Component {
                     <Line/>
                     <div className = { 'grid-footer-column margin-5px' }>
                       <div>
-                        <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(details.priority)}` }>{ priorityFunc(details.priority) }</h2>
+                        <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(priorityId)}` }>{ priorityFunc(priorityId) }</h2>
                       </div>
                       <div></div>
                       <div>
-                        <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(details.endDate).format('MMM DD, YYYY') }</b></h2>
+                        <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(dueDate).format('MMM DD, YYYY') }</b></h2>
                       </div>
                     </div>
                   </div>
@@ -145,8 +117,8 @@ class RequestedGoalsComponent extends Component {
   }
 }
 
-RequestedGoalsComponent.propTypes = {
+TeamGoalsComponent.propTypes = {
   onSendPageNumberToView : PropTypes.func
 }
 
-export default RequestedGoalsComponent
+export default TeamGoalsComponent

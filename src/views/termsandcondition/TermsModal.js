@@ -48,6 +48,10 @@ class TermsModal extends BaseMVPView {
           <br/>
           <br/>
           <div className = { 'grid-global' }>
+            <GenericButton text= "Disagree"
+            onClick={ () => this.disagreeTerms() }
+            disabled = {disableSubmit}
+            />
             <GenericButton text= "Agree"
               onClick={ () => {
                   this.setState({ disableSubmit : true, text : `Please wait while we're submitting your Response` })
@@ -56,10 +60,6 @@ class TermsModal extends BaseMVPView {
               }
               disabled = {disableSubmit}
              />
-            <GenericButton text= "Disagree"
-              onClick={ () => this.disagreeTerms() }
-              disabled = {disableSubmit}
-            />
           </div>
         </div>
       }

@@ -1,3 +1,9 @@
+@media print {
+  * {
+    display: none !important;
+  }
+}
+
 body {
   background: url('../images/ub_pattern_bg.png');
   background-size:cover;
@@ -42,6 +48,7 @@ h1 {
   margin: 0;
 }
 
+
 p {
   margin: 0 0 20px;
   line-height: 1.5;
@@ -52,7 +59,12 @@ p {
   -webkit-transform: rotate(135deg);
 }
 
-.back-arrow {
+.top-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.bottom-arrow {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
@@ -83,6 +95,12 @@ p {
   min-width: 100px;
   height: 30px;
   border-radius: 50px;
+}
+
+.profile-button-medium {
+  min-width: 130px;
+  height: 40px;
+  border-radius: 50px
 }
 
 @media (max-width: 768px) {
@@ -212,6 +230,10 @@ p {
   font-size: 35px;
 }
 
+.font-size-40px{
+  font-size: 50px;
+}
+
 /* text-align*/
 
 .text-align-center {
@@ -242,7 +264,12 @@ p {
   align-items: center;
 }
 
-/* flaot position */
+.margin-auto {
+  margin: auto;
+}
+
+
+/* float position */
 
 .float-left {
   float: left;
@@ -252,10 +279,24 @@ p {
   float: right;
 }
 
+/* Text Alignment Spacing */
+
+.letter-spacing-1 {
+  letter-spacing: .1pc;
+}
+
+.letter-spacing-2 {
+  letter-spacing: .2pc;
+}
+
 /* Default color */
 
 .unionbank-color {
-  color: #ff8a00;
+  color: #fea30a;
+}
+
+.unionbank-color-grey {
+  color: #4e4b48;
 }
 
 .unionbank-white-color {

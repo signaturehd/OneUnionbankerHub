@@ -21,59 +21,51 @@ import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 // import CarDealerQuotation from './modals/CarDealerQuotationModal'
 
 import FormComponent from './components/LaptopLeaseCardComponent'
+import CardOptionComponent from './components/LaptopLeaseOptionComponent'
+import LaptopLeaseEmpToPurchaseComponent from './components/LaptopLeaseEmpToPurchaseComponent'
 import moment from 'moment'
 import store from '../../store'
 import { NotifyActions } from '../../actions'
 
 import * as controller from './functions/LaptopLeaseFunctions'
 
+import './styles/laptopLeaseStyle.css'
+
 class LaptopLeaseFragment extends BaseMVPView {
 
   constructor (props) {
     super(props)
     this.state = {
+      cardOptionComponent : true,
       enabledLoader : false,
       showNoticeModal : false,
       showNoticeResponseModal : false,
-      showFileUpload: false,
-      showQuotation: true,
       noticeResponse : null,
-      showNoticeResponseModal : false,
       showBenefitFeedbackModal : false,
-      showLaptopBrands: false,
-      showEnterSolRCModal: false,
-      showInsurancePaymentModal: false,
       showEditMode: false,
-      carValidate: [],
-      deliveryData: [],
-      loanType: 15,
-      leaseMode: 1,
-      carBrand: '',
-      carId: '',
       laptopModel: '',
       screenSize: '',
-      primaryColor: '',
-      secondaryColor: '',
       file: [],
-      solRC: '',
-      solId: '',
-      solIdErrorMessage: '',
-      solRCInput: '',
-      insurancePayment: '',
-      insuranceId: '',
-      solRCErrorMessage : '',
-      yearErrorMessage : '',
       attachmentsRequired : [ {name : 'Dealer Quotations'}]
     }
-
   }
 
   /* Life Cycle */
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    this.presenter.validateLaptopLease()
   }
+
+  /* Display Modal Notice of Undertaking*/
+
+  noticeOfUndertaking (noticeResponse) {
+   this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+  noticeResponseResp (noticeResponse) {
+    this.setState({ noticeResponse })
+  }
+
 
   /* Presenter Functions */
 
@@ -101,6 +93,26 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ screenSize })
   }
 
+  setHardDriveCapacity (hardDriveCapacity) {
+    this.setState({ hardDriveCapacity })
+  }
+
+  setGraphicsCard (graphicsCard) {
+    this.setState({ graphicsCard })
+  }
+
+  setProcessorType (processorType) {
+    this.setState({ processorType })
+  }
+
+  setOperatingSystem (operatingSystem) {
+    this.setState({ operatingSystem })
+  }
+
+  setSystemMemory (systemMemory) {
+    this.setState({ systemMemory })
+  }
+
   setDeliveryOption (deliveryOption) {
     this.setState({ deliveryOption })
   }
@@ -123,26 +135,12 @@ class LaptopLeaseFragment extends BaseMVPView {
     }
   }
 
-
-  /* Notice Response*/
-  noticeOfUndertaking (noticeResponse) {
-   this.setState({ showNoticeModal : true, noticeResponse })
-  }
-
-  noticeResponseResp (noticeResponse) {
-    this.setState({ noticeResponse })
-  }
-
-  showDeliveryOptions (deliveryData) {
-    this.setState({ deliveryData })
-  }
-
   /* Loader*/
-  hideCircularLoader () {
+  hideLoading () {
     this.setState({ enabledLoader : false })
   }
 
-  showCircularLoader () {
+  showLoading () {
     this.setState({ enabledLoader : true })
   }
 
@@ -160,6 +158,32 @@ class LaptopLeaseFragment extends BaseMVPView {
     return word.replace(nonDigitRegex, '')
   }
 
+  checkIfDigitRegex (number) {
+    let digitRegex = /^[0-9]+$/
+    return number.replace(digitRegex, '')
+  }
+
+  setOrDate (orDate) {
+    this.setState({ orDate })
+  }
+
+  setOrNumber (orNumber) {
+    this.setState({ orNumber })
+  }
+
+  setVendor (vendor) {
+    this.setState({ vendor })
+  }
+
+  setcostAquisition (costAquisition) {
+    this.setState({ costAquisition })
+  }
+
+  resetValue () {
+    this.setState({ showEditMode : false })
+    this.presenter.resetValue()
+  }
+
   render () {
     const {
       terms,
@@ -167,6 +191,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       color,
       deliveryOption,
       deliveryOptionList,
+      deliveryOptionName,
       file,
       showDeliveryOptions,
       showNoticeModal,
@@ -174,7 +199,6 @@ class LaptopLeaseFragment extends BaseMVPView {
       showBenefitFeedbackModal,
       enabledLoader,
       showEditMode,
-      deliveryOptionName,
       laptopLeaseAttachment,
       showTermsSelection,
       termsId,
@@ -183,6 +207,17 @@ class LaptopLeaseFragment extends BaseMVPView {
       laptopBrand,
       laptopModel,
       screenSize,
+      getCardOptionId,
+      cardOptionComponent,
+      graphicsCard,
+      hardDriveCapacity,
+      processorType,
+      operatingSystem,
+      systemMemory ,
+      orNumber,
+      orDate,
+      vendor,
+      costAquisition,
     } = this.state
 
     const { history }=this.props
@@ -196,117 +231,179 @@ class LaptopLeaseFragment extends BaseMVPView {
 
     return (
       <div>
-        {
-          showNoticeModal &&
-          <NoticeModal
-            onClose={ () => this.setState({ showNoticeModal : false })}
-            noticeResponse={ noticeResponse }
-            benefitId={ '16' }
-            onDismiss={ (showNoticeModal, noticeResponse) =>
-              this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
-          />
-        }
-
-        {
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
-            }}
-            noticeResponse={ noticeResponse }
-          />
-        }
-
-        {
-          showBenefitFeedbackModal &&
-          <BenefitFeedbackModal
-            benefitId={ '16' }
-            onClose={ () => {
-              this.props.history.push('/mybenefits/benefits/'),
-              this.setState({ showBenefitFeedbackModal : false })
-            }}
-          />
-        }
-        {
-          showDeliveryOptions &&
-          <SingleInputModal
-            label = { 'Delivery Options' }
-            inputArray = { deliveryOptionList && deliveryOptionList }
-            selectedArray = { (deliveryOptionId, deliveryOptionName) => {
-                this.setState({
-                  deliveryOptionName,
-                  showDeliveryOptions : false,
-                }),
-                this.presenter.setDeliveryOption(deliveryOptionId)
-              }
+        {super.render()}
+        <div className = { 'laptoplease-container-grid' }>
+          <div></div>
+          <div>
+            {
+              showNoticeModal &&
+              <NoticeModal
+                onClose={ () => this.setState({ showNoticeModal : false })}
+                noticeResponse={ noticeResponse }
+                benefitId={ '16' }
+                onDismiss={ (showNoticeModal, noticeResponse) =>
+                  this.setState({ showNoticeModal, noticeResponse, showNoticeResponseModal : true })  }
+              />
             }
-            onClose = { () => this.setState({ showDeliveryOptions : false }) }
-          />
-        }
 
-        {
-          showTermsSelection &&
-          <SingleInputModal
-            label = { 'Terms' }
-            inputArray = { [{
-              id: 1,
-              name: '12 Months'
-            }, {
-              id: 2,
-              name: '24 Months'
-            },{
-              id: 3,
-              name: '36 Months'
-            }] }
-            selectedArray = { (termsId, termsName) =>
+            {
+              showNoticeResponseModal &&
+              <ResponseModal
+                onClose={ () => {
+                  this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+                }}
+                noticeResponse={ noticeResponse }
+              />
+            }
+
+            {
+              showBenefitFeedbackModal &&
+              <BenefitFeedbackModal
+                benefitId={ '16' }
+                onClose={ () => {
+                  this.props.history.push('/mybenefits/benefits/'),
+                  this.setState({ showBenefitFeedbackModal : false })
+                }}
+              />
+            }
+            {
+              showDeliveryOptions &&
+              <SingleInputModal
+                label = { 'Delivery Options' }
+                inputArray = { deliveryOptionList && deliveryOptionList }
+                selectedArray = { (deliveryOptionId, deliveryOptionName) => {
+                    this.setState({
+                      deliveryOptionName,
+                      showDeliveryOptions : false,
+                    }),
+                    this.presenter.setDeliveryOption(deliveryOptionId)
+                  }
+                }
+                onClose = { () => this.setState({ showDeliveryOptions : false }) }
+              />
+            }
+
+            {
+              showTermsSelection &&
+              <SingleInputModal
+                label = { 'Terms' }
+                inputArray = { [{
+                  id: 1,
+                  name: '12 Months'
+                }, {
+                  id: 2,
+                  name: '24 Months'
+                },{
+                  id: 3,
+                  name: '36 Months'
+                }] }
+                selectedArray = { (termsId, termsName) =>
+                  {
+                    this.setState({
+                      termsName,
+                      showTermsSelection : false,
+                    }),
+                    this.presenter.setTerms(termsId)
+                  }
+                }
+                onClose = { () => this.setState({ showTermsSelection : false }) }
+              />
+            }
+            <div>
               {
-                this.setState({
-                  termsName,
-                  showTermsSelection : false,
-                }),
-                this.presenter.setTerms(termsId)
+                !cardOptionComponent &&
+                <i
+                  className={ 'back-arrow' }
+                  onClick = { () => {
+                    this.setState({ cardOptionComponent : true })
+                    this.resetValue()
+                   }
+                  }>
+                </i>
               }
-            }
-            onClose = { () => this.setState({ showTermsSelection : false }) }
-          />
-        }
-        <div>
-          <i
-            className={ 'back-arrow' }
-            onClick={ this.navigate.bind(this) }>
-          </i>
-          <h2 className={ 'header-margin-default' }>
-            Laptop Lease
-          </h2>
+              <h2 className={ 'header-margin-default' }>
+                Laptop Lease
+              </h2>
+            </div>
+              {
+                cardOptionComponent ?
+                  <CardOptionComponent
+                    getCardOptionIdFunc = { (getCardOptionId) => {
+                      this.presenter.validateLaptopLease()
+                      this.setState({ getCardOptionId, cardOptionComponent : false })
+                    }}
+                  />
+                :
+                <div>
+                  {
+                    enabledLoader ?
+                     <center className={ 'circular-loader-center' }>
+                       <CircularLoader show={ enabledLoader }/>
+                     </center> :
+                     <div>
+                       {
+                         getCardOptionId === 1 ?
+                         <FormComponent
+                            getCardOptionId = { getCardOptionId }
+                            showEditMode = { showEditMode }
+                            setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
+                            setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
+                            setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
+                            setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
+                            setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
+                            showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
+                            showTerms = { () => this.setState({ showTermsSelection: true }) }
+                            deliveryOptionName = { deliveryOptionName }
+                            laptopLeaseAttachment = { laptopLeaseAttachment }
+                            amount = { amount }
+                            color = { color }
+                            terms = { termsName }
+                            laptopBrand = { laptopBrand }
+                            laptopModel = { laptopModel }
+                            screenSize = { screenSize }
+                            graphicsCard = { graphicsCard }
+                            showGraphicsCard = { (e) => this.presenter.setGraphicsCard(e) }
+                            hardDriveCapacity = { hardDriveCapacity }
+                            showHardDriveCapacity = { (e) => this.presenter.setHardDriveCapacity(e) }
+                            processorType = { processorType }
+                            showProcessorType = { (e) => this.presenter.setProcessorType(e) }
+                            operatingSystem = { operatingSystem }
+                            showOperatingSystem = { (e) => this.presenter.setOperatingSystem(e) }
+                            systemMemory = { systemMemory }
+                            showSystemMemory = { (e) => this.presenter.setSystemMemory(e) }
+                            setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
+                            onContinue={ () => this.presenter.validateSubmission(getCardOptionId) }
+                            onEdit = { () => this.setState({ showEditMode : false })  }
+                            onSubmit = { () => this.presenter.addLaptopLease(getCardOptionId)  }
+                          />
+                         :
+                         <LaptopLeaseEmpToPurchaseComponent
+                           getCardOptionId = { getCardOptionId }
+                           vendor = { vendor }
+                           terms = { termsName }
+                           showEditMode = { showEditMode }
+                           vendorFunc = { (e) => this.presenter.setVendor(e) }
+                           orDate = { orDate }
+                           showTerms = { () => this.setState({ showTermsSelection: true }) }
+                           orDateFunc = { (e) => this.presenter.setOrDate(e) }
+                           orNumber = { orNumber }
+                           orNumberFunc = { (e) => this.presenter.setOrNumber(e) }
+                           costAquisition = { amount }
+                           costAquisitionFunc = { (e) => this.presenter.setAmount(controller.checkedAmount(e)) }
+                           laptopLeaseAttachment = { laptopLeaseAttachment }
+                           setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
+                           onContinue={ () => this.presenter.validateSubmission(getCardOptionId) }
+                           onEdit = { () => this.setState({ showEditMode : false })  }
+                           onSubmit = { () => this.presenter.addLaptopLease(getCardOptionId)  }
+                         />
+                       }
+                     </div>
+                  }
+                </div>
+              }
+          </div>
+          <div></div>
         </div>
-          {
-            enabledLoader ?
-             <center className={ 'circular-loader-center' }>
-               <CircularLoader show={ this.state.enabledLoader }/>
-             </center> :
-            <FormComponent
-              showEditMode = { showEditMode }
-              setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
-              setColor = { (resp) =>  this.presenter.setColor(controller.checkedValidateAlphabet(resp)) }
-              setLaptopBrand = { resp => this.presenter.setLaptopBrand(resp) }
-              setLaptopModel = { resp => this.presenter.setLaptopModel(resp) }
-              setScreenSize = { resp => this.presenter.setScreenSize( this.checkNonDigitRegex(resp)) }
-              showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
-              showTerms = { () => this.setState({ showTermsSelection: true }) }
-              deliveryOptionName = { deliveryOptionName }
-              laptopLeaseAttachment = { laptopLeaseAttachment }
-              amount = { amount }
-              color = { color }
-              terms = { termsName }
-              laptopBrand = { laptopBrand }
-              laptopModel = { laptopModel }
-              screenSize = { screenSize }
-              setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
-              onContinue={ () => this.presenter.validateSubmission() }
-              onEdit = { () => this.setState({ showEditMode : false })  }
-              onSubmit = { () => this.presenter.addLaptopLease()  }
-            />
-          }
       </div>
     )
   }

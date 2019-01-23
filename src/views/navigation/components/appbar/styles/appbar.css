@@ -7,6 +7,10 @@
   height: 100%;
 }
 
+.appbar-style-color {
+  background-color: #fff;
+}
+
 .appbar-default-menu {
   font-weight: bold;
   cursor: pointer;
@@ -249,6 +253,16 @@
   background-position: center;
 }
 
+.appbar-future-icon {
+  background-image: url('../../../../../images/SIDE MENU/FUND2-ORANGE .png');
+  background-position: center;
+}
+
+.appbar-rewards-icon {
+  background-image: url('../../../../../images/drawer/Rewards-Orange.png');
+  background-position: center;
+}
+
 .appbar-background-menu {
   background-image: url('../../../../../images/WEB and LOGO/Orange Wallpaper.jpg');
   width: 100%;
@@ -413,12 +427,11 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 1300px) {
-}
 @media screen and (max-width: 768px) {
   ._img-ub-profile {
   margin: 3% 5% 0 0;
   }
+
   .appbar-logo-circle {
     width: 45px;
     height: 44px;

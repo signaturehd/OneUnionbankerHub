@@ -3,7 +3,7 @@ export default class AddGoalTaskInteractor {
     this.client = client
   }
 
-  execute (goalId, goalComment) {
-    return this.client.addGoalComment(this.client.getToken(), goalId, goalComment)
+  execute (goalCommentParam) {
+    return this.client.addGoalComment(this.client.getToken(), goalCommentParam)
   }
 }

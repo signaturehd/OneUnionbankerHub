@@ -5,15 +5,13 @@ import {
   Modal,
   Line,
   GenericButton,
-  GenericInput
-} from '../../../ub-components/'
+  GenericInput,
+  Card
+} from '../../../../ub-components/'
 
-import '../modals/styles/contactModal.css'
-import './styles/profileSettings.css'
+import { validateEmail } from '../../../../utils/emailUtils'
 
-import { validateEmail } from '../../../utils/emailUtils'
-
-class SettingsContactInfoComponent extends Component {
+class ContactInfoFragment extends Component {
 
   constructor (props) {
     super(props)
@@ -78,32 +76,51 @@ class SettingsContactInfoComponent extends Component {
     } = this.state
 
     return (
-      <div className={ 'profile-others-card' }>
+      <Card className={ 'profile-others-card padding-profileFragment' }>
         <div className={ 'profile-padding' }>
         <div className= { 'grid-global' }>
           <div>
-            <br/>
             <div className={ 'contact-info-grid' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
+                Contact Information
+              </h2>
+              <br/>
               <div>
                 {
                   updateEmail ?
 
-                  <div className = { 'align-items-center' }>
-                    <GenericInput
-                      errorMessage = { emailTextErrorMessage }
-                      hint = { 'Enter Email Address' }
-                      text = { '(e.g sample@unionbankph.com/@mercury.unionbankph.com)' }
-                      onChange = { (e) =>
-                        this.setState({ emailText : e.target.value })
-                      }
-                      value = { emailText }
-                      />
-                    <GenericButton
-                      className = { 'align-items-center global-button' }
-                      className = { 'profile-button-small' }
-                      onClick = { () => this.checkEmail () }
-                      text = { 'Update' }
-                      />
+                  <div className = { 'contact-number-grid' }>
+                    <div>
+                      <span className={ 'contact-icon-settings employeeEmail' }/>
+                    </div>
+                    <div className = { 'profile-address-grid-x2' }>
+                      <div className={ 'contact-info-grid-row' }>
+                        <div className={ 'font-size-17px contact-title' }>
+                          <h2>Email</h2>
+                        </div>
+                        <div className={ 'font-size-14px' }>
+                          <GenericInput
+                            errorMessage = { emailTextErrorMessage }
+                            hint = { 'Enter Email Address' }
+                            text = { '(e.g sample@unionbankph.com/@mercury.unionbankph.com)' }
+                            onChange = { (e) =>
+                              this.setState({ emailText : e.target.value })
+                            }
+                            value = { emailText }
+                            />
+                          <GenericButton
+                            className = { 'align-items-center global-button' }
+                            className = { 'profile-button-small' }
+                            onClick = { () => this.checkEmail () }
+                            text = { 'Update' }
+                            />
+                        </div>
+                      </div>
+                      <span
+                        onClick = { () => this.setState({ updateEmail : false }) }
+                        className = { 'profile-icon-settings editIconImage' }/>
+                    </div>
+
                   </div>
                   :
                   <div className={ 'contact-number-grid' }>
@@ -115,7 +132,7 @@ class SettingsContactInfoComponent extends Component {
                         <div className={ 'font-size-17px contact-title' }>
                           <h2>Email</h2>
                         </div>
-                        <div className={ 'font-size-16px' }>
+                        <div className={ 'font-size-14px' }>
                           <a>{ profileEmail ? profileEmail : '(Not Yet Provided)' }</a>
                         </div>
                       </div>
@@ -175,7 +192,7 @@ class SettingsContactInfoComponent extends Component {
                       <div className={ 'font-size-17px contact-title' }>
                         <h2>Mobile Number</h2>
                       </div>
-                      <div className={ 'font-size-16px' }>
+                      <div className={ 'font-size-14px' }>
                         <a>+{ profileNumber ? profileNumber : '(Not Yet Provided)' }</a>
                       </div>
                     </div>
@@ -192,9 +209,9 @@ class SettingsContactInfoComponent extends Component {
           <div></div>
         </div>
       </div>
-    </div>
+    </Card>
     )
   }
 }
 
-export default SettingsContactInfoComponent
+export default ContactInfoFragment

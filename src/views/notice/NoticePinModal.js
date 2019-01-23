@@ -27,7 +27,6 @@ class NoticePinModal extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      enabledLoader : false,
       uniquePIN : '',
       showNoticeResponseModal : false,
       showPinCodeModal : true,
@@ -37,23 +36,11 @@ class NoticePinModal extends BaseMVPView {
 
   noticeResponseFunc (noticeResponse, showPinCodeModal) {
     this.setState({ noticeResponse, showPinCodeModal })
-    this.submitAgreement()
+    this.submitAgreement(noticeResponse)
   }
 
-  submitAgreement() {
-    this.props.onSubmitAgreement()
-  }
-
-  showCircularLoader () {
-    this.setState({ enabledLoader : true })
-  }
-
-  hideCircularLoader () {
-    this.setState({ enabledLoader : false })
-  }
-
-  isAgree (tranId, isAgree, benId) {
-    this.presenter.updateNotice(tranId, isAgree, benId)
+  submitAgreement(data) {
+    this.props.onSubmitAgreement(data)
   }
 
   validator (input) {
@@ -79,11 +66,11 @@ class NoticePinModal extends BaseMVPView {
       history,
       onClick,
       onClose,
-      onSubmitAgreement
+      onSubmitAgreement,
+      enabledLoader,
     } = this.props
 
     const {
-      enabledLoader,
       noticeResponse,
       showNoticeResponseModal,
       showPinCodeModal,
@@ -93,53 +80,50 @@ class NoticePinModal extends BaseMVPView {
     return (
       <div>
         {
-          showPinCodeModal &&
-          <Modal
-            width = { 40 }
-            >
-            <div>
-              {
-                enabledLoader ?
-                <center className = { 'circular-loader-center' }>
-                  <h2>Please wait while we validate your PIN</h2>
-                  <br/>
-                  <CircularLoader show = { enabledLoader }/>
-                </center> :
-                <center>
-                  <div className = { 'grid-global-row' }>
-                    <span className = { 'pinlock-icon lock-icon-settings' }/>
-                    <h2 className = { 'font-size-12px' }>Please enter your registered digital signature (PIN).</h2>
-                  </div>
-                  <GenericInput
-                    className = { 'generic-pin' }
-                    hint = { '* * * * *' }
-                    maxLength = { 5 }
-                    type = { 'password' }
-                    onChange = { (e) => {
-                      new RequiredNumberValidation().isValid(e.target.value) ?
-                      this.setState({ uniquePIN : e.target.value }) :
-                      this.setState({ uniquePIN : '' })
-                      }
-                    }
-                    value = { uniquePIN }
-                    errorMessage = { 'Please enter your 5-digit PIN' }
-                    />
-                  <br/>
-                  <GenericButton
-                    type = { 'button' }
-                    text = { 'Submit' }
-                    onClick = {
-                      () => {
-                        this.onSubmit(uniquePIN)
-                      }
-                    }
-                    className={ 'compliance-buttons compliance-submit' }
-                    />
-                </center>
-              }
-            </div>
-          </Modal>
-        }
+          enabledLoader ?
+            <CircularLoader show = { enabledLoader }/>
+         :
+         <div>
+           {
+             showPinCodeModal &&
+             <Modal
+               width = { 40 }
+               >
+               <center>
+                 <div className = { 'grid-global-row' }>
+                   <span className = { 'pinlock-icon lock-icon-settings' }/>
+                   <h2 className = { 'font-size-12px' }>Please enter your registered digital signature (PIN).</h2>
+                 </div>
+                 <GenericInput
+                   className = { 'generic-pin' }
+                   hint = { '* * * * *' }
+                   maxLength = { 5 }
+                   type = { 'password' }
+                   onChange = { (e) => {
+                     new RequiredNumberValidation().isValid(e.target.value) ?
+                     this.setState({ uniquePIN : e.target.value }) :
+                     this.setState({ uniquePIN : '' })
+                     }
+                   }
+                   value = { uniquePIN }
+                   errorMessage = { 'Please enter your 5-digit PIN' }
+                   />
+                 <br/>
+                 <GenericButton
+                   type = { 'button' }
+                   text = { 'Submit' }
+                   onClick = {
+                     () => {
+                       this.onSubmit(uniquePIN)
+                     }
+                   }
+                   className={ 'compliance-buttons compliance-submit' }
+                   />
+               </center>
+             </Modal>
+           }
+         </div>
+       }
       </div>
     )
   }

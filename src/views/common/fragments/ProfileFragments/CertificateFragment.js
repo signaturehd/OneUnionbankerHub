@@ -21,7 +21,7 @@ class CertificateFragment extends Component {
 
     return (
       <div>
-        <h2 className={ 'font-weight-normal unionbank-color' }> Certificate </h2>
+        <h2 className={ 'font-weight-normal unionbank-color-grey' }> Certificate </h2>
         <br/>
         <Line/>
         <br/>
@@ -44,7 +44,7 @@ class CertificateFragment extends Component {
                   <h3 className={ 'font-size-17px font-weight-lighter' }>
                     Issued body: { certificate.issuingBody }
                   </h3>
-                  <h4 className={ 'font-size-16px font-weight-lighter' }>
+                  <h4 className={ 'font-size-14px font-weight-lighter' }>
                     Date Issued: { certificate.dateIssued }
                   </h4>
                 </div>

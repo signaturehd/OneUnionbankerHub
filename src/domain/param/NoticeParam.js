@@ -1,5 +1,6 @@
-export default (transactionId, isAgree, benefitType) => ({
+export default (transactionId, isAgree, benefitType, code) => ({
     transactionId,
     isAgree,
     benefitType,
+    code
   })

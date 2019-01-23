@@ -20,9 +20,14 @@ export default class MedicalSchedulingFormCardComponent extends Component {
 
   render () {
     const {
+      branches,
+      branchesAddress ,
+      branchesId,
+      branchesLabel,
       showPackages,
       showFormReview,
       showClinics,
+      showBranchesFunc,
       isFormReview,
       clinicLabel,
       packageLabel,
@@ -33,7 +38,8 @@ export default class MedicalSchedulingFormCardComponent extends Component {
       index,
       viewMoreText,
       viewMore,
-      viewLess
+      viewLess,
+      remarksText
     } = this.props
 
     const isVisible = (packageLabel && procedureList && procedureList.length > 4) ? '' : 'hide'
@@ -51,6 +57,29 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             value = { clinicLabel }
             onClick = { () => showClinics() }
             type = { 'text' }/>
+          {
+            branches &&
+            <div>
+              <GenericInput
+                value = { branchesLabel }
+                disabled = { isFormReview }
+                text = { 'Branches' }
+                onClick = { () => showBranchesFunc() }
+                type = { 'text' }
+                />
+              {
+                branchesAddress &&
+                <GenericInput
+                  value = { branchesAddress }
+                  disabled = { true }
+                  readOnly
+                  text = { 'Address' }
+                  type = { 'textarea' }
+                  />
+              }
+            </div>
+
+          }
           <GenericInput
             text = { 'Packages' }
             disabled = { isFormReview }
@@ -64,7 +93,14 @@ export default class MedicalSchedulingFormCardComponent extends Component {
             minDate = { moment(Date.now()).add(3, 'weeks') }
             selected = { func.checkedDate(preferredDate) }
             onChange = { (data) => onChangePreferredDate(data) }/>
+          {
+            remarksText &&
 
+            <GenericInput
+              disabled = { true }
+              value = { remarksText && remarksText }
+              type = { 'textare' }/>
+          }
             <br/>
             <div className={ 'medsched-package-procedure' }>
               <table>

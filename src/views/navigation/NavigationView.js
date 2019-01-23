@@ -16,6 +16,9 @@ import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
+/*Rewards and Recognition */
+import RewardsRecognitionFragment from '../rewards/RewardsFragment'
+
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
@@ -92,7 +95,10 @@ import CertificateOfEmploymentFragment from '../coe/CertificateOfEmploymentFragm
 /* Goals */
 import MyGoalsFragment from '../mygoals/MyGoalsFragment'
 import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
-import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
+import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
+
+/* Pension Funds */
+import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -116,6 +122,7 @@ class NavigationView extends BaseMVPView {
       hasFilledOut: '',
       preEmploymentStatus: null,
       isLineManager : false,
+      isPO : false,
       employeeNumber : '',
       profileDisplay : 'none',
       profillePosition: '',
@@ -135,6 +142,7 @@ class NavigationView extends BaseMVPView {
     this.setState({
       profile : profile.employee,
       isLineManager: profile.isLineManager,
+      isPO: profile.isPO,
       profillePosition: profile.employee.position,
       employeeNumber: profile.employee.employeeNumber
     })
@@ -249,6 +257,7 @@ class NavigationView extends BaseMVPView {
       hasFilledOut,
       preEmploymentStatus,
       isLineManager,
+      isPO,
       employeeNumber,
       profillePosition,
       storeWidth
@@ -473,6 +482,7 @@ class NavigationView extends BaseMVPView {
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }
                     isLineManager = { isLineManager }
+                    isPO = { isPO }
                     employeeNumber = { employeeNumber }/> } />
                 <Route path = '/feedback' render = { props =>
                   <FeedbackFragment { ...props }
@@ -483,6 +493,12 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/phenom' render = { props =>
                   <PhenomFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/myrewards' render = { props =>
+                  <RewardsRecognitionFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/pensionfunds' render = { props =>
+                  <PensionFundsFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>

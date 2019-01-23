@@ -25,7 +25,7 @@ class SkillsFragment extends Component {
 
     return (
       <Card className={ 'profile-common-card' }>
-        <h2 className={ 'font-weight-normal unionbank-color' }> Skills </h2>
+        <h2 className={ 'font-weight-normal unionbank-color-grey' }> Skills </h2>
         <br/>
         <Line />
         <br/>

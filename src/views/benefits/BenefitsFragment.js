@@ -57,11 +57,16 @@ class BenefitsFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
     this.presenter.validateFabToShow()
     this.presenter.getReleasingCenters()
+    this.presenter.getProfile()
     this.presenter.getAccountNumber()
   }
 
   showAccountNumberPrefill (accountNumber) {
     this.setState({ accountNumber })
+  }
+
+  showGender (e) {
+    this.setState({ gender : e && e.gender })
   }
 
   showReleasingCenters (releasingCenters) {
@@ -139,7 +144,8 @@ class BenefitsFragment extends BaseMVPView {
       isAccountNumber,
       carValidated,
       enableLoader,
-      enabledAccountNumberLoader
+      enabledAccountNumberLoader,
+      gender
     } = this.state
 
 
@@ -222,11 +228,8 @@ class BenefitsFragment extends BaseMVPView {
         <div>
           {
           enabledAccountNumberLoader ?
-            <center>
-              <h4>Please wait while we validating the Account Number</h4>
-              <br/>
-              <CircularLoader show={ true }/>
-            </center>
+            <CircularLoader
+               show={ true }/>
             :
               <div>
                 <h2 className = { 'font-weight-bold' }>UnionBank Account Enrollment</h2>
@@ -321,29 +324,29 @@ class BenefitsFragment extends BaseMVPView {
         </div>
         <div className = { 'tabs-container' }>
           <input
-            className = { 'input-tab' }
-            id = { 'tab1' }
+            className = { 'benefits-input-tab' }
+            id = { 'benefitsTab1' }
             type = { 'radio' }
             name = { 'tabs' }
             defaultChecked = { true }
             onClick = { () => this.props.history.push('/mybenefits/benefits') }/>
-          <label className = { 'benefit-icon-tab' } htmlFor='tab1'>Benefits</label>
+          <label className = { 'benefit-icon-tab' } htmlFor='benefitsTab1'>Benefits</label>
 
          <input
-           className = { 'input-tab' }
-           id = { 'tab2' }
+           className = { 'benefits-input-tab' }
+           id = { 'benefitsTab2' }
            type = { 'radio' }
            name = { 'tabs' }
            onClick={ () => this.props.history.push('/mybenefits/transactions/personal') } />
-         <label className={ 'transaction-icon-tab' } htmlFor='tab2'>My Transactions</label>
+         <label className={ 'transaction-icon-tab' } htmlFor='benefitsTab2'>My Transactions</label>
 
          <input
-           className = { 'input-tab' }
-           id = { 'tab3' }
+           className = { 'benefits-input-tab' }
+           id = { 'benefitsTab3' }
            type = { 'radio' }
            name = { 'tabs' }
            onClick={ () => this.props.history.push('/mybenefits/loan/existing') } />
-         <label className={ 'transaction-icon-tab' } htmlFor='tab3'>My Existing Loans</label>
+         <label className={ 'transaction-icon-tab' } htmlFor='benefitsTab3'>My Existing Loans</label>
           {
             // TODO uncomment if required the for approval module
 
@@ -367,18 +370,14 @@ class BenefitsFragment extends BaseMVPView {
               <Route path='/mybenefits/benefits/eventbudgetrequisition'
                 render={ props => <EventsBudgetFragment { ...props } />}/>
               <Route exact path='/mybenefits/benefits/medical'
-                render={ props => <MedicalFragment { ...props } />}/>
+                render={ props => <MedicalFragment
+                  gender = { gender }
+                  { ...props } />}/>
               <Route exact path='/mybenefits/benefits/loans'
                 render={ props => <LoansFragment { ...props } />}/>
               {
                 enableLoader ?
-                <Modal>
-                  <h4>Please wait while validating your Employee Number</h4>
-                  <br/>
-                  <center>
-                    <CircularLoader show={ enableLoader }/>
-                  </center>
-                </Modal>
+                <CircularLoader show={ enableLoader }/>
                 :
                 <Route exact path='/mybenefits/benefits/carlease'
                   render={ props => <CarLeaseFragment

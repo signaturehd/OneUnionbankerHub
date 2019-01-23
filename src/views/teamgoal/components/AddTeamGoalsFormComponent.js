@@ -22,10 +22,21 @@ import moment from 'moment'
 import { Progress } from 'react-sweet-progress'
 import './styles/teamGoal.css'
 
-class AddGoalsFormComponent extends Component {
+class AddTeamGoalsFormComponent extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      index: 5,
+      viewMoreText : 'View More'
+    }
+  }
+
+  componentDidMount() {
+    this.props.showSquadGoal ?
+    this.props.getMembersGoals('squad')
+    :
+    this.props.getMembersGoals('team')
   }
 
   render () {
@@ -48,13 +59,25 @@ class AddGoalsFormComponent extends Component {
       goalType,
       goalTypeId,
       goalTypeErrorMessage,
+      memberId,
+      memberArray,
+      participantArray,
+      participantErrorMessage,
       editMode,
       showGoalTypeModal,
       showGoalTypeModalFunc,
+      getMembersGoals,
+      checkedMember,
+      squadMembers,
       onCancel,
       onSubmit,
-      onEdit
+      onEdit,
+      squadId,
+      showSquadGoal
     } = this.props
+
+    const { index, viewMoreText } = this.state
+    const isVisible = (memberArray && memberArray.length > 5) ? '' : 'hide'
 
     return (
       <div className = { 'goal-container' }>
@@ -114,6 +137,53 @@ class AddGoalsFormComponent extends Component {
               />
             </div>
             <div className = { 'grid-global' }>
+            <div>
+            <h2 className = { 'text-align-left font-size-16px font-weight-bold' }>Members</h2>
+              {
+                participantErrorMessage &&
+                <span className = {'error-message'}>participantErrorMessage</span>
+              }
+              {
+                squadId ?
+                squadMembers.length !== 0 &&
+                squadMembers.slice(0, index).map((member, key) =>
+                    <Card className = { 'padding-5px' }>
+                      <Checkbox
+                        label = { member.name }
+                        onChange = { () => checkedMember(member.id, participantArray) }/>
+                    </Card>
+                )
+                :
+                memberArray.length !== 0 &&
+                memberArray.slice(0, index).map((member, key) =>
+                    <Card className = { 'padding-5px' }>
+                      <Checkbox
+                        label = { member.name }
+                        onChange = { () => checkedMember(member.id, participantArray) }/>
+                    </Card>
+                )
+              }
+              <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${ isVisible }` }
+              onClick = {
+                () => {
+                  if(index === memberArray.length)
+                  this.setState({ index : 5, viewMoreText : 'View more' })
+                  else
+                  this.setState({ index : memberArray.length, viewMoreText : 'View less' })
+                }
+              }>
+              <img src={ require('../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+              </button>
+            </div>
+            <div></div>
+            </div>
+            <br/>
+            <Line/>
+            <br/>
+            <div className = { 'grid-global' }>
               <GenericButton
                 text = { 'Cancel' }
                 onClick = { () => onCancel() }
@@ -137,8 +207,9 @@ class AddGoalsFormComponent extends Component {
   }
 }
 
-AddGoalsFormComponent.propTypes = {
-  onSendPageNumberToView : PropTypes.func
+AddTeamGoalsFormComponent.propTypes = {
+  onSendPageNumberToView : PropTypes.func,
+  getMembersGoals : PropTypes.func
 }
 
-export default AddGoalsFormComponent
+export default AddTeamGoalsFormComponent

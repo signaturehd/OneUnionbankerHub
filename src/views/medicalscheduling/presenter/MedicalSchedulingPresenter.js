@@ -1,6 +1,7 @@
 
 import ValidateMedicalSchedulingInteractor from '../../../domain/interactor/medicalScheduling/ValidateMedicalSchedulingInteractor'
 import AddMedicalSchedulingInteractor from '../../../domain/interactor/medicalScheduling/AddMedicalSchedulingInteractor'
+import GetHospitalBranchInteractor from '../../../domain/interactor/medicalScheduling/GetHospitalBranchInteractor'
 
 import addMedicalSchedulingParam from '../../../domain/param/AddMedicalSchedulingParam'
 
@@ -14,6 +15,9 @@ export default class MedicalSchedulingPresenter {
 
     this.addMedicalSchedulingInteractor =
       new AddMedicalSchedulingInteractor(container.get('HRBenefitsClient'))
+
+    this.getHospitalBranchInteractor =
+      new GetHospitalBranchInteractor(container.get('HRBenefitsClient'))
 
   }
 
@@ -56,6 +60,7 @@ export default class MedicalSchedulingPresenter {
               )
             }
           )
+          this.view.setRemarks(resp.remarks)
           this.view.setClinics (clinics)
           this.view.setPackages(packages)
           this.view.setProcedures(procedures)
@@ -66,16 +71,31 @@ export default class MedicalSchedulingPresenter {
       )
     }
 
+    getHospitalBranch (id) {
+      try {
+        this.getHospitalBranchInteractor.execute(id)
+        .subscribe(data => {
+          this.view.setHospitalBranch(data)
+        }, error => {
+
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    }
+
     addMedicalScheduling (
       preferredDate,
       clinicId,
-      packageId
+      packageId,
+      branchesId
       ) {
         this.view.showCircularLoader()
         this.addMedicalSchedulingInteractor.execute(addMedicalSchedulingParam(
           preferredDate,
           clinicId,
-          packageId
+          packageId,
+          branchesId
           )
         )
         .subscribe(

@@ -41,7 +41,7 @@ class BookBorrowedFragment extends Component {
   }
 
   render () {
-    const { detail, borrowed } = this.props
+    const { detail, borrowed, cancelRequest, showConfirmation, confirmation } = this.props
     const { bookRequest } = this.state
 
     const BookBorrowed = () => (
@@ -53,6 +53,7 @@ class BookBorrowedFragment extends Component {
             <BookBorrowedCard
               rateBook = { (id, rating, comment) => this.addRating(id, rating, comment) }
               detail = { bookRequest.book }
+              date = { bookRequest.date }
               quantity = { bookRequest.quantity }
               key = { key }
               onClick = { (details, view) => this.setState({ bookRequest, view }) }
@@ -61,7 +62,17 @@ class BookBorrowedFragment extends Component {
         }
         {
           this.state.view &&
-          <BookBorrowModal detail = { bookRequest } onClose = { () => this.setState({ view : false }) }/>
+          <BookBorrowModal
+            showConfirmation = { showConfirmation }
+            detail = { bookRequest }
+            cancelRequest = { (bool) =>
+              cancelRequest(bool)
+            }
+            confirmation = { (id) => {
+              confirmation(id)
+              this.setState({ view: false })
+            } }
+            onClose = { () => this.setState({ view : false }) }/>
         }
       </div>
     )

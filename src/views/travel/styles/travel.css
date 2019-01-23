@@ -34,20 +34,34 @@
   font-weight: lighter;
 }
 
-section {
-  display: none;
-  padding: 20px 0 0;
-  border-top: 1px solid #ddd;
+.travel-input-tab:checked + label {
+  color: #ff8a00;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #ff8a00;
+  border-top: 1px solid #ff8a00;
+  border-left: 1px solid #ff8a00;
+  border-right: 1px solid #ff8a00;
 }
 
-.input-tab {
-  display: none !important;
+.travel-input-tab + label {
+  color: #546E7A;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #546E7A;
+  border-top: 1px solid #546E7A;
+  border-left: 1px solid #546E7A;
+  border-right: 1px solid #546E7A;
 }
 
 label {
   display: inline-block;
   margin: 0 0 -1px;
-  padding: 15px 25px;
+  padding: 5px 25px;
   font-weight: 150;
   text-align: center;
   border: 1px solid transparent;
@@ -68,51 +82,12 @@ label:hover {
   cursor: pointer;
 }
 
-.input-tab:checked + label {
-  color: #000;
-  border-bottom: 4px solid #ffa800;
-}
-
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content1,
-#tab3:checked ~ #content1 {
+#travel-tab1:checked ~ #content1,
+#travel-tab2:checked ~ #content1,
+#travel-tab3:checked ~ #content1 {
   display: block;
   padding-left: 30px;
   padding-right: 30px;
-}
-
-@media screen and (max-width: 650px) {
-  label {
-    font-size: 0;
-  }
-  label:before {
-    margin: 0;
-    font-size: 18px;
-  }
-  .travel-icon-tab {
-    background: url('../../../images/drawer/Benefit.png') no-repeat center center;
-    background-size: contain;
-    height: auto;
-    width: 30%;
-  }
-  .approval-icon {
-    background: url('../../../images/drawer/approval.png') no-repeat center center;
-    background-size: contain;
-    height: auto;
-    width: 30%;
-  }
-  .transaction-icon-tab {
-    background: url('../../../images/drawer/mytransaction1.png') no-repeat center center;
-    background-size: contain;
-    height: auto;
-    width: 30%;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  label {
-    padding: 15px;
-  }
 }
 
 .travel-option-cards-1 {
@@ -143,6 +118,10 @@ label:hover {
   background-image: url('../../../images/icons/LAPTOP LEASE V2.png');
 }
 
+.travel-input-tab {
+  display: none !important;
+}
+
 .travel-option-default {
   background-repeat: no-repeat;
   background-size: cover;
@@ -159,6 +138,45 @@ label:hover {
   padding-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+@media screen and (max-width : 768px) {
+  .travel-tabs-container {
+    margin: auto;
+    text-align: center;
+  }
+
+  label {
+    font-size: 9px !important;
+  }
+
+  .travel-input-tab + label {
+    color: #546E7A;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border-bottom: 1px solid #546E7A;
+    border-top: 1px solid #546E7A;
+    border-left: 1px solid #546E7A;
+    border-right: 1px solid #546E7A;
+  }
+
+  .travel-input-tab:checked + label {
+    color: #ff8a00;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border-bottom: 1px solid #ff8a00;
+    border-top: 1px solid #ff8a00;
+    border-left: 1px solid #ff8a00;
+    border-right: 1px solid #ff8a00;
+  }
+
+  .travel-tabs-container {
+    text-align: center;
+  }
 }
 
 .travel-card-container {
