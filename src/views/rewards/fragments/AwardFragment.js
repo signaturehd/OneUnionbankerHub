@@ -62,17 +62,17 @@ class Award extends Component {
         <div>
         <br/>
         {
-          membersData &&
-          <div className = { 'awards-grid-select-option' }>
-            <div></div>
-            <h4 className = { 'font-size-10px font-weight-lighter' }>Select all</h4>
-            <Checkbox
-              selected = { selectAllIsChecked }
-              onChange = { () =>
-                selectAllEmployee()
-              }
-            />
-          </div>
+          // membersData &&
+          // <div className = { 'awards-grid-select-option' }>
+          //   <div></div>
+          //   <h4 className = { 'font-size-10px font-weight-lighter' }>Select all</h4>
+          //   <Checkbox
+          //     selected = { selectAllIsChecked }
+          //     onChange = { () =>
+          //       selectAllEmployee()
+          //     }
+          //   />
+          // </div>
         }
 				<RewardSearchComponent
           enabledCircularLoader = { enabledCircularLoader }
@@ -102,14 +102,14 @@ class Award extends Component {
                   backgroundColor: '#ff8a00',
                   textAlign: 'left',
                   marginBottom: '10px',
-                  padding: '1px 0px 1px 1px',
+                  padding: '1px 5px 1px 10px',
                   display: 'grid',
                   color: '#fff',
                   gridTemplateColumns: 'auto .01fr',
                   alignItems: 'center',
                 }}>
                 <h4
-                  className = { 'align-items-center cursor-pointer font-weight-lighter font-size-12px' }>
+                  className = { 'align-items-center cursor-pointer font-weight-lighter font-size-10px' }>
                   { resp.name }
                 </h4>
                 <div className = { 'text-align-right' }>

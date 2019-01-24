@@ -155,7 +155,7 @@ class DrawerAppBar extends Component {
       id: 6,
       name: 'Feedback',
       imageStyle : 'feedback',
-      imageActive: require('../../../../images/drawer/feedback-grey.png'),
+      imageActive: require('../../../../images/drawer/feedback-orange.png'),
       imageInactive: require('../../../../images/drawer/feedback-grey.png'),
       action : () => history.push('/feedback'),
     }]
@@ -233,7 +233,6 @@ class DrawerAppBar extends Component {
                                 }}
                                 src={ `${ selected === resp.id ? resp.imageActive : resp.imageInactive }` }
                               />
-                            <span className={ 'tooltiptext' }>{ resp.name }</span>
                           </button>
                         <div></div>
                       </div>
