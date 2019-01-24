@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Card, Line, GenericInput, GenericButton } from '../../../ub-components/'
+import { Card, Line, GenericInput, GenericButton } from '../../../../ub-components/'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
 
-import './styles/profileSettings.css'
-
-class SettingsProfileDescriptions extends Component {
+class DescriptionFragment extends Component {
 
   constructor (props) {
     super(props)
@@ -29,20 +27,25 @@ class SettingsProfileDescriptions extends Component {
     const ratings = parseInt(performanceRating)
 
     return (
-      <div className={ 'profile-others-card' }>
+      <Card className={ 'profile-others-card padding-profileFragment' }>
         <div className={ 'profile-padding' }>
           <div className = { 'grid-global' }>
             <div className = { 'grid-global' }>
-              <h2 className={ 'unionbank-color font-weight-normal' }>
+              <h2 className={ 'unionbank-color-grey font-weight-normal padding-profileFragment-name' }>
                 Description
               </h2>
               <div className = { 'text-align-right' }>
                 <span
-                  onClick = { () => onChangeToEditMode(true) }
-                  className = { 'profile-icon-settings editIconImage' }/>
+                  onClick = { () => {
+                    if(descriptionEditMode) {
+                      onChangeToEditMode(false)
+                    } else {
+                      onChangeToEditMode(true)
+                    }
+                  }  }
+                  className = { 'profile-icon-settings editIconImage padding-profileFragment-name' }/>
               </div>
             </div>
-            <div></div>
           </div>
           <br/>
           {
@@ -83,14 +86,14 @@ class SettingsProfileDescriptions extends Component {
             readonly
           />
         </div>
-      </div>
+      </Card>
     )
   }
 }
 
-SettingsProfileDescriptions.propTypes={
+DescriptionFragment.propTypes={
   profileDescriptions : PropTypes.string,
   performanceRating : PropTypes.string,
 }
 
-export default SettingsProfileDescriptions
+export default DescriptionFragment

@@ -20,8 +20,8 @@ class EducationFragment extends Component {
 
     return (
       <div>
-        <Card className={ 'profile-common-card' }>
-          <h2 className={ 'unionbank-color font-weight-normal' }> Education </h2>
+        <Card className={ 'profile-common-card padding-profileFragment-name' }>
+          <h2 className={ 'unionbank-color-grey font-weight-normal' }> Education </h2>
           <br/>
           {
             profileEducation ?
@@ -44,7 +44,7 @@ class EducationFragment extends Component {
                     <br/>
                     { `${ 'Degree :' + education.degree }` }
                   </h3>
-                  <h4 className={ 'font-size-16px font-weight-lighter' }>
+                  <h4 className={ 'font-size-14px font-weight-lighter' }>
                     SY { `${ education.startYear } - ${ education.endYear } `  }
                   </h4>
                 </div>
