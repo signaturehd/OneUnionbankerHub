@@ -173,7 +173,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 											selectAllIsChecked = { selectAllIsChecked }
                       awardData = { awardData }
 											selectAllEmployee = { () => this.presenter.setSelectAllEmployee(selectAllIsChecked, membersData, selectedId) }
-                      selectedAwards = { (selectedAwards) => this.setState({ selectedAwards, searchString : '' }) }
+                      selectedAwards = { (selectedAwards) => {
+												this.setState({ selectedAwards, searchString : '' })
+												this.presenter.resetData()
+											} }
                       onSubmitAwards = { () => this.sendData() }
                       employeeName = { employeeName }
                       employeeMessage = { employeeMessage }

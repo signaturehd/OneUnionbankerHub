@@ -113,17 +113,20 @@ export default class RewardsPresenter {
 
   setDeleteEmployeeToList (key, id, selectedId) {
     const newStoredUpdatedList = [...storedUpdatedList]
+    const nreStoredId = [...storedId]
     const restoredStoredUpdatedList = [...storedEmployeeList]
     storedUpdatedList && storedUpdatedList.map((resp, idx) => {
       if(resp.id === id) {
         if(selectedId === 2) {
           newStoredUpdatedList.splice(idx, 1)
+          nreStoredId.splice(idx, 1)
           restoredStoredUpdatedList.push({
             id: resp.id,
             name: resp.name,
             isChecked: !resp.isChecked ? true : false,
           })
         } else {
+          nreStoredId.splice(idx, 1)
           newStoredUpdatedList.splice(idx, 1)
           restoredStoredUpdatedList.push({
             id: resp.id,
@@ -136,6 +139,7 @@ export default class RewardsPresenter {
         }
       }
     })
+    storedId = nreStoredId
     storedUpdatedList = newStoredUpdatedList
     storedEmployeeList = restoredStoredUpdatedList
     this.view.storedEmployeeList(storedUpdatedList)
@@ -235,6 +239,7 @@ export default class RewardsPresenter {
       if(selectedId === 2) {
         let updateList = [...storedEmployeeList]
         let selectedList = [...storedUpdatedList]
+        let updateListId = [...storedId]
         const employeeId = data.id
         membersData && membersData.map((resp, key) => {
           if(employeeId === resp.id) {
@@ -243,6 +248,7 @@ export default class RewardsPresenter {
               name: resp.name,
               isChecked : !resp.isChecked ? true : false
             })
+            updateListId.push(employeeId)
           } else {
             updateList.push({
               id: resp.id,
@@ -251,14 +257,17 @@ export default class RewardsPresenter {
             })
           }
         })
+        storedId = updateListId
         storedEmployeeList = updateList
         storedUpdatedList = selectedList
+        storedId = updateListId
         this.view.setEmployeeList(storedEmployeeList)
         this.view.storedEmployeeList(selectedList)
         storedEmployeeList = []
       } else {
         let updateList = [...storedEmployeeList]
         let selectedList = [...storedUpdatedList]
+        let updateListId = [...storedId]
         const employeeId = data.id
         membersData && membersData.map((resp, key) => {
           if(employeeId === resp.id) {
@@ -270,6 +279,7 @@ export default class RewardsPresenter {
               firstName: resp.firstName,
               employeeNumber: resp.employeeNumber,
             })
+            updateListId.push(employeeId)
           } else {
             updateList.push({
               id: resp.id,
@@ -281,12 +291,15 @@ export default class RewardsPresenter {
             })
           }
         })
+        storedId = updateListId
         storedEmployeeList = updateList
         storedUpdatedList = selectedList
         this.view.setEmployeeList(storedEmployeeList)
         this.view.storedEmployeeList(selectedList)
         storedEmployeeList = []
       }
+
+      console.log(storedId)
     } catch (e) {
       console.log(e)
     }
@@ -338,17 +351,7 @@ export default class RewardsPresenter {
   resetData () {
     storedId = []
     storedEmployeeList = []
-  }
-
-  setEmployeeId (data) {
-    console.log(data)
-    const listId = [...storedId]
-    data.map((resp) => {
-      if(resp.isChecked === true) {
-        listId.push(resp.id)
-      }
-    })
-    storedId = listId
+    storedUpdatedList = []
   }
 
   getRewardAwards () {
