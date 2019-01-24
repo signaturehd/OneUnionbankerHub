@@ -270,7 +270,6 @@ class LaptopLeaseFragment extends BaseMVPView {
                       selectedLaptopDetails: laptopDetails.details,
                       showLaptopModel : false,
                     })
-                    console.log(laptopDetails.id)
                     this.presenter.setLaptopId(laptopDetails.id)
                     this.presenter.setAmount(laptopDetails.unitPrice)
                     this.presenter.setLaptopModel(laptopDetails.id)
