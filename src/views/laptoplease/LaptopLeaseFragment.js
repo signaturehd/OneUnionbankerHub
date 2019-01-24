@@ -269,7 +269,10 @@ class LaptopLeaseFragment extends BaseMVPView {
                       selectedLaptopDetails: laptopDetails.details,
                       showLaptopModel : false,
                     })
-                    this.presenter.setLaptopModel(laptopDetails)
+                    console.log(laptopDetails.id)
+                    this.presenter.setLaptopId(laptopDetails.id)
+                    this.presenter.setAmount(laptopDetails.unitPrice)
+                    this.presenter.setLaptopModel(laptopDetails.id)
                   }
                 }
                 selectedArray = { () => {} }
@@ -344,13 +347,12 @@ class LaptopLeaseFragment extends BaseMVPView {
                             laptopDetailsName = { laptopDetailsName }
                             getCardOptionId = { getCardOptionId }
                             showEditMode = { showEditMode }
-                            setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
                             setLaptopModel = { () => this.setState({ showLaptopModel : true }) }
                             showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
                             showTerms = { () => this.setState({ showTermsSelection: true }) }
                             deliveryOptionName = { deliveryOptionName }
                             laptopLeaseAttachment = { laptopLeaseAttachment }
-                            amount = { amount }
+                            amount = { controller.checkedAmount(amount) }
                             terms = { termsName }
                             laptopModel = { laptopModel }
                             setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }

@@ -2036,12 +2036,14 @@ export default class HRBenefitsService {
      releasingCenter,
      laptopLeaseParam) {
    const formData = new FormData()
+   console.log(laptopLeaseParam)
    const bankToPurchaseObject = {
      accountNumber,
      releasingCenter,
      benefitId: '16',
      type: laptopLeaseParam.id === 1 ? 1 : 2,
      term: laptopLeaseParam.terms,
+     deliveryOption: laptopLeaseParam.deliveryOption,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      laptopId: laptopLeaseParam.laptopId,
    }
@@ -2049,7 +2051,7 @@ export default class HRBenefitsService {
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
-     benefitId: '16',
+     benefitId: '16', 
      type: laptopLeaseParam.id === 1 ? 1 : 2,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,

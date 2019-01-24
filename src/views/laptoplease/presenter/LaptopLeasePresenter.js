@@ -151,7 +151,7 @@ export default class LaptopLeasePresenter {
     try {
       if(getCardOptionId.toString() === '1') {
         store.dispatch(NotifyActions.resetNotify())
-         if (!storedLaptopModel.name){
+         if (storedLaptopModel.id === null){
             store.dispatch(NotifyActions.addNotify({
               message : 'Laptop Model is Required',
               type : 'warning',
@@ -275,9 +275,9 @@ export default class LaptopLeasePresenter {
         storedFile,
         storedOrNumber,
         storedVendor,
-        moment(storedOrDate).format('MM/DD/YYYY')),
+        moment(storedOrDate).format('MM/DD/YYYY'),
         storedLaptopId
-      )
+      ))
       .subscribe(data => {
         this.view.noticeOfUndertaking(data)
         this.view.hideLoading()
