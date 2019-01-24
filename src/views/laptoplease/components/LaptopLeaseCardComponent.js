@@ -47,8 +47,6 @@ class LaptopLeaseCardComponent extends Component {
       selectedLaptopDetails
     } = this.props
 
-    console.log(selectedLaptopDetails)
-
     return (
       <div className={'carview-container'}>
         <center>
