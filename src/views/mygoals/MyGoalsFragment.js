@@ -264,12 +264,22 @@ class MyGoalsFragment extends BaseMVPView {
               <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
             </div>
             <div>
-              <div>
-                <h2 className={ 'header-margin-default text-align-left' }>My Goals</h2>
-                <div className = { 'grid-global' }>
-                  <h2 className={ 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
+              <div className={ 'mygoal-banner-grid' }>
+                <div className={ 'mygoal-header-default' }>
+                  <div></div>
+                  <div>
+                    <div className={ 'mygoal-banner-grid-content' }>
+                      <div></div>
+                      <div className={ 'mygoal-header-title' }>
+                        <h2 className = { 'mygoal-header-title' }>My Goals</h2>
+                        <h2 className = { 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
               </div>
-            </div>
               <br/>
               <div className = { 'grid-filter' }>
                 <div className = { 'padding-10px' }>
@@ -323,7 +333,7 @@ class MyGoalsFragment extends BaseMVPView {
                     }/>
                     {
                       isLineManager &&
-                      <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Approval</label>
+                      <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Manager Approval</label>
                     }
                     <section>
                     <Switch>

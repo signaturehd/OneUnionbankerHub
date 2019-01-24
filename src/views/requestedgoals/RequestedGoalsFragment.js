@@ -837,7 +837,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                 <Card className = { 'grid-points' }>
                   <span className = { 'padding-10px icon-check icon-points-img text-align-left' }/>
                   <div className = { 'padding-10px' }>
-                    <h2 className = { 'font-size-14px text-align-left font-weight-bold' }>My Points</h2>
+                    <h2 className = { 'font-size-14px text-align-left font-weight-normal' }>My Points</h2>
                     <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>{ this.checkPoints(goalsArray) } Available Points</h2>
                   </div>
                 </Card>
@@ -917,7 +917,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             <div className = { 'padding-10px' }>
               <div className = { 'padding-10px' }>
                 <div className = { 'header-column card-background padding-10px' }>
-                  <h2 className = { 'font-weight-bold text-align-left font-size-14px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                  <h2 className = { 'font-weight-normal text-align-left font-size-14px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                   {
                     goalId &&
                     <span
@@ -929,8 +929,8 @@ class RequestedGoalsFragment extends BaseMVPView {
 
                 <div className = { 'details-columns padding-10px' }>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Goal type</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Goal type</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>{
                       isTeamGoal ?
                       'Team Goal'
                       :
@@ -941,33 +941,33 @@ class RequestedGoalsFragment extends BaseMVPView {
                     }</h2>
                   </div>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Status</h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Status</h2>
                     {
                       approvalStatus === 2 ?
-                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Medium' }>Approved</h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Medium  description-title' }>Approved</h2>
                       :
                         approvalStatus === 3 ?
-                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter color-High' }>Rejected</h2>
+                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter color-High description-title' }>Rejected</h2>
                         :
                         approvalStatus === 1 ?
-                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter' }>Requested</h2>
+                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter description-title' }>Requested</h2>
                         :
                         approvalStatus === 4 ?
-                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>Update for approval</h2>
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>Update for approval</h2>
                         :
                         approvalStatus === 5 ?
-                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>Deletion for approval</h2>
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>Deletion for approval</h2>
                         :
                         approvalStatus === 6 &&
-                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low' }>Completed</h2>
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low description-title' }>Completed</h2>
                     }
                   </div>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Priority</h2>
-                    <h2 className = { `text-align-center font-size-12px font-weight-lighter color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Priority</h2>
+                    <h2 className = { `text-align-center font-size-12px font-weight-lighter  description-title color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
                   </div>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Type</h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Type</h2>
                     <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
                       goalTypeId === 1 ?
                       'Performance'
@@ -980,28 +980,28 @@ class RequestedGoalsFragment extends BaseMVPView {
                   { /* Second row */ }
 
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Start Date</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{ moment(startDate).format('MMMM, DD, YYYY') }</h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Start Date</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter  description-title' }>{ moment(startDate).format('MMMM, DD, YYYY') }</h2>
                   </div>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Due Date</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{ moment(dueDate).format('MMMM, DD, YYYY') }</h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Due Date</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>{ moment(dueDate).format('MMMM, DD, YYYY') }</h2>
                   </div>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }></h2>
-                    <h2 className = { `text-align-center font-size-12px font-weight-lighter color-${priorityName}` }></h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }></h2>
+                    <h2 className = { `text-align-center font-size-12px font-weight-lighter description-title color-${priorityName}` }></h2>
                   </div>
                   <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }></h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }></h2>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }></h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }></h2>
                   </div>
                 </div>
 
                 { /* Description */ }
 
                 <div className = { 'padding-10px' }>
-                  <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Description</h2>
-                  <h2 className = { 'text-align-left font-size-14px font-weight-lighter' }>{
+                  <h2 className = { 'text-align-left font-size-14px font-weight-normal' }>Description</h2>
+                  <h2 className = { 'padding-10px text-align-left font-size-14px font-weight-lighter' }>{
                     description ?
                     description
                     :
@@ -1009,7 +1009,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   }</h2>
                 </div>
                 <div className = { 'padding-10px' }>
-                  <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Progress</h2>
+                  <h2 className = { 'text-align-left font-size-14px font-weight-normal' }>Progress</h2>
                   <Progress
                     theme = {
                       {
@@ -1033,7 +1033,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
                       <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
+                        <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Tasks</h2>
                         <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
                       </div>
                       <h2>
@@ -1099,7 +1099,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
                       <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Reviews</h2>
+                        <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Reviews</h2>
                         <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
                       </div>
                       <br/>
@@ -1154,7 +1154,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                 }
                 <Line/>
                 <div className = { 'padding-10px' }>
-                  <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
+                  <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Goal History</h2>
                   {
                     historyArray.length !==0 ?
                       historyArray.goalDetails.map((resp, key) =>(

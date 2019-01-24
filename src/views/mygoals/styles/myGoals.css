@@ -3,6 +3,37 @@
   grid-template-columns: 3fr 2fr;
 }
 
+.mygoal-banner-grid {
+  background: url('../../../images/GOALS/mygoal-banner.png');
+  color: #fff;
+  background-size: cover;
+  height: 250px;
+  margin: 0px 10px
+}
+
+.mygoal-header-default {
+  height: 250px;
+  margin: auto;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.mygoal-title-grid {
+  display: grid;
+  grid-template-rows: 1fr .2fr;
+}
+
+.mygoal-header-title {
+  font-size: 70px;
+  font-weight: bolder;
+  height: 50px;
+}
+
+.mygoal-banner-grid-content {
+  display: grid;
+  grid-template-columns: .15fr 1fr .15fr;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: .1fr 3fr;
@@ -39,7 +70,8 @@
 }
 
 .mygoal-input-tab:checked + label {
-  color: #ff8a00;
+  color: #fff;
+  background: #ff8a00;
   border-radius: 50px;
   font-weight: lighter;
   min-width: 200px;
