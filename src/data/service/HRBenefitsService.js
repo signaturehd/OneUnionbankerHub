@@ -2041,7 +2041,6 @@ export default class HRBenefitsService {
      releasingCenter,
      benefitId: '16',
      type: laptopLeaseParam.id === 1 ? 1 : 2,
-     model: laptopLeaseParam.model,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      laptopId: laptopLeaseParam.laptopId,

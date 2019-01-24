@@ -1,6 +1,5 @@
 export default (
   id,
-  model,
   estimatedAmount,
   terms,
   deliveryOption,
@@ -11,7 +10,6 @@ export default (
   laptopId,
 ) => ({
   id,
-  model,
   estimatedAmount,
   terms,
   deliveryOption,

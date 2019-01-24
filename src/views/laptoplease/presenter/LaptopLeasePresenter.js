@@ -269,14 +269,14 @@ export default class LaptopLeasePresenter {
       this.view.showLoading()
       this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
         getCardOptionId,
-        storedLaptopModel,
         storedAmount,
         storedTerms,
         storedDeliveryOption,
         storedFile,
         storedOrNumber,
         storedVendor,
-        moment(storedOrDate).format('MM/DD/YYYY'))
+        moment(storedOrDate).format('MM/DD/YYYY')),
+        storedLaptopId
       )
       .subscribe(data => {
         this.view.noticeOfUndertaking(data)
