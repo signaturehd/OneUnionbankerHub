@@ -121,7 +121,6 @@ export default class LaptopLeasePresenter {
 
     })
     .subscribe(data => {
-      console.log(data)
       this.view.isLaptopLeaseValidate(data.isValid)
       this.view.setDeliveryOptionList(data.deliveryOptions)
       this.view.setLaptopModelList(data.laptopDetails)

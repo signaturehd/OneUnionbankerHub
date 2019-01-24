@@ -87,7 +87,6 @@ class PostEmploymentBIR2316Fragment extends Component {
               try {
                 this.onCheckedPdf('/2018-11-07/12345-BIR Form 2316-1540879749374.pdf')
                 this.setState({ showPdfViewComponent : true  })
-                console.log('tst')
               } catch (e) {
                 console.log(e)
               }
