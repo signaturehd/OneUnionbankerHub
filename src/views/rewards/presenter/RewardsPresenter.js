@@ -318,12 +318,12 @@ export default class RewardsPresenter {
   }
 
   submitAwards (selectedId, employeeName, employeeMessage) {
-    if (!employeeName) {
+    if (storedId.length === 0) {
       store.dispatch(NotifyActions.addNotify({
         title: 'Required',
         message: 'You have to choose an employee first.',
         type: 'warning',
-        duration: 5000
+        duration: 5000,
       }))
     }
     else if (!employeeMessage) {
