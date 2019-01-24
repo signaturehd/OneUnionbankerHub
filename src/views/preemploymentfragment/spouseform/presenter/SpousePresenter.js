@@ -265,7 +265,6 @@ export default class SpousePresenter {
     spouseAttachmentsArray,
     attachments
   ) {
-    console.log(attachments)
     let validateAttachments = false
     spouseAttachmentsArray && spouseAttachmentsArray.map(
       (attachment, key) => {
@@ -300,7 +299,6 @@ export default class SpousePresenter {
           this.view.reload()
         })
       } else {
-        console.log('test')
         this.view.showCircularLoader()
         this.putSpouseInteractor.execute(addSpouseForm(
           firstName,

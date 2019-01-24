@@ -8,7 +8,7 @@ import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRew
 import SubmitAwardsParam from '../../../domain/param/SubmitAwardsParam'
 import * as AwardsFunction from '../function/AwardsFunction'
 
-let storedRecognizedAwards = [], storedEmployeeList = [], storedId = []
+let storedRecognizedAwards = [], storedEmployeeList = [], storedId = [], storedUpdatedList = []
 
 export default class RewardsPresenter {
   constructor (container) {
@@ -27,24 +27,9 @@ export default class RewardsPresenter {
     this.view.setRecognizedRewards(data)
   }
 
-  checkedId (id) {
-    storedEmployeeList.map((resp) => {
-      if(id.toString() === resp.id.toString()) {
-        return false
-      } else {
-        return true
-      }
-    })
-  }
-
   validateAlphabet (e) {
     const validate = AwardsFunction.checkedValidatedAlphabet(e)
     this.view.setValidateAlphabet(validate)
-  }
-
-  reconstructEmployeeList (data) {
-    storedEmployeeList = data
-    this.view.setEmployeeList(data)
   }
 
   getAwardData() {
@@ -126,50 +111,217 @@ export default class RewardsPresenter {
     this.view.setRewardList(rewardList)
   }
 
-  getEmployeeList (data) {
-    const updateEmployee = [...storedEmployeeList]
-    if(data.directReports.length !== 0) {
-      data.directReports.map((resp) => {
-        updateEmployee.push({
-          id: resp.id,
-          name: resp.name,
-          isChecked: false,
-        })
-      })
-    }
-
-    if(data.squadMembers.length !== 0) {
-      data.squadMembers.map((resp) => {
-        updateEmployee.push({
-          id: resp.id,
-          name: resp.name,
-          isChecked: false,
-        })
-      })
-    }
-    storedEmployeeList = updateEmployee
+  setDeleteEmployeeToList (key, id, selectedId) {
+    const newStoredUpdatedList = [...storedUpdatedList]
+    const nreStoredId = [...storedId]
+    const restoredStoredUpdatedList = [...storedEmployeeList]
+    storedUpdatedList && storedUpdatedList.map((resp, idx) => {
+      if(resp.id === id) {
+        if(selectedId === 2) {
+          newStoredUpdatedList.splice(idx, 1)
+          nreStoredId.splice(idx, 1)
+          restoredStoredUpdatedList.push({
+            id: resp.id,
+            name: resp.name,
+            isChecked: !resp.isChecked ? true : false,
+          })
+        } else {
+          nreStoredId.splice(idx, 1)
+          newStoredUpdatedList.splice(idx, 1)
+          restoredStoredUpdatedList.push({
+            id: resp.id,
+            name: resp.firstName +', '+ resp.lastName + ' '+ resp.middleName,
+            isChecked: !resp.isChecked ? true : false,
+            lastName: resp.lastName,
+            firstName: resp.firstName,
+            employeeNumber: resp.employeeNumber
+          })
+        }
+      }
+    })
+    storedId = nreStoredId
+    storedUpdatedList = newStoredUpdatedList
+    storedEmployeeList = restoredStoredUpdatedList
+    this.view.storedEmployeeList(storedUpdatedList)
     this.view.setEmployeeList(storedEmployeeList)
   }
 
-  getEligibleInRewards (data) {
+  getEmployeeList (type, data) {
+    if(type === 2) {
+      const updateEmployee = [...storedEmployeeList]
+      try{
+        if(data.directReports.length !== 0) {
+          data.directReports.map((resp) => {
+            updateEmployee.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked: false,
+            })
+          })
+        }
+
+        if(data.squadMembers.length !== 0) {
+          data.squadMembers.map((resp) => {
+            updateEmployee.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked: false,
+            })
+          })
+        }
+        storedEmployeeList = updateEmployee
+        this.view.setEmployeeList(storedEmployeeList)
+      } catch (e) {
+        console.log(e)
+      }
+    } else if (type === 1 || type === 3) {
+      const updateEmployee = [...storedEmployeeList]
+      try{
+        if(data.list.length !== 0) {
+          data.list.map((resp) => {
+            updateEmployee.push({
+              id: resp.id,
+              name: resp.firstName + ', ' + resp.lastName + ' '+resp.middleName,
+              isChecked: false,
+              lastName: resp.lastName,
+              firstName: resp.firstName,
+              employeeNumber: resp.employeeNumber
+            })
+          })
+        }
+        storedEmployeeList = updateEmployee
+        this.view.setEmployeeList(storedEmployeeList)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+
+  setSelectAllEmployee (employeeAllIsChecked, membersData, selectedId) {
+    // console.log(employeeAllIsChecked, membersData)
+    // let updateList = [...storedEmployeeList]
+    // let selectedList = [...storedUpdatedList]
+    // const isCheck = !employeeAllIsChecked ? true : false
+    // console.log(membersData)
+    // membersData && membersData.map((resp, key) => {
+    //   if(selectedId === 2) {
+    //     if(isCheck) {
+    //       updateList.splice(key, 1)
+    //     } else {
+    //       selectedList.push({
+    //         id: resp.id,
+    //         name: resp.name,
+    //         isChecked : isCheck
+    //       })
+    //     }
+    //   } else {
+    //     selectedList.push({
+    //       id: resp.id,
+    //       name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+    //       isChecked : employeeAllIsChecked,
+    //       lastName: resp.lastName,
+    //       firstName: resp.firstName,
+    //       employeeNumber: resp.employeeNumber,
+    //     })
+    //   }
+    // })
+    // storedUpdatedList = selectedList
+    // storedEmployeeList = updateList
+    //
+    // this.view.setAllEmployeeSelectBool(isCheck)
+    // this.view.setEmployeeList(storedUpdatedList)
+    // this.view.storedEmployeeList(storedUpdatedList)
+  }
+
+  receiveEmployeeListData (data, membersData, employeeList, selectedId) {
+    storedEmployeeList = []
+    try {
+      if(selectedId === 2) {
+        let updateList = [...storedEmployeeList]
+        let selectedList = [...storedUpdatedList]
+        let updateListId = [...storedId]
+        const employeeId = data.id
+        membersData && membersData.map((resp, key) => {
+          if(employeeId === resp.id) {
+            selectedList.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked : !resp.isChecked ? true : false
+            })
+            updateListId.push(employeeId)
+          } else {
+            updateList.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked : resp.isChecked
+            })
+          }
+        })
+        storedId = updateListId
+        storedEmployeeList = updateList
+        storedUpdatedList = selectedList
+        storedId = updateListId
+        this.view.setEmployeeList(storedEmployeeList)
+        this.view.storedEmployeeList(selectedList)
+        storedEmployeeList = []
+      } else {
+        let updateList = [...storedEmployeeList]
+        let selectedList = [...storedUpdatedList]
+        let updateListId = [...storedId]
+        const employeeId = data.id
+        membersData && membersData.map((resp, key) => {
+          if(employeeId === resp.id) {
+            selectedList.push({
+              id: resp.id,
+              name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+              isChecked : !resp.isChecked ? true : false,
+              lastName: resp.lastName,
+              firstName: resp.firstName,
+              employeeNumber: resp.employeeNumber,
+            })
+            updateListId.push(employeeId)
+          } else {
+            updateList.push({
+              id: resp.id,
+              name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+              isChecked : resp.isChecked,
+              lastName: resp.lastName,
+              firstName: resp.firstName,
+              employeeNumber: resp.employeeNumber,
+            })
+          }
+        })
+        storedId = updateListId
+        storedEmployeeList = updateList
+        storedUpdatedList = selectedList
+        this.view.setEmployeeList(storedEmployeeList)
+        this.view.storedEmployeeList(selectedList)
+        storedEmployeeList = []
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  getEligibleInRewards (type, data) {
     storedEmployeeList = []
     this.view.showLoadingCircular(true)
-    this.getEligibleInRewardsInteractor.execute(data)
+    this.getEligibleInRewardsInteractor.execute(type, data)
     .subscribe(data => {
       this.view.showLoadingCircular(false)
-      this.getEmployeeList(data)
+      this.getEmployeeList(type, data)
     }, error => {
       this.view.showLoadingCircular(false)
     })
   }
 
   submitAwards (selectedId, employeeName, employeeMessage) {
-    if (!employeeName) {
+    if (storedId.length === 0) {
       store.dispatch(NotifyActions.addNotify({
         title: 'Required',
         message: 'You have to choose an employee first.',
         type: 'warning',
-        duration: 5000
+        duration: 5000,
       }))
     }
     else if (!employeeMessage) {
@@ -197,16 +349,7 @@ export default class RewardsPresenter {
   resetData () {
     storedId = []
     storedEmployeeList = []
-  }
-
-  setEmployeeId (data) {
-    const listId = [...storedId]
-    data.map((resp) => {
-      if(resp.isChecked === true) {
-        listId.push(resp.id)
-      }
-    })
-    storedId = listId
+    storedUpdatedList = []
   }
 
   getRewardAwards () {

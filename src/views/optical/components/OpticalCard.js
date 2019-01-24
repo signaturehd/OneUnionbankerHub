@@ -12,7 +12,6 @@ import {
   Line
 } from  '../../../ub-components/'
 
-import staticImage from '../../../images/uploadicon-grey.jpg'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 

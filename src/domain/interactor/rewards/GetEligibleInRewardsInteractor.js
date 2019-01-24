@@ -3,7 +3,7 @@ export default class getEligibleInRewardsInteractor {
     this.client = client
   }
 
-  execute (string) {
-    return this.client.getEligibleInRewards(this.client.getToken(), string)
+  execute (type, string) {
+    return this.client.getEligibleInRewards(this.client.getToken(), type, string)
   }
 }

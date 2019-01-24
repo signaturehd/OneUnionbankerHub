@@ -11,7 +11,7 @@ import {
 } from '../../ub-components/'
 
 import CertificateOfEmploymentFormComponent from './components/CertificateOfEmploymentFormComponent'
-import BIR2316CardComponent from './components/BIR2316CardComponent'
+import Bir2316Fragment from '../bir2316/Bir2316Fragment'
 import './styles/coeStyles.css'
 class CertificateOfEmploymentFragment extends BaseMVPView {
   constructor (props) {
@@ -253,15 +253,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
         }
         {
           showBIR2316 &&
-          <BIR2316CardComponent
-            index = { index }
-            viewMoreText = { viewMoreText }
-            viewMore = { () => this.setState({ index : payslipList.length, viewMoreText : 'View less' }) }
-            viewLess = { () => this.setState({ index : 3, viewMoreText : 'View more' }) }
-            birArrayList={ birArrayList }
-            onSubmit={ (date) =>
-                  {this.selectedDate(empId, date) , this.setState({ showPayslipDetails : true })}
-             }
+          <Bir2316Fragment
             backToList = { () =>
              this.setState({ showBIR2316: false, showListForm: true })}
           />

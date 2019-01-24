@@ -2561,8 +2561,16 @@ export default class HRBenefitsService {
     })
   }
 
-  getEligibleInRewards (token, string) {
-    return this.apiClient.get(`v1/rewards/candidates?keyword=${ string }`, {
+  getEligibleInRewards (token, type, string) {
+    return this.apiClient.get(`v1/rewards/candidates?awardType=${type}&keyword=${ string }`, {
+      headers : { token }
+    })
+  }
+
+  // BIR 2316 My Documents
+
+  getBir2316List (token) {
+    return this.apiClient.get('v1/bir/', {
       headers : { token }
     })
   }

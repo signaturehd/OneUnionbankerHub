@@ -27,7 +27,7 @@ class LaptopLeaseOptionComponent extends Component {
         id : 2,
         subtitle: '',
         title: 'Employee to Purchase',
-        imageSrc : require('../../../images/icons/employeetopurchase.png')
+        imageSrc : require('../../../images/icons/employeepurchase-orange.png')
       }
     ]
 
@@ -44,14 +44,14 @@ class LaptopLeaseOptionComponent extends Component {
                 >
                 <img
                   style = {{
-                    height : '50px',
-                    width: '50px',
+                    height : '100px',
+                    width: '100px',
                     objectFit: 'cover',
                     backgroundRepeat : 'no-repeat',
                    }}
                   src = { resp.imageSrc }/>
                 <br/>
-                <h2>{ resp.title }</h2>
+                <h4 className = { 'font-weight-lighter' }>{ resp.title }</h4>
               </Card>
             )
           }

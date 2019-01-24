@@ -190,7 +190,7 @@ class OutPatientReimbursementFragment extends BaseMVPView {
       attachmentArray)
   }
 
-  showFormReviewFieldDisabled (e) {
+    showFormReviewFieldDisabled (e) {
     const {
       dependentName,
       procedureArray,

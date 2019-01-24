@@ -27,12 +27,13 @@ class ResetPasswordFragment extends BaseMVPView {
     this.state = {
       token: '',
       successMessage: '',
+      successMessageComponent: '',
       loader: false,
     }
   }
 
-  showOtpResponse (successMessage) {
-    this.setState({ successMessage })
+  showOtpResponse (successMessage, successMessageComponent) {
+    this.setState({ successMessage, successMessageComponent })
   }
 
   showCircularLoader () {
@@ -55,7 +56,8 @@ class ResetPasswordFragment extends BaseMVPView {
     const {
       token,
       successMessage,
-      loader
+      loader,
+      successMessageComponent
     } = this.state
 
     const {
@@ -86,13 +88,29 @@ class ResetPasswordFragment extends BaseMVPView {
               <div></div>
             </div>
             <div className = { 'circular-loader-center' }>
-              <br/>
-              <center>
-                <span  className = { 'upload-success-icon security-icon-settings' }/>
-              </center>
-              <h2>Successfully  Unlocked Account Pin</h2>
-              <br/>
-              <h2>{ successMessage }</h2>
+              <div>
+                {
+                  successMessageComponent ?
+
+                  <div>
+                    <br/>
+                    <center>
+                      <span  className = { 'upload-success-icon security-icon-settings' }/>
+                    </center>
+                    <h2>{ successMessage }</h2>
+                  </div>
+
+                  :
+                  <div>
+                    <br/>
+                    <center>
+                      <span  className = { 'upload-fail-icon security-icon-settings' }/>
+                    </center>
+                    <h2>Failed: Unable to unlock employee account.</h2>
+                    <br/>
+                  </div>
+                }
+              </div>
               <GenericButton
                 className = { 'profile-button-small' }
                 onClick = { () => history.push('/') }
