@@ -298,8 +298,6 @@ export default class RewardsPresenter {
         this.view.storedEmployeeList(selectedList)
         storedEmployeeList = []
       }
-
-      console.log(storedId)
     } catch (e) {
       console.log(e)
     }
