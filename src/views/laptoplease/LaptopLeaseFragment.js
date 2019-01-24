@@ -263,7 +263,6 @@ class LaptopLeaseFragment extends BaseMVPView {
                       selectedLaptopDetails: laptopDetails.details,
                       showLaptopModel : false,
                     })
-                    console.log(laptopDetails.details)
                     this.presenter.setLaptopModel(laptopDetails)
                   }
                 }
