@@ -12,7 +12,7 @@ import { NotifyActions } from '../../../actions'
 import moment from 'moment'
 
 let storedAmount = '', storedTerms = '', storedDeliveryOption = '', storedLaptopModel = '', storedFile = ''
-let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = ''
+let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = '', storedLaptopId=''
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -61,6 +61,11 @@ export default class LaptopLeasePresenter {
   setVendor (vendor) {
     storedVendor = vendor
     this.view.setVendor(vendor)
+  }
+
+  setLaptopId (id) {
+    storedLaptopId = id
+    this.view.setLaptopId(id)
   }
 
   resetValue () {

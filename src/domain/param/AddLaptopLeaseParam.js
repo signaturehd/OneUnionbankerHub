@@ -8,6 +8,7 @@ export default (
   orNumber,
   vendor,
   orDate,
+  laptopId,
 ) => ({
   id,
   model,
@@ -18,4 +19,5 @@ export default (
   orNumber,
   vendor,
   orDate,
+  laptopId,
 })

@@ -2041,18 +2041,10 @@ export default class HRBenefitsService {
      releasingCenter,
      benefitId: '16',
      type: laptopLeaseParam.id === 1 ? 1 : 2,
-     brand: laptopLeaseParam.brand,
      model: laptopLeaseParam.model,
-     screenSize: laptopLeaseParam.screenSize,
-     color: laptopLeaseParam.color,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
-     deliveryOptionId: laptopLeaseParam.deliveryOption,
-     graphicsCard : laptopLeaseParam.graphicsCard,
-     hardDriveCapacity : laptopLeaseParam.hardDriveCapacity,
-     processorType : laptopLeaseParam.processorType,
-     operatingSystem : laptopLeaseParam.operatingSystem,
-     systemMemory : laptopLeaseParam.systemMemory,
+     laptopId: laptopLeaseParam.laptopId,
    }
 
    const employeeToPurchaseObject = {
