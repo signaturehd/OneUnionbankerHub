@@ -40,6 +40,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       showRejectRemarksModal: false,
+      personal: 'personal',
       employeeName: '',
       goalId : '',
       goalTitle : '',
@@ -91,15 +92,17 @@ class ApprovalGoalsFragment extends BaseMVPView {
     return lmh
   }
 
-  onApprovalSubmit(goalId, isApprove, rejectedRemarks) {
+  onApprovalSubmit(personal, goalId, isApprove, rejectedRemarks) {
     isApprove ?
     this.presenter.approveGoal(
+      personal,
       goalId,
       isApprove,
       ''
     )
     :
     this.presenter.approveGoal(
+      personal,
       goalId,
       isApprove,
       rejectedRemarks
@@ -124,6 +127,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
 
   render () {
     const {
+      personal,
       enabledLoader,
       showNoticeResponseModal,
       noticeResponse,
@@ -191,7 +195,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
                 showRejectRemarksFunc = { () => this.setState({ showRejectRemarksModal : true }) }
                 rejectedRemarksFunc = { (resp) => this.setState({ rejectedRemarks: resp }) }
                 onApprovalSubmit = { (goalId, isApproved, rejectedRemarks) => {
-                    this.onApprovalSubmit(goalId, isApproved, rejectedRemarks)
+                    this.onApprovalSubmit(personal, goalId, isApproved, rejectedRemarks)
                     this.resetValue()
                   }
                 }
@@ -263,7 +267,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
                         <GenericButton
                         text = { 'Submit' }
                         onClick = { () => {
-                          this.onApprovalSubmit(goalId, 3, rejectedRemarks)
+                          this.onApprovalSubmit(personal, goalId, 3, rejectedRemarks)
                           this.setState({ showRejectRemarksModal: false })
                         }
                        }/>
@@ -284,7 +288,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
                       <GenericButton
                       text = { 'Approve' }
                       className = { 'button-approve profile-button-small' }
-                      onClick = { () => this.onApprovalSubmit(goalId, 2, '') }/>
+                      onClick = { () => this.onApprovalSubmit(personal, goalId, 2, '') }/>
                     </div>
                   </div>
                 </center>

@@ -3,7 +3,7 @@ export default class ApproveGoalsInteractor {
     this.client = client
   }
 
-  execute (goalId, isApprove, rejectedRemarks) {
-    return this.client.approveGoal(this.client.getToken(), goalId, isApprove, rejectedRemarks)
+  execute (approvalGoalsParam) {
+    return this.client.approveGoal(this.client.getToken(), approvalGoalsParam)
   }
 }

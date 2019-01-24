@@ -3,9 +3,9 @@
   color: #999999;
   }
 
-.grid-main {
+.grid-req-main {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: .8fr 2fr;
 }
 
 .grid-container {
@@ -29,6 +29,14 @@
   padding: 10px;
 }
 
+.padding-5px {
+  padding: 5px;
+}
+
+.padding-10px-no-bottom {
+  padding: 10px 10px 0px 10px;
+}
+
 .height-100 {
   height: 100%;
 }
@@ -39,14 +47,24 @@
   height: 100%;
 }
 
-.grid-filter {
-  display: grid;
-  grid-template-columns: 1fr .5fr 1fr;
-}
-
 .grid-percentage {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-points-main {
+  display: grid;
+  grid-template-columns: 1fr .1fr;
+}
+
+.grid-points-rows {
+  display: grid;
+  grid-template-rows: .3fr 1fr .3fr;
+}
+
+.grid-points {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
 }
 
 .color-Low {
@@ -61,12 +79,20 @@
   color: #ff3333;
 }
 
-.icon-edit-img {
-  background-image: url('../../../images/icons/baseline_edit_black_18dp.png')
+.color-white {
+  color: #ffffff;
+}
+
+.icon-edit-white-img {
+  background-image: url('../../../images/icons/ic-edit-48px.png')
 }
 
 .icon-add-img {
   background-image: url('../../../images/icons/icons-add-36.png')
+}
+
+.icon-points-img {
+  background-image: url('../../../images/icons/icons8-trophy-50.png')
 }
 
 .header-column {
@@ -78,4 +104,33 @@
 .comment-grid {
   display: grid;
   grid-template-columns: 1fr .5fr;
+}
+
+/* scroll */
+.scroll-y {
+  width: auto;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* Goals details */
+.card-background {
+  background-color: #FF8A00;
+  border-radius: 5px;
+}
+
+.details-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.details-rows {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  padding-top: 10px;
+}
+
+.details-title {
+  background-color: #f1f1f1;
 }

@@ -35,17 +35,17 @@ class RequestedGoalsComponent extends Component {
   render () {
     const { cardHolder, priorityFunc, onSelected, onDeleted, filterId } = this.props
     return (
-      <div className = { 'padding-15px' }>
+      <div>
       {
         cardHolder.map((resp, key) =>
           (
             filterId ?
             resp.approvalStatus === filterId &&
             resp.approvalStatus !== 3 &&
-            <Card className = { 'margin-10px' }>
+            <Card>
               <div className = { 'padding-15' }>
                 <div className = { 'header-column' }>
-                  <span/>
+                  <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                   {
                     resp.approvalStatus !== 5 &&
                     <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
@@ -53,15 +53,6 @@ class RequestedGoalsComponent extends Component {
                 </div>
                 <div className = { 'header-column-1 cursor-pointer' } >
                   <div>
-                    <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
-                    {
-                      // <Progress
-                      //   width = { 65 }
-                      //   height = { 65 }
-                      //   percent = { 80 }
-                      //   className = { 'margin-5px' }
-                      // />
-                    }
                   </div>
                   <div>
                     {
@@ -83,7 +74,15 @@ class RequestedGoalsComponent extends Component {
                         resp.approvalStatus === 6 &&
                         <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
                     }
-                    <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
+                    <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>{
+                      resp.isTeamGoal ?
+                      'Team Goal'
+                      :
+                        resp.isSquadGoal ?
+                        'Squad Goal'
+                        :
+                        'Personal'
+                    }</h2>
                   </div>
 
                 </div>
@@ -105,18 +104,10 @@ class RequestedGoalsComponent extends Component {
             </Card>
             :
             resp.approvalStatus !== 3 &&
-            <Card className = { 'margin-10px' }>
+            <Card>
               <div className = { 'padding-15' }>
                 <div className = { 'header-column' }>
-                  {
-                    resp.isTeamGoal ?
-                    <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold' }>Team Goal</h2>
-                    :
-                    resp.isSquadGoal ?
-                    <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold' }>Squad Goal</h2>
-                    :
-                    <span/>
-                  }
+                  <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                   {
                     resp.approvalStatus !== 5 &&
                     <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
@@ -138,44 +129,42 @@ class RequestedGoalsComponent extends Component {
                     resp.rating && resp.rating ? resp.rating : 0.0
                   ) }>
                   <div>
-                    <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
                     {
-                      // <Progress
-                      //   width = { 65 }
-                      //   height = { 65 }
-                      //   percent = { 80 }
-                      //   className = { 'margin-5px' }
-                      // />
+                      resp.approvalStatus === 2 ?
+                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Medium' }>Approved</h2>
+                      :
+                        resp.approvalStatus === 3 ?
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                        :
+                        resp.approvalStatus === 1 ?
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Requested</h2>
+                        :
+                        resp.approvalStatus === 4 ?
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
+                        :
+                        resp.approvalStatus === 5 ?
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
+                        :
+                        resp.approvalStatus === 6 &&
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Low' }>Completed</h2>
                     }
                   </div>
                   <div>
-                    {
-                      resp.approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
+                    <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>{
+                      resp.isTeamGoal ?
+                      'Team Goal'
                       :
-                        resp.approvalStatus === 3 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                        resp.isSquadGoal ?
+                        'Squad Goal'
                         :
-                        resp.approvalStatus === 1 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
-                        :
-                        resp.approvalStatus === 4 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
-                        :
-                        resp.approvalStatus === 5 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
-                        :
-                        resp.approvalStatus === 6 &&
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
-                    }
-                    <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
+                        'Personal'
+                    }</h2>
                   </div>
-
                 </div>
                 <div></div>
                 <div>
                   <Line/>
-                  <div className = { 'grid-footer-column margin-5px' }>
+                  <div className = { 'details-footer-column margin-5px' }>
                     <div>
                       <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(resp.priority)}` }>{ priorityFunc(resp.priority) }</h2>
                     </div>

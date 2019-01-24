@@ -164,7 +164,6 @@ export default class RequestCoachPresenter {
     taskDescription,
     isCompleted
   ){
-    this.view.showSubmitLoader()
     try {
       this.updateGoalTaskInteractor.execute(
         taskId,
@@ -176,10 +175,8 @@ export default class RequestCoachPresenter {
       })
       .subscribe  (
         data => {
-          this.view.hideSubmitLoader()
         },
         errors => {
-          this.view.hideSubmitLoader()
         }
       )
     } catch (e) {

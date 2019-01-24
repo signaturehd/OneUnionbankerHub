@@ -64,7 +64,6 @@ class RequestedGoalsFragment extends BaseMVPView {
       deleteTask: false,
       showCommentOption: false,
       deleteComment: false,
-      showFilterModal: false,
       showMarkAsCompleted: false,
       ifYesCompleted: false,
       showRemarksText: false,
@@ -97,28 +96,12 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeId : '',
       goalType : '',
       goalTypeErrorMessage : '',
-      filterId: '',
-      filterName: '',
       businessOutcome: '',
       businessOutcomeErrorMessage: '',
       commentArray: [],
       taskArray: [],
       goalsArray : [],
       historyArray : [],
-      filterArray : [
-        {
-          id: 0,
-          name: 'All'
-        },
-        {
-          id: 1,
-          name: 'Requested'
-        },
-        {
-          id: 2,
-          name: 'Approved'
-        }
-      ],
       priorityArray : [
         {
           id: 3,
@@ -263,7 +246,8 @@ class RequestedGoalsFragment extends BaseMVPView {
       startDate,
       dueDate,
       priorityId,
-      goalTypeId
+      goalTypeId,
+      personal
     } = this.state
 
     if(!goalTitle) {
@@ -309,7 +293,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitTask() {
-    const { goalId, taskId, taskDescription, onEditTask, isCompleted } = this.state
+    const { goalId, taskId, taskDescription, onEditTask, isCompleted, personal } = this.state
     if(!taskDescription) {
       this.setState({ taskDescriptionErrorMessage: 'Required field' })
     }
@@ -323,7 +307,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitComment() {
-    const { goalId, goalComment, pageNumber, pageItem } = this.state
+    const { goalId, goalComment, pageNumber, pageItem, personal } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
@@ -412,7 +396,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     let boolCompleted = false
 
     if(approvalStatus === 2) {
-      !isCompleted ?
+      isCompleted ?
       boolCompleted = true
       :
       boolCompleted = false
@@ -472,6 +456,29 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
   }
 
+  checkPoints(goalsArray) {
+    let performanceRate = 0
+    let developementalRate = 0
+    let totalPoints = 0
+    if(goalsArray.length !== 0) {
+      goalsArray.map((details, key) =>
+      {
+        if(details.isCompleted) {
+          details.type === 1 ?
+          performanceRate++
+          :
+          details.type === 2 &&
+          developementalRate++
+        }
+      })
+      totalPoints = (performanceRate * 0.95) + (developementalRate * 0.05)
+
+      return totalPoints !== 0 ? totalPoints.toFixed(2) : 'No'
+    } else {
+      return 'No'
+    }
+  }
+
   render () {
     const {
       personal,
@@ -525,10 +532,6 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalsArray,
       priorityArray,
       goalTypeArray,
-      filterArray,
-      showFilterModal,
-      filterId,
-      filterName,
       historyArray,
       ratings,
       ifYesCompleted,
@@ -541,7 +544,8 @@ class RequestedGoalsFragment extends BaseMVPView {
     } = this.state
 
     const {
-      isLineManager
+      isLineManager,
+      filterId
     } = this.props
 
     let totalCount = taskArray && taskArray.length
@@ -563,12 +567,9 @@ class RequestedGoalsFragment extends BaseMVPView {
       }
       {
         submitLoader &&
-        <Modal>
-          <center>
-            <h2>Please wait...</h2>
-            <CircularLoader show = { submitLoader } />
-          </center>
-        </Modal>
+        <center>
+          <CircularLoader show = { submitLoader } />
+        </center>
       }
       {
         showPriorityModal &&
@@ -759,18 +760,40 @@ class RequestedGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
-        showFilterModal &&
-        <SingleInputModal
-          label = { 'Select status' }
-          inputArray = { filterArray }
-          selectedArray = { (filterId, filterName) => this.setState({
-              filterId,
-              filterName,
-              showFilterModal: false
-            })
+        this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) &&
+        <Modal>
+          <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
+            { ratings }
+          </h2>
+          <br/>
+          <div className = { 'text-align-center' }>
+              <Rating
+                emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+                fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                fractions={ 1 }
+                onChange={ e => this.commentRateFunc(e) }
+                initialRating={ (ratings ? ratings : 0) || 0 }
+              />
+          </div>
+          <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+          {
+            showRemarksText &&
+
+            <GenericInput
+              value = { remarksText }
+              hint = { 'Please add remarks' }
+              type = { 'textarea' }
+              onChange = { (e) => {
+                try {
+                  this.setState({ remarksText : e.target.value })
+                } catch(e) {
+                  console.log(e)
+                }
+              } }
+              onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
+            />
           }
-          onClose = { () => this.setState({ showFilterModal: false }) }
-        />
+        </Modal>
       }
       {
         showForm ?
@@ -807,37 +830,34 @@ class RequestedGoalsFragment extends BaseMVPView {
           />
         :
         <div>
-        <br/>
-          <div className = { 'grid-filter margin-left' }>
-            <div className = { 'text-align-left margin-right grid-global' }>
-              <GenericInput
-                text = { 'Filter by status' }
-                className = { 'global-button profile-button-medium font-size-11px' }
-                value = { filterName }
-                onClick = { () => {
-                  this.setState({ showFilterModal: true })
-                } }
-              />
-              <div></div>
+        <div className = { 'grid-req-main' }>
+          <div>
+            <div className = { ' grid-points-main' }>
+              <div className = { 'padding-10px-no-bottom' }>
+                <Card className = { 'grid-points' }>
+                  <span className = { 'padding-10px icon-check icon-points-img text-align-left' }/>
+                  <div className = { 'padding-10px' }>
+                    <h2 className = { 'font-size-14px text-align-left font-weight-bold' }>My Points</h2>
+                    <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>{ this.checkPoints(goalsArray) } Available Points</h2>
+                  </div>
+                </Card>
+              </div>
+              <div className = 'padding-10px-no-bottom'>
+                <GenericButton
+                  text = { 'Add Goal' }
+                  className = { 'global-button profile-button-small font-size-10px' }
+                  onClick = { () => {
+                    this.resetValue()
+                    this.setState({ showForm: true })
+                  } }
+                />
+                <GenericButton
+                  text = { 'Request for Coaching' }
+                  className = { 'global-button profile-button-small font-size-10px' }
+                  onClick = { () => showRequestCoachFunc(true)}
+                />
+              </div>
             </div>
-            <div className = { 'text-align-right margin-right grid-global' }>
-              <GenericButton
-                text = { 'Add Goal' }
-                className = { 'global-button profile-button-medium font-size-11px' }
-                onClick = { () => {
-                  this.resetValue()
-                  this.setState({ showForm: true })
-                } }
-              />
-              <GenericButton
-                text = { 'Request for Coaching' }
-                className = { 'global-button profile-button-medium font-size-11px' }
-                onClick = { () => showRequestCoachFunc(true)}
-              />
-            </div>
-          </div>
-          <div className = { 'grid-main' }>
-            <div>
             {
               enabledLoader ?
               <center>
@@ -845,7 +865,8 @@ class RequestedGoalsFragment extends BaseMVPView {
               </center>
               :
               goalsArray.length !== 0 ?
-              <RequestedGoalsComponent
+              <div className = { 'scroll-y padding-10px' }>
+                <RequestedGoalsComponent
                 filterId = { filterId }
                 cardHolder = { goalsArray }
                 priorityFunc = { (resp) => this.priorityFunc(resp) }
@@ -877,160 +898,132 @@ class RequestedGoalsFragment extends BaseMVPView {
                     ratings: parseFloat(ratings),
                     showRemarksText: false,
                     remarksText: ''
-                   })
+                  })
                   this.presenter.getGoalTask(goalId)
                   this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                   this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
                   this.setState({ ifYesCompleted: false,
                     showMarkAsCompleted: this.checkIfShowMarkAsCompleted(approvalStatus, isCompleted),
                     showRemarksText : false })
+                  }
                 }
-               }
-               onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
-              />
+                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                />
+              </div>
               :
               <center><h2>No record</h2></center>
             }
             </div>
-            <div ref = { 'main-div' } className = { 'padding-10px' }>
-              <Card className = { 'padding-10px' }>
-                {
-                  // <div className = { 'header-column' }>
-                  //   <span/>
-                  //   <span className = { 'icon-check icon-delete-img' }/>
-                  // </div>
-                }
-                <div className = { 'grid-percentage' }>
-                  <div className = { 'text-align-center padding-10px' }>
-                    {
+            <div className = { 'padding-10px' }>
+              <div className = { 'padding-10px' }>
+                <div className = { 'header-column card-background padding-10px' }>
+                  <h2 className = { 'font-weight-bold text-align-left font-size-14px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                  {
+                    goalId &&
+                    <span
+                      className = { 'icon-check icon-edit-white-img' }
+                      onClick = { () => this.setState({ showForm: true, editMode: true }) }
+                    />
+                  }
+                </div>
+
+                <div className = { 'details-columns padding-10px' }>
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Goal type</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
                       isTeamGoal ?
-                      <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Team Goal</h2>
+                      'Team Goal'
                       :
-                      isSquadGoal &&
-                      <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Squad Goal</h2>
-                    }
+                        isSquadGoal ?
+                        'Squad Goal'
+                        :
+                        'Personal'
+                    }</h2>
+                  </div>
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Status</h2>
                     {
                       approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold color-Medium' }>Approved</h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Medium' }>Approved</h2>
                       :
                         approvalStatus === 3 ?
-                        <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter color-High' }>Rejected</h2>
                         :
                         approvalStatus === 1 ?
-                        <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Requested</h2>
+                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter' }>Requested</h2>
                         :
                         approvalStatus === 4 ?
-                        <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Update for approval</h2>
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>Update for approval</h2>
                         :
                         approvalStatus === 5 ?
-                        <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>Deletion for approval</h2>
                         :
                         approvalStatus === 6 &&
-                        <h2 className = { 'text-align-center font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low' }>Completed</h2>
                     }
-                    <br/>
-                    <Progress
-                      type = { 'circle' }
-                      height = { 80 }
-                      width = { 80 }
-                      percent = { percentageTask ? parseInt(percentageTask) : 0 } />
-                    <br/>
-                    <br/>
                   </div>
-                  <div>
-                    <div>
-                      <br/>
-                      <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
-                        { ratings }
-                      </h2>
-                      <br/>
-                      <div className = { 'text-align-center' }>
-                        {
-                          this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) ?
-                          <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
-                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                            fractions={ 1 }
-                            onChange={ e => this.commentRateFunc(e) }
-                            initialRating={ (ratings ? ratings : 0) || 0 }
-                          />
-                        :
-                          <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
-                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                            fractions={ 1 }
-                            initialRating={ (ratings ? ratings : 0) || 0 }
-                            readonly
-                          />
-                        }
-                        <br/>
-                      </div>
-                      <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
-                      {
-                        showRemarksText &&
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Priority</h2>
+                    <h2 className = { `text-align-center font-size-12px font-weight-lighter color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                  </div>
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Type</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
+                      goalTypeId === 1 ?
+                      'Performance'
+                      :
+                      goalTypeId === 2 &&
+                      'Developemental'
+                    }</h2>
+                  </div>
 
-                        <GenericInput
-                          value = { remarksText }
-                          hint = { 'Please add remarks' }
-                          type = { 'textarea' }
-                          onChange = { (e) => {
-                            try {
-                              this.setState({ remarksText : e.target.value })
-                            } catch(e) {
-                              console.log(e)
-                            }
-                          } }
-                          onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
-                        />
-                      }
-                      <br/>
-                    </div>
+                  { /* Second row */ }
+
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Start Date</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{ moment(startDate).format('MMMM, DD, YYYY') }</h2>
                   </div>
-                  <div className = { 'text-align-right' }>
-                    <div>
-                      {
-                        goalTypeId === 1 ?
-                        <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Performance</span></h2>
-                        :
-                          goalTypeId === 2 &&
-                          <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
-                      }
-                      <div>
-                        <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                      </div>
-                      <br/>
-                      <div className = { 'grid-global' }>
-                        <div></div>
-                        <div className = { 'grid-global' }>
-                          <div className = { 'text-align-center' }>
-                            <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
-                              <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount ? commentArray.totalCount : 0 }</h2>
-                          </div>
-                          <div className = { 'text-align-center' }>
-                            <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
-                              <span className = { 'icon-check icon-taskcompleted-img' }/>{ this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount }</h2>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Due Date</h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{ moment(dueDate).format('MMMM, DD, YYYY') }</h2>
+                  </div>
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }></h2>
+                    <h2 className = { `text-align-center font-size-12px font-weight-lighter color-${priorityName}` }></h2>
+                  </div>
+                  <div className = { 'details-rows' }>
+                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }></h2>
+                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }></h2>
                   </div>
                 </div>
-                <br/>
-                <Line/>
+
+                { /* Description */ }
+
                 <div className = { 'padding-10px' }>
-                  <div className = { 'header-column' }>
-                    <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
-                    <h2>
-                    {
-                      goalId &&
-                      <span
-                        className = { 'icon-check icon-edit-img' }
-                        onClick = { () => this.setState({ showForm: true, editMode: true }) }
-                      />
+                  <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Description</h2>
+                  <h2 className = { 'text-align-left font-size-14px font-weight-lighter' }>{
+                    description ?
+                    description
+                    :
+                    'Goals allow you to create effective objectives for yourself or employees.'
+                  }</h2>
+                </div>
+                <div className = { 'padding-10px' }>
+                  <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Progress</h2>
+                  <Progress
+                    theme = {
+                      {
+                        default: {
+                          color: '#FF8A00'
+                        },
+                        active: {
+                          color: '#FF8A00'
+                        }
+                      }
                     }
-                    </h2>
-                  </div>
-                  <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+                    height = { 50 }
+                    width = { 80 }
+                    percent = { percentageTask ? parseInt(percentageTask) : 0 } />
                 </div>
                 {
                   this.checkApprovalStatus(approvalStatus) &&
@@ -1099,7 +1092,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                         />
                       :
                       !addTask &&
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                      <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No task</h2>
                     }
                   </div>
                   <Line/>
@@ -1173,10 +1166,10 @@ class RequestedGoalsFragment extends BaseMVPView {
                       )
                       )
                     :
-                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
                   }
                 </div>
-              </Card>
+              </div>
             </div>
           </div>
         </div>
