@@ -2,6 +2,13 @@
 
 /*she */
 
+.awards-grid-select-option {
+  display: grid;
+  grid-template-columns: 1fr .1fr .01fr;
+  text-align: right;
+  align-items: baseline;
+}
+
 .myreward-grid-container {
   display: grid;
   grid-template-columns: .05fr auto .05fr;

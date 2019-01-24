@@ -1,56 +1,47 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles/coeComponentStyle.css'
+import '../styles/birStyle.css'
 import {  Card } from '../../../ub-components/'
-// import PayslipDetailsModal from '../modals/PayslipDetailsModal'
 
-class BIR2316CardComponent extends Component {
-
+class Bir2316Components extends Component {
   constructor (props) {
     super(props)
   }
 
   render () {
     const {
-      birArrayList,
+      dataArayList,
       onSubmit,
       viewMoreText,
       viewMore,
       viewLess,
-      index,
-      backToList
+      index
     }=this.props
 
-    const isVisible = (birArrayList && birArrayList.length > 4) ? '' : 'hide'
+    const isVisible = (dataArayList && dataArayList.length > 4) ? '' : 'hide'
 
     return (
-    <div className = { 'coe-grid-column-2' }>
       <div>
-        <i
-          className = { 'back-arrow' }
-          onClick = { () => backToList() }>
-        </i>
-      </div>
-      <div>
-        <div className={ 'bir-card-container' }>
+      <br/>
+        <div className={ 'bir2316list-card-container' }>
           {
-            birArrayList.slice(0, index).map((bir, key) =>
+            dataArayList.slice(0, index).map((bir2316list, key) =>
               <Card
-                className={ 'bir-card-component' }
+                className={ 'bir2316list-card-component' }
                 key={ key }
                 onClick={ () =>
-                  onSubmit(bir && bir.period ? bir.period : '')
+                  onSubmit(bir2316list && bir2316list.period ? bir2316list.period : '')
                 } >
-                <div className={ 'bir-grid-card-container' }>
+                <div className={ 'bir2316list-grid-card-container' }>
                   <div>
-                    <span className={ 'bir-icon-forms bir-icon' }/>
+                    <span className={ ' bir2316list-icon-forms bir2316list-icon' }/>
                   </div>
                   <div>
-                    <h2 className={ 'bir-label' }>
-                      { bir && bir.date ? bir.date : '(Not Yet Provided)' }
+                    <h2 className={ 'bir2316list-label' }>
+                      { bir2316list && bir2316list.date ? bir2316list.date : '(Not Yet Provided)' }
                     </h2>
                   </div>
-                  <div><span className={ 'bir-icon-forms bir-icon-proceed' }/>
+                  <div><span className={ 'bir2316list-icon-forms bir2316list-icon-proceed' }/>
                 </div>
                 </div>
               </Card>
@@ -63,7 +54,7 @@ class BIR2316CardComponent extends Component {
           className = { `viewmore tooltip ${isVisible}` }
           onClick = {
             () => {
-              if(index === birArrayList.length)
+              if(index === dataArayList.length)
                 viewLess()
               else
                 viewMore()
@@ -73,16 +64,15 @@ class BIR2316CardComponent extends Component {
           <span className={ 'tooltiptext' }>{ viewMoreText }</span>
         </button>
       </div>
-    </div>
     )
   }
 }
 
-BIR2316CardComponent.propTypes = {
-  birArrayList : PropTypes.array,
+Bir2316Components.propTypes = {
+  dataArayList : PropTypes.array,
   viewMore : PropTypes.func,
   viewMoreText : PropTypes.string,
   viewLess : PropTypes.func,
 }
 
-export default BIR2316CardComponent
+export default Bir2316Components

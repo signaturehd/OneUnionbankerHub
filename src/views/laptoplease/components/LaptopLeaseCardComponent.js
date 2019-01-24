@@ -30,16 +30,6 @@ class LaptopLeaseCardComponent extends Component {
       color,
       showTerms,
       terms,
-      graphicsCard,
-      showGraphicsCard,
-      hardDriveCapacity,
-      showHardDriveCapacity,
-      processorType,
-      showProcessorType,
-      operatingSystem,
-      showOperatingSystem,
-      systemMemory ,
-      showSystemMemory ,
       showEditMode,
       onSubmit,
       onEdit,
@@ -50,13 +40,11 @@ class LaptopLeaseCardComponent extends Component {
       showLaptopDeliveryOption,
       laptopLeaseAttachment,
       setAttachments,
-      laptopBrand,
       laptopModel,
-      screenSize,
-      setLaptopBrand,
       setLaptopModel,
-      setScreenSize,
-      getCardOptionId
+      getCardOptionId,
+      laptopDetailsName,
+      selectedLaptopDetails
     } = this.props
 
     return (
@@ -73,32 +61,14 @@ class LaptopLeaseCardComponent extends Component {
 
             <div className = { 'grid-global' }>
               <GenericInput
-                placeholder = { 'Laptop Brand' }
-                errorMessage = { '' }
-                onChange ={ (e) => setLaptopBrand(e.target.value) }
-                text = { 'Laptop Brand' }
-                disabled = { showEditMode }
-                value = { laptopBrand }
-                maxLength = { 15 }
-                />
-              <GenericInput
                 placeholder = { 'Laptop Model' }
                 errorMessage = { '' }
                 disabled = { showEditMode }
                 text = { 'Laptop Model' }
-                onChange = { (e) => setLaptopModel(e.target.value) }
-                value = { laptopModel }
-                />
-
-              <GenericInput
-                placeholder = { 'Screen Size' }
-                errorMessage = { '' }
-                onChange ={ (e) => setScreenSize(e.target.value) }
-                text = { 'Screen Size' }
-                disabled = { showEditMode }
-                value = { screenSize }
-                maxLength = { 6 }
-                />
+                readOnly
+                onClick = { () => setLaptopModel() }
+                value = { laptopDetailsName }
+              />
 
               <GenericInput
                 placeholder = { 'Estimated Cost' }
@@ -106,16 +76,9 @@ class LaptopLeaseCardComponent extends Component {
                 onChange ={ (e) => setAmount(e.target.value) }
                 text = { 'Estimated Cost' }
                 disabled = { showEditMode }
-                value = { amount }
+                value = { selectedLaptopDetails && selectedLaptopDetails.unitPrice }
                 maxLength = { 6 }
-                />
-              <GenericInput
-                placeholder = { 'Colour Family' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Colour Family' }
-                onChange = { (e) => setColor(e.target.value) }
-                value = { color }
+                readOnly
                 />
               <GenericInput
                 placeholder = { 'Payment Terms' }
@@ -127,46 +90,6 @@ class LaptopLeaseCardComponent extends Component {
                 value = { terms }
                 />
               <GenericInput
-                placeholder = { 'Graphics Card' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Graphics Card' }
-                onChange = { (e) => showGraphicsCard(e.target.value) }
-                value = { graphicsCard }
-                />
-              <GenericInput
-                placeholder = { 'Hard Drive Capacity' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Hard Drive Capacity' }
-                onChange = { (e) => showHardDriveCapacity(e.target.value) }
-                value = { hardDriveCapacity }
-                />
-              <GenericInput
-                placeholder = { 'Processor Type' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Processor Type' }
-                onChange = { (e) => showProcessorType(e.target.value) }
-                value = { processorType }
-                />
-              <GenericInput
-                placeholder = { 'Operationg System' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'Operationg System' }
-                onChange = { (e) => showOperatingSystem(e.target.value) }
-                value = { operatingSystem }
-                />
-              <GenericInput
-                placeholder = { 'System Memory' }
-                errorMessage = { '' }
-                disabled = { showEditMode }
-                text = { 'System Memory' }
-                onChange = { (e) => showSystemMemory(e.target.value) }
-                value = { systemMemory }
-                />
-              <GenericInput
                 value = { deliveryOptionName }
                 disabled = { showEditMode }
                 readOnly
@@ -174,6 +97,11 @@ class LaptopLeaseCardComponent extends Component {
                 text = { 'Delivery Option' }
               />
             </div>
+              <div
+                className = { 'font-weight-lighter font-size-12px' }
+                dangerouslySetInnerHTML = {{ __html : selectedLaptopDetails &&  selectedLaptopDetails.specification }}>
+              </div>
+              <br/>
               <MultipleFileUploader
                 placeholder = { 'Required Attachments' }
                 fileArray = { laptopLeaseAttachment }

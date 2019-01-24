@@ -25,6 +25,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			orNumberErrorMessage: '',
       employeeName: 'test',
       enabledCircularLoader : false,
+			selectAllIsChecked: false
 		}
 	}
 
@@ -71,7 +72,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 	}
 
   searchData (searchString) {
-    this.presenter.getEligibleInRewards(searchString)
+    this.presenter.getEligibleInRewards(this.state.selectedId, searchString)
   }
 
   showLoadingCircular (enabledCircularLoader) {
@@ -80,6 +81,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 
   setEmployeeList (membersData) {
     this.setState({ membersData })
+  }
+
+  storedEmployeeList (employeeList) {
+    this.setState({ employeeList })
   }
 
   setAwardData (awardData) {
@@ -93,6 +98,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
   setRedeemData (redeemData) {
     this.setState({ redeemData })
   }
+
+	setAllEmployeeSelectBool (selectAllIsChecked) {
+		this.setState({ selectAllIsChecked })
+	}
 
 	render () {
 		const { history, profileHasCOC } = this.props
@@ -111,10 +120,11 @@ class RewardsRecognitionFragment extends BaseMVPView {
       searchString,
       membersData,
       enabledCircularLoader,
-      employeeList,
       rewardList,
       awardData,
-      redeemData
+      redeemData,
+			employeeList,
+			selectAllIsChecked
 		} = this.state
 
 		return (
@@ -147,19 +157,26 @@ class RewardsRecognitionFragment extends BaseMVPView {
                   selectedAwards  ?
                   <div>
                      <AwardFragment
-                      employeeList = { employeeList }
+											employeeList = { employeeList }
                       enabledCircularLoader = { enabledCircularLoader }
                       searchString = { searchString }
                       onChangeDataFunc = { (e) => this.setState({ searchString : e }) }
                       searchFunc = { () => this.searchData(searchString) }
                       membersData = { membersData }
+											deleteEmployeeToList = { (key, id) =>
+												this.presenter.setDeleteEmployeeToList(key, id, selectedId) }
                       membersDataFunc = { (data) => {
-                        this.setState({ employeeList : data })
-                        this.presenter.setEmployeeId(data)
+												this.presenter.receiveEmployeeListData(data, membersData, employeeList, selectedId)
+                        // this.presenter.setEmployeeId(data)
                       } }
                       selectedId = { selectedId }
+											selectAllIsChecked = { selectAllIsChecked }
                       awardData = { awardData }
-                      selectedAwards = { (selectedAwards) => this.setState({selectedAwards}) }
+											selectAllEmployee = { () => this.presenter.setSelectAllEmployee(selectAllIsChecked, membersData, selectedId) }
+                      selectedAwards = { (selectedAwards) => {
+												this.setState({ selectedAwards, searchString : '' })
+												this.presenter.resetData()
+											} }
                       onSubmitAwards = { () => this.sendData() }
                       employeeName = { employeeName }
                       employeeMessage = { employeeMessage }

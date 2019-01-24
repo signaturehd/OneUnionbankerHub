@@ -73,7 +73,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                 />
               {
                 purposeBody &&
-                purposeBody.id === 37 &&
+                purposeBody.id === 38 &&
                 <div>
                   <GenericInput
                     text = { 'VISA' }

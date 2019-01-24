@@ -22,24 +22,6 @@
   width: 100% !important;
 }
 
-.optical-image-view {
-  position: relative;
-  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
-  background-size: 50px;
-  width: 225px;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 20px;
-}
-
-.optical-image {
-  background: url('../../../../images/uploadicon-grey.jpg')  no-repeat center center;
-  width: 225px;
-  height: 240px;
-  object-fit: cover;
-  background-size: 85%;
-}
-
 .optical-image-layer {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
@@ -89,19 +71,6 @@
   position:relative;
   width:100%;
   margin-top:45px;
-}
-
-.text-icon {
-  font-size:16px;
-  padding:10px 5px 10px 5px;
-  display:block;
-  width:100%;
-  border:none;
-  border-bottom:1px solid #ff8a00;
-  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
-  background-size: 25px;
-  background-position: right;
-  cursor: pointer;
 }
 
 .text-icon {

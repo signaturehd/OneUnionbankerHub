@@ -16,10 +16,11 @@ export default class ResetPasswordPresenter {
     this.view.showCircularLoader()
     this.requestOtpVerificationInteractor.execute(token)
     .subscribe(data => {
-      this.view.showOtpResponse(data.message)
+      this.view.showOtpResponse(data.message , true)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()
+      this.view.showOtpResponse(error, false)
     })
   }
 }
