@@ -225,6 +225,7 @@ class LaptopLeaseFragment extends BaseMVPView {
               showNoticeResponseModal &&
               <ResponseModal
                 onClose={ () => {
+                  this.resetValue()
                   this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
                 }}
                 noticeResponse={ noticeResponse }

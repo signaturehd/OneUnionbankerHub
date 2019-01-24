@@ -71,6 +71,7 @@ export default class LaptopLeasePresenter {
   resetValue () {
     this.view.setLaptopBrand('')
     this.view.setLaptopModel('')
+    this.view.setLaptopId(null)
     this.view.setAmount('')
     this.view.setTerms('')
     this.view.setVendor('')
