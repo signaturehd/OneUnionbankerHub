@@ -51,29 +51,43 @@ class RequestedGoalsComponent extends Component {
                     <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
                   }
                 </div>
-                <div className = { 'header-column-1 cursor-pointer' } >
-                  <div>
-                  </div>
+                <div className = { 'header-column-1 cursor-pointer' } onClick = { () =>
+                  onSelected(
+                    resp.id,
+                    resp.title,
+                    resp.description,
+                    resp.startDate,
+                    resp.endDate,
+                    priorityFunc(resp.priority),
+                    resp.approvalStatus,
+                    resp.type,
+                    resp.isTeamGoal,
+                    resp.isSquadGoal,
+                    resp.isCompleted,
+                    resp.rating && resp.rating ? resp.rating : 0.0
+                  ) }>
                   <div>
                     {
                       resp.approvalStatus === 2 ?
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
+                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Medium' }>Approved</h2>
                       :
                         resp.approvalStatus === 3 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-High' }>Rejected</h2>
                         :
                         resp.approvalStatus === 1 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Requested</h2>
                         :
                         resp.approvalStatus === 4 ?
-                        <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
                         :
                         resp.approvalStatus === 5 ?
-                        <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
                         :
                         resp.approvalStatus === 6 &&
-                        <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Low' }>Completed</h2>
                     }
+                  </div>
+                  <div>
                     <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>{
                       resp.isTeamGoal ?
                       'Team Goal'
@@ -84,12 +98,11 @@ class RequestedGoalsComponent extends Component {
                         'Personal'
                     }</h2>
                   </div>
-
                 </div>
                 <div></div>
                 <div>
                   <Line/>
-                  <div className = { 'grid-footer-column margin-5px' }>
+                  <div className = { 'details-footer-column margin-5px' }>
                     <div>
                       <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(resp.priority)}` }>{ priorityFunc(resp.priority) }</h2>
                     </div>

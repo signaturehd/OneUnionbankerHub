@@ -63,7 +63,9 @@ class TeamGoalsFragment extends BaseMVPView {
       deleteComment: false,
       showDirectReport: true,
       showTeamGoal: false,
+      showTeamGoalDetails: false,
       showSquadGoal: false,
+      showMemberGoal: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -442,6 +444,7 @@ class TeamGoalsFragment extends BaseMVPView {
       showCommentOption,
       showDirectReport,
       showTeamGoal,
+      showTeamGoalDetails,
       showSquadGoal,
       deleteComment,
       isCompleted,
@@ -486,7 +489,8 @@ class TeamGoalsFragment extends BaseMVPView {
       selectedName,
       selectedImageUrl,
       selectedMembers,
-      squadId
+      squadId,
+      showMemberGoal
     } = this.state
 
     const {
@@ -655,7 +659,7 @@ class TeamGoalsFragment extends BaseMVPView {
                 name = { 'tabs' }
                 defaultChecked = { true }
                 onClick = { () => {
-                    this.setState({ showDirectReport: true, showTeamGoal: false, showSquadGoal: false })
+                    this.setState({ showDirectReport: true, showTeamGoal: false, showTeamGoalDetails: false, showSquadGoal: false })
                     this.presenter.getDirectReportGoals()
                     this.props.history.push('/mygoals/request')
                   }
@@ -668,7 +672,7 @@ class TeamGoalsFragment extends BaseMVPView {
                 type = { 'radio' }
                 name = { 'tabs' }
                 onClick = { () => {
-                    this.setState({ showDirectReport: false, showTeamGoal: true, showSquadGoal: false })
+                    this.setState({ showDirectReport: false, showTeamGoal: true, showTeamGoalDetails: true, showSquadGoal: false })
                     this.presenter.getTeamGoals(teamType)
                     this.props.history.push('/mygoals/team')
                   }
@@ -683,7 +687,7 @@ class TeamGoalsFragment extends BaseMVPView {
                   type = { 'radio' }
                   name = { 'tabs' }
                   onClick = { () => {
-                      this.setState({ showDirectReport: false, showTeamGoal: false, showSquadGoal: true })
+                      this.setState({ showDirectReport: false, showTeamGoal: false, showTeamGoalDetails: false, showSquadGoal: true })
                       this.presenter.getSquadGoals(this.state.squadType)
                       this.props.history.push('/mygoals/approved')
                     }
@@ -785,7 +789,10 @@ class TeamGoalsFragment extends BaseMVPView {
                           this.setState({
                             selectedTitle,
                             selectedDescription,
-                            selectedMembers
+                            selectedMembers,
+                            showTeamGoal: true,
+                            showTeamGoalDetails: true,
+                            showMemberGoal: false
                            })
                           this.presenter.getGoalTask(goalId)
                           this.presenter.getGoalComment(goalId, pageNumber, pageItem)
@@ -969,7 +976,7 @@ class TeamGoalsFragment extends BaseMVPView {
                     <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                     <h2>
                     {
-                      // goalId &&
+                      goalId &&
                       <span
                         className = { 'icon-check icon-edit-img' }
                         onClick = { () => this.setState({ showForm: true, editMode: true }) }
@@ -992,7 +999,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       </div>
                       <h2>
                       {
-                        // goalId &&
+                        goalId &&
                         <span
                           className = { 'icon-check icon-add-img' }
                           onClick = { () => this.setState({ addTask: true }) }
@@ -1124,7 +1131,7 @@ class TeamGoalsFragment extends BaseMVPView {
               </Card>
             }
             {
-              showTeamGoal &&
+              showTeamGoalDetails &&
               <Card className = { 'padding-10px' }>
                 <div className = { 'padding-10px' }>
                   <div className = { 'header-column' }>
@@ -1149,7 +1156,8 @@ class TeamGoalsFragment extends BaseMVPView {
                     {
                       selectedMembers ?
                       selectedMembers.map((details, key) =>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.fullName }</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }
+                        onClick = { () => this.setState({ showMemberGoal: true, showTeamGoalDetails: false }) }>{ details.fullName }</h2>
                       )
                       :
                       <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>
@@ -1214,6 +1222,10 @@ class TeamGoalsFragment extends BaseMVPView {
                   </div>
                 }
               </Card>
+            }
+            {
+              showMemberGoal &&
+              <h2>member</h2>
             }
             </div>
           </div>

@@ -268,11 +268,11 @@ class MyGoalsFragment extends BaseMVPView {
                 <h2 className={ 'header-margin-default text-align-left' }>My Goals</h2>
                 <div className = { 'grid-global' }>
                   <h2 className={ 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
-                </div>
               </div>
+            </div>
               <br/>
               <div className = { 'grid-filter' }>
-                <div>
+                <div className = { 'padding-10px' }>
                   <GenericInput
                     text = { 'Filter by status' }
                     className = { 'global-button profile-button-medium font-size-11px' }
@@ -285,7 +285,7 @@ class MyGoalsFragment extends BaseMVPView {
                 <div></div>
                 <div className = { 'grid-tabs' }>
                   <div></div>
-                  <div className = { 'mygoal-tabs-container' }>
+                  <div className = { 'mygoal-tabs padding-10px' }>
                     <input
                       className = { 'mygoal-input-tab' }
                       id = { 'mygoal-tab1' }
@@ -309,7 +309,7 @@ class MyGoalsFragment extends BaseMVPView {
                         this.props.history.push('/mygoals/team')
                       }
                     }/>
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Reporting Goals</label>
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team / Squad Goals</label>
 
                     <input
                       className = { 'mygoal-input-tab' }
@@ -336,7 +336,6 @@ class MyGoalsFragment extends BaseMVPView {
                     </Switch>
                     </section>
                   </div>
-                  <div></div>
                 </div>
               </div>
               {
