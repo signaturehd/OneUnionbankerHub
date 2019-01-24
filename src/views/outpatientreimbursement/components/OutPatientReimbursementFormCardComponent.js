@@ -97,7 +97,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 errorMessage = { diagnosisErrorMessage }/>
               <DatePicker
                 selected = { preferredDate }
-                readOnly
+                //readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
                 maxDate = { moment() }
@@ -138,11 +138,13 @@ class OutPatientReimbursementFormCardComponent extends Component {
                             hint = { 'Enter Procedure' }
                             text = { resp.name }
                             value = { othersText }
+                            disabled = { showEditSubmitButton }
                             onChange = { (e) => {
                               const updateProcedures = [...procedureArray]
                               updateProcedures[key].otherProcedure = e.target.value
                               othersTextFunc(e.target.value)
                               }
+
                             }
                           />
                           <GenericInput
