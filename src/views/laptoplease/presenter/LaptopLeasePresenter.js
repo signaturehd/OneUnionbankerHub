@@ -11,7 +11,7 @@ import { NotifyActions } from '../../../actions'
 
 import moment from 'moment'
 
-let storedAmount = '', storedTerms = '', storedDeliveryOption = '', storedLaptopModel = '',  storedFile
+let storedAmount = '', storedTerms = '', storedDeliveryOption = '', storedLaptopModel = '', storedFile = ''
 let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = ''
 
 export default class LaptopLeasePresenter {
@@ -118,6 +118,7 @@ export default class LaptopLeasePresenter {
         deliveryOptions: arrayOption,
         laptopDetails: laptopDetailsOption,
       }
+
     })
     .subscribe(data => {
       console.log(data)
@@ -133,18 +134,20 @@ export default class LaptopLeasePresenter {
   }
 
   validateSubmission (getCardOptionId) {
+
+    let validateAttachments = false
+    storedFile && storedFile.map(
+      (storedFile, key) => {
+        if(!storedFile.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
     try {
       if(getCardOptionId.toString() === '1') {
         store.dispatch(NotifyActions.resetNotify())
-        if (storedAmount === '' || storedAmount < 1) {
-           store.dispatch(NotifyActions.addNotify({
-              title: 'Laptop Lease',
-              message : 'Estimated Cost must be greater than 0',
-              type : 'warning',
-              duration : 2000
-            })
-          )
-        } else if (!storedLaptopModel.name){
+         if (!storedLaptopModel.name){
             store.dispatch(NotifyActions.addNotify({
               message : 'Laptop Model is Required',
               type : 'warning',
@@ -159,6 +162,28 @@ export default class LaptopLeasePresenter {
              duration : 2000
            })
          )
+        } else if(  storedFile === '' ){
+          store.dispatch(NotifyActions.addNotify({
+             title: 'Laptop Lease',
+             message : 'Attachment required',
+             type : 'warning',
+             duration : 2000
+           })
+         )
+        } else if (validateAttachments) {
+          storedFile && storedFile.map(
+            (storedFile, key) => {
+              if(!storedFile.file) {
+                store.dispatch(NotifyActions.addNotify({
+                   title : 'Loptop Lease' ,
+                   message : storedFile.name + ' is required',
+                   type : 'warning',
+                   duration : 2000
+                 })
+               )
+              }
+            }
+          )
         } else {
           this.view.validateInput()
         }
@@ -188,6 +213,28 @@ export default class LaptopLeasePresenter {
             duration : 2000
           })
         )
+      } else if(  storedFile === '' ){
+        store.dispatch(NotifyActions.addNotify({
+           title: 'Laptop Lease',
+           message : 'Attachment required',
+           type : 'warning',
+           duration : 2000
+         })
+       )
+      } else if (validateAttachments) {
+        storedFile && storedFile.map(
+          (storedFile, key) => {
+            if(!storedFile.file) {
+              store.dispatch(NotifyActions.addNotify({
+                 title : 'Loptop Lease' ,
+                 message : storedFile.name + ' is required',
+                 type : 'warning',
+                 duration : 2000
+               })
+             )
+            }
+          }
+        )
       } else if (storedAmount === '' || storedAmount < 1) {
          store.dispatch(NotifyActions.addNotify({
             title: 'Laptop Lease',
@@ -204,7 +251,7 @@ export default class LaptopLeasePresenter {
            duration : 2000
          })
        )
-     } else {
+     }   else {
           this.view.validateInput()
         }
       }

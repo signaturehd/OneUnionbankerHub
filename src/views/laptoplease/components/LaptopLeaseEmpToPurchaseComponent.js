@@ -71,7 +71,7 @@ class LaptopLeaseCardComponent extends Component {
                   maxDate = { moment() }
                   selected = { orDate }
                   errorMessage = { '' }
-                  //readOnly
+                  disabled = { showEditMode }
                   />
                 <GenericInput
                   errorMessage = { '' }
