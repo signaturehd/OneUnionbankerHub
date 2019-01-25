@@ -2050,7 +2050,7 @@ export default class HRBenefitsService {
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
-     benefitId: '16', 
+     benefitId: '16',
      type: laptopLeaseParam.id === 1 ? 1 : 2,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
@@ -2327,7 +2327,7 @@ export default class HRBenefitsService {
   }
 
   addGoalTask (token, goalTaskParam) {
-    return this.apiClient.post(`v1/goals/tasks?goalType=${goalTaskParam.goalType}`, goalTaskParam.body, {
+    return this.apiClient.post(`v1/goals/tasks?goalId=${goalTaskParam.body.id}&goalType=${goalTaskParam.goalType}`, goalTaskParam.body, {
       headers : { token }
     })
   }
@@ -2350,7 +2350,7 @@ export default class HRBenefitsService {
     })
   }
 
-  updateGoalTask(token, goalId, taskDescription, isCompleted) {
+  updateGoalTask(token, taskId, taskDescription, isCompleted) {
     let updateGoal
     if (taskDescription) {
       updateGoal = this.apiClient.put(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
@@ -2359,7 +2359,7 @@ export default class HRBenefitsService {
         headers : { token }
       })
     } else if (isCompleted !== null) {
-      updateGoal = this.apiClient.post(`v1/goals/${goalId}/completion?goalType=personal`, {
+      updateGoal = this.apiClient.post(`v1/goals/tasks/${taskId}?goalType=personal`, {
         isCompleted
       }, {
         headers : { token }
