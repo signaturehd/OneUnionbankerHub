@@ -3,6 +3,10 @@
   grid-template-columns: 3fr 2fr;
 }
 
+.mygoal-filter-margin {
+  margin: auto;
+}
+
 .mygoal-banner-grid {
   background: url('../../../images/GOALS/mygoal-banner.png');
   color: #fff;
@@ -24,7 +28,7 @@
 }
 
 .mygoal-header-title {
-  font-size: 70px;
+  font-size: 65px;
   font-weight: bolder;
   height: 50px;
 }
@@ -41,7 +45,7 @@
 
 .grid-filter {
   display: grid;
-  grid-template-columns: .3fr .1fr 1fr;
+  grid-template-columns: .40fr .02fr 1fr;
 }
 
 .grid-tabs {

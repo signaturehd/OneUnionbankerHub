@@ -64,6 +64,7 @@ class MyGoalsFragment extends BaseMVPView {
       rejectedRemarks: '',
       filterId: 0,
       filterName: '',
+      searchString: '',
       goalsArray : [],
       approvalArray : [],
       priorityArray : [
@@ -105,6 +106,7 @@ class MyGoalsFragment extends BaseMVPView {
         }
       ]
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount() {
@@ -215,10 +217,15 @@ class MyGoalsFragment extends BaseMVPView {
     })
   }
 
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
+  }
+
   render () {
     const { isLineManager, isPO, employeeNumber } = this.props
     const {
       enabledLoader,
+      searchString,
       showNoticeResponseModal,
       noticeResponse,
       goalsArray,
@@ -280,16 +287,14 @@ class MyGoalsFragment extends BaseMVPView {
                   <div></div>
                 </div>
               </div>
-              <br/>
               <div className = { 'grid-filter' }>
-                <div className = { 'padding-10px' }>
+                <div className = { 'padding-10px mygoal-filter-margin' }>
                   <GenericInput
-                    text = { 'Filter by status' }
-                    className = { 'global-button profile-button-medium font-size-11px' }
-                    value = { filterName }
-                    onClick = { () => {
-                      this.setState({ showFilterModal: true })
-                    } }
+                    hint = { 'Search goal name' }
+                    refCallback = { 'search' }
+                    type = { 'text' }
+                    value = { searchString }
+                    onChange = { this.updateSearch }
                   />
                 </div>
                 <div></div>
@@ -358,11 +363,12 @@ class MyGoalsFragment extends BaseMVPView {
                 />
                 :
                 <RequestedGoalsFragment
-                filterId = { filterId }
-                employeeNumber = { employeeNumber }
-                isLineManager = { isLineManager }
-                showRequestCoachForm = { showRequestCoachForm }
-                showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
+                  searchString = { searchString }
+                  filterId = { filterId }
+                  employeeNumber = { employeeNumber }
+                  isLineManager = { isLineManager }
+                  showRequestCoachForm = { showRequestCoachForm }
+                  showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                 :
                 <ApprovalGoalsFragment/>
               }

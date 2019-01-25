@@ -866,7 +866,7 @@ class TeamGoalsFragment extends BaseMVPView {
                         <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold color-High' }>Rejected</h2>
                         :
                         approvalStatus === 1 ?
-                        <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Requested</h2>
+                        <h2 className = { 'margin-10px text-align-center font-size-12px font-weight-bold' }>Goals Pending Manager Approval</h2>
                         :
                         approvalStatus === 4 ?
                         <h2 className = { 'text-align-center font-size-12px font-weight-bold' }>Update for approval</h2>

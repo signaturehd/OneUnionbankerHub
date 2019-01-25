@@ -540,12 +540,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       showRemarksText,
       remarksText,
       isTeamGoal,
-      isSquadGoal
+      isSquadGoal,
     } = this.state
 
     const {
       isLineManager,
-      filterId
+      filterId,
+      searchString
     } = this.props
 
     let totalCount = taskArray && taskArray.length
@@ -838,7 +839,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <span className = { 'padding-10px icon-check icon-points-img text-align-left' }/>
                   <div className = { 'padding-10px' }>
                     <h2 className = { 'font-size-14px text-align-left font-weight-normal' }>My Points</h2>
-                    <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>{ this.checkPoints(goalsArray) } Available Points</h2>
+                  <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>
+                    { this.checkPoints(goalsArray)+ ' ' }<b className={ 'font-weight-normal font-size-10px' }> Available Points</b></h2>
                   </div>
                 </Card>
               </div>
@@ -867,23 +869,11 @@ class RequestedGoalsFragment extends BaseMVPView {
               goalsArray.length !== 0 ?
               <div className = { 'scroll-y padding-10px' }>
                 <RequestedGoalsComponent
-                filterId = { filterId }
-                cardHolder = { goalsArray }
-                priorityFunc = { (resp) => this.priorityFunc(resp) }
-                onSelected = { (
-                  goalId,
-                  goalTitle,
-                  description,
-                  startDate,
-                  dueDate,
-                  priorityName,
-                  approvalStatus,
-                  goalTypeId,
-                  isTeamGoal,
-                  isCompleted,
-                  ratings,
-                ) => {
-                  this.setState({
+                  filterId = { filterId }
+                  searchString = { searchString }
+                  cardHolder = { goalsArray }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onSelected = { (
                     goalId,
                     goalTitle,
                     description,
@@ -893,21 +883,34 @@ class RequestedGoalsFragment extends BaseMVPView {
                     approvalStatus,
                     goalTypeId,
                     isTeamGoal,
-                    isSquadGoal,
                     isCompleted,
-                    ratings: parseFloat(ratings),
-                    showRemarksText: false,
-                    remarksText: ''
-                  })
-                  this.presenter.getGoalTask(goalId)
-                  this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                  this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  this.setState({ ifYesCompleted: false,
-                    showMarkAsCompleted: this.checkIfShowMarkAsCompleted(approvalStatus, isCompleted),
-                    showRemarksText : false })
+                    ratings,
+                  ) => {
+                    this.setState({
+                      goalId,
+                      goalTitle,
+                      description,
+                      startDate,
+                      dueDate,
+                      priorityName,
+                      approvalStatus,
+                      goalTypeId,
+                      isTeamGoal,
+                      isSquadGoal,
+                      isCompleted,
+                      ratings: parseFloat(ratings),
+                      showRemarksText: false,
+                      remarksText: ''
+                    })
+                    this.presenter.getGoalTask(goalId)
+                    this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                    this.setState({ ifYesCompleted: false,
+                      showMarkAsCompleted: this.checkIfShowMarkAsCompleted(approvalStatus, isCompleted),
+                      showRemarksText : false })
+                    }
                   }
-                }
-                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                  onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
                 />
               </div>
               :
@@ -917,7 +920,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             <div className = { 'padding-10px' }>
               <div className = { 'padding-10px' }>
                 <div className = { 'header-column card-background padding-10px' }>
-                  <h2 className = { 'font-weight-normal text-align-left font-size-14px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
+                  <h2 className = { 'font-weight-bold text-align-left font-size-16px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                   {
                     goalId &&
                     <span
@@ -1034,7 +1037,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <div className = { 'header-column' }>
                       <div>
                         <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Tasks</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px padding-10px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
                       </div>
                       <h2>
                       {
@@ -1100,7 +1103,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <div className = { 'header-column' }>
                       <div>
                         <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Reviews</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px padding-10px' }>You can add any notes or updates for this goal.</h2>
                       </div>
                       <br/>
                     </div>
