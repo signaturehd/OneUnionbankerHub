@@ -47,6 +47,7 @@ class LaptopLeaseFragment extends BaseMVPView {
       laptopModel: '',
       screenSize: '',
       file: [],
+      laptopId: null,
       attachmentsRequired : [ {name : 'Dealer Quotations'}]
     }
   }
@@ -152,6 +153,10 @@ class LaptopLeaseFragment extends BaseMVPView {
     this.setState({ laptopModelDetails })
   }
 
+  setLaptopId (laptopId) {
+    this.setState({ laptopId })
+  }
+
   resetValue () {
     this.setState({ showEditMode : false })
     this.presenter.resetValue()
@@ -186,7 +191,8 @@ class LaptopLeaseFragment extends BaseMVPView {
       costAquisition,
       laptopModelDetails,
       laptopDetailsName,
-      selectedLaptopDetails
+      selectedLaptopDetails,
+      laptopId
     } = this.state
 
     const { history }=this.props
@@ -219,6 +225,7 @@ class LaptopLeaseFragment extends BaseMVPView {
               showNoticeResponseModal &&
               <ResponseModal
                 onClose={ () => {
+                  this.resetValue()
                   this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
                 }}
                 noticeResponse={ noticeResponse }
@@ -258,12 +265,14 @@ class LaptopLeaseFragment extends BaseMVPView {
                 inputArray = { laptopModelDetails && laptopModelDetails }
                 multipleContentArray = { (laptopDetails) => {
                     this.setState({
-                      laptopDetailsId: laptopDetails.id,
+                      laptopId: laptopDetails.id,
                       laptopDetailsName: laptopDetails.name,
                       selectedLaptopDetails: laptopDetails.details,
                       showLaptopModel : false,
                     })
-                    this.presenter.setLaptopModel(laptopDetails)
+                    this.presenter.setLaptopId(laptopDetails.id)
+                    this.presenter.setAmount(laptopDetails.unitPrice)
+                    this.presenter.setLaptopModel(laptopDetails.id)
                   }
                 }
                 selectedArray = { () => {} }
@@ -338,13 +347,12 @@ class LaptopLeaseFragment extends BaseMVPView {
                             laptopDetailsName = { laptopDetailsName }
                             getCardOptionId = { getCardOptionId }
                             showEditMode = { showEditMode }
-                            setAmount = { (resp) => this.presenter.setAmount(controller.checkedAmount(resp)) }
                             setLaptopModel = { () => this.setState({ showLaptopModel : true }) }
                             showLaptopDeliveryOption = { () => this.setState({ showDeliveryOptions: true }) }
                             showTerms = { () => this.setState({ showTermsSelection: true }) }
                             deliveryOptionName = { deliveryOptionName }
                             laptopLeaseAttachment = { laptopLeaseAttachment }
-                            amount = { amount }
+                            amount = { controller.checkedAmount(amount) }
                             terms = { termsName }
                             laptopModel = { laptopModel }
                             setAttachments = { (laptopLeaseAttachment) => { this.setState({ laptopLeaseAttachment }),  this.presenter.setFile(laptopLeaseAttachment) } }
