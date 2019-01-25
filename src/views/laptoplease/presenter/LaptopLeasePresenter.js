@@ -12,7 +12,7 @@ import { NotifyActions } from '../../../actions'
 import moment from 'moment'
 
 let storedAmount = '', storedTerms = '', storedDeliveryOption = '', storedLaptopModel = '', storedFile = ''
-let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = ''
+let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = '', storedLaptopId=''
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -63,9 +63,15 @@ export default class LaptopLeasePresenter {
     this.view.setVendor(vendor)
   }
 
+  setLaptopId (id) {
+    storedLaptopId = id
+    this.view.setLaptopId(id)
+  }
+
   resetValue () {
     this.view.setLaptopBrand('')
     this.view.setLaptopModel('')
+    this.view.setLaptopId(null)
     this.view.setAmount('')
     this.view.setTerms('')
     this.view.setVendor('')
@@ -146,7 +152,7 @@ export default class LaptopLeasePresenter {
     try {
       if(getCardOptionId.toString() === '1') {
         store.dispatch(NotifyActions.resetNotify())
-         if (!storedLaptopModel.name){
+         if (storedLaptopModel.id === null){
             store.dispatch(NotifyActions.addNotify({
               message : 'Laptop Model is Required',
               type : 'warning',
@@ -264,15 +270,15 @@ export default class LaptopLeasePresenter {
       this.view.showLoading()
       this.addLaptopLeaseInteractor.execute(AddLaptopLeaseParam(
         getCardOptionId,
-        storedLaptopModel,
         storedAmount,
         storedTerms,
         storedDeliveryOption,
         storedFile,
         storedOrNumber,
         storedVendor,
-        moment(storedOrDate).format('MM/DD/YYYY'))
-      )
+        moment(storedOrDate).format('MM/DD/YYYY'),
+        storedLaptopId
+      ))
       .subscribe(data => {
         this.view.noticeOfUndertaking(data)
         this.view.hideLoading()

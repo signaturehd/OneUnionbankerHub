@@ -73,7 +73,6 @@ class LaptopLeaseCardComponent extends Component {
               <GenericInput
                 placeholder = { 'Estimated Cost' }
                 errorMessage = { '' }
-                onChange ={ (e) => setAmount(e.target.value) }
                 text = { 'Estimated Cost' }
                 disabled = { showEditMode }
                 value = { selectedLaptopDetails && selectedLaptopDetails.unitPrice }
