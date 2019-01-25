@@ -1,6 +1,5 @@
 export default (
   id,
-  model,
   estimatedAmount,
   terms,
   deliveryOption,
@@ -8,9 +7,9 @@ export default (
   orNumber,
   vendor,
   orDate,
+  laptopId,
 ) => ({
   id,
-  model,
   estimatedAmount,
   terms,
   deliveryOption,
@@ -18,4 +17,5 @@ export default (
   orNumber,
   vendor,
   orDate,
+  laptopId,
 })
