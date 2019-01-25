@@ -132,5 +132,10 @@
 }
 
 .details-title {
+  padding: 5px;
   background-color: #f1f1f1;
+}
+
+.description-title {
+  padding: 5px;
 }
