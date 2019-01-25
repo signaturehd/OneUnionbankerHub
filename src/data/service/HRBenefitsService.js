@@ -2036,7 +2036,6 @@ export default class HRBenefitsService {
      releasingCenter,
      laptopLeaseParam) {
    const formData = new FormData()
-   console.log(laptopLeaseParam)
    const bankToPurchaseObject = {
      accountNumber,
      releasingCenter,
