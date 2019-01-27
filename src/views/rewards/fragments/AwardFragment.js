@@ -90,7 +90,7 @@ class Award extends Component {
         <div>
           <h4 className={'celebrate-container-space font-size-14px'}>Who will I award this to?</h4>
           <br/>
-        <div className = { 'grid-global' }>
+        <div className = { 'grid-global-columns-x3' }>
           {
             employeeList &&
             employeeList.map((resp, key) =>
@@ -109,7 +109,7 @@ class Award extends Component {
                   alignItems: 'center',
                 }}>
                 <h4
-                  className = { 'align-items-center cursor-pointer font-weight-lighter font-size-10px' }>
+                  className = { 'align-items-center cursor-pointer font-weight-normal font-size-10px' }>
                   { resp.name }
                 </h4>
                 <div className = { 'text-align-right' }>

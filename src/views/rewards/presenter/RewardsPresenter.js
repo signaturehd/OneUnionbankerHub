@@ -115,35 +115,50 @@ export default class RewardsPresenter {
     const newStoredUpdatedList = [...storedUpdatedList]
     const nreStoredId = [...storedId]
     const restoredStoredUpdatedList = [...storedEmployeeList]
-    storedUpdatedList && storedUpdatedList.map((resp, idx) => {
-      if(resp.id === id) {
-        if(selectedId === 2) {
-          newStoredUpdatedList.splice(idx, 1)
-          nreStoredId.splice(idx, 1)
-          restoredStoredUpdatedList.push({
-            id: resp.id,
-            name: resp.name,
-            isChecked: !resp.isChecked ? true : false,
-          })
-        } else {
-          nreStoredId.splice(idx, 1)
-          newStoredUpdatedList.splice(idx, 1)
-          restoredStoredUpdatedList.push({
-            id: resp.id,
-            name: resp.firstName +', '+ resp.lastName + ' '+ resp.middleName,
-            isChecked: !resp.isChecked ? true : false,
-            lastName: resp.lastName,
-            firstName: resp.firstName,
-            employeeNumber: resp.employeeNumber
-          })
+    try {
+      storedUpdatedList && storedUpdatedList.map((resp, idx) => {
+        if(resp.id === id) {
+          if(selectedId === 2) {
+            newStoredUpdatedList.splice(idx, 1)
+            nreStoredId.splice(idx, 1)
+            restoredStoredUpdatedList.push({
+              id: resp.id,
+              name: resp.name,
+              isChecked: !resp.isChecked ? true : false,
+            })
+          } else {
+            nreStoredId.splice(idx, 1)
+            newStoredUpdatedList.splice(idx, 1)
+            restoredStoredUpdatedList.push({
+              id: resp.id,
+              name: resp.firstName +', '+ resp.lastName + ' '+ resp.middleName,
+              isChecked: !resp.isChecked ? true : false,
+              lastName: resp.lastName,
+              firstName: resp.firstName,
+              employeeNumber: resp.employeeNumber
+            })
+          }
         }
-      }
-    })
+      })
+    } catch (e) {
+      console.log(e)
+    }
     storedId = nreStoredId
     storedUpdatedList = newStoredUpdatedList
     storedEmployeeList = restoredStoredUpdatedList
     this.view.storedEmployeeList(storedUpdatedList)
     this.view.setEmployeeList(storedEmployeeList)
+  }
+
+  checkIdIfExist (id) {
+    let isBool = false
+    for (var i in storedId) {
+      if (storedId[i] === id) {
+        isBool = true
+        break
+      }
+    }
+    return isBool
   }
 
   getEmployeeList (type, data) {
@@ -152,21 +167,25 @@ export default class RewardsPresenter {
       try{
         if(data.directReports.length !== 0) {
           data.directReports.map((resp) => {
-            updateEmployee.push({
-              id: resp.id,
-              name: resp.name,
-              isChecked: false,
-            })
+            if(!this.checkIdIfExist(resp.id)) {
+              updateEmployee.push({
+                id: resp.id,
+                name: resp.name,
+                isChecked: false,
+              })
+            }
           })
         }
 
         if(data.squadMembers.length !== 0) {
           data.squadMembers.map((resp) => {
-            updateEmployee.push({
-              id: resp.id,
-              name: resp.name,
-              isChecked: false,
-            })
+            if(!this.checkIdIfExist(resp.id)) {
+              updateEmployee.push({
+                id: resp.id,
+                name: resp.name,
+                isChecked: false,
+              })
+            }
           })
         }
         storedEmployeeList = updateEmployee
@@ -179,14 +198,16 @@ export default class RewardsPresenter {
       try{
         if(data.list.length !== 0) {
           data.list.map((resp) => {
-            updateEmployee.push({
-              id: resp.id,
-              name: resp.firstName + ', ' + resp.lastName + ' '+resp.middleName,
-              isChecked: false,
-              lastName: resp.lastName,
-              firstName: resp.firstName,
-              employeeNumber: resp.employeeNumber
-            })
+            if(!this.checkIdIfExist(resp.id)) {
+              updateEmployee.push({
+                id: resp.id,
+                name: resp.lastName + ', ' + resp.firstName + ' '+resp.middleName,
+                isChecked: false,
+                lastName: resp.lastName,
+                firstName: resp.firstName,
+                employeeNumber: resp.employeeNumber
+              })
+            }
           })
         }
         storedEmployeeList = updateEmployee
@@ -260,11 +281,9 @@ export default class RewardsPresenter {
         storedId = updateListId
         storedEmployeeList = updateList
         storedUpdatedList = selectedList
-        storedId = updateListId
         this.view.setEmployeeList(storedEmployeeList)
         this.view.storedEmployeeList(selectedList)
-        storedEmployeeList = []
-      } else {
+      } else if (selectedId === 1 || selectedId === 3) {
         let updateList = [...storedEmployeeList]
         let selectedList = [...storedUpdatedList]
         let updateListId = [...storedId]
@@ -273,7 +292,7 @@ export default class RewardsPresenter {
           if(employeeId === resp.id) {
             selectedList.push({
               id: resp.id,
-              name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+              name: resp.lastName + ', ' + resp.firstName + ' '+resp.middleName,
               isChecked : !resp.isChecked ? true : false,
               lastName: resp.lastName,
               firstName: resp.firstName,
@@ -283,7 +302,7 @@ export default class RewardsPresenter {
           } else {
             updateList.push({
               id: resp.id,
-              name: resp.lastName+ ', ' + resp.fistName + ' ' + resp.middleName,
+              name: resp.lastName + ', ' + resp.firstName + ' '+resp.middleName,
               isChecked : resp.isChecked,
               lastName: resp.lastName,
               firstName: resp.firstName,
@@ -296,7 +315,6 @@ export default class RewardsPresenter {
         storedUpdatedList = selectedList
         this.view.setEmployeeList(storedEmployeeList)
         this.view.storedEmployeeList(selectedList)
-        storedEmployeeList = []
       }
     } catch (e) {
       console.log(e)
@@ -339,6 +357,7 @@ export default class RewardsPresenter {
         this.view.showSuccessMessage(data)
         this.view.showLoading(false)
         this.resetData()
+        this.view.resetData()
       }, e => {
         this.view.showLoading(false)
       })

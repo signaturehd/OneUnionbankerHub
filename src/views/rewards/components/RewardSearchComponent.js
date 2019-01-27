@@ -101,7 +101,7 @@ class RewardSearchComponent extends Component {
                         marginRight: '1px',
                       }}
                       className = { 'cursor-pointer font-weight-lighter font-size-12px' }>
-                      { resp.name }
+                      { resp && resp.name }
                     </h4>
                   )
                 }
@@ -122,10 +122,10 @@ class RewardSearchComponent extends Component {
                   <GenericLoader show = { enabledCircularLoader }/>
                 </center>
                 :
-                <div className = { 'grid-global-column-x3' }>
+                <div>
                   {
                     list ?
-                    <div className = { 'grid-global' }>
+                    <div className = { 'grid-global-columns-x3' }>
                       {
                         list.slice(0, index).map((resp, key) =>
                         <Card
@@ -145,7 +145,7 @@ class RewardSearchComponent extends Component {
                           }}>
                           <h4
                             className = { 'align-items-center cursor-pointer font-weight-lighter font-size-12px' }>
-                            { resp.name }
+                            { resp && resp.name }
                           </h4>
                           <div className = { 'text-align-right' }>
                           </div>
