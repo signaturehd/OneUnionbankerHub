@@ -28,7 +28,6 @@ class Notice extends BaseMVPView {
       isAgree: '',
       benId : '',
       enabledLoader : false,
-      showPinCode: false
     }
   }
 
@@ -77,7 +76,8 @@ class Notice extends BaseMVPView {
       isAgree,
       benId,
       showDisagreeModal,
-      enabledLoader
+      enabledLoader,
+      showPinCode
     } = this.state
 
     return (
@@ -153,11 +153,11 @@ class Notice extends BaseMVPView {
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () => {
                   try {
-                    if(!showPinCode) {
-                      this.setState({ disableSubmit: true, showPinCodeModal : true  })
+                    if(showPinCode) {
+                      this.setState({ disableSubmit: true })
                       this.presenter.updateNotice(noticeResponse.transactionId.toString(), 1, benefitId, '')
                     } else {
-                      this.setState({ disableSubmit: true })
+                      this.setState({ disableSubmit: true, showPinCodeModal : true })
                       this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
                     }
                   } catch (e) {
