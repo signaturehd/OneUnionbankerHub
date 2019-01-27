@@ -113,7 +113,7 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   dateFunc (date) {
     const { premiumMonths } = this.state
-    const eDate = (premiumMonths ? moment(date).add(premiumMonths, 'months') : '')
+    const eDate = (premiumMonths ? moment(date).add(premiumMonths, 'months') : moment())
     const eDateText = date.format('LL') + ( eDate ? ' - ' + eDate.format('LL') : '' )
     this.setState({ effectivityDate : date, effectiveDate: eDate.format('MM/DD/YYYY'), effectivityDateText: eDateText })
   }
