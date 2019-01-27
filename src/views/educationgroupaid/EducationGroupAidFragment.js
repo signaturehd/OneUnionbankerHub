@@ -64,7 +64,7 @@ class EducationGroupAidFragment extends BaseMVPView {
 
   componentDidMount () {
     this.props.setSelectedNavigation(1)
-    // this.presenter.validateGroupAid()
+    this.presenter.validateGroupAid()
   }
 
   showDependentMap (dependentArray) {
