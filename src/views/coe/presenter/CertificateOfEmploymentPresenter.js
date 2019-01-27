@@ -113,7 +113,7 @@ export default class CertificateOfEmploymentPresenter {
   }
 
   validateInput () {
-    if(storedPurposeObject && storedPurposeObject.purpose !== 37) {
+    if(storedTypeOFCoeObject.id === 3 && storedPurposeObject.id === 38) {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
@@ -128,21 +128,10 @@ export default class CertificateOfEmploymentPresenter {
           type: 'warning',
           duration: 5000,
         }))
-      } else {
-        this.view.setEditable(true)
-      }
-    } else {
-      if(storedTypeOFCoeObject === '') {
+      } else if(storedVisaObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
-          message : 'Please select the type of COE',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedPurposeObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select your purpose',
+          message : 'Please select Country',
           type: 'warning',
           duration: 5000,
         }))
@@ -154,16 +143,98 @@ export default class CertificateOfEmploymentPresenter {
           duration: 5000,
         }))
       } else if(storedVLFrom === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select VL Date From field',
-          type: 'warning',
-          duration: 5000,
-        }))
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Certificate of Employment',
+            message : 'Please select VL Date From field',
+            type: 'warning',
+            duration: 5000,
+          }))
       } else if(storedVLTo === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
           message : 'Please select VL Date To field',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else {
+        this.view.setEditable(true)
+      }
+    } else if (storedTypeOFCoeObject.id === 3) {
+      if(storedTypeOFCoeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select the type of Certificate of Employment',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Purpose',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVLFrom === '') {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Certificate of Employment',
+            message : 'Please select VL Date From field',
+            type: 'warning',
+            duration: 5000,
+          }))
+      } else if(storedVLTo === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VL Date To field',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else {
+        this.view.setEditable(true)
+      }
+    } else if (storedPurposeObject.id === 38) {
+      if(storedTypeOFCoeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select the type of Certificate of Employment',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Purpose',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVisaObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Country',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVisaObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VISA',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else {
+        this.view.setEditable(true)
+      }
+    } else {
+      if(storedTypeOFCoeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select the type of Certificate of Employment',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Purpose',
           type: 'warning',
           duration: 5000,
         }))

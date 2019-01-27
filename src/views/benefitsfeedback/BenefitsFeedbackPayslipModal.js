@@ -103,10 +103,8 @@ class BenefitsFeedbackPayslipModal extends BaseMVPView {
         }
         {
           submitLoader ?
-          <center>
-            <h3>Please wait while we are submitting your feedback</h3>
-            <CircularLoader show={ true }/>
-          </center>            :
+          <CircularLoader show={ true }/>
+            :
           <div>
             <center>
               <img
