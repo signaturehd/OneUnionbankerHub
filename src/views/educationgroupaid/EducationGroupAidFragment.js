@@ -62,6 +62,11 @@ class EducationGroupAidFragment extends BaseMVPView {
     }
   }
 
+  componentDidMount () {
+    this.props.setSelectedNavigation(1)
+    // this.presenter.validateGroupAid()
+  }
+
   showDependentMap (dependentArray) {
     this.setState({ dependentArray })
   }
@@ -110,12 +115,7 @@ class EducationGroupAidFragment extends BaseMVPView {
     const { premiumMonths } = this.state
     const eDate = (premiumMonths ? moment(date).add(premiumMonths, 'months') : '')
     const eDateText = date.format('LL') + ( eDate ? ' - ' + eDate.format('LL') : '' )
-    this.setState({ effectivityDate : date, effectiveDate: eDate.format('MM-DD-YYYY'), effectivityDateText: eDateText })
-  }
-
-  componentDidMount () {
-    this.props.setSelectedNavigation(1)
-    this.presenter.validateGroupAid()
+    this.setState({ effectivityDate : date, effectiveDate: eDate.format('MM/DD/YYYY'), effectivityDateText: eDateText })
   }
 
   editFormReview (e) {
@@ -326,7 +326,7 @@ class EducationGroupAidFragment extends BaseMVPView {
         {
           showDOPModal &&
           <DurationOfPremium
-            label = { 'Dependents' }
+            label = { 'Duration of Premium Payment' }
             inputArray = { durationOfPremium }
             selectedArray = { (premiumId, premiumMonths, premiumDuration) => {
               this.setState({
