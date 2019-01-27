@@ -2042,7 +2042,7 @@ export default class HRBenefitsService {
      benefitId: '16',
      type: laptopLeaseParam.id === 1 ? 1 : 2,
      term: laptopLeaseParam.terms,
-     deliveryOption: laptopLeaseParam.deliveryOption,
+     deliveryOptionId: laptopLeaseParam.deliveryOption,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      laptopId: laptopLeaseParam.laptopId,
    }
@@ -2050,7 +2050,7 @@ export default class HRBenefitsService {
    const employeeToPurchaseObject = {
      accountNumber,
      releasingCenter,
-     benefitId: '16', 
+     benefitId: '16',
      type: laptopLeaseParam.id === 1 ? 1 : 2,
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
