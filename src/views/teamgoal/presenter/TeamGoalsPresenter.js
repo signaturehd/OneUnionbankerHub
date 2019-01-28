@@ -25,7 +25,7 @@ import addSquadGoalCommentParam from '../../../domain/param/AddSquadGoalCommentP
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-let storedGoalId = '', storedPageNumber = '', storedPageItem = ''
+let storedGoalId = '', storedPageNumber = '', storedPageItem = '', storedGoalType = ''
 
 export default class RequestCoachPresenter {
   constructor (container) {
@@ -56,12 +56,21 @@ export default class RequestCoachPresenter {
   }
 
   getSquadGoalComment (pageNumber, pageItem, goalId, goalType) {
+    storedPageNumber = pageNumber
+    storedPageItem = pageItem
+    storedGoalId =goalId
+    storedGoalType = goalType
     try {
       this.view.showCircularLoader()
       this.getSquadGoalsCommentInteractor.execute(pageNumber, pageItem, goalId, goalType)
-      .subscribe(data => {
+      .do(data=> {
         this.view.hideCircularLoader()
-        this.view.setSquadGoalCommentList(data)
+        this.view.setSquadGoalCommentList(data && data.commentDetails, data)
+      }, error => {
+        this.view.hideCircularLoader()
+      })
+      .subscribe(data => {
+        this.view.setSquadGoalCommentList(data && data.commentDetails, data)
       }, error => {
         this.view.hideCircularLoader()
       })
@@ -75,6 +84,7 @@ export default class RequestCoachPresenter {
     this.addSquadGoalCommentInteractor.execute(addSquadGoalCommentParam(type, id, description))
     .subscribe(data => {
       this.view.noticeResponse(data)
+      this.getSquadGoalComment(storedPageNumber, storedPageItem, storedGoalId, storedGoalType)
       this.view.hideCircularLoader()
     }, error => {
       this.view.hideCircularLoader()

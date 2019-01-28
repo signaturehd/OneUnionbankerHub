@@ -12,6 +12,7 @@ import {
   GenericInput,
   SingleInputModal,
   CircularLoader,
+  GenericLoader,
   DatePicker,
   Card,
   Line,
@@ -101,6 +102,7 @@ class TeamGoalsFragment extends BaseMVPView {
       selectedDescription: '',
       selectedName: '',
       selectedImageUrl: '',
+      squadCommentList: '',
       onChangeValue: '',
       selectedMembers: [],
       memberId: '',
@@ -112,7 +114,6 @@ class TeamGoalsFragment extends BaseMVPView {
       historyArray : [],
       participantArray : [],
       directReportArray: [],
-      squadCommentList: [],
       priorityArray : [
         {
           id: 3,
@@ -425,10 +426,11 @@ class TeamGoalsFragment extends BaseMVPView {
     this.setState({ participantArray: tempArray })
   }
 
-  setSquadGoalCommentList (squadCommentList) {
+  setSquadGoalCommentList (squadCommentList, data) {
     this.setState({
-      squadCommentList: squadCommentList,
-      pageItem: squadCommentList && squadCommentList.totalCount === 0 ? pageItem : pageItem.totalCount })
+      squadCommentList,
+      onChangeValue: '',
+      pageItem: data && data.totalCount === 0 ? pageItem : data.totalCount })
   }
 
   render () {
@@ -1222,34 +1224,38 @@ class TeamGoalsFragment extends BaseMVPView {
                           <div>
                             {
                               squadCommentList &&
-                              squadCommentList.commentDetails.map((squadList, key) => {
-                                return (
-                                  <div key = { key }>
-                                    <div className = { 'squad-goals-comment' }>
-                                      <div className = { 'squad-profile-picture' }>
-                                        <h2 className = { 'squad-initial-text' }>{ convertInitial(squadList.employeeName && squadList.employeeName) }</h2>
-                                      </div>
-                                      <div>
-                                        <h4 className = { 'font-size-12px font-weight-lighter' }>{ squadList.employeeName }</h4>
-                                      </div>
+                              squadCommentList.map((squadList, key) =>
+                                <div key = { key }>
+                                  <div className = { 'squad-goals-comment' }>
+                                    <div className = { 'squad-profile-picture' }>
+                                      <h2 className = { 'squad-initial-text' }>
+                                        { squadList &&  convertInitial(squadList.employeeName && squadList.employeeName) }
+                                      </h2>
                                     </div>
-                                    <div className = { 'squad-goals-comment' }>
-                                      <div></div>
-                                      <div>
-                                        <h4 className = { 'font-size-10px font-weight-lighter' }>{squadList.description}</h4>
-                                      </div>
+                                    <div>
+                                      <h4 className = { 'font-size-9px font-weight-lighter' }>{ squadList && squadList.employeeName }</h4>
                                     </div>
-                                    <br/>
                                   </div>
-                                )
-                              })
+                                  <div className = { 'squad-goals-comment' }>
+                                    <div></div>
+                                    <div>
+                                      <h4 className = { 'font-size-14px font-weight-lighter' }>
+                                        : { squadList && squadList.description}
+                                      </h4>
+                                    </div>
+                                  </div>
+                                  <br/>
+                                </div>
+                              )
                             }
                           </div>
                           <br/>
                           <div>
                           {
                             enabledLoader ?
-                            <CircularLoader show = { enabledLoader } />
+                            <center>
+                              <GenericLoader show = { enabledLoader } />
+                            </center>
                             :
                             <center>
                               <GenericInput
