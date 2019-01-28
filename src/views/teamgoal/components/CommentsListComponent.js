@@ -16,6 +16,7 @@ import {
   FloatingActionButton
 } from '../../../ub-components/'
 
+import { convertInitial  } from '../../../utils/initialUtils'
 import { format } from '../../../utils/numberUtils'
 import moment from 'moment'
 
@@ -119,7 +120,10 @@ class CommentsListComponent extends Component {
           </Modal>
         }
         <div className = { 'employee-column' }>
-          <img src = { require('../../../images/1uhub.png') } width = { '50px' } height = { '50px' }/>
+          <div className = { 'team-profile-picture' }>
+            <h2 className = { 'team-initial-text' }>{ convertInitial(employeeName && employeeName) }</h2>
+            <small></small>
+          </div>
           {
             onEditComment ?
             <div>

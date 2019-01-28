@@ -83,6 +83,10 @@
   color: #ff0000;
 }
 
+.color-rating {
+  color: #4CAF50;
+}
+
 .margin-5px {
   margin: 5px 5px 5px 5px;
 }
@@ -178,6 +182,40 @@
   border-radius: 50%;
 }
 
+.team-profile-picture {
+  background-color: #ff8a00;
+  box-shadow: inset 0px 0px 0px 0px #ffffff;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: auto;
+}
+
+
+.profilePicture:hover .profilePictureLabel {
+  bottom: 10px;
+}
+
+
+.team-profile-picture {
+  background-color: #ff8a00;
+  box-shadow: inset 0px 0px 0px 0px #ffffff;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.team-initial-text {
+  text-align: center;
+  align-items: center;
+  font-weight: lighter;
+  color: white;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
 .squad-initial-text {
   text-align: center;
   align-items: center;
@@ -186,7 +224,12 @@
   font-size: 10px;
 }
 
+.team-goals-comment {
+  display: grid;
+  grid-template-columns: .2fr auto;
+}
+
 .squad-goals-comment {
   display: grid;
-  grid-template-columns: .15fr auto; 
+  grid-template-columns: .15fr auto;
 }

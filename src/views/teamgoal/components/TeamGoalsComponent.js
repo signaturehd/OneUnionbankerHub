@@ -36,6 +36,14 @@ class TeamGoalsComponent extends Component {
     this.props.history.push('/mylearning')
   }
 
+  checkTpye (id) {
+    if(id === 1) {
+      return 'Performance'
+    }  else  if (2) {
+      return 'Developmental'
+    }
+  }
+
   render () {
     const {
       teamId,
@@ -61,22 +69,20 @@ class TeamGoalsComponent extends Component {
             participants &&
             participants.map((details, key) =>
 
-              <Card className = { 'margin-10px cursor-pointer' }
+              <Card className = { 'cursor-pointer' }
                 onClick = { () => onSelected(
                   teamTitle,
                   description,
-                  participants
+                  participants,
                 ) }>
                 <div className = { 'padding-15' }>
                   <div className = { 'header-column-1' }>
                     <div>
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ teamTitle }</h2>
-
                     </div>
-                    <div>
-
+                    <div className = { 'text-align-right' }>
+                      <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>{this.checkTpye(typeId)}</span></h2>
                     </div>
-
                   </div>
                   <div></div>
                   <div>

@@ -18,7 +18,7 @@ import {
 
 import { format } from '../../../utils/numberUtils'
 import moment from 'moment'
-
+import { convertInitial } from '../../../utils/initialUtils'
 import { Progress } from 'react-sweet-progress'
 import './styles/teamGoal.css'
 
@@ -52,9 +52,12 @@ class DirectReportGoalsComponent extends Component {
       <div className = { 'padding-15px' }>
       {
         <div>
-          <div className = { 'employee-column' }>
-            <img src = { require('../../../images/1uhub.png') } width = { '60px' } height = { '50px' }/>
-            <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>{employeeName}</h2>
+          <div className = { 'team-goals-comment' }>
+            <div className = { 'team-profile-picture' }>
+              <h2 className = { 'team-initial-text' }>{ convertInitial(employeeName && employeeName) }</h2>
+              <small></small>
+            </div>
+            <h4 className = { 'font-size-14px margin-auto font-weight-lighter' }>{ employeeName && employeeName }</h4>
           </div>
           {
             cardHolder &&
@@ -87,23 +90,26 @@ class DirectReportGoalsComponent extends Component {
                     </div>
                     <div>
                       {
-                        details.approvalStatus === 2 ?
+                        details.statusId === 2 ?
                         <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-Medium' }>Approved</h2>
                         :
-                          details.approvalStatus === 3 ?
+                          details.statusId === 3 ?
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-High' }>Rejected</h2>
                           :
-                          details.approvalStatus === 1 ?
+                          details.statusId === 1 ?
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Requested</h2>
                           :
-                          details.approvalStatus === 4 ?
+                          details.statusId === 4 ?
                           <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-bold color-gray' }>Update for approval</h2>
                           :
-                          details.approvalStatus === 5 ?
+                          details.statusId === 5 ?
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold' }>Deletion for approval</h2>
                           :
-                          details.approvalStatus === 6 &&
+                          details.statusId === 6 ?
                           <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                          :
+                          details.statusId === 8 &&
+                          <h2 className = { 'text-align-right font-size-12px font-weight-bold color-Low' }>For Rating</h2>
                       }
                       <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
                     </div>
@@ -116,7 +122,8 @@ class DirectReportGoalsComponent extends Component {
                       <div>
                         <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(details.priority)}` }>{ priorityFunc(details.priority) }</h2>
                       </div>
-                      <div></div>
+                      <div>
+                      </div>
                       <div>
                         <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(details.endDate).format('MMM DD, YYYY') }</b></h2>
                       </div>

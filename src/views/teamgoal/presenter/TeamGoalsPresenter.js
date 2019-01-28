@@ -22,6 +22,7 @@ import teamGoalsParam from '../../../domain/param/AddTeamGoalsParam'
 import squadGoalsParam from '../../../domain/param/AddSquadGoalsParam'
 import addMarkAsCompletedWithTypeParam from '../../../domain/param/AddMarkAsCompletedWithTypeParam'
 import addSquadGoalCommentParam from '../../../domain/param/AddSquadGoalCommentParam'
+import addGoalCommentParam from '../../../domain/param/AddGoalCommentParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -297,15 +298,22 @@ export default class RequestCoachPresenter {
     goalId,
     goalComment,
     pageNumber,
-    pageItem
+    pageItem,
+    goalType
   ){
     this.view.checkCommentLoader(true)
     this.addGoalCommentInteractor.execute(
-      goalId,
-      goalComment
+      addGoalCommentParam(
+        goalId,
+        goalComment,
+        goalType
+      )
     )
     .do(data => {
+      this.view.checkCommentLoader(false)
       this.getGoalComment(storedGoalId, pageNumber, pageItem)
+    }, error => {
+      this.view.checkCommentLoader(false)
     })
     .subscribe(
       data => {
