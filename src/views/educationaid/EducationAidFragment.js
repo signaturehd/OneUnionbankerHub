@@ -40,18 +40,18 @@ class EducationAidFragment extends BaseMVPView {
       enabledLoader : false,
       showEditSubmitButton : false,
       showSchools : false,
-      showEducationAcademicYearModal : false,
+      showEducationAcademicYearToModal : false,
+      showEducationAcademicYearFromModal : false,
       showEducationSemesterModal : false,
       showBenefitFeedbackModal : false,
       schoolId: '',
-      academicYearId: '',
+      academicYearToId: '',
       semesterId: '',
       tuitionFeeText: '',
       registrationFeeText: '',
       schoolName: '',
       computations: '',
       courseText: '',
-      academicYearText: '',
       semesterText: '',
       gwaText: '',
       totalReimbursableAmount: '',
@@ -63,13 +63,18 @@ class EducationAidFragment extends BaseMVPView {
       registrationFeeErrorMessage: '',
       schoolErrorMessage: '',
       courseTextErrorMessage: '',
-      academicYearTextErrorMessage: '',
+      academicYearToTextErrorMessage: '',
+      academicYearFromTextErrorMessage: '',
       semesterErrorMessage: '',
       gwaErrorMessage: '',
       data: '',
       schoolsData: [],
       attachmentsData : [],
-      attachmentArray : []
+      attachmentArray : [],
+      academicYearTo : '',
+      academicYearFrom: '',
+      academicYearFromErrorMessage : '',
+      academicYearToErrorMessage: '',
     }
     this.validateRequired = this.validateRequired.bind(this)
     this.tuitionFeeFunc = this.tuitionFeeFunc.bind(this)
@@ -87,6 +92,28 @@ class EducationAidFragment extends BaseMVPView {
   registrationFeeFunc (e) {
     const validate = EducationAidFunction.checkedAmount(e)
         this.setState({ registrationFeeText : validate, registrationFeeErrorMessage : '' })
+  }
+
+  academicYearFromFunc (e) {
+    const validate = EducationAidFunction.checkedAmount(e)
+    const validateDateFrom = moment().subtract(2, 'years').format('YYYY')
+    if(validateDateFrom >= validate) {
+      this.setState({ academicYearFromErrorMessage : 'Enter present or past 2 yrs' })
+    } else {
+      this.setState({ academicYearFrom : validate, academicYearFromErrorMessage : '' })
+    }
+  }
+
+  academicYearToFunc (e) {
+    const validate = EducationAidFunction.checkedAmount(e)
+    const validateDateFrom = moment().subtract(1, 'years').format('YYYY')
+    const validateDateTo = moment().add(1, 'years').format('YYYY')
+
+    if(validate > parseInt(validateDateTo)) {
+      this.setState({ academicYearToErrorMessage : 'Enter present or past 2 yrs' })
+    } else {
+      this.setState({ academicYearTo : validate, academicYearToErrorMessage : '' })
+    }
   }
 
   showSchoolsFunc () {
@@ -147,7 +174,8 @@ class EducationAidFragment extends BaseMVPView {
   submitForm () {
     const {
       courseText,
-      academicYearText,
+      academicYearToText,
+      academicYearFromText,
       semesterText,
       gwaText,
       tuitionFeeText,
@@ -160,7 +188,7 @@ class EducationAidFragment extends BaseMVPView {
 
     this.presenter.addEducationAid(
       courseText,
-      academicYearText,
+      academicYearFromText + '-' +academicYearToText,
       semesterText,
       gwaText,
       tuitionFeeText,
@@ -182,7 +210,8 @@ class EducationAidFragment extends BaseMVPView {
       registrationFeeText,
       schoolName,
       courseText,
-      academicYearText,
+      academicYearFromText,
+      academicYearToText,
       semesterText,
       gwaText,
       orNumber,
@@ -207,7 +236,7 @@ class EducationAidFragment extends BaseMVPView {
       this.setState({ schoolErrorMessage : 'Please select a Colleges/Universities' })
     } else if (!this.validateRequired(courseText)) {
       this.setState({ courseTextErrorMessage : 'Please enter a Course' })
-    } else if (!this.validateRequired(academicYearText)) {
+    } else if (!this. validateRequired(academicYearToText) || !this.validateRequired(academicYearFromText)) {
       this.setState({ academicYearTextErrorMessage : 'Please select an Academic Year' })
     } else if (!this.validateRequired(semesterText)) {
       this.setState({ semesterErrorMessage : 'Please select a Semester' })
@@ -273,6 +302,18 @@ class EducationAidFragment extends BaseMVPView {
     this.setState({showConfirmation: false, noticeResponse })
   }
 
+  setAcademicYear (AcademicYearOptionsFrom, AcademicYearOptionsTo) {
+     this.setState({ AcademicYearOptionsFrom, AcademicYearOptionsTo })
+  }
+
+  showAcademicYearFromFunc () {
+    this.setState({ showEducationAcademicYearFromModal : true })
+  }
+
+  showAcademicYearToFunc () {
+    this.setState({ showEducationAcademicYearToModal : true })
+  }
+
   navigate () {
     this.props.history.push('/mybenefits/benefits/education')
   }
@@ -289,9 +330,12 @@ class EducationAidFragment extends BaseMVPView {
       computations,
       courseText,
       courseTextErrorMessage,
-      academicYearId,
-      academicYearText,
-      academicYearTextErrorMessage,
+      academicYearFromId,
+      academicYearFromText,
+      academicYearToId,
+      academicYearToText,
+      academicYearFromTextErrorMessage,
+      academicYearToTextErrorMessage,
       semesterId,
       semesterText,
       semesterErrorMessage,
@@ -310,13 +354,20 @@ class EducationAidFragment extends BaseMVPView {
       showNoticeResponseModal,
       showBenefitFeedbackModal,
       showEditSubmitButton,
-      showEducationAcademicYearModal,
+      showEducationAcademicYearToModal,
+      showEducationAcademicYearFromModal,
       showEducationSemesterModal,
       data,
       titleChange,
       schoolsData,
       attachmentArray,
-      attachmentsData
+      attachmentsData,
+      academicYearTo,
+      academicYearFrom,
+      academicYearFromErrorMessage,
+      academicYearToErrorMessage,
+      AcademicYearOptionsFrom,
+      AcademicYearOptionsTo,
     }=this.state
 
     const resultTotalFee =
@@ -324,17 +375,19 @@ class EducationAidFragment extends BaseMVPView {
     registrationFeeText ?
     parseFloat(tuitionFeeText) + parseFloat(registrationFeeText)
     : 0.00
-
-    const AcademicYearOptions = [
-      {
-        id: 0,
-        name: moment().subtract(1, 'years').format('YYYY') + '-' + moment().format('YYYY')
-      },
-      {
-        id: 1,
-        name: moment().format('YYYY') + '-' + moment().add(1, 'years').format('YYYY')
-      }
-    ]
+    {
+    //
+    // const AcademicYearOptions = [
+    //   {
+    //     id: 0,
+    //     name: moment().subtract(2, 'years').format('YYYY') + '-' + moment().subtract(1, 'years').format('YYYY')
+    //   },
+    //   {
+    //     id: 1,
+    //     name: moment().subtract(1, 'years').format('YYYY') + '-' + moment().format('YYYY')
+    //   }
+    // ]
+    }
 
     const semesterOptions = [
       {
@@ -411,20 +464,58 @@ class EducationAidFragment extends BaseMVPView {
         }
 
         {
-          showEducationAcademicYearModal &&
+          showEducationAcademicYearFromModal &&
           <SingleInputModal
             label = { 'Academic Year' }
-            inputArray = { AcademicYearOptions }
-            selectedArray = { (academicYearId, academicYearText) => {
-              this.setState({
-                academicYearId,
-                academicYearText,
-                showEducationAcademicYearModal : false,
-                academicYearTextErrorMessage : ''
+            inputArray = { AcademicYearOptionsFrom }
+            selectedArray = { (academicYearFromId, academicYearFromText) => {
+              if(!academicYearToText) {
+                this.setState({
+                  academicYearFromId,
+                  academicYearFromText,
+                  showEducationAcademicYearFromModal : false,
+                  academicYearFromTextErrorMessage : ''
                 })
+              } else {
+                if(
+                  parseInt(academicYearToText) === parseInt(academicYearFromText) ||
+                  parseInt(academicYearToText)-1 === parseInt(academicYearFromText)
+                  ) {
+                  this.setState({
+                    academicYearFromId,
+                    academicYearFromText,
+                    showEducationAcademicYearFromModal : false,
+                    academicYearFromTextErrorMessage : ''
+                  })
+                }
               }
             }
-            onClose = { () => this.setState({ showEducationAcademicYearModal : false }) }
+          }
+          onClose = { () => this.setState({ showEducationAcademicYearFromModal : false }) }
+          />
+        }
+
+        {
+          showEducationAcademicYearToModal &&
+          <SingleInputModal
+            label = { 'Academic Year' }
+            inputArray = { AcademicYearOptionsTo }
+            selectedArray = { (academicYearToId, academicYearToText) => {
+              if(academicYearFromText) {
+                if(
+                  parseInt(academicYearToText) === parseInt(academicYearFromText) + 1 ||
+                  parseInt(academicYearToText) === parseInt(academicYearFromText)) {
+                  this.setState({
+                    academicYearToId,
+                    academicYearToText,
+                    showEducationAcademicYearToModal : false,
+                    academicYearToTextErrorMessage : ''
+                    })
+                  }
+                }
+              }
+            }
+            onClose = { () => this.setState({ showEducationAcademicYearToModal : false }) }
           />
         }
 
@@ -467,7 +558,7 @@ class EducationAidFragment extends BaseMVPView {
         {
           enabledLoader ?
            <center className={ 'circular-loader-center' }>
-             <CircularLoader show={ this.state.enabledLoader }/>
+             <CircularLoader show={ enabledLoader }/>
            </center> :
           <FormComponent
             educationAid = { educationAid }
@@ -479,13 +570,21 @@ class EducationAidFragment extends BaseMVPView {
             showSchools = { showSchools }
             computations = { computations }
             courseText = { courseText }
-            academicYearText = { academicYearText }
+            academicYearFromText = { academicYearFromText }
+            academicYearToText = { academicYearToText }
+            academicYearToFunc = { (e) => this.academicYearToFunc(e) }
+            academicYearFromFunc = { (e) => this.academicYearFromFunc(e) }
+            academicYearTo = { academicYearTo }
+            academicYearFrom = { academicYearFrom }
+            academicYearFromErrorMessage = { academicYearFromErrorMessage }
+            academicYearToErrorMessage = { academicYearToErrorMessage }
             semesterText = { semesterText }
             gwaText = { gwaText }
             totalReimbursment = { totalReimbursment }
             schoolErrorMessage = { schoolErrorMessage }
             registrationFeeErrorMessage = { registrationFeeErrorMessage }
-            academicYearTextErrorMessage = { academicYearTextErrorMessage }
+            academicYearToTextErrorMessage = { academicYearToTextErrorMessage }
+            academicYearFromTextErrorMessage = { academicYearFromTextErrorMessage }
             courseTextErrorMessage = { courseTextErrorMessage }
             semesterErrorMessage = { semesterErrorMessage }
             gwaErrorMessage = { gwaErrorMessage }
@@ -499,7 +598,8 @@ class EducationAidFragment extends BaseMVPView {
             registrationFeeFunc = { (resp) => this.registrationFeeFunc(resp) }
             showSchoolsFunc = { () => this.showSchoolsFunc() }
             courseTextFunc = { (resp) => this.courseTextFunc(resp) }
-            showAcademicYearFunc = { (resp) => this.showAcademicYearFunc(resp) }
+            showAcademicYearFromFunc = { () => this.showAcademicYearFromFunc() }
+            showAcademicYearToFunc = { () => this.showAcademicYearToFunc() }
             showSemesterFunc = { (resp) => this.showSemesterFunc(resp) }
             gwaFunc = { (resp) => this.gwaFunc(resp) }
             orNumberFunc = { (resp) => this.orNumberFunc(resp) }

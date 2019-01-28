@@ -235,7 +235,7 @@ class ParentFragment extends BaseMVPView {
       parentId : nullChecker.id,
       relationship : nullChecker.relationship,
       statusId : nullChecker.status,
-      statusName : nullChecker.status === 0 ? 'Living' : 'Deceased',
+      statusName : nullChecker.status === 1 ? 'Deceased' : 'Living' ,
       hospitalization : nullChecker.healthHospitalizationPlan,
       groupPlan : nullChecker.groupLifeInsurance,
     })

@@ -264,7 +264,7 @@ class LoginView extends BaseMVPView {
       history
     } = this.props
 
-    /* Prod Version 6.0.0 */
+    /* Prod Version 6.3.0 */
 
     /* UAT 7.0.0*/
 

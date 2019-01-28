@@ -1,9 +1,11 @@
 import AddEducationAidInteractor from '../../../domain/interactor/educationAid/AddEducationAidInteractor'
 import validateAidInteractor from '../../../domain/interactor/educationAid/validateAidInteractor'
 import educationAidParam from '../../../domain/param/AddEducationAidParam'
-
+import moment from 'moment'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
+
+let academicYear = []
 
 export default class EducationAidPresenter {
 
@@ -45,12 +47,36 @@ export default class EducationAidPresenter {
      this.view.noticeOfUndertaking(educationAid)
      this.view.hideCircularLoader()
    }, e => {
-     this.view.noticeResponse(e)
      this.view.hideCircularLoader()
    })
  }
 
+ setAcademicYear () {
+   let futureYear = parseInt(moment().add(1,'years').format('YYYY'))
+   let currentYear = parseInt(moment().format('YYYY'))
+   let minimumYear = parseInt(moment().subtract(2,'years').format('YYYY'))
+   let rangeTo = futureYear - minimumYear
+   let rangeFrom = currentYear - minimumYear
+   let fromData = []
+   let toData = []
+   for (let count = 0; count <= rangeTo; count++) {
+     toData.push({
+       id: count,
+       name: futureYear--
+     })
+   }
+   for (let count = 0; count <= rangeFrom; count++) {
+     fromData.push({
+       id: count,
+       name: currentYear--
+     })
+   }
+   this.view.setAcademicYear(fromData, toData)
+ }
+
+
  validateAid () {
+   this.setAcademicYear()
    this.view.showCircularLoader()
    this.validateAidInteractor.execute()
    .map(data => {
