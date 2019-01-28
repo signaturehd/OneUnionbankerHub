@@ -1,5 +1,6 @@
-export default (goalId, rate, remarks) => ({
-  goalId,
+export default (goalParam, rate, remarks) => ({
+  goalId: goalParam.id,
+  goalType: goalParam.type,
   body : {
     rate,
     remarks

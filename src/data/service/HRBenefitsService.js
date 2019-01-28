@@ -2423,7 +2423,7 @@ export default class HRBenefitsService {
   }
 
   addRatingGoal (token, ratingParam) {
-    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate`, ratingParam.body, {
+    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate?goalType=${ratingParam.goalType}`, ratingParam.body, {
       headers: { token }
     })
   }
@@ -2459,7 +2459,7 @@ export default class HRBenefitsService {
   }
 
   getDirectReportGoals (token) {
-    return this.apiClient.get('v1/goals/reports?goalType=personal&type=1&status=2,8', {
+    return this.apiClient.get('v1/goals/reports?goalType=personal&status=2,8', {
       headers: { token }
     })
   }
