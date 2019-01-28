@@ -93,6 +93,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                     <DatePicker
                       minDate = { moment() }
                       text = { 'From' }
+                      disabled = { showEditMode }
                       selected = { vlFrom }
                       onChange = { (e) => {
                         vlFromFunc(e)
@@ -100,6 +101,7 @@ class CertificateOfEmploymentFormComponent extends Component {
                     />
                     <DatePicker
                       minDate = { vlFrom }
+                      disabled = { showEditMode }
                       text = { 'To' }
                       selected = { vlTo }
                       onChange = { (e) => {

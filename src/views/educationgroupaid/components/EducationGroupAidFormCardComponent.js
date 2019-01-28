@@ -102,6 +102,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 readOnly
                 selected = { effectivityDate && moment(effectivityDate)}
                 value = { effectivityDateText }
+                maxDate = { moment() }
                 text = { 'Effectivity Date/Coverage of Insurance' }
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }

@@ -85,7 +85,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
   }
 
   backToList () {
-    this.setState({ showListForm : true, showCOEForm: false, showBIR2316 : false })
+    this.setState({ showListForm : true, showCOEForm: false, showBIR2316 : false, showEditMode : false })
   }
 
   render () {
@@ -247,8 +247,14 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
               this.setState({ showPurposeModal : true }) }
             showVisaModalFunc = { () =>
               this.setState({ showVisaModal : true }) }
-            backToList = { () =>
-              this.setState({ showCOEForm: false, showListForm: true }) }
+            backToList = { () => {
+              this.presenter.setStoredVisaObject('')
+              this.presenter.setStoredTypeOFCoeObject('')
+              this.presenter.setStoredPurposeObject('')
+              this.presenter.setStoredVLFrom('')
+              this.presenter.setStoredVLTo('')
+              this.backToList()
+            } }
           />
         }
         {

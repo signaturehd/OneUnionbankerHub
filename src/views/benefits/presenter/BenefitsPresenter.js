@@ -96,13 +96,6 @@ export default class BenefitsPresenter {
         } this.view.isAccountOrRelasing(true)
       }
     } else {
-      store.dispatch(NotifyActions.addNotify({
-          title: 'Benefits',
-          message : 'Theres a Problem Getting your profile',
-          type : 'success',
-          duration : 2000
-        })
-      )
     }
   }
 

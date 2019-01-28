@@ -103,6 +103,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 		this.setState({ selectAllIsChecked })
 	}
 
+  resetData () {
+    this.setState({ membersData: [], employeeList : [], searchString : '', employeeMessage: '' })
+  }
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -174,8 +178,8 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       awardData = { awardData }
 											selectAllEmployee = { () => this.presenter.setSelectAllEmployee(selectAllIsChecked, membersData, selectedId) }
                       selectedAwards = { (selectedAwards) => {
-												this.setState({ selectedAwards, searchString : '' })
-												this.presenter.resetData()
+												this.setState({ selectedAwards })
+												this.resetData()
 											} }
                       onSubmitAwards = { () => this.sendData() }
                       employeeName = { employeeName }
@@ -220,7 +224,6 @@ class RewardsRecognitionFragment extends BaseMVPView {
                                     text={value.title} >
                                   </div>
                                   <p className={'myrewards-option-cards font-weight-bold'}>{value.title}</p>
-                                  <p className={'myrewards-option-cards-details'}>{value.details}</p>
                                 </div>
                               </Card>
                             ))
