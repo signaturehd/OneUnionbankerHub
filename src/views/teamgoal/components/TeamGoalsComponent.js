@@ -89,7 +89,8 @@ class TeamGoalsComponent extends Component {
                     <Line/>
                     <div className = { 'grid-footer-column margin-5px' }>
                       <div>
-                        <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(priorityId)}` }>{ priorityFunc(priorityId) }</h2>
+                        <h2
+                          className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(priorityId)}` }>{ priorityFunc(priorityId) }</h2>
                       </div>
                       <div></div>
                       <div>

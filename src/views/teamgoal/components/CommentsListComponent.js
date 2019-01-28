@@ -57,7 +57,8 @@ class CommentsListComponent extends Component {
       updateComment,
       deleteCommentFunc,
       employeeNumber,
-      respEmployeeNumber
+      respEmployeeNumber,
+      dateTime
      } = this.props
     const {
       onEditComment,
@@ -160,7 +161,12 @@ class CommentsListComponent extends Component {
               }
             }>
               <h2 className = { 'text-align-left font-size-12px font-weight-bold unionbank-color' }>{employeeName}</h2>
-              <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{goalComment}</h2>
+              <div className = { 'grid-global' }>
+                <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{goalComment}</h2>
+                <div className = { 'text-align-right' }>
+                  <h2 className = { 'text-align-right font-size-10px font-weight-lighter' }>{moment(dateTime).fromNow()}</h2>
+                </div>
+              </div>
             </div>
           }
         </div>

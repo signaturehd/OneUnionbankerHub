@@ -443,7 +443,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    return isLineManager && approvalStatus === 6 ? true : false
+    return isLineManager && approvalStatus === 8 ? true : false
   }
 
   postMarkAsCompleted() {
@@ -783,40 +783,40 @@ class RequestedGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
-        this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) &&
-        <Modal>
-          <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
-            { ratings }
-          </h2>
-          <br/>
-          <div className = { 'text-align-center' }>
-              <Rating
-                emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
-                fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                fractions={ 1 }
-                onChange={ e => this.commentRateFunc(e) }
-                initialRating={ (ratings ? ratings : 0) || 0 }
-              />
-          </div>
-          <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
-          {
-            showRemarksText &&
-
-            <GenericInput
-              value = { remarksText }
-              hint = { 'Please add remarks' }
-              type = { 'textarea' }
-              onChange = { (e) => {
-                try {
-                  this.setState({ remarksText : e.target.value })
-                } catch(e) {
-                  console.log(e)
-                }
-              } }
-              onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
-            />
-          }
-        </Modal>
+        // this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) &&
+        // <Modal>
+        //   <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
+        //     { ratings }
+        //   </h2>
+        //   <br/>
+        //   <div className = { 'text-align-center' }>
+        //       <Rating
+        //         emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+        //         fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+        //         fractions={ 1 }
+        //         onChange={ e => this.commentRateFunc(e) }
+        //         initialRating={ (ratings ? ratings : 0) || 0 }
+        //       />
+        //   </div>
+        //   <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+        //   {
+        //     showRemarksText &&
+        //
+        //     <GenericInput
+        //       value = { remarksText }
+        //       hint = { 'Please add remarks' }
+        //       type = { 'textarea' }
+        //       onChange = { (e) => {
+        //         try {
+        //           this.setState({ remarksText : e.target.value })
+        //         } catch(e) {
+        //           console.log(e)
+        //         }
+        //       } }
+        //       onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
+        //     />
+        //   }
+        // </Modal>
       }
       {
         showForm ?
@@ -945,7 +945,7 @@ class RequestedGoalsFragment extends BaseMVPView {
             }
             </div>
             {
-              goalTitle &&
+              goalTitle ?
               <div className = { 'padding-10px' }>
                 <div className = { 'padding-10px' }>
                   <div className = { 'header-column card-background padding-10px' }>
@@ -1221,6 +1221,12 @@ class RequestedGoalsFragment extends BaseMVPView {
                   </div>
                 </div>
               </div>
+              :
+              <center>
+                <br/>
+                <br/>
+                <h4 className = { 'font-weight-lighter' }>Select goal to view details</h4>
+              </center>
             }
           </div>
         </div>

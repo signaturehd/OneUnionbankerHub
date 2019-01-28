@@ -69,11 +69,16 @@ class TeamGoalsFragment extends BaseMVPView {
       showTeamGoalDetails: false,
       showSquadGoal: false,
       showMemberGoal: false,
+      showRemarksText: false,
       showReviewComponent: false,
+      showRatingModal: false,
+      showRateOptions: false,
+      showTabDetails: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
       selectedTeamId: '',
+      remarksText : '',
       squadId: '',
       taskId: '',
       taskDescription: '',
@@ -215,6 +220,13 @@ class TeamGoalsFragment extends BaseMVPView {
     this.setState({ taskLoader : true })
   }
 
+  resetRemarks () {
+    this.setState({
+      showTabDetails : false,
+      showRemarksText : false,
+      remarksText : '',
+      goalComment: '' })
+  }
 
   checkCommentLoader (commentLoader) {
     this.setState({ commentLoader })
@@ -400,6 +412,7 @@ class TeamGoalsFragment extends BaseMVPView {
       showApprovalForm : false,
       showTaskOption: false,
       showCommentOption: false,
+      showTabDetails: false,
       selectedId: '',
       selectedTitle: '',
       selectedDescription: '',
@@ -415,13 +428,6 @@ class TeamGoalsFragment extends BaseMVPView {
     } else {
       return false
     }
-  }
-
-  checkIfTimeToday (time) {
-    // var now = moment();
-    // var mom = time < now ? now : time;
-    // mom.fromNow();
-    // console.log(mom.fromNow())
   }
 
   checkIfTaskCompleted (task) {
@@ -453,6 +459,34 @@ class TeamGoalsFragment extends BaseMVPView {
       squadCommentList,
       onChangeValue: '',
       pageItem: data && data.totalCount === 0 ? pageItem : data.totalCount })
+  }
+
+  commentRateFunc (ratings) {
+    this.setState({ ratings, showRemarksText: true })
+  }
+
+  checkRatings (rate) {
+    if(rate === 1) {
+      return 'Seldom Meets'
+    } else if (rate === 2) {
+      return 'Usually Meets'
+    } else if (rate === 3) {
+      return 'Consistently Meets'
+    } else if (rate === 4) {
+      return 'Usually Exceeds'
+    } else if (rate === 5) {
+      return 'Consistently Exceeds'
+    }
+  }
+
+  submitRatingWithRemarks (e) {
+    if(e.which === 13) {
+      try {
+        this.setState({ showRemarksText: false , showRateOptions: true })
+      }catch(e) {
+        console.log(e)
+      }
+    }
   }
 
   render () {
@@ -530,7 +564,13 @@ class TeamGoalsFragment extends BaseMVPView {
       showReviewComponent,
       onChangeValue,
       squadCommentList,
-      selectedTeamId
+      selectedTeamId,
+      showRemarksText,
+      ratings,
+      remarksText,
+      showRatingModal,
+      showRateOptions,
+      showTabDetails
     } = this.state
 
     const {
@@ -644,6 +684,76 @@ class TeamGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
+        showRatingModal &&
+        <Modal
+          isDismisable = {true}
+          onClose = { () =>
+            this.setState({
+              ratings: 0,
+              remarksText: '',
+              showRatingModal: false }) }
+          >
+          <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
+            { ratings }
+          </h2>
+          <br/>
+          <div className = { 'text-align-center' }>
+              <Rating
+                emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+                fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                fractions={ 1 }
+                onChange={ e => this.commentRateFunc(e) }
+                initialRating={ (ratings ? ratings : 0) || 0 }
+              />
+          </div>
+          <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+          {
+            showRemarksText &&
+
+            <GenericInput
+              value = { remarksText }
+              hint = { 'Please add remarks' }
+              type = { 'textarea' }
+              onChange = { (e) => {
+                try {
+                  this.setState({ remarksText : e.target.value })
+                } catch(e) {
+                  console.log(e)
+                }
+              } }
+              onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
+            />
+          }
+
+          {
+            showRateOptions &&
+            <center>
+              <br/>
+              <h2>Are your sure you want to submit?</h2>
+              <br/>
+              <div className ={ 'grid-global' }>
+                <GenericButton
+                  className = { 'profile-button-small' }
+                  text= { 'no' }
+                  onClick = { () =>
+                    this.setState({ showRateOptions : false, showRemarksText: true })
+                  }
+                />
+                <GenericButton
+                  className = { 'profile-button-small' }
+                  text= { 'yes' }
+                  onClick = { () => {
+                      this.presenter.addRatingGoal(goalTypeParam, goalId, ratings, remarksText)
+                      this.setState({ showRatingModal: false })
+                    }
+                  }
+                />
+              </div>
+            </center>
+          }
+        </Modal>
+      }
+      {
         showForm ?
           <AddTeamGoalsFormComponent
             onCancel = { () => {
@@ -704,7 +814,7 @@ class TeamGoalsFragment extends BaseMVPView {
                     this.props.history.push('/mygoals/request')
                   }
                 }/>
-              <label className = { 'teamgoal-icon-tab font-size-14px' } htmlFor='teamgoal-tab1'>Direct Reports Goals</label>
+              <label className = { 'teamgoal-icon-tab font-size-14px' } htmlFor='teamgoal-tab1'>My Direct Reports</label>
 
               <input
                 className = { 'teamgoal-input-tab' }
@@ -712,7 +822,12 @@ class TeamGoalsFragment extends BaseMVPView {
                 type = { 'radio' }
                 name = { 'tabs' }
                 onClick = { () => {
-                    this.setState({ showDirectReport: false, showTeamGoal: true, showTeamGoalDetails: true, showSquadGoal: false })
+                    this.setState({
+                      showTabDetails : false,
+                      showDirectReport: false,
+                      showTeamGoal: true,
+                      showTeamGoalDetails: true,
+                      showSquadGoal: false })
                     this.presenter.getTeamGoals(teamType)
                     this.props.history.push('/mygoals/team')
                   }
@@ -727,7 +842,12 @@ class TeamGoalsFragment extends BaseMVPView {
                   type = { 'radio' }
                   name = { 'tabs' }
                   onClick = { () => {
-                      this.setState({ showDirectReport: false, showTeamGoal: false, showTeamGoalDetails: false, showSquadGoal: true })
+                      this.setState({
+                        showTabDetails: false,
+                        showDirectReport: false,
+                        showTeamGoal: false,
+                        showTeamGoalDetails: false,
+                        showSquadGoal: true })
                       this.presenter.getSquadGoals(this.state.squadType)
                       this.props.history.push('/mygoals/approved')
                     }
@@ -780,10 +900,11 @@ class TeamGoalsFragment extends BaseMVPView {
                             priorityName,
                             statusId,
                             goalTypeId,
+                            showTabDetails: true,
                             goalTypeParam : 'personal'
                            })
-                          this.presenter.getGoalTask(goalId)
-                          this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                          this.presenter.getGoalTask(goalId, goalTypeParam)
+                          this.presenter.getGoalComment(goalId, pageNumber, pageItem, goalTypeParam)
                           this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
                         }
                        }
@@ -848,8 +969,8 @@ class TeamGoalsFragment extends BaseMVPView {
                             showMemberGoal: false,
                             goalTypeParam: 'team'
                            })
-                          this.presenter.getGoalTask(goalId)
-                          this.presenter.getGoalComment(goalId, pageNumber, pageItem)
+                          this.presenter.getGoalTask(goalId, 'team')
+                          this.presenter.getGoalComment(goalId, pageNumber, pageItem, goalTypeParam)
                           this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
                         }
                        }
@@ -913,7 +1034,7 @@ class TeamGoalsFragment extends BaseMVPView {
             </div>
             <div ref = { 'main-div' } className = { 'padding-10px' }>
             {
-              showDirectReport &&
+              showTabDetails &&
               <Card className = { 'padding-10px' }>
 
                 <div className = { 'grid-percentage' }>
@@ -938,7 +1059,13 @@ class TeamGoalsFragment extends BaseMVPView {
                         <h2 className = { 'text-align-center font-size-12px font-weight-bold color-Low' }>Completed</h2>
                         :
                         statusId === 8 &&
-                        <h2 className = { 'text-align-center font-size-12px font-weight-bold color-Low' }>For Rating</h2>
+                        <h2
+                          style = {{
+                            background: '#25a925',
+                            borderRadius: '3px',
+                            color: '#fff'
+                          }}
+                          className = { 'text-align-center font-size-12px font-weight-bold' }>For Rating</h2>
                     }
                     <br/>
                     <Progress
@@ -960,16 +1087,16 @@ class TeamGoalsFragment extends BaseMVPView {
                       <br/>
                       <div className = { 'text-align-center' }>
                         {
-                          this.checkIfLineMangerOrCompleted(statusId, isLineManager) ?
-                          <Rating
-                            emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
-                            fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                            fractions={ 1 }
-                            onChange={ e => this.commentRateFunc(e) }
-                            initialRating={ (ratings ? ratings : 0) || 0 }
-                          />
-                        :
-                        <div></div>
+                        //   // !this.checkIfLineMangerOrCompleted(statusId, isLineManager) ?
+                        //   <Rating
+                        //     emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+                        //     fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+                        //     fractions={ 1 }
+                        //     onChange={ e => this.commentRateFunc(e) }
+                        //     initialRating={ (ratings ? ratings : 0) || 0 }
+                        //   />
+                        // :
+                        // <div></div>
                         }
                         <br/>
                       </div>
@@ -1004,13 +1131,6 @@ class TeamGoalsFragment extends BaseMVPView {
                           goalTypeId === 2 &&
                           <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>Developemental</span></h2>
                       }
-                      {
-                        statusId === 8 &&
-                        <div>
-                          <br/>
-                          <h2 className = { 'margin-10px font-size-12px font-weight-bold' }><span className = { 'border-team color-gray' }>For Rating</span></h2>
-                        </div>
-                      }
                       <div>
                         <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
                       </div>
@@ -1018,14 +1138,17 @@ class TeamGoalsFragment extends BaseMVPView {
                       <div className = { 'grid-global' }>
                         <div></div>
                         <div className = { 'grid-global' }>
+                          {
+                            // <div className = { 'text-align-center' }>
+                            //   <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
+                            //     <span className = { 'icon-check icon-taskcompleted-img' }/>{ //this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount
+                            //     }</h2>
+                            // </div>
+                          }
+                          <div></div>
                           <div className = { 'text-align-center' }>
                             <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
-                              <span className = { 'icon-check icon-comment-img text-align-center' }/>{ //commentArray && commentArray.totalCount ? commentArray.totalCount : 0
-                              }</h2>
-                          </div>
-                          <div className = { 'text-align-center' }>
-                            <h2 className = { 'margin-5px text-align-center font-size-12px font-weight-lighter' }>
-                              <span className = { 'icon-check icon-taskcompleted-img' }/>{ //this.checkIfTaskCompleted(taskArray) }/{ taskArray && totalCount
+                              <span className = { 'icon-check icon-comment-img text-align-center' }/>{ commentArray && commentArray.totalCount ? commentArray.totalCount : 0
                               }</h2>
                           </div>
                         </div>
@@ -1119,7 +1242,15 @@ class TeamGoalsFragment extends BaseMVPView {
                       //   />
                       // :
                       // !addTask &&
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                      // <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                      this.checkIfLineMangerOrCompleted(statusId, isLineManager) &&
+                      <center>
+                        <GenericButton
+                          text = { 'SUBMIT GOAL RATING' }
+                          onClick = { () => this.setState({ showRatingModal : true }) }
+                          className = { 'global-button cursor-pointer' }
+                        />
+                      </center>
                     }
                   </div>
                   <Line/>
@@ -1139,6 +1270,7 @@ class TeamGoalsFragment extends BaseMVPView {
                             respEmployeeNumber = { resp.employeeNumber }
                             commentLoader = { commentLoader }
                             cardHolder = { resp }
+                            dateTime = { resp.dateTime }
                             commentId = { resp.id }
                             goalComment = { resp.description }
                             employeeName = { resp.employeeName }
@@ -1157,6 +1289,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       goalId &&
                       <div className = { 'comment-grid align-items-center' }>
                         <GenericInput
+                          value = { goalComment }
                           text = { 'Write a comment' }
                           onChange = { (e) => this.goalCommentFunc(e.target.value) }
                         />
@@ -1197,6 +1330,7 @@ class TeamGoalsFragment extends BaseMVPView {
               </Card>
             }
             {
+              goalTitle &&
               showTeamGoalDetails &&
               <Card className = { 'padding-10px' }>
                 <div className = { 'padding-10px' }>
@@ -1285,7 +1419,7 @@ class TeamGoalsFragment extends BaseMVPView {
                                     <div></div>
                                     <div>
                                       <h4 className = { 'font-size-14px font-weight-lighter' }>
-                                        : { squadList && squadList.description}, <b className = { 'font-size-10px font-weight-ligther' }>{ this.checkIfTimeToday(squadList.dateTime) }</b>
+                                        : { squadList && squadList.description}, <b className = { 'font-size-10px font-weight-ligther' }>{ moment(squadList.dateTime).fromNow() }</b>
                                       </h4>
                                     </div>
                                   </div>

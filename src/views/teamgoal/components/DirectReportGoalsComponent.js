@@ -72,7 +72,7 @@ class DirectReportGoalsComponent extends Component {
                   details.startDate,
                   details.endDate,
                   priorityFunc(details.priority),
-                  details.status,
+                  details.statusId,
                   details.type
                 ) }>
                 <div className = { 'padding-15' }>
