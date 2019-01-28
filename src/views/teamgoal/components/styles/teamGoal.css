@@ -168,3 +168,25 @@
   color: #F44336;
   font-size: 10px;
 }
+
+.squad-profile-picture {
+  background-color: #ff8a00;
+  box-shadow: inset 0px 0px 0px 0px #ffffff;
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.squad-initial-text {
+  text-align: center;
+  align-items: center;
+  font-weight: lighter;
+  color: #fff;
+  font-size: 10px;
+}
+
+.squad-goals-comment {
+  display: grid;
+  grid-template-columns: .15fr auto; 
+}

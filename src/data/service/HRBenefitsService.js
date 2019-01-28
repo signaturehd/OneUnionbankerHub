@@ -2344,8 +2344,20 @@ export default class HRBenefitsService {
     })
   }
 
+  addSquadGoalComment (token, squadGoalParam) {
+    return this.apiClient.post(`v1/goals/comments?goalType=${squadGoalParam.type}`, squadGoalParam.body, {
+      headers : { token }
+    })
+  }
+
   getGoalComment (token, goalId, pageNumber, pageItem) {
     return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}`, {
+      headers: { token }
+    })
+  }
+
+  getSquadGoalComment (token, pageNumber, pageItem, goalId, goalType) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}&goalType=${goalType}`, {
       headers: { token }
     })
   }
@@ -2416,6 +2428,12 @@ export default class HRBenefitsService {
 
   markAsCompleted (token, markParam) {
     return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
+      headers: { token }
+    })
+  }
+
+  markAsCompletedWithType (token, markParam) {
+    return this.apiClient.post(`v1/goals/${markParam.id}/completion?goalType${markParam.type}`, markParam.body, {
       headers: { token }
     })
   }

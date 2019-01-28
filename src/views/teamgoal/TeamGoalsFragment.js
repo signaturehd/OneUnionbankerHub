@@ -21,6 +21,7 @@ import {
 import DirectReportGoalsComponent from './components/DirectReportGoalsComponent'
 import TeamGoalsComponent from './components/TeamGoalsComponent'
 import SquadGoalsComponent from './components/SquadGoalsComponent'
+import SquadGoalListComponent from './components/SquadGoalListComponent'
 import AddTeamGoalsFormComponent from './components/AddTeamGoalsFormComponent'
 import TasksListComponent from './components/TasksListComponent'
 import CommentsListComponent from './components/CommentsListComponent'
@@ -28,6 +29,7 @@ import HistoryListComponent from './components/HistoryListComponent'
 
 import ResponseModal from '../notice/NoticeResponseModal'
 
+import { convertInitial  } from '../../utils/initialUtils'
 import { format } from '../../utils/numberUtils'
 import moment from 'moment'
 
@@ -66,6 +68,7 @@ class TeamGoalsFragment extends BaseMVPView {
       showTeamGoalDetails: false,
       showSquadGoal: false,
       showMemberGoal: false,
+      showReviewComponent: false,
       isCompleted: 0,
       pageItem: 10,
       pageNumber: 1,
@@ -98,6 +101,7 @@ class TeamGoalsFragment extends BaseMVPView {
       selectedDescription: '',
       selectedName: '',
       selectedImageUrl: '',
+      onChangeValue: '',
       selectedMembers: [],
       memberId: '',
       memberArray: [],
@@ -108,6 +112,7 @@ class TeamGoalsFragment extends BaseMVPView {
       historyArray : [],
       participantArray : [],
       directReportArray: [],
+      squadCommentList: [],
       priorityArray : [
         {
           id: 3,
@@ -420,6 +425,12 @@ class TeamGoalsFragment extends BaseMVPView {
     this.setState({ participantArray: tempArray })
   }
 
+  setSquadGoalCommentList (squadCommentList) {
+    this.setState({
+      squadCommentList: squadCommentList,
+      pageItem: squadCommentList && squadCommentList.totalCount === 0 ? pageItem : pageItem.totalCount })
+  }
+
   render () {
     const {
       teamType,
@@ -490,7 +501,10 @@ class TeamGoalsFragment extends BaseMVPView {
       selectedImageUrl,
       selectedMembers,
       squadId,
-      showMemberGoal
+      showMemberGoal,
+      showReviewComponent,
+      onChangeValue,
+      squadCommentList
     } = this.state
 
     const {
@@ -810,6 +824,9 @@ class TeamGoalsFragment extends BaseMVPView {
             {
               showSquadGoal &&
               <div>
+                <h4 className={ 'font-size-14px font-weight-bold' }>My Squads</h4>
+                <h4 className={ 'font-size-10px font-weight-lighter' }>List of goals you've assigned to your squad.</h4>
+                <br/>
                 {
                   enabledLoader ?
                   <center>
@@ -837,6 +854,8 @@ class TeamGoalsFragment extends BaseMVPView {
                           selectedDescription,
                           selectedMembers
                          })
+                         this.presenter.getTeamGoals('squad')
+                         this.setState({ showReviewComponent: false })
                         // this.presenter.getGoalTask(goalId)
                         // this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                         // this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
@@ -1002,7 +1021,7 @@ class TeamGoalsFragment extends BaseMVPView {
                         goalId &&
                         <span
                           className = { 'icon-check icon-add-img' }
-                          onClick = { () => this.setState({ addTask: true }) }
+                          onClick = { () => this.setState({ addTask: false }) }
                         />
                       }
                       </h2>
@@ -1148,7 +1167,7 @@ class TeamGoalsFragment extends BaseMVPView {
                   <div className = { 'padding-10px' }>
                     <div className = { 'header-column' }>
                       <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Members</h2>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Team Members</h2>
                         <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }></h2>
                       </div>
                       <h2></h2>
@@ -1179,47 +1198,132 @@ class TeamGoalsFragment extends BaseMVPView {
                 </div>
                 {
                   selectedTitle &&
-                  <div>
-                  <br/>
-                  <Line/>
-                  <div className = { 'padding-10px' }>
-                    <div className = { 'header-column' }>
-                      <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goals</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }></h2>
+                <div>
+                  {
+                    showReviewComponent ?
+                    <div>
+                      <br/>
+                      <div className = { 'squad-goals-comment' }>
+                        <div>
+                          <i
+                            onClick = { () => this.setState({ showReviewComponent : false }) }
+                            className = { 'back-arrow' }></i>
+                        </div>
+                        <div>
+                          <div className = { 'grid-global' }>
+                            <h4 className = { 'font-weight-lighter font-size-16px' }>Reviews</h4>
+                            <GenericButton
+                              className = { 'profile-button-small text-align-right cursor-pointer global-button' }
+                              text = { 'Mark as Completed' }
+                              onClick = { () => this.presenter.test() }
+                              />
+                          </div>
+                          <br/>
+                          <div>
+                            {
+                              squadCommentList &&
+                              squadCommentList.commentDetails.map((squadList, key) => {
+                                return (
+                                  <div key = { key }>
+                                    <div className = { 'squad-goals-comment' }>
+                                      <div className = { 'squad-profile-picture' }>
+                                        <h2 className = { 'squad-initial-text' }>{ convertInitial(squadList.employeeName && squadList.employeeName) }</h2>
+                                      </div>
+                                      <div>
+                                        <h4 className = { 'font-size-12px font-weight-lighter' }>{ squadList.employeeName }</h4>
+                                      </div>
+                                    </div>
+                                    <div className = { 'squad-goals-comment' }>
+                                      <div></div>
+                                      <div>
+                                        <h4 className = { 'font-size-10px font-weight-lighter' }>{squadList.description}</h4>
+                                      </div>
+                                    </div>
+                                    <br/>
+                                  </div>
+                                )
+                              })
+                            }
+                          </div>
+                          <br/>
+                          <div>
+                          {
+                            enabledLoader ?
+                            <CircularLoader show = { enabledLoader } />
+                            :
+                            <center>
+                              <GenericInput
+                                value = { onChangeValue }
+                                onChange = { (e) => this.setState({ onChangeValue : e.target.value }) }
+                                />
+                              <GenericButton
+                                className = { 'profile-button-small global-button' }
+                                text = { 'Send' }
+                                onClick = { () => this.presenter.addSquadGoalComment('squad', squadId, onChangeValue) }
+                                />
+                            </center>
+                          }
+                          </div>
+                        </div>
                       </div>
-                      <h2>
-                      {
-                        // goalId &&
-                        <span
-                          className = { 'icon-check icon-add-img' }
-                          onClick = { () => this.setState({ showForm: true, squadId: selectedId }) }
-                        />
-                      }
-                      </h2>
                     </div>
-                  </div>
-                  <br/>
-                  <Line/>
-                  <div className = { 'padding-10px' }>
-                    <div className = { 'header-column' }>
-                      <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Members</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }></h2>
+                    :
+                    <div>
+                      <br/>
+                      <Line/>
+                      <div className = { 'padding-10px' }>
+                        <div className = { 'header-column' }>
+                          <div>
+                            <h2 className = { 'font-weight-bold text-align-left font-size-16px' }>Squad Goals</h2>
+                            <h2 className = { 'font-weight-lighter text-align-left font-size-14px' }></h2>
+                          </div>
+                          <h2>
+                          {
+                            // goalId &&
+                            <span
+                              className = { 'icon-check icon-add-img' }
+                              onClick = { () => this.setState({ showForm: true, squadId: selectedId }) }
+                            />
+                          }
+                          </h2>
+                        </div>
                       </div>
-                      <h2>
-                      </h2>
+
+                      <br/>
+                      <div>
+                        <SquadGoalListComponent
+                          onSelected = { (pageNumber, goalId, goalType) => {
+                            this.setState({ squadId : goalId })
+                            this.presenter.getSquadGoalComment(pageNumber, pageItem, goalId, goalType)
+                            this.setState({ showReviewComponent : true })
+                            }
+                          }
+                          teamGoalsArray = { teamGoalsArray }
+                          />
+                      </div>
+                      <br/>
+                      <Line/>
+                      <div className = { 'padding-10px' }>
+                        <div className = { 'header-column' }>
+                          <div>
+                            <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Members</h2>
+                            <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }></h2>
+                          </div>
+                          <h2>
+                          </h2>
+                        </div>
+                        {
+                          selectedMembers ?
+                          selectedMembers.map((details, key) =>
+                            <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.name }</h2>
+                          )
+                          :
+                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>
+                        }
+                      </div>
                     </div>
-                    {
-                      selectedMembers ?
-                      selectedMembers.map((details, key) =>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.name }</h2>
-                      )
-                      :
-                      <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>
-                    }
-                  </div>
-                  </div>
+                  }
+                </div>
                 }
               </Card>
             }

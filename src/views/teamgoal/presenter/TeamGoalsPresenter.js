@@ -1,3 +1,6 @@
+import AddMarkAsCompletedWithTypeInteractor from '../../../domain/interactor/goals/AddMarkAsCompletedWithTypeInteractor'
+import GetSquadGoalsCommentInteractor from '../../../domain/interactor/goals/GetSquadGoalsCommentInteractor'
+import AddSquadGoalCommentInteractor from '../../../domain/interactor/goals/AddSquadGoalCommentInteractor'
 import GetTeamGoalsInteractor from '../../../domain/interactor/goals/GetTeamGoalsInteractor'
 import GetSquadGoalsInteractor from '../../../domain/interactor/goals/GetSquadGoalsInteractor'
 import GetGoalTaskInteractor from '../../../domain/interactor/goals/GetGoalTaskInteractor'
@@ -17,6 +20,8 @@ import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInt
 import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
 import teamGoalsParam from '../../../domain/param/AddTeamGoalsParam'
 import squadGoalsParam from '../../../domain/param/AddSquadGoalsParam'
+import addMarkAsCompletedWithTypeParam from '../../../domain/param/AddMarkAsCompletedWithTypeParam'
+import addSquadGoalCommentParam from '../../../domain/param/AddSquadGoalCommentParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
@@ -24,6 +29,9 @@ let storedGoalId = '', storedPageNumber = '', storedPageItem = ''
 
 export default class RequestCoachPresenter {
   constructor (container) {
+    this.addMarkAsCompletedWithTypeInteractor = new AddMarkAsCompletedWithTypeInteractor(container.get('HRBenefitsClient'))
+    this.getSquadGoalsCommentInteractor = new GetSquadGoalsCommentInteractor(container.get('HRBenefitsClient'))
+    this.addSquadGoalCommentInteractor = new AddSquadGoalCommentInteractor(container.get('HRBenefitsClient'))
     this.getTeamGoalsInteractor = new GetTeamGoalsInteractor(container.get('HRBenefitsClient'))
     this.getSquadGoalsInteractor = new GetSquadGoalsInteractor(container.get('HRBenefitsClient'))
     this.getGoalTaskInteractor = new GetGoalTaskInteractor(container.get('HRBenefitsClient'))
@@ -45,6 +53,42 @@ export default class RequestCoachPresenter {
 
   setView (view) {
     this.view = view
+  }
+
+  getSquadGoalComment (pageNumber, pageItem, goalId, goalType) {
+    try {
+      this.view.showCircularLoader()
+      this.getSquadGoalsCommentInteractor.execute(pageNumber, pageItem, goalId, goalType)
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+        this.view.setSquadGoalCommentList(data)
+      }, error => {
+        this.view.hideCircularLoader()
+      })
+    } catch(e) {
+       console.log(e)
+    }
+  }
+
+  addSquadGoalComment (type, id, description) {
+    this.view.showCircularLoader()
+    this.addSquadGoalCommentInteractor.execute(addSquadGoalCommentParam(type, id, description))
+    .subscribe(data => {
+      this.view.noticeResponse(data)
+      this.view.hideCircularLoader()
+    }, error => {
+      this.view.hideCircularLoader()
+    })
+  }
+
+  markAsCompletedWithType (type, id, remarks) {
+    this.view.showCircularLoader()
+    this.addMarkAsCompletedWithTypeInteractor.execute(addMarkAsCompletedWithTypeParam(type, id, remarks))
+    .subscribe(data=> {
+      this.view.hideCircularLoader()
+    },error => {
+      this.view.hideCircularLoader()
+    })
   }
 
   getTeamGoals (goalType) {

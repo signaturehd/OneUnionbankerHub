@@ -276,22 +276,25 @@ class ApprovalGoalsFragment extends BaseMVPView {
                     </center>
                   </Modal>
                 }
-                <center>
-                  <div className = { 'grid-global padding' }>
-                    <div>
-                      <GenericButton
-                      text = { 'Reject' }
-                      className = { 'button-reject profile-button-small' }
-                      onClick = { () => this.setState({ showRejectRemarksModal: true }) }/>
+                {
+                  employeeName !== ''  &&
+                  <center>
+                    <div className = { 'grid-global padding' }>
+                      <div>
+                        <GenericButton
+                        text = { 'Reject' }
+                        className = { 'button-reject profile-button-small' }
+                        onClick = { () => this.setState({ showRejectRemarksModal: true }) }/>
+                      </div>
+                      <div>
+                        <GenericButton
+                        text = { 'Approve' }
+                        className = { 'button-approve profile-button-small' }
+                        onClick = { () => this.onApprovalSubmit(personal, goalId, 2, '') }/>
+                      </div>
                     </div>
-                    <div>
-                      <GenericButton
-                      text = { 'Approve' }
-                      className = { 'button-approve profile-button-small' }
-                      onClick = { () => this.onApprovalSubmit(personal, goalId, 2, '') }/>
-                    </div>
-                  </div>
-                </center>
+                  </center>
+                }
                 </Card>
               </div>
             </div>
