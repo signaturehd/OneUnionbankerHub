@@ -4,8 +4,8 @@ export default (
   remarks
 ) => ({
   body : {
-    id,
     remarks,
   },
+  id,
   type,
 })

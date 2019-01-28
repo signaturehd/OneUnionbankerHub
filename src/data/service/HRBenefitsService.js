@@ -2332,8 +2332,9 @@ export default class HRBenefitsService {
     })
   }
 
-  getGoalTask (token, goalId) {
-    return this.apiClient.get(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
+  getGoalTask (token, goalTask) {
+    console.log(goalTask)
+    return this.apiClient.get(`v1/goals/tasks?goalType=${goalTask.goalType}&goalId=${goalTask.goalId}`, {
       headers: { token }
     })
   }
@@ -2350,8 +2351,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getGoalComment (token, goalId, pageNumber, pageItem) {
-    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}`, {
+  getGoalComment (token, goalParam, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalParam.goalId}&goalType=${goalParam.goalType}`, {
       headers: { token }
     })
   }
@@ -2362,16 +2363,17 @@ export default class HRBenefitsService {
     })
   }
 
-  updateGoalTask(token, taskId, taskDescription, isCompleted) {
+  updateGoalTask(token, taskParam, taskDescription, isCompleted) {
     let updateGoal
     if (taskDescription) {
-      updateGoal = this.apiClient.put(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
+      updateGoal = this.apiClient.put(`v1/goals/tasks/${taskParam.taskId}?goalType=${taskParam.goalType}`, {
         description: taskDescription
       }, {
         headers : { token }
       })
     } else if (isCompleted !== null) {
-      updateGoal = this.apiClient.post(`v1/goals/tasks/${taskId}?goalType=personal`, {
+      updateGoal = this.apiClient.post(`v1/goals/tasks/${taskParam.taskId}?goalType=${taskParam.goalType}`, {
+        taskId: taskParam.taskId,
         isCompleted
       }, {
         headers : { token }
@@ -2409,7 +2411,7 @@ export default class HRBenefitsService {
   }
 
   getTeamGoals (token, goalType) {
-    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=2,6`, {
+    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=2,6,8`, {
       headers: { token }
     })
   }
@@ -2426,14 +2428,8 @@ export default class HRBenefitsService {
     })
   }
 
-  markAsCompleted (token, markParam) {
-    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
-      headers: { token }
-    })
-  }
-
   markAsCompletedWithType (token, markParam) {
-    return this.apiClient.post(`v1/goals/${markParam.id}/completion?goalType${markParam.type}`, markParam.body, {
+    return this.apiClient.post(`v1/goals/${markParam.id}/remarks`, markParam.body, {
       headers: { token }
     })
   }
@@ -2463,7 +2459,7 @@ export default class HRBenefitsService {
   }
 
   getDirectReportGoals (token) {
-    return this.apiClient.get('v1/goals/reports?goalType=personal&type=1&status=2', {
+    return this.apiClient.get('v1/goals/reports?goalType=personal&type=1&status=2,8', {
       headers: { token }
     })
   }
