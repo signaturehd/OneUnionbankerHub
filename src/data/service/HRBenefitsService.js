@@ -2333,7 +2333,6 @@ export default class HRBenefitsService {
   }
 
   getGoalTask (token, goalTask) {
-    console.log(goalTask)
     return this.apiClient.get(`v1/goals/tasks?goalType=${goalTask.goalType}&goalId=${goalTask.goalId}`, {
       headers: { token }
     })

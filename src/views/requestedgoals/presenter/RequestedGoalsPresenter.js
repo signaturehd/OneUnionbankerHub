@@ -255,7 +255,7 @@ export default class RequestCoachPresenter {
     try {
       this.deleteGoalsInteractor.execute(goalId)
       .do(data => {
-        this.getGoals()
+        this.getGoals(storedGoalType)
       })
       .subscribe(
         data => {
@@ -335,7 +335,8 @@ export default class RequestCoachPresenter {
       data => {
         this.view.noticeResponse(data)
         this.view.hideSubmitLoader()
-        this.getGoals()
+        this.getGoals(storedGoalType)
+        this.view.resetValue()
       },
       errors => {
         this.view.hideSubmitLoader()
@@ -349,7 +350,7 @@ export default class RequestCoachPresenter {
     .subscribe(data => {
       this.view.noticeResponse(data)
       this.view.resetRemarks()
-      this.getGoals()
+      this.getGoals(storedGoalType)
       this.view.hideSubmitLoader()
     }, error => {
       this.view.hideSubmitLoader()

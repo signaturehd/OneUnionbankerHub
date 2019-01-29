@@ -137,3 +137,8 @@
 .teamgoal-input-tab {
   display: none;
 }
+
+.team-goal-grid-percentage {
+  display: grid;
+  grid-template-columns: .2fr auto .3fr;
+}

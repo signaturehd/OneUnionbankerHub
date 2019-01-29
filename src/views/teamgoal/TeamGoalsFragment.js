@@ -361,7 +361,7 @@ class TeamGoalsFragment extends BaseMVPView {
     }
     else {
       this.presenter.addGoalComment(
-        goalTypeParam === 'team '? selectedTeamId : goalId,
+        goalId,
         goalComment,
         pageNumber,
         pageItem,
@@ -487,6 +487,12 @@ class TeamGoalsFragment extends BaseMVPView {
         console.log(e)
       }
     }
+  }
+
+  checkEmployeePercentageStatus (totalTask, completedTask) {
+    let totalPercentage
+    totalPercentage =  (completedTask / totalTask) * 100
+    return parseInt(totalPercentage)
   }
 
   render () {
@@ -895,10 +901,10 @@ class TeamGoalsFragment extends BaseMVPView {
                             statusId,
                             goalTypeId,
                             showTabDetails: true,
-                            goalTypeParam : 'personal'
+                            goalTypeParam: 'personal',
                            })
-                          this.presenter.getGoalTask(goalId, goalTypeParam)
-                          this.presenter.getGoalComment(goalId, pageNumber, pageItem, goalTypeParam)
+                          this.presenter.getGoalTask(goalId, 'personal')
+                          this.presenter.getGoalComment(goalId, pageNumber, pageItem, 'personal')
                           this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
                         }
                        }
@@ -964,9 +970,8 @@ class TeamGoalsFragment extends BaseMVPView {
                             showTeamGoal: true,
                             showTeamGoalDetails: true,
                            })
-                          console.log(resp.id, resp.id &&  'team')
-                          this.presenter.getGoalTask(resp.id, resp.id &&  'team')
-                          this.presenter.getGoalComment(resp.id, pageNumber, pageItem, resp.id && 'team')
+                          this.presenter.getGoalTask(resp.id, 'team')
+                          this.presenter.getGoalComment(resp.id, pageNumber, pageItem, 'team')
                           this.presenter.getGoalsHistory(resp.id, pageNumber, pageItem)
                         }
                        }
@@ -1068,7 +1073,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       type = { 'circle' }
                       height = { 80 }
                       width = { 80 }
-                      percent = { 0 } />
+                      percent = { percentageTask ? parseInt(percentageTask) : 0 } />
                     <br/>
                     <br/>
                   </div>
@@ -1220,31 +1225,33 @@ class TeamGoalsFragment extends BaseMVPView {
                       // </div>
                     }
                     {
-                      // taskLoader ?
-                      // <center>
-                      //   <GenericLoader show = { taskLoader }/>
-                      // </center>
-                      // :
-                      // taskArray.length !== 0 ?
-                      //   <TasksListComponent
-                      //     cardHolder = { taskArray }
-                      //     onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
-                      //       taskId,
-                      //       taskDescription,
-                      //       isCompleted,
-                      //       showTaskOption: true
-                      //     }) }
-                      //     changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
-                      //   />
-                      // :
-                      // !addTask &&
-                      // <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                      taskLoader ?
+                      <center>
+                        <GenericLoader show = { taskLoader }/>
+                      </center>
+                      :
+                      taskArray &&
+                      taskArray.length !== 0 ?
+                        <TasksListComponent
+                          cardHolder = { taskArray }
+                          onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
+                            taskId,
+                            taskDescription,
+                            isCompleted,
+                            showTaskOption: true
+                          }) }
+                          changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
+                        />
+                      :
+                      <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                    }
+                    {
                       this.checkIfLineMangerOrCompleted(statusId, isLineManager) &&
                       <center>
                         <GenericButton
                           text = { 'SUBMIT GOAL RATING' }
                           onClick = { () => this.setState({ showRatingModal : true }) }
-                          className = { 'global-button cursor-pointer' }
+                          className = { 'global-button profile-button-medium cursor-pointer' }
                         />
                       </center>
                     }
@@ -1345,14 +1352,30 @@ class TeamGoalsFragment extends BaseMVPView {
                       <div>
                         <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Team Members</h2>
                         <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }></h2>
+                        <br/>
                       </div>
                       <h2></h2>
                     </div>
                     {
                       selectedMembers ?
                       selectedMembers.map((details, key) =>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }
-                        onClick = { () => this.setState({ showMemberGoal: true }) }>{ details.fullName }</h2>
+                        <div
+                          onClick = { () => this.setState({ showMemberGoal: true }) }
+                          className = { 'cursor-pointer team-goal-grid-percentage' }>
+                          <div className = { 'squad-profile-picture' }>
+                            <h2 className = { 'squad-initial-text' }>
+                              { details &&  convertInitial(details.fullName && details.fullName) }
+                            </h2>
+                          </div>
+                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.fullName }</h2>
+                          <div className = { 'text-align-right' }>
+                            <Progress
+                              type = { 'circle' }
+                              height = { 25 }
+                              width = { 25 }
+                              percent = { this.checkEmployeePercentageStatus(details.totalTask, details.completedTask ) || 0} />
+                          </div>
+                        </div>
                       )
                       :
                       <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>

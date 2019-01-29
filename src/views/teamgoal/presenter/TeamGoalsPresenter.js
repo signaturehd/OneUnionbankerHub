@@ -313,6 +313,7 @@ export default class RequestCoachPresenter {
     pageItem,
     goalType
   ){
+    storedGoalType = goalType
     this.view.checkCommentLoader(true)
     this.addGoalCommentInteractor.execute(
       addGoalCommentParam(
@@ -324,7 +325,7 @@ export default class RequestCoachPresenter {
     .do(data => {
       this.view.checkCommentLoader(false)
       this.view.resetRemarks()
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, pageNumber, pageItem, goalType)
     }, error => {
       this.view.checkCommentLoader(false)
     })
@@ -351,7 +352,7 @@ export default class RequestCoachPresenter {
       goalComment
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, pageNumber, pageItem, goalType)
     })
     .subscribe(
       data => {
@@ -408,7 +409,7 @@ export default class RequestCoachPresenter {
     try {
       this.deleteCommentInteractor.execute(commentId)
       .do(data => {
-        this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem)
+        this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem, storedGoalType)
       })
       .subscribe(
         data => {
