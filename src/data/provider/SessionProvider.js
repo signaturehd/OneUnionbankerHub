@@ -18,7 +18,8 @@ export default class SessionProvider {
   }
 
   getToken () {
-    return this.storage.getItem(TOKEN) || ''
+    return 'employee932'
+    // return this.storage.getItem(TOKEN) || ''
   }
 
   setInitialToken (token = '') {

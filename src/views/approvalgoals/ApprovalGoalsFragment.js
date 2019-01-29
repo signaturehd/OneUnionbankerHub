@@ -167,6 +167,34 @@ class ApprovalGoalsFragment extends BaseMVPView {
         <div>
         <br/>
           <div className = { 'grid-main padding-10px' }>
+            <div className = { 'approve-tabs-container' } >
+              <input
+                className = { 'approvegoal-input-tab' }
+                id = { 'approvegoal-tab1' }
+                type = { 'radio' }
+                name = { 'tabs' }
+                defaultChecked = { true }
+                onClick = { () => {
+                  }
+                }/>
+              <label className = { 'approvegoal-icon-tab font-size-14px' } htmlFor='approvegoal-tab1'>My Direct Reports</label>
+
+              <input
+                className = { 'approvegoal-input-tab' }
+                id = { 'approvegoal-tab1' }
+                type = { 'radio' }
+                name = { 'tabs' }
+                defaultChecked = { true }
+                onClick = { () => {
+                  }
+                }/>
+              <label className = { 'approvegoal-icon-tab font-size-14px' } htmlFor='approvegoal-tab1'>My Direct Reports</label>
+            </div>
+            <div></div>
+          </div>
+
+          <Line/>
+          <div className = { 'grid-main padding-10px' }>
             <div>
             {
               enabledLoader ?
