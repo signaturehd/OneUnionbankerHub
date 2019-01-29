@@ -222,6 +222,7 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
             showEditMode = { showEditMode }
             onContinue = { () => this.presenter.validateInput() }
             onEdit = { (e) => {
+            //  console.log(()=> this.presenter.validateInput())
               if(e) {
                 this.presenter.submitCoe()
               } else {
