@@ -1557,6 +1557,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getSquadGoalComment (token, goalId, pageNumber, pageItem, goalType) {
+    return this.service.getSquadGoalComment(token, goalId, pageNumber, pageItem, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
   updateGoalTask (token, goalId, taskDescription, isCompleted) {
     return this.service.updateGoalTask(token,  goalId, taskDescription, isCompleted)
     .pipe(ServiceErrorOperator())
@@ -1587,6 +1592,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addSquadGoalComment (token, squadCommentParam) {
+    return this.service.addSquadGoalComment(token, squadCommentParam)
+    .pipe(ServiceErrorOperator())
+  }
+
   getGoalsHistory (token, goalId, pageNumber, pageItem) {
     return this.service.getGoalsHistory(token, goalId, pageNumber, pageItem)
     .pipe(ServiceErrorOperator())
@@ -1599,6 +1609,11 @@ export default class HRBenefitsClient {
 
   markAsCompleted (token, markParam) {
     return this.service.markAsCompleted(token, markParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  markAsCompletedWithType (token, markParam) {
+    return this.service.markAsCompletedWithType(token, markParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1622,9 +1637,14 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getDirectReportGoals (token) {
-    return this.service.getDirectReportGoals(token)
+  getDirectReportGoals (token, status) {
+    return this.service.getDirectReportGoals(token, status)
     .pipe(ServiceErrorOperator())
+  }
+
+  getGoalsForConfirmation (token) {
+    return this.service.getGoalsForConfirmation(token)
+      .pipe(ServiceErrorOperator())
   }
 
   /* Certificaqte of Employment */

@@ -30,14 +30,13 @@ import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 import ResponseModal from '../notice/NoticeResponseModal'
 
 import { format } from '../../utils/numberUtils'
-import moment from 'moment'
-
 import { Progress } from 'react-sweet-progress'
 import './styles/requestedGoalStyles.css'
 
 import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { FaPlayCircleO } from 'react-icons/lib/fa/'
 import Rating from 'react-rating'
+import moment from 'moment'
 
 class RequestedGoalsFragment extends BaseMVPView {
 
@@ -98,6 +97,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       goalTypeErrorMessage : '',
       businessOutcome: '',
       businessOutcomeErrorMessage: '',
+      selectedTypeId: '',
       commentArray: [],
       taskArray: [],
       goalsArray : [],
@@ -130,7 +130,14 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getGoals(this.state.personal)
+    const {
+      isLineManager
+    } = this.props
+    const objectParam = {
+      isLineManager : isLineManager && isLineManager,
+      personal: this.state.personal,
+    }
+    this.presenter.getGoals(objectParam)
     // this.scrollFunction()
   }
 
@@ -301,7 +308,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       onEditTask ?
       this.presenter.updateGoalTask(taskId, taskDescription, isCompleted)
       :
-      this.presenter.addGoalTask(personal, goalId, taskDescription)
+      this.presenter.addGoalTask(goalId, taskDescription)
       this.setState({ addTask:false, taskDescription: '' })
     }
   }
@@ -443,14 +450,15 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   checkIfLineMangerOrCompleted (approvalStatus, isLineManager) {
-    return isLineManager && approvalStatus === 6 ? true : false
+    return isLineManager && approvalStatus === 8 ? true : false
   }
 
   postMarkAsCompleted() {
-    const { goalId, businessOutcome } = this.state
+    const { businessOutcome } = this.state
 
-    if(businessOutcome) {
-      this.presenter.markAsCompleted(goalId, businessOutcome)
+    if(businessOutcome !== '') {
+      this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
+      this.presenter.markAsCompletedWithType( businessOutcome)
     } else {
       this.setState ({ businessOutcomeErrorMessage: 'Required field' })
     }
@@ -463,19 +471,30 @@ class RequestedGoalsFragment extends BaseMVPView {
     if(goalsArray.length !== 0) {
       goalsArray.map((details, key) =>
       {
-        if(details.isCompleted) {
-          details.type === 1 ?
-          performanceRate++
-          :
-          details.type === 2 &&
-          developementalRate++
+        if(details && details.approvalStatus === 6) {
+          if(details && details.type === 1) {
+            performanceRate += details && details.ratings
+          } else if (details && details.type === 2) {
+            developementalRate += details &&  details.ratings
+          }
         }
       })
+      let performanceRateTotal = performanceRate * 0.95
+      let developementalRateTotal = developementalRate * 0.05
       totalPoints = (performanceRate * 0.95) + (developementalRate * 0.05)
-
       return totalPoints !== 0 ? totalPoints.toFixed(2) : 'No'
     } else {
       return 'No'
+    }
+  }
+
+  checkIdType (isTeam, isSquad) {
+    if(isTeam === 1) {
+      return 'team'
+    } else if (isSquad === 1) {
+      return 'squad'
+    } else {
+      return 'personal'
     }
   }
 
@@ -540,19 +559,20 @@ class RequestedGoalsFragment extends BaseMVPView {
       showRemarksText,
       remarksText,
       isTeamGoal,
-      isSquadGoal
+      isSquadGoal,
+      selectedTypeId
     } = this.state
 
     const {
       isLineManager,
-      filterId
+      filterId,
+      searchString
     } = this.props
 
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
-
     return (
     <div>
       { super.render() }
@@ -624,8 +644,12 @@ class RequestedGoalsFragment extends BaseMVPView {
           {
             ifYesCompleted ?
             <div>
+              <h4>Business Outcome</h4>
+              <h4 className = { 'font-size-10px font-weight-normal' }>Please input the actual outcome of the completed goal</h4>
+              <br/>
               <GenericInput
                 text = { 'Business Outcome' }
+                type = { 'textarea' }
                 value = { businessOutcome }
                 onChange = { (e) => this.setState({ businessOutcome: e.target.value, businessOutcomeErrorMessage: '' }) }
                 errorMessage = { businessOutcomeErrorMessage }
@@ -634,13 +658,19 @@ class RequestedGoalsFragment extends BaseMVPView {
               <div className = { 'grid-global' }>
                 <GenericButton
                   text = { 'Cancel' }
+                  className = { 'profile-button-small cursor-pointer global-button' }
                   onClick = { () => this.setState({ showMarkAsCompleted: false, ifYesCompleted: false }) }
                 />
                 <GenericButton
                   text = { 'Submit' }
+                  className = { 'profile-button-small cursor-pointer global-button' }
                   onClick = { () => {
-                    this.postMarkAsCompleted(),
-                    this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
+                    try {
+                      this.postMarkAsCompleted()
+
+                    } catch (e) {
+                      console.log(e)
+                    }
                   } }
                 />
               </div>
@@ -760,40 +790,40 @@ class RequestedGoalsFragment extends BaseMVPView {
         </Modal>
       }
       {
-        this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) &&
-        <Modal>
-          <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
-            { ratings }
-          </h2>
-          <br/>
-          <div className = { 'text-align-center' }>
-              <Rating
-                emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
-                fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                fractions={ 1 }
-                onChange={ e => this.commentRateFunc(e) }
-                initialRating={ (ratings ? ratings : 0) || 0 }
-              />
-          </div>
-          <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
-          {
-            showRemarksText &&
-
-            <GenericInput
-              value = { remarksText }
-              hint = { 'Please add remarks' }
-              type = { 'textarea' }
-              onChange = { (e) => {
-                try {
-                  this.setState({ remarksText : e.target.value })
-                } catch(e) {
-                  console.log(e)
-                }
-              } }
-              onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
-            />
-          }
-        </Modal>
+        // this.checkIfLineMangerOrCompleted(approvalStatus, isLineManager) &&
+        // <Modal>
+        //   <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
+        //     { ratings }
+        //   </h2>
+        //   <br/>
+        //   <div className = { 'text-align-center' }>
+        //       <Rating
+        //         emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+        //         fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+        //         fractions={ 1 }
+        //         onChange={ e => this.commentRateFunc(e) }
+        //         initialRating={ (ratings ? ratings : 0) || 0 }
+        //       />
+        //   </div>
+        //   <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
+        //   {
+        //     showRemarksText &&
+        //
+        //     <GenericInput
+        //       value = { remarksText }
+        //       hint = { 'Please add remarks' }
+        //       type = { 'textarea' }
+        //       onChange = { (e) => {
+        //         try {
+        //           this.setState({ remarksText : e.target.value })
+        //         } catch(e) {
+        //           console.log(e)
+        //         }
+        //       } }
+        //       onKeyPress = { (e) => this.submitRatingWithRemarks(e) }
+        //     />
+        //   }
+        // </Modal>
       }
       {
         showForm ?
@@ -837,8 +867,9 @@ class RequestedGoalsFragment extends BaseMVPView {
                 <Card className = { 'grid-points' }>
                   <span className = { 'padding-10px icon-check icon-points-img text-align-left' }/>
                   <div className = { 'padding-10px' }>
-                    <h2 className = { 'font-size-14px text-align-left font-weight-bold' }>My Points</h2>
-                    <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>{ this.checkPoints(goalsArray) } Available Points</h2>
+                    <h2 className = { 'font-size-14px text-align-left font-weight-normal' }>My Points</h2>
+                  <h2 className = { 'font-size-14px text-align-left font-weight-lighter' }>
+                    { this.checkPoints(goalsArray)+ ' ' }<b className={ 'font-weight-normal font-size-10px' }> Available Points</b></h2>
                   </div>
                 </Card>
               </div>
@@ -858,6 +889,10 @@ class RequestedGoalsFragment extends BaseMVPView {
                 />
               </div>
             </div>
+            <br/>
+            <h4 className = { 'font-size-15px font-weight-bold' }>{moment().year()} Goals</h4>
+            <h4 className = { 'font-size-14px' }>Strive for your greatest year yet. Complete your approved goals below. #Own {moment().year()}</h4>
+            <br/>
             {
               enabledLoader ?
               <center>
@@ -867,23 +902,11 @@ class RequestedGoalsFragment extends BaseMVPView {
               goalsArray.length !== 0 ?
               <div className = { 'scroll-y padding-10px' }>
                 <RequestedGoalsComponent
-                filterId = { filterId }
-                cardHolder = { goalsArray }
-                priorityFunc = { (resp) => this.priorityFunc(resp) }
-                onSelected = { (
-                  goalId,
-                  goalTitle,
-                  description,
-                  startDate,
-                  dueDate,
-                  priorityName,
-                  approvalStatus,
-                  goalTypeId,
-                  isTeamGoal,
-                  isCompleted,
-                  ratings,
-                ) => {
-                  this.setState({
+                  filterId = { filterId }
+                  searchString = { searchString }
+                  cardHolder = { goalsArray }
+                  priorityFunc = { (resp) => this.priorityFunc(resp) }
+                  onSelected = { (
                     goalId,
                     goalTitle,
                     description,
@@ -895,282 +918,323 @@ class RequestedGoalsFragment extends BaseMVPView {
                     isTeamGoal,
                     isSquadGoal,
                     isCompleted,
-                    ratings: parseFloat(ratings),
-                    showRemarksText: false,
-                    remarksText: ''
-                  })
-                  this.presenter.getGoalTask(goalId)
-                  this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                  this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                  this.setState({ ifYesCompleted: false,
-                    showMarkAsCompleted: this.checkIfShowMarkAsCompleted(approvalStatus, isCompleted),
-                    showRemarksText : false })
+                    ratings,
+                  ) => {
+                    this.setState({
+                      goalId,
+                      goalTitle,
+                      description,
+                      startDate,
+                      dueDate,
+                      priorityName,
+                      approvalStatus,
+                      goalTypeId,
+                      isTeamGoal,
+                      isSquadGoal,
+                      isCompleted,
+                      selectedTypeId:  this.checkIdType(isTeamGoal, isSquadGoal),
+                      ratings: parseFloat(ratings),
+                      showRemarksText: false,
+                      remarksText: ''
+                    })
+                    this.presenter.getGoalTask(goalId, this.checkIdType(isTeamGoal, isSquadGoal))
+                    this.presenter.getGoalComment(goalId, this.checkIdType(isTeamGoal, isSquadGoal), pageNumber, pageItem)
+                    this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                    this.setState({
+                      showRemarksText : false })
+                    }
                   }
-                }
-                onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                  onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
                 />
               </div>
               :
               <center><h2>No record</h2></center>
             }
             </div>
-            <div className = { 'padding-10px' }>
+            {
+              goalTitle ?
               <div className = { 'padding-10px' }>
-                <div className = { 'header-column card-background padding-10px' }>
-                  <h2 className = { 'font-weight-bold text-align-left font-size-14px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
-                  {
-                    goalId &&
-                    <span
-                      className = { 'icon-check icon-edit-white-img' }
-                      onClick = { () => this.setState({ showForm: true, editMode: true }) }
-                    />
-                  }
-                </div>
-
-                <div className = { 'details-columns padding-10px' }>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Goal type</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
-                      isTeamGoal ?
-                      'Team Goal'
-                      :
-                        isSquadGoal ?
-                        'Squad Goal'
-                        :
-                        'Personal'
-                    }</h2>
-                  </div>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Status</h2>
-                    {
-                      approvalStatus === 2 ?
-                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Medium' }>Approved</h2>
-                      :
-                        approvalStatus === 3 ?
-                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter color-High' }>Rejected</h2>
-                        :
-                        approvalStatus === 1 ?
-                        <h2 className = { ' text-align-center font-size-12px font-weight-lighter' }>Requested</h2>
-                        :
-                        approvalStatus === 4 ?
-                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>Update for approval</h2>
-                        :
-                        approvalStatus === 5 ?
-                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>Deletion for approval</h2>
-                        :
-                        approvalStatus === 6 &&
-                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low' }>Completed</h2>
-                    }
-                  </div>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Priority</h2>
-                    <h2 className = { `text-align-center font-size-12px font-weight-lighter color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
-                  </div>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Type</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
-                      goalTypeId === 1 ?
-                      'Performance'
-                      :
-                      goalTypeId === 2 &&
-                      'Developemental'
-                    }</h2>
-                  </div>
-
-                  { /* Second row */ }
-
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Start Date</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{ moment(startDate).format('MMMM, DD, YYYY') }</h2>
-                  </div>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }>Due Date</h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{ moment(dueDate).format('MMMM, DD, YYYY') }</h2>
-                  </div>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }></h2>
-                    <h2 className = { `text-align-center font-size-12px font-weight-lighter color-${priorityName}` }></h2>
-                  </div>
-                  <div className = { 'details-rows' }>
-                    <h2 className = { 'text-align-center font-size-14px font-weight-bold details-title' }></h2>
-                    <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }></h2>
-                  </div>
-                </div>
-
-                { /* Description */ }
-
                 <div className = { 'padding-10px' }>
-                  <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Description</h2>
-                  <h2 className = { 'text-align-left font-size-14px font-weight-lighter' }>{
-                    description ?
-                    description
-                    :
-                    'Goals allow you to create effective objectives for yourself or employees.'
-                  }</h2>
-                </div>
-                <div className = { 'padding-10px' }>
-                  <h2 className = { 'text-align-left font-size-14px font-weight-bold' }>Progress</h2>
-                  <Progress
-                    theme = {
-                      {
-                        default: {
-                          color: '#FF8A00'
-                        },
-                        active: {
-                          color: '#FF8A00'
-                        }
-                      }
-                    }
-                    height = { 50 }
-                    width = { 80 }
-                    percent = { percentageTask ? parseInt(percentageTask) : 0 } />
-                </div>
-                {
-                  this.checkApprovalStatus(approvalStatus) &&
-                  <div>
-                  <br/>
-                  <Line/>
-                  <div className = { 'padding-10px' }>
-                    <div className = { 'header-column' }>
-                      <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
-                      </div>
-                      <h2>
-                      {
-                        goalId &&
-                        <span
-                          className = { 'icon-check icon-add-img' }
-                          onClick = { () => this.setState({ addTask: true }) }
-                        />
-                      }
-                      </h2>
-                    </div>
-                    {
-                      addTask &&
-                      <div>
-                        <GenericInput
-                          text = { 'Task description' }
-                          value = { taskDescription }
-                          onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
-                          type = { 'textarea' }
-                          errorMessage = { taskDescriptionErrorMessage }
-                        />
-                        <div className = { 'grid-global' }>
-                          <GenericButton
-                            text = { 'Cancel' }
-                            className = { 'profile-button-small' }
-                            onClick = { () => this.setState({ onEditTask: false, addTask: false, taskDescription: '' }) }
-                          />
-                          <GenericButton
-                            text = { onEditTask ? 'Update' : 'Submit' }
-                            className = { 'profile-button-small' }
-                            onClick = { () => this.submitTask() }
-                          />
-                        </div>
-                        <br/>
-                        <Line/>
-                        <br/>
-                      </div>
-                    }
-                    {
-                      taskLoader ?
-                      <center>
-                        <GenericLoader show = { taskLoader }/>
-                      </center>
-                      :
-                      taskArray.length !== 0 ?
-                        <TasksListComponent
-                          cardHolder = { taskArray }
-                          onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
-                            taskId,
-                            taskDescription,
-                            isCompleted,
-                            showTaskOption: true
-                          }) }
-                          changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
-                        />
-                      :
-                      !addTask &&
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No task</h2>
-                    }
-                  </div>
-                  <Line/>
-                  <div className = { 'padding-10px' }>
-                    <div className = { 'header-column' }>
-                      <div>
-                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Reviews</h2>
-                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
-                      </div>
-                      <br/>
-                    </div>
-                    {
-                      commentArray.length !==0 ?
-                        commentArray.commentDetails.map((resp, key) =>(
-                          <CommentsListComponent
-                            employeeNumber = { employeeNumber }
-                            respEmployeeNumber = { resp.employeeNumber }
-                            commentLoader = { commentLoader }
-                            cardHolder = { resp }
-                            commentId = { resp.id }
-                            goalComment = { resp.description }
-                            employeeName = { resp.employeeName }
-                            deleteCommentFunc = { (commentId, goalId) =>
-                              this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
-                            updateComment = { (commentId, goalEditComment) =>
-                              this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
-                          />
-                        )
-                        )
-                      :
-                      <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
-                    }
-                    <br/>
+                  <div className = { 'header-column card-background padding-10px' }>
+                    <h2 className = { 'font-weight-bold text-align-left font-size-16px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                     {
                       goalId &&
-                      <div className = { 'comment-grid align-items-center' }>
-                        <GenericInput
-                          text = { 'Write a comment' }
-                          value = { goalComment }
-                          onChange = { (e) => this.goalCommentFunc(e.target.value) }
-                          errorMessage = { goalCommentErrorMessage }
-                        />
-                        {
-                          commentLoader ?
-                          <center>
-                            <GenericLoader show = { commentLoader }/>
-                          </center>
+                      <span
+                        className = { 'icon-check icon-edit-white-img' }
+                        onClick = { () => this.setState({ showForm: true, editMode: true }) }
+                      />
+                    }
+                  </div>
+
+                  <div className = { 'details-columns padding-10px' }>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Goal type</h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>{
+                        isTeamGoal ?
+                        'Team'
+                        :
+                          isSquadGoal ?
+                          'Squad'
                           :
-                          <GenericButton
-                            text = { 'Post' }
-                            className = { 'profile-button-small' }
-                            onClick = { () => this.submitComment() }
+                          'Personal'
+                      }</h2>
+                    </div>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Status</h2>
+                      {
+                        approvalStatus === 2 ?
+                        <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Medium  description-title' }>Approved</h2>
+                        :
+                          approvalStatus === 3 ?
+                          <h2 className = { ' text-align-center font-size-12px font-weight-lighter color-High description-title' }>Rejected</h2>
+                          :
+                          approvalStatus === 1 ?
+                          <h2 className = { ' text-align-center font-size-12px font-weight-lighter description-title' }>Requested</h2>
+                          :
+                          approvalStatus === 4 ?
+                          <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>Update for approval</h2>
+                          :
+                          approvalStatus === 5 ?
+                          <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>Deletion for approval</h2>
+                          :
+                          approvalStatus === 6 &&
+                          <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low description-title' }>Completed</h2>
+                      }
+                    </div>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Priority</h2>
+                      <h2 className = { `text-align-center font-size-12px font-weight-lighter  description-title color-${priorityName}` }>{ priorityName ? priorityName : 'Priority' }</h2>
+                    </div>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Type</h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter' }>{
+                        goalTypeId === 1 ?
+                        'Performance'
+                        :
+                        goalTypeId === 2 &&
+                        'Developemental'
+                      }</h2>
+                    </div>
+
+                    { /* Second row */ }
+
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Start Date</h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter  description-title' }>{ moment(startDate).format('MMMM, DD, YYYY') }</h2>
+                    </div>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }>Due Date</h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>{ moment(dueDate).format('MMMM, DD, YYYY') }</h2>
+                    </div>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }></h2>
+                      <h2 className = { `text-align-center font-size-12px font-weight-lighter description-title color-${priorityName}` }></h2>
+                    </div>
+                    <div className = { 'details-rows' }>
+                      <h2 className = { 'text-align-center font-size-14px font-weight-normal details-title' }></h2>
+                      <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }></h2>
+                    </div>
+                  </div>
+
+                  { /* Description */ }
+
+                  <div className = { 'padding-10px' }>
+                    <h2 className = { 'text-align-left font-size-14px font-weight-normal' }>Description</h2>
+                    <h2 className = { 'padding-10px text-align-left font-size-14px font-weight-lighter' }>{
+                      description ?
+                      description
+                      :
+                      'Goals allow you to create effective objectives for yourself or employees.'
+                    }</h2>
+                  </div>
+                  <div className = { 'padding-10px' }>
+                    <h2 className = { 'text-align-left font-size-14px font-weight-normal' }>Progress</h2>
+                    <Progress
+                      theme = {
+                        {
+                          default: {
+                            color: '#FF8A00'
+                          },
+                          active: {
+                            color: '#FF8A00'
+                          }
+                        }
+                      }
+                      height = { 50 }
+                      width = { 80 }
+                      percent = { percentageTask ? parseInt(percentageTask) : 0 } />
+                  </div>
+                  {
+                    this.checkApprovalStatus(approvalStatus) &&
+                    <div>
+                    <br/>
+                    <Line/>
+                    <div className = { 'padding-10px' }>
+                      <div className = { 'header-column' }>
+                        <div>
+                          <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Tasks</h2>
+                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px padding-10px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                        </div>
+                        <h2>
+                        {
+                          goalId &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addTask: true }) }
                           />
                         }
+                        </h2>
                       </div>
+                      {
+                        addTask &&
+                        <div>
+                          <GenericInput
+                            text = { 'Task description' }
+                            value = { taskDescription }
+                            onChange = { (e) => this.taskDescriptionFunc(e.target.value) }
+                            type = { 'textarea' }
+                            errorMessage = { taskDescriptionErrorMessage }
+                          />
+                          <div className = { 'grid-global' }>
+                            <GenericButton
+                              text = { 'Cancel' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.setState({ onEditTask: false, addTask: false, taskDescription: '' }) }
+                            />
+                            <GenericButton
+                              text = { onEditTask ? 'Update' : 'Submit' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.submitTask() }
+                            />
+                          </div>
+                          <br/>
+                          <Line/>
+                          <br/>
+                        </div>
+                      }
+                      {
+                        taskLoader ?
+                        <center>
+                          <GenericLoader show = { taskLoader }/>
+                        </center>
+                        :
+
+                        <div>
+                          {
+                            parseInt(percentageTask) === 100 &&
+                            <div className= { 'text-align-right' }>
+                              <GenericButton
+                                text = { 'Mark as completed' }
+                                className = { 'cursor-pointer global-button profile-button-small' }
+                                onClick = { () => this.setState({ showMarkAsCompleted : true  }) }
+                              />
+                            </div>
+                          }
+                          <div>
+                            {
+                              taskArray.length !== 0 ?
+                                <TasksListComponent
+                                  cardHolder = { taskArray }
+                                  onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
+                                    taskId,
+                                    taskDescription,
+                                    isCompleted,
+                                    showTaskOption: true
+                                  }) }
+                                  changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
+                                />
+                              :
+                              !addTask &&
+                              <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No task</h2>
+                            }
+                          </div>
+                        </div>
+                      }
+                    </div>
+                    <Line/>
+                    <div className = { 'padding-10px' }>
+                      <div className = { 'header-column' }>
+                        <div>
+                          <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Reviews</h2>
+                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px padding-10px' }>You can add any notes or updates for this goal.</h2>
+                        </div>
+                        <br/>
+                      </div>
+                      {
+                        commentArray.length !==0 ?
+                          commentArray.commentDetails.map((resp, key) =>(
+                            <CommentsListComponent
+                              employeeNumber = { employeeNumber }
+                              respEmployeeNumber = { resp.employeeNumber }
+                              commentLoader = { commentLoader }
+                              cardHolder = { resp }
+                              commentId = { resp.id }
+                              goalComment = { resp.description }
+                              employeeName = { resp.employeeName }
+                              dateTime = { resp.dateTime }
+                              deleteCommentFunc = { (commentId, goalId) =>
+                                this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
+                              updateComment = { (commentId, goalEditComment) =>
+                                this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
+                            />
+                          )
+                          )
+                        :
+                        <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                      }
+                      <br/>
+                      {
+                        goalId &&
+                        <div className = { 'comment-grid align-items-center' }>
+                          <GenericInput
+                            text = { 'Write a comment' }
+                            value = { goalComment }
+                            onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                            errorMessage = { goalCommentErrorMessage }
+                          />
+                          {
+                            commentLoader ?
+                            <center>
+                              <GenericLoader show = { commentLoader }/>
+                            </center>
+                            :
+                            <GenericButton
+                              text = { 'Post' }
+                              className = { 'profile-button-small' }
+                              onClick = { () => this.submitComment() }
+                            />
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  }
+                  <Line/>
+                  <div className = { 'padding-10px' }>
+                    <h2 className = { 'font-weight-normal text-align-left font-size-14px' }>Goal History</h2>
+                    {
+                      historyArray.length !==0 ?
+                        historyArray.goalDetails.map((resp, key) =>(
+                          <HistoryListComponent
+                          cardHolder = { resp }
+                          action = { resp.action }
+                          dateTime = { resp.dateTime }
+                          />
+                        )
+                        )
+                      :
+                      <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
                     }
                   </div>
                 </div>
-                }
-                <Line/>
-                <div className = { 'padding-10px' }>
-                  <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
-                  {
-                    historyArray.length !==0 ?
-                      historyArray.goalDetails.map((resp, key) =>(
-                        <HistoryListComponent
-                        cardHolder = { resp }
-                        action = { resp.action }
-                        dateTime = { resp.dateTime }
-                        />
-                      )
-                      )
-                    :
-                    <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
-                  }
-                </div>
               </div>
-            </div>
+              :
+              <center>
+                <br/>
+                <br/>
+                <h4 className = { 'font-weight-lighter font-size-14px' }>Select in my goal to view details</h4>
+              </center>
+            }
           </div>
         </div>
       }

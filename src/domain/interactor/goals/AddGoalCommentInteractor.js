@@ -1,4 +1,4 @@
-export default class AddGoalTaskInteractor {
+export default class AddGoalCommentInteractor {
   constructor (client) {
     this.client = client
   }

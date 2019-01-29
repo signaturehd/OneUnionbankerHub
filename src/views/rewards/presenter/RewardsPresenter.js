@@ -35,7 +35,7 @@ export default class RewardsPresenter {
   getAwardData() {
     const awardData  = [{
       id:2 ,
-      title: 'Celebrate a DNA Moment',
+      title: 'Celebrating a DNA Moment',
       details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
       styleName : 'myawards-image myawards-image-1',
       value : 'Values:',

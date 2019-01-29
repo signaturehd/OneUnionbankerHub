@@ -1,0 +1,26 @@
+.approve-tabs-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.approvegoal-input-tab:checked + label {
+  color: #ff8a00;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 50px;
+  margin-right: 20px;
+  border: 1px solid #ff8a00;
+}
+
+.approvegoal-input-tab + label {
+  color: #546E7A;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 50px;
+  margin-right: 20px;
+  border: 1px solid #546E7A;
+}
+
+.approvegoal-input-tab {
+  display: none;
+}

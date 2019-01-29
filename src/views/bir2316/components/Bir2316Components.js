@@ -10,7 +10,7 @@ class Bir2316Components extends Component {
 
   render () {
     const {
-      dataArayList,
+      dataArrayList,
       onSubmit,
       viewMoreText,
       viewMore,
@@ -18,19 +18,18 @@ class Bir2316Components extends Component {
       index
     }=this.props
 
-    const isVisible = (dataArayList && dataArayList.length > 4) ? '' : 'hide'
-
+    const isVisible = (dataArrayList && dataArrayList.length > 4) ? '' : 'hide'
     return (
       <div>
       <br/>
         <div className={ 'bir2316list-card-container' }>
           {
-            dataArayList.slice(0, index).map((bir2316list, key) =>
+            dataArrayList.map((bir2316list, key) =>
               <Card
                 className={ 'bir2316list-card-component' }
                 key={ key }
                 onClick={ () =>
-                  onSubmit(bir2316list && bir2316list.period ? bir2316list.period : '')
+                  onSubmit(bir2316list)
                 } >
                 <div className={ 'bir2316list-grid-card-container' }>
                   <div>
@@ -38,7 +37,7 @@ class Bir2316Components extends Component {
                   </div>
                   <div>
                     <h2 className={ 'bir2316list-label' }>
-                      { bir2316list && bir2316list.date ? bir2316list.date : '(Not Yet Provided)' }
+                      { bir2316list ? bir2316list : '(Not Yet Provided)' }
                     </h2>
                   </div>
                   <div><span className={ 'bir2316list-icon-forms bir2316list-icon-proceed' }/>
