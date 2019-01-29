@@ -473,12 +473,14 @@ class RequestedGoalsFragment extends BaseMVPView {
       {
         if(details && details.approvalStatus === 6) {
           if(details && details.type === 1) {
-            performanceRate ++
+            performanceRate += details && details.ratings
           } else if (details && details.type === 2) {
-            developementalRate ++
+            developementalRate += details &&  details.ratings
           }
         }
       })
+      let performanceRateTotal = performanceRate * 0.95
+      let developementalRateTotal = developementalRate * 0.05
       totalPoints = (performanceRate * 0.95) + (developementalRate * 0.05)
       return totalPoints !== 0 ? totalPoints.toFixed(2) : 'No'
     } else {
@@ -1230,7 +1232,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               <center>
                 <br/>
                 <br/>
-                <h4 className = { 'font-weight-lighter' }>Select goal to view details</h4>
+                <h4 className = { 'font-weight-lighter font-size-14px' }>Select in my goal to view details</h4>
               </center>
             }
           </div>

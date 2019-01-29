@@ -2268,7 +2268,7 @@ export default class HRBenefitsService {
   /* My Goals */
 
   getGoals (token, status) {
-    return this.apiClient.get(`v1/goals?goalType=${status.isLineManager ? status.personal: '2,6' }`, {
+    return this.apiClient.get(`v1/goals?status=`, {
       headers: { token }
     })
   }
