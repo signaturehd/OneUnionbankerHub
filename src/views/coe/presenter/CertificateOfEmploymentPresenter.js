@@ -112,8 +112,8 @@ export default class CertificateOfEmploymentPresenter {
     })
   }
 
-  validateInput () {
-    if(storedTypeOFCoeObject.id === 3 && storedPurposeObject.id === 38) {
+  validateInput(){
+    if(storedTypeOFCoeObject.id === 3) {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
@@ -157,9 +157,26 @@ export default class CertificateOfEmploymentPresenter {
           duration: 5000,
         }))
       } else {
-        this.view.setEditable(true)
+        if(storedVLFrom === '' || storedVLFrom === null) {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VL Date From field',
+              type: 'warning',
+              duration: 5000,
+            }))
+        } else if(storedVLTo === '' || storedVLTo === null) {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Certificate of Employment',
+            message : 'Please select VL Date To field',
+            type: 'warning',
+            duration: 5000,
+          }))
+        }else{
+            this.view.setEditable(true)
+        }
+
       }
-    } else if (storedTypeOFCoeObject.id === 3) {
+    }else if (storedTypeOFCoeObject.id === 3) {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
