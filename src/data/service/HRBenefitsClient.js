@@ -1642,6 +1642,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getGoalsForConfirmation () {
+    return this.service.getGoalsForConfirmation()
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

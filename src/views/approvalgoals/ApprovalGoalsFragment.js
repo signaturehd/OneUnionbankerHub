@@ -19,6 +19,8 @@ import {
 } from '../../ub-components/'
 
 import ApprovalGoalsComponent from './components/ApprovalGoalsComponent'
+import ConfirmGoalsComponent from './components/ConfirmGoalsComponent'
+
 
 import ResponseModal from '../notice/NoticeResponseModal'
 
@@ -40,6 +42,8 @@ class ApprovalGoalsFragment extends BaseMVPView {
       enabledLoader : false,
       showNoticeResponseModal : false,
       showRejectRemarksModal: false,
+      showConfirmation: false,
+      showApproval: false,
       personal: 'personal',
       employeeName: '',
       goalId : '',
@@ -59,11 +63,15 @@ class ApprovalGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getForApprovalGoals()
+    this.presenter.getGoalsForConfirmation()
   }
 
-  getForApprovalGoals(approvalArray) {
+  setGoalsForApproval (approvalArray) {
     this.setState({ approvalArray })
+  }
+
+  setGoalsForConfirmation (confirmationArray) {
+    this.setState({ confirmationArray })
   }
 
   noticeResponse (noticeResponse) {
@@ -146,6 +154,9 @@ class ApprovalGoalsFragment extends BaseMVPView {
       approvalStatus,
       rejectedRemarks,
       showRejectRemarksModal,
+      confirmationArray,
+      showApprovals,
+      showConfirmation,
     } = this.state
 
     const {
@@ -175,20 +186,29 @@ class ApprovalGoalsFragment extends BaseMVPView {
                 name = { 'tabs' }
                 defaultChecked = { true }
                 onClick = { () => {
+                    this.setState({
+                      showApprovals: false,
+                      showConfirmation: true,
+                    }),
+                    this.presenter.getGoalsForConfirmation()
                   }
                 }/>
-              <label className = { 'approvegoal-icon-tab font-size-14px' } htmlFor='approvegoal-tab1'>My Direct Reports</label>
+              <label className = { 'approvegoal-icon-tab font-size-14px' } htmlFor='approvegoal-tab1'>For your Confirmation</label>
 
               <input
                 className = { 'approvegoal-input-tab' }
                 id = { 'approvegoal-tab1' }
                 type = { 'radio' }
                 name = { 'tabs' }
-                defaultChecked = { true }
                 onClick = { () => {
+                    this.setState({
+                      showApprovals: true,
+                      showConfirmation: false,
+                    }),
+                    this.presenter.getGoalsForApproval()
                   }
-                }/>
-              <label className = { 'approvegoal-icon-tab font-size-14px' } htmlFor='approvegoal-tab1'>My Direct Reports</label>
+                } />
+              <label className = { 'approvegoal-icon-tab font-size-14px' } htmlFor='approvegoal-tab1'>For your Approval</label>
             </div>
             <div></div>
           </div>
@@ -204,7 +224,6 @@ class ApprovalGoalsFragment extends BaseMVPView {
               :
               approvalArray.length !== 0 ?
               approvalArray.map((resp, key) =>
-
               <ApprovalGoalsComponent
                 employeeName = { resp.name }
                 imageUrl = { resp.imageUrl }

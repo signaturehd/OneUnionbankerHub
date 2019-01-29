@@ -2416,6 +2416,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getGoalsForConfirmation (token) {
+    return this.apiClient.get(`v1/goals?status=1`, {
+      headers: { token }
+    })
+  }
+
   getGoalsHistory (token, goalId, pageNumber, pageItem) {
     return this.apiClient.get(`v1/goals/${goalId}/history?pageItem=${pageItem}&pageNumber=${pageNumber}`, {
       headers: { token }
