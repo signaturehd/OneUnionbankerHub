@@ -29,10 +29,6 @@ class ConfirmGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      index: 1,
-      viewMoreText : 'View More'
-    }
   }
 
   navigate () {
@@ -41,111 +37,103 @@ class ConfirmGoalsComponent extends Component {
 
   render () {
     const {
-      cardHolder,
-      employeeName,
-      imageUrl,
-      priorityFunc,
-      showApprovalFormFunc,
-      goalId,
-      goalTitle,
+      title,
       approvalStatus,
+      priorityFunc,
+      type,
       description,
-      priorityId,
       startDate,
-      dueDate,
-      goalTypeId,
-      showRejectRemarksModal,
-      showRejectRemarksFunc,
-      onApprovalSubmit,
-      onClose,
-      rejectedRemarks,
-      rejectedRemarksFunc
+      endDate,
+      isSquadGoal,
+      goalId,
+      isTeamGoal,
+      onSelected
     } = this.props
 
-    const {
-      index,
-      viewMoreText
-    } = this.state
-
-    const isVisible = (cardHolder && cardHolder.length > 1) ? '' : 'hide'
-
     return (
-      <div>
+      <div
+        onClick = { ()  =>
+          onSelected(
+            goalId,
+            title,
+            approvalStatus,
+            priorityFunc,
+            type,
+            description,
+            startDate,
+            endDate,
+            isSquadGoal,
+            isTeamGoal
+          )
+        }
+        className = { 'cursor-pointer' }>
         <div>
-          <div className = { 'employee-column' }>
-            <div className = { 'team-profile-picture' }>
-              <h2 className = { 'team-initial-text' }>{ convertInitial(employeeName && employeeName) }</h2>
-              <small></small>
+          <Card>
+            <div className = { 'text-align-left'}>
+              <h2
+                style = {{
+                  background: 'rgb(37, 169, 37)',
+                  borderRadius: '3px',
+                  color: 'rgb(255, 255, 255)',
+                  width: '100px',
+                  padding: '5px'
+                }}
+                className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>{
+                isTeamGoal ?
+                'Team' : ''
+              }</h2>
             </div>
-            <h4 className = { 'font-size-14px margin-auto font-weight-lighter' }>{ employeeName && employeeName }</h4>
-          </div>
-          {
-            cardHolder &&
-            cardHolder.slice(0, index).map((details, key) =>
+            <div className = { 'padding-15' }>
+              <div className = { 'header-column-1' }>
+                <div>
+                  <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-bold' }>{ title }</h2>
+                  <br/>
+                  <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ description }</h2>
+                {
+                  // <Progress
+                  //   width = { 65 }
+                  //   height = { 65 }
+                  //   percent = { 80 }
+                  //   className = { 'margin-5px' }
+                  // />
+                }
+                </div>
+                <div>
+                  <h2
+                    style = { {
+                      border: '1px solid #595959',
+                      borderRadius: '5px',
+                      padding: '5px',
+                    } }
+                    className = { 'text-align-center font-size-12px font-weight-lighter' }>{
+                    type === 1 ?
+                    'Performance' : ''
+                  }
+                  {
+                    type === 2 ?
+                    'Developemental' : ''
+                  }</h2>
+                </div>
 
-              <Card className = { 'margin-10px' }
-                onClick = { () => showApprovalFormFunc(
-                  employeeName,
-                  details.id,
-                  details.title,
-                  details.approvalStatus,
-                  details.description,
-                  details.priority,
-                  details.startDate,
-                  details.endDate,
-                  details.type
-                ) }>
-                <div className = { 'padding-15' }>
-                  <div className = { 'header-column-1' }>
-                    <div>
-                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ details.title }</h2>
-                    {
-                      // <Progress
-                      //   width = { 65 }
-                      //   height = { 65 }
-                      //   percent = { 80 }
-                      //   className = { 'margin-5px' }
-                      // />
-                    }
-                    </div>
-                    <div>
-                      <h2 className = { 'text-align-right font-size-12px font-weight-bold color-gray' }>{ details.status }</h2>
-                      <h2 className = { 'margin-10px text-align-right font-size-12px font-weight-lighter color-gray' }>Personal</h2>
-                    </div>
-
+              </div>
+              <div></div>
+              <div>
+                <Line/>
+                <div className = { 'grid-footer-column margin-5px' }>
+                  <div>
+                    <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc}` }>{ priorityFunc }</h2>
                   </div>
                   <div></div>
                   <div>
-                    <Line/>
-                    <div className = { 'grid-footer-column margin-5px' }>
-                      <div>
-                        <h2 className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(details.priority)}` }>{ priorityFunc(details.priority) }</h2>
-                      </div>
-                      <div></div>
-                      <div>
-                        <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(details.endDate).format('MMM DD, YYYY') }</b></h2>
-                      </div>
-                    </div>
+                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start Date: <b>{ moment(startDate).format('MMM DD, YYYY') }</b></h2>
+                    <br/>
+                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(endDate).format('MMM DD, YYYY') }</b></h2>
                   </div>
-
                 </div>
-              </Card>
-            )
-          }
-          <button
-            type = { 'button' }
-            className = { `viewmore tooltip ${ isVisible }` }
-            onClick = {
-              () => {
-                if(index === cardHolder.length)
-                  this.setState({ index : 1, viewMoreText : 'View more' })
-                else
-                  this.setState({ index : cardHolder.length, viewMoreText : 'View less' })
-              }
-            }>
-            <img src={ require('../../../images/icons/horizontal.png') } />
-            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-          </button>
+              </div>
+
+            </div>
+          </Card>
         </div>
       </div>
     )

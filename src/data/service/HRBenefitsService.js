@@ -2303,7 +2303,7 @@ export default class HRBenefitsService {
   }
 
   getForApprovalGoals (token) {
-    return this.apiClient.get('v1/goals/reports?status=&type=&goalType=personal', {
+    return this.apiClient.get('v1/goals/reports?goalType=personal&status=1,4,5', {
       headers: { token }
     })
   }

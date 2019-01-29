@@ -70,7 +70,7 @@ class ApprovalGoalsComponent extends Component {
     const isVisible = (cardHolder && cardHolder.length > 1) ? '' : 'hide'
 
     return (
-      <div>
+      <div className = { 'cursor-pointer' }>
         <div>
           <div className = { 'employee-column' }>
             <div className = { 'team-profile-picture' }>

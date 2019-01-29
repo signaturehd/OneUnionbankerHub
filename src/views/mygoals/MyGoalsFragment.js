@@ -279,7 +279,7 @@ class MyGoalsFragment extends BaseMVPView {
                       <div></div>
                       <div className={ 'mygoal-header-title' }>
                         <h2 className = { 'mygoal-header-title' }>My Goals</h2>
-                        <h2 className = { 'font-size-16px text-align-left' }>Exhibit Magis At Work. Let's continue to Own the Future together.</h2>
+                        <h2 className = { 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
                       </div>
                       <div></div>
                     </div>
@@ -336,18 +336,20 @@ class MyGoalsFragment extends BaseMVPView {
                         this.props.history.push('/mygoals/approved')
                       }
                     }/>
-                    
+
                     <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>Goals Confirmation</label>
-                    <section>
-                      <Switch>
-                        <Route exact path='/mygoals/request/RequestedGoalsFragment'
-                        render={ props => <RequestedGoalsFragment { ...props } /> }/>
-                        <Route exact path='/mygoals/team/TeamGoalsFragment'
-                        render={ props => <TeamGoalsFragment { ...props } /> }/>
-                        <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
-                        render={ props => <ApprovedGoalsComponent { ...props } /> }/>
-                      </Switch>
-                    </section>
+                    {
+                      // <section>
+                      //   <Switch>
+                      //     <Route exact path='/mygoals/request/RequestedGoalsFragment'
+                      //     render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                      //     <Route exact path='/mygoals/team/TeamGoalsFragment'
+                      //     render={ props => <TeamGoalsFragment { ...props } /> }/>
+                      //     <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
+                      //     render={ props => <ApprovedGoalsComponent { ...props } /> }/>
+                      //   </Switch>
+                      // </section>
+                    }
                   </div>
                 </div>
               </div>
@@ -368,7 +370,9 @@ class MyGoalsFragment extends BaseMVPView {
                   showRequestCoachForm = { showRequestCoachForm }
                   showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                 :
-                <ApprovalGoalsFragment/>
+                <ApprovalGoalsFragment
+                  isLineManager = { isLineManager }
+                  />
               }
             </div>
           </div>

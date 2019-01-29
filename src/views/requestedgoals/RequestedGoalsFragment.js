@@ -480,7 +480,7 @@ class RequestedGoalsFragment extends BaseMVPView {
         }
       })
       totalPoints = (performanceRate * 0.95) + (developementalRate * 0.05)
-      return totalPoints !== 0 ? totalPoints.toFixed(0) : 'No'
+      return totalPoints !== 0 ? totalPoints.toFixed(2) : 'No'
     } else {
       return 'No'
     }
@@ -571,7 +571,6 @@ class RequestedGoalsFragment extends BaseMVPView {
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
     const { onClose, showRequestCoachForm, showRequestCoachFunc, employeeNumber } = this.props
-
     return (
     <div>
       { super.render() }

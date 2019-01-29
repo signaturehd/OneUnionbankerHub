@@ -1022,7 +1022,7 @@ class TeamGoalsFragment extends BaseMVPView {
                         // this.presenter.getGoalTask(goalId)
                         // this.presenter.getGoalComment(goalId, pageNumber, pageItem)
                         // this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
-                      }
+                        }
                      }
                      onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
                     />

@@ -26,10 +26,21 @@ class RequestedGoalsComponent extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      isMygoal : true
+    }
   }
 
   navigate () {
     this.props.history.push('/mylearning')
+  }
+
+  checkIfTeamGoal (resp) {
+    if(this.state.isMygoal) {
+      return resp && resp.approvalStatus === 2
+    } else {
+      return resp && resp.approvalStatus !==2
+    }
   }
 
   render () {
@@ -42,6 +53,10 @@ class RequestedGoalsComponent extends Component {
       searchString
     } = this.props
 
+    const {
+      isMygoal
+    } = this.state
+
     let goalList = cardHolder
     const search = searchString && searchString.trim().toLowerCase()
     if (search.length > 0) {
@@ -50,8 +65,25 @@ class RequestedGoalsComponent extends Component {
 
     return (
       <div>
+      <center className = { 'grid-global' }>
+        <GenericButton
+          className = { 'profile-button-medium' }
+          text = { 'My Goals' }
+          onClick = { () => this.setState({ isMygoal: true }) }
+          />
+        <GenericButton
+          className = { 'profile-button-medium' }
+          text = { 'Goals Pending Manager Approval' }
+          onClick = { () => this.setState({ isMygoal: false }) }
+          />
+      </center>
+      <br/>
+      <Line/>
+      <br/>
       {
+        goalList &&
         goalList.map((resp, key) => (
+          this.checkIfTeamGoal(resp) &&
           <Card>
             <div className = { 'padding-15' }>
               <div className = { 'header-column' }>

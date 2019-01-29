@@ -20,3 +20,25 @@
   display: grid;
   grid-template-columns: .2fr auto;
 }
+
+
+.color-Low {
+  color: #dddd00;
+}
+
+.color-Medium {
+  color: #ff8a00;
+}
+
+.color-High {
+  color: #ff0000;
+}
+
+.details-title {
+  padding: 5px;
+  background-color: #f1f1f1;
+}
+
+.description-title {
+  padding: 5px;
+}
