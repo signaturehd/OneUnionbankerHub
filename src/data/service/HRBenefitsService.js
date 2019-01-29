@@ -2581,8 +2581,18 @@ export default class HRBenefitsService {
   // BIR 2316 My Documents
 
   getBir2316List (token) {
-    return this.apiClient.get('v1/bir/', {
+    return this.rootClient.get('v1/bir/history', {
       headers : { token }
     })
   }
+
+  requestBIR2316 (token, year) {
+    return this.rootClient.post('v1/bir', {
+      year
+    }, {
+      headers: { token }
+    })
+  }
+
+
 }
