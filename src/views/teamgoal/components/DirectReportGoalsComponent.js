@@ -79,14 +79,6 @@ class DirectReportGoalsComponent extends Component {
                   <div className = { 'header-column-1' }>
                     <div>
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ details.title }</h2>
-                      {
-                        // <Progress
-                        //   width = { 65 }
-                        //   height = { 65 }
-                        //   percent = { 80 }
-                        //   className = { 'margin-5px' }
-                        // />
-                      }
                     </div>
                     <div>
                       {

@@ -480,7 +480,6 @@ class RequestedGoalsFragment extends BaseMVPView {
         }
       })
       totalPoints = (performanceRate * 0.95) + (developementalRate * 0.05)
-      console.log(totalPoints)
       return totalPoints !== 0 ? totalPoints.toFixed(0) : 'No'
     } else {
       return 'No'

@@ -45,6 +45,7 @@ class TasksListComponent extends Component {
           <div
             className={ 'requestTask-border margin-5px padding-5px employee-column' }>
             <Checkbox
+              value = { resp.isCompleted }
               checked = { resp.isCompleted }
               onChange = { () => changeTask(resp.id , !resp.isCompleted) }
             />
