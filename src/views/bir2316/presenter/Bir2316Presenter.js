@@ -18,9 +18,13 @@ export default class Bir2316Presenter {
   }
 
   getBir2316List () {
+    this.view.showCircularLoader()
     this.getBir2316ListInteractor.execute()
-    .subscribe(data => {
-    }, error => {
-    })
+      .subscribe(data => {
+        this.view.hideCircularLoader()
+        this.view.setBIRList(data)
+      }, error => {
+        console.log(error);
+      })
   }
 }
