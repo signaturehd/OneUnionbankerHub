@@ -1699,17 +1699,37 @@ export default class HRBenefitsClient {
 
   submitAwards (token, objectParam) {
     return this.service.submitAwards(token, objectParam)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   getEligibleInRewards (token, type, string) {
     return this.service.getEligibleInRewards(token, type, string)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
   }
 
   // Bir2316 My Documents
   getBir2316List (token) {
     return this.service.getBir2316List(token)
-    .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator())
+  }
+
+  requestBIR2316 (token, year) {
+    return this.service.requestBIR2316(token, year)
+      .pipe(ServiceErrorOperator())
+      .flatMap(resp => {
+          return this.service.getPdf(token, resp)
+        }
+      )
+      .flatMap(resp =>
+        Observable.create(observer => {
+          const reader = new FileReader()
+          reader.onerror = err => observer.error(err)
+          reader.onabort = err => observer.error(err)
+          reader.onload = () => observer.next(reader.result)
+          reader.onloadend = () => observer.complete()
+
+          reader.readAsDataURL(resp.data)
+        })
+      )
   }
 }

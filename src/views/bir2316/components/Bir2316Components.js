@@ -29,7 +29,7 @@ class Bir2316Components extends Component {
                 className={ 'bir2316list-card-component' }
                 key={ key }
                 onClick={ () =>
-                  onSubmit(bir2316list && bir2316list)
+                  onSubmit(bir2316list)
                 } >
                 <div className={ 'bir2316list-grid-card-container' }>
                   <div>

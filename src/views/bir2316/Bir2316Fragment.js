@@ -9,6 +9,8 @@ import Bir2316Components from './components/Bir2316Components'
 
 import { CircularLoader } from '../../ub-components/'
 
+import Bir2316FileModal from './modal/Bir2316FileModal'
+
 import './styles/birStyle.css'
 class Bir2316Fragment extends BaseMVPView {
   constructor (props) {
@@ -17,6 +19,7 @@ class Bir2316Fragment extends BaseMVPView {
       pdfFile: null,
       showPayslipDetails: false,
       index : 3,
+      showBIRModal: false,
       viewMoreText : 'View more',
     }
   }
@@ -27,6 +30,10 @@ class Bir2316Fragment extends BaseMVPView {
 
   setBIRList (dataArray) {
     this.setState({ dataArray })
+  }
+
+  setBIR2316File (bir2316) {
+    this.setState({ bir2316, showBIRModal: true })
   }
 
   /* Loader*/
@@ -52,7 +59,9 @@ class Bir2316Fragment extends BaseMVPView {
       index,
       viewMoreText,
       enabledLoader,
-      dataArray
+      dataArray,
+      bir2316,
+      showBIRModal
     } = this.state
 
     return (
@@ -66,6 +75,13 @@ class Bir2316Fragment extends BaseMVPView {
               show = { enabledLoader }
             />
           </center>
+        }
+        {
+          showBIRModal &&
+          <Bir2316FileModal
+            pdfFile = { bir2316 }
+            onClose = { () => this.setState({ showBIRModal: false, bir2316: null }) }
+          />
         }
         {
           // showPayslipDetails &&
@@ -96,8 +112,11 @@ class Bir2316Fragment extends BaseMVPView {
             viewMore = { () => this.setState({ index : dataAray.length, viewMoreText : 'View less' }) }
             viewLess = { () => this.setState({ index : 3, viewMoreText : 'View more' }) }
             dataArrayList = { dataArray }
-            onSubmit = { (date) =>
-              {}
+            onSubmit = { (date) => { try {
+                  this.presenter.requestBIR2316(date)
+                } catch (e) {
+                  console.log(e);
+                }}
              }
           />
         }

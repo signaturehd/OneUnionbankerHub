@@ -2585,4 +2585,14 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
+
+  requestBIR2316 (token, year) {
+    return this.rootClient.post('v1/bir', {
+      year
+    }, {
+      headers: { token }
+    })
+  }
+
+
 }
