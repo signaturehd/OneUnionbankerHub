@@ -279,7 +279,7 @@ class MyGoalsFragment extends BaseMVPView {
                       <div></div>
                       <div className={ 'mygoal-header-title' }>
                         <h2 className = { 'mygoal-header-title' }>My Goals</h2>
-                        <h2 className = { 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
+                        <h2 className = { 'font-size-16px text-align-left' }>Exhibit Magis At Work. Let's continue to Own the Future together.</h2>
                       </div>
                       <div></div>
                     </div>

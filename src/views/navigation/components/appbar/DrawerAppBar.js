@@ -72,10 +72,30 @@ class DrawerAppBar extends Component {
       imageStyle : 'settings',
       action : () => history.push('/settings'),
     },{
-      id: 10,
-      name: 'Phenom Prime',
-      imageStyle : 'phenom',
-      action : () => history.push('/phenom'),
+      id: 14,
+      name: 'My Goals & Performance',
+      imageStyle : 'goals',
+      action : () => history.push('/mygoals'),
+    },{
+      id: 17,
+      name: 'Rewards & Recognition',
+      imageStyle : 'rewards',
+      action : () => history.push('/myrewards'),
+    },{
+      id: 7,
+      name: 'My Documents',
+      imageStyle : 'coe',
+      action : () => history.push('/coe'),
+    },{
+      id: 13,
+      name: 'My Travel',
+      imageStyle : 'travel',
+      action : () => history.push('/mytravel'),
+    },{
+      id: 15,
+      name: 'My Future',
+      imageStyle : 'future',
+      action : () => history.push('/pensionfunds'),
     },{
       id: 11,
       name: 'Pre-Employment',
@@ -87,35 +107,15 @@ class DrawerAppBar extends Component {
       imageStyle : 'postemployment',
       action : () => history.push('/postemployment'),
     },{
-      id: 13,
-      name: 'My Travel',
-      imageStyle : 'travel',
-      action : () => history.push('/mytravel'),
-    },{
-      id: 17,
-      name: 'Rewards & Recognition',
-      imageStyle : 'rewards',
-      action : () => history.push('/myrewards'),
-    },{
-      id: 14,
-      name: 'My Goals & Performance',
-      imageStyle : 'goals',
-      action : () => history.push('/mygoals'),
-    },{
-      id: 7,
-      name: 'My Documents',
-      imageStyle : 'coe',
-      action : () => history.push('/coe'),
-    },{
-      id: 15,
-      name: 'My Future',
-      imageStyle : 'future',
-      action : () => history.push('/pensionfunds'),
-    },{
       id: 1,
       name: 'FAQs',
       imageStyle : 'faqs',
       action : () => history.push('/faqs'),
+    },{
+      id: 10,
+      name: 'Phenom Prime',
+      imageStyle : 'phenom',
+      action : () => history.push('/phenom'),
     },{
       id: 3,
       name: 'Logout',
