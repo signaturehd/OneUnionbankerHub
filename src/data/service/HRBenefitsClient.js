@@ -1637,8 +1637,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  getDirectReportGoals (token) {
-    return this.service.getDirectReportGoals(token)
+  getDirectReportGoals (token, status) {
+    return this.service.getDirectReportGoals(token, status)
     .pipe(ServiceErrorOperator())
   }
 

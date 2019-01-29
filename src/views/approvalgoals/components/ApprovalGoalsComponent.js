@@ -19,6 +19,7 @@ import {
 } from '../../../ub-components/'
 
 import { format } from '../../../utils/numberUtils'
+import { convertInitial } from '../../../utils/initialUtils'
 import moment from 'moment'
 
 import { Progress } from 'react-sweet-progress'
@@ -72,8 +73,11 @@ class ApprovalGoalsComponent extends Component {
       <div>
         <div>
           <div className = { 'employee-column' }>
-            <img src = { require('../../../images/1uhub.png') } width = { '60px' } height = { '50px' }/>
-            <h2 className = { 'margin-10px text-align-left font-size-14px font-weight-lighter' }>{employeeName}</h2>
+            <div className = { 'team-profile-picture' }>
+              <h2 className = { 'team-initial-text' }>{ convertInitial(employeeName && employeeName) }</h2>
+              <small></small>
+            </div>
+            <h4 className = { 'font-size-14px margin-auto font-weight-lighter' }>{ employeeName && employeeName }</h4>
           </div>
           {
             cardHolder &&

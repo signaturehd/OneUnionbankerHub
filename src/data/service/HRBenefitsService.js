@@ -2268,7 +2268,7 @@ export default class HRBenefitsService {
   /* My Goals */
 
   getGoals (token, status) {
-    return this.apiClient.get(`v1/goals?goalType=${status}`, {
+    return this.apiClient.get(`v1/goals?goalType=${status.isLineManager ? status.personal: '2,6' }`, {
       headers: { token }
     })
   }
@@ -2458,8 +2458,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getDirectReportGoals (token) {
-    return this.apiClient.get('v1/goals/reports?goalType=personal&status=2,8', {
+  getDirectReportGoals (token, status) {
+    return this.apiClient.get(`v1/goals/reports?goalType=personal&status=2,8`, {
       headers: { token }
     })
   }

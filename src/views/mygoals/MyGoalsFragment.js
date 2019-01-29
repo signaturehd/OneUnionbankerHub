@@ -336,19 +336,17 @@ class MyGoalsFragment extends BaseMVPView {
                         this.props.history.push('/mygoals/approved')
                       }
                     }/>
-                    {
-                      isLineManager &&
-                      <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>For Manager Approval</label>
-                    }
+                    
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>Goals Confirmation</label>
                     <section>
-                    <Switch>
-                    <Route exact path='/mygoals/request/RequestedGoalsFragment'
-                    render={ props => <RequestedGoalsFragment { ...props } /> }/>
-                    <Route exact path='/mygoals/team/TeamGoalsFragment'
-                    render={ props => <TeamGoalsFragment { ...props } /> }/>
-                    <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
-                    render={ props => <ApprovedGoalsComponent { ...props } /> }/>
-                    </Switch>
+                      <Switch>
+                        <Route exact path='/mygoals/request/RequestedGoalsFragment'
+                        render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                        <Route exact path='/mygoals/team/TeamGoalsFragment'
+                        render={ props => <TeamGoalsFragment { ...props } /> }/>
+                        <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
+                        render={ props => <ApprovedGoalsComponent { ...props } /> }/>
+                      </Switch>
                     </section>
                   </div>
                 </div>
@@ -357,9 +355,9 @@ class MyGoalsFragment extends BaseMVPView {
                 !forApproval ?
                 showTeamGoal ?
                 <TeamGoalsFragment
-                employeeNumber = { employeeNumber }
-                isLineManager = { isLineManager }
-                isPO = { isPO }
+                  employeeNumber = { employeeNumber }
+                  isLineManager = { isLineManager }
+                  isPO = { isPO }
                 />
                 :
                 <RequestedGoalsFragment

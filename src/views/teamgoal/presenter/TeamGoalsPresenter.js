@@ -446,9 +446,9 @@ export default class RequestCoachPresenter {
     })
   }
 
-  getDirectReportGoals () {
+  getDirectReportGoals (data) {
     this.view.showCircularLoader()
-    this.getDirectReportGoalsInteractor.execute()
+    this.getDirectReportGoalsInteractor.execute(data)
       .subscribe(data => {
         this.view.hideCircularLoader()
         this.view.getDirectReportGoals(data)

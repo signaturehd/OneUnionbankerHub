@@ -810,7 +810,7 @@ class TeamGoalsFragment extends BaseMVPView {
                 defaultChecked = { true }
                 onClick = { () => {
                     this.setState({ showDirectReport: true, showTeamGoal: false, showTeamGoalDetails: false, showSquadGoal: false })
-                    this.presenter.getDirectReportGoals()
+                    this.presenter.getDirectReportGoals(isLineManager && isLineManager)
                     this.props.history.push('/mygoals/request')
                   }
                 }/>
@@ -832,10 +832,7 @@ class TeamGoalsFragment extends BaseMVPView {
                     this.props.history.push('/mygoals/team')
                   }
                 }/>
-                {
-                  isLineManager &&
-                  <label className = { 'teamgoal-icon-tab font-size-14px' } htmlFor='teamgoal-tab2'>Manager-Assigned-Goals</label>
-                }
+                <label className = { 'teamgoal-icon-tab font-size-14px' } htmlFor='teamgoal-tab2'>Manager-Assigned-Goals</label>
                 <input
                   className = { 'teamgoal-input-tab' }
                   id = { 'teamgoal-tab3' }
@@ -852,10 +849,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       this.props.history.push('/mygoals/approved')
                     }
                 }/>
-                {
-                  isPO &&
-                  <label className = { 'teamgoal-icon-tab font-size-14px' } htmlFor='teamgoal-tab3'>Squad Goals</label>
-                }
+                <label className = { 'teamgoal-icon-tab font-size-14px' } htmlFor='teamgoal-tab3'>Squad Goals</label>
             </div>
             <br/>
             <br/>
@@ -961,17 +955,19 @@ class TeamGoalsFragment extends BaseMVPView {
                           selectedMembers,
                         ) => {
                           this.setState({
+                            goalTypeParam: 'team',
                             selectedTitle,
+                            goalId: resp.id,
+                            goalTitle: resp.title,
                             selectedDescription,
                             selectedMembers,
                             showTeamGoal: true,
                             showTeamGoalDetails: true,
-                            showMemberGoal: false,
-                            goalTypeParam: 'team'
                            })
-                          this.presenter.getGoalTask(goalId, 'team')
-                          this.presenter.getGoalComment(goalId, pageNumber, pageItem, goalTypeParam)
-                          this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                          console.log(resp.id, resp.id &&  'team')
+                          this.presenter.getGoalTask(resp.id, resp.id &&  'team')
+                          this.presenter.getGoalComment(resp.id, pageNumber, pageItem, resp.id && 'team')
+                          this.presenter.getGoalsHistory(resp.id, pageNumber, pageItem)
                         }
                        }
                        onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
@@ -1317,9 +1313,9 @@ class TeamGoalsFragment extends BaseMVPView {
                     historyArray.length !==0 ?
                       historyArray.goalDetails.map((resp, key) =>(
                         <HistoryListComponent
-                        cardHolder = { resp }
-                        action = { resp.action }
-                        dateTime = { resp.dateTime }
+                          cardHolder = { resp }
+                          action = { resp.action }
+                          dateTime = { resp.dateTime }
                         />
                       )
                       )
@@ -1330,7 +1326,6 @@ class TeamGoalsFragment extends BaseMVPView {
               </Card>
             }
             {
-              goalTitle &&
               showTeamGoalDetails &&
               <Card className = { 'padding-10px' }>
                 <div className = { 'padding-10px' }>
@@ -1342,7 +1337,7 @@ class TeamGoalsFragment extends BaseMVPView {
                 </div>
                 {
                   selectedTitle &&
-                  <div>
+                <div>
                   <br/>
                   <Line/>
                   <div className = { 'padding-10px' }>
@@ -1357,13 +1352,90 @@ class TeamGoalsFragment extends BaseMVPView {
                       selectedMembers ?
                       selectedMembers.map((details, key) =>
                         <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }
-                        onClick = { () => this.setState({ showMemberGoal: true, showTeamGoalDetails: false }) }>{ details.fullName }</h2>
+                        onClick = { () => this.setState({ showMemberGoal: true }) }>{ details.fullName }</h2>
                       )
                       :
                       <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>
                     }
                   </div>
-                  </div>
+                  {
+                    showMemberGoal &&
+                      <div>
+                        <Line/>
+                        <div className = { 'padding-10px' }>
+                          <div className = { 'header-column' }>
+                            <div>
+                              <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Reviews</h2>
+                              <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>You can add any notes or updates for this goal.</h2>
+                            </div>
+                            <br/>
+                          </div>
+                          {
+                            commentArray.length !==0 ?
+                              commentArray.commentDetails.map((resp, key) =>(
+                                <CommentsListComponent
+                                  employeeNumber = { employeeNumber }
+                                  respEmployeeNumber = { resp.employeeNumber }
+                                  commentLoader = { commentLoader }
+                                  cardHolder = { resp }
+                                  dateTime = { resp.dateTime }
+                                  commentId = { resp.id }
+                                  goalComment = { resp.description }
+                                  employeeName = { resp.employeeName }
+                                  deleteCommentFunc = { (commentId, goalId) =>
+                                    this.presenter.deleteComment(commentId, goalId, pageNumber, pageItem) }
+                                  updateComment = { (commentId, goalEditComment) =>
+                                    this.presenter.updateGoalComment(goalId, pageNumber, pageItem, commentId, goalEditComment) }
+                                />
+                              )
+                              )
+                            :
+                            <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No comment</h2>
+                          }
+                          <br/>
+                          {
+                            goalId &&
+                            <div className = { 'comment-grid align-items-center' }>
+                              <GenericInput
+                                value = { goalComment }
+                                text = { 'Write a comment' }
+                                onChange = { (e) => this.goalCommentFunc(e.target.value) }
+                              />
+                              {
+                                commentLoader ?
+                                <center>
+                                  <GenericLoader show = { commentLoader }/>
+                                </center>
+                                :
+                                <GenericButton
+                                  text = { 'Post' }
+                                  className = { 'profile-button-small' }
+                                  onClick = { () => this.submitComment() }
+                                />
+                              }
+                            </div>
+                          }
+                        </div>
+                        <Line/>
+                        <div className = { 'padding-10px' }>
+                          <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
+                          {
+                            historyArray.length !==0 ?
+                              historyArray.goalDetails.map((resp, key) =>(
+                                <HistoryListComponent
+                                  cardHolder = { resp }
+                                  action = { resp.action }
+                                  dateTime = { resp.dateTime }
+                                />
+                              )
+                              )
+                            :
+                            <h2 className = { 'text-align-center font-weight-lighter font-size-12px' }>No history</h2>
+                          }
+                        </div>
+                      </div>
+                  }
+                </div>
                 }
               </Card>
             }
@@ -1511,10 +1583,6 @@ class TeamGoalsFragment extends BaseMVPView {
                 </div>
                 }
               </Card>
-            }
-            {
-              showMemberGoal &&
-              <h2>member</h2>
             }
             </div>
           </div>

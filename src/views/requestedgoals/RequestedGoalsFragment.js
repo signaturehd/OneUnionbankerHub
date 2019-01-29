@@ -130,7 +130,14 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   componentDidMount() {
-    this.presenter.getGoals(this.state.personal)
+    const {
+      isLineManager
+    } = this.props
+    const objectParam = {
+      isLineManager : isLineManager && isLineManager,
+      personal: this.state.personal,
+    }
+    this.presenter.getGoals(objectParam)
     // this.scrollFunction()
   }
 
@@ -464,7 +471,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     if(goalsArray.length !== 0) {
       goalsArray.map((details, key) =>
       {
-        if(details && details.approvalStatus === 2 || details.approvalStatus === 6 || details.approvalStatus === 1) {
+        if(details && details.approvalStatus === 6) {
           if(details && details.type === 1) {
             performanceRate ++
           } else if (details && details.type === 2) {
