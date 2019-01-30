@@ -2066,10 +2066,10 @@ export default class HRBenefitsService {
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
-     formData.append('qoutation', resp.file)
+     formData.append(resp.name, resp.file)
    ))
    formData.append('body', JSON.stringify(objectParam))
-   return this.apiClient.post('v1/leases/laptop',  formData, {
+   return tghis.apiClient.post('v1/leases/laptop',  formData, {
      headers : { token }
    })
   }

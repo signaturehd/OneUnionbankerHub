@@ -113,6 +113,7 @@ export default class CertificateOfEmploymentPresenter {
   }
 
   validateInput(){
+    console.log(storedVLTo)
     if(storedTypeOFCoeObject.id === 3) {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
@@ -157,14 +158,14 @@ export default class CertificateOfEmploymentPresenter {
           duration: 5000,
         }))
       } else {
-        if(storedVLFrom === '' || storedVLFrom === null) {
+        if(storedVLFrom === '' || !storedVLFrom) {
             store.dispatch(NotifyActions.addNotify({
               title: 'Certificate of Employment',
               message : 'Please select VL Date From field',
               type: 'warning',
               duration: 5000,
             }))
-        } else if(storedVLTo === '' || storedVLTo === null) {
+        } else if(storedVLTo === '' || !storedVLTo) {
           store.dispatch(NotifyActions.addNotify({
             title: 'Certificate of Employment',
             message : 'Please select VL Date To field',
@@ -191,14 +192,14 @@ export default class CertificateOfEmploymentPresenter {
           type: 'warning',
           duration: 5000,
         }))
-      } else if(storedVLFrom === '') {
+      } else if(storedVLFrom === '' || !storedVLFrom) {
           store.dispatch(NotifyActions.addNotify({
             title: 'Certificate of Employment',
             message : 'Please select VL Date From field',
             type: 'warning',
             duration: 5000,
           }))
-      } else if(storedVLTo === '') {
+      } else if(storedVLTo === '' || !storedVLTo) {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
           message : 'Please select VL Date To field',
