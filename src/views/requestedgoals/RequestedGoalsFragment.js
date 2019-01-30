@@ -633,7 +633,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               />
               <GenericButton
                 text = { 'Yes' }
-                onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
+                onClick = { () => {this.presenter.deleteGoal(goalId, selectedTypeId), this.setState({ showDeleteModal: false })} }
               />
             </div>
           </center>
@@ -945,7 +945,12 @@ class RequestedGoalsFragment extends BaseMVPView {
                       showRemarksText : false })
                     }
                   }
-                  onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                  onDeleted = { (goalId, isSquadGoal, isTeamGoal) =>
+                    this.setState({
+                      goalId,
+                      showDeleteModal: true,
+                      selectedTypeId: this.checkIdType(isTeamGoal, isSquadGoal)
+                    }) }
                 />
               </div>
               :

@@ -204,6 +204,7 @@ export default class RequestCoachPresenter {
     pageNumber,
     pageItem
   ){
+    storedGoalType = personal
     this.view.showCommentLoader(true)
     this.addGoalCommentInteractor.execute(goalCommentParam(
         personal,
@@ -212,7 +213,7 @@ export default class RequestCoachPresenter {
       )
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, personal, pageNumber, pageItem)
     })
     .subscribe(
       data => {
@@ -237,7 +238,7 @@ export default class RequestCoachPresenter {
       goalComment
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, storedGoalType, pageNumber, pageItem)
     })
     .subscribe(
       data => {
@@ -250,10 +251,15 @@ export default class RequestCoachPresenter {
     )
   }
 
-  deleteGoal (goalId) {
+  deleteGoal (goalId, goalType) {
+    storedGoalType = goalType
+    const objectParam = {
+      goalId : goalId,
+      goalType : goalType
+    }
     this.view.showCircularLoader()
     try {
-      this.deleteGoalsInteractor.execute(goalId)
+      this.deleteGoalsInteractor.execute(objectParam)
       .do(data => {
         this.getGoals(storedGoalType)
       })

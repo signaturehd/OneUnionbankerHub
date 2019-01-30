@@ -2391,8 +2391,8 @@ export default class HRBenefitsService {
     })
   }
 
-  deleteGoal(token, goalId) {
-    return this.apiClient.delete(`v1/goals/personal/${goalId}?isArchived=1`, {
+  deleteGoal(token, goalParam) {
+    return this.apiClient.delete(`v1/goal/${goalParam.goalId}?goalType=${goalParam.goalType}`, {
       headers : { token }
     })
   }
