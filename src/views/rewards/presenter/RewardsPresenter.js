@@ -345,7 +345,7 @@ export default class RewardsPresenter {
     else if (!employeeMessage) {
       store.dispatch(NotifyActions.addNotify({
         title: 'Required',
-        message: 'You have to choose an employee first.',
+        message: 'Please enter personal message to selected employees.',
         type: 'warning',
         duration: 5000
       }))
