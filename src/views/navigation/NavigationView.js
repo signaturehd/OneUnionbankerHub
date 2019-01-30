@@ -320,7 +320,9 @@ class NavigationView extends BaseMVPView {
             onCallWizard = { () => this.callWizard() }
             logout = { () => this.setState({ showLogoutModal : true }) }/>
         </header>
-        <div className="navigation-panels">
+        <div
+          className="navigation-panels"
+          onClick = { () => this.hideProfileMenu() }>
           <main
             className = { 'navigation-panel navigation-content' }
             role = { 'main' }
@@ -348,7 +350,7 @@ class NavigationView extends BaseMVPView {
                   } }
                 />
               }
-            <Drawer onClick = { () => this.hideProfileMenu() } >
+            <Drawer  >
               <Switch>
                 <Route exact path = '/' render = {props =>
                   <HomeFragment
