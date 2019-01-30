@@ -312,7 +312,22 @@ class LaptopLeaseFragment extends BaseMVPView {
                 <i
                   className={ 'back-arrow' }
                   onClick = { () => {
-                    this.setState({ cardOptionComponent : true })
+                    this.setState({ 
+                      cardOptionComponent : true,
+                      //bank to purchase
+                      laptopDetailsName: '',
+                      selectedLaptopDetails: '',
+                      termsName: '',
+                      deliveryOptionName: '',
+                      laptopLeaseAttachment: '',
+                      //employee to purchase
+                      vendor: '',
+                      termsName: '',
+                      orDate: '',
+                      orNumber: '',
+                      amount: '',
+                      laptopLeaseAttachment: '',
+                    })
                     this.resetValue()
                    }
                   }>
