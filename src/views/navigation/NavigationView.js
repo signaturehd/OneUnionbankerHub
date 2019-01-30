@@ -239,6 +239,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ preEmploymentStatus : e })
   }
 
+  hideProfileMenu(){
+    this.setState({ profileDisplay : 'none' })
+  }
+
   render () {
     const {
       profileDisplay,
@@ -343,7 +347,7 @@ class NavigationView extends BaseMVPView {
                   } }
                 />
               }
-            <Drawer>
+            <Drawer onClick = { () => this.hideProfileMenu() } >
               <Switch>
                 <Route exact path = '/' render = {props =>
                   <HomeFragment
