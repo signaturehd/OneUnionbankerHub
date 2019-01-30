@@ -264,6 +264,7 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   goalCommentFunc (goalComment) {
+    console.log(this.state.commentArray)
     this.setState({ goalComment })
   }
 
@@ -695,8 +696,8 @@ class TeamGoalsFragment extends BaseMVPView {
           isDismisable = {true}
           onClose = { () =>
             this.setState({
-              ratings: 0,
               remarksText: '',
+              ratings: 0,
               showRatingModal: false }) }
           >
           <h2 className = { 'text-align-center font-size-30px  font-weight-ligther' }>
@@ -704,13 +705,13 @@ class TeamGoalsFragment extends BaseMVPView {
           </h2>
           <br/>
           <div className = { 'text-align-center' }>
-              <Rating
-                emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
-                fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
-                fractions={ 1 }
-                onChange={ e => this.commentRateFunc(e) }
-                initialRating={ (ratings ? ratings : 0) || 0 }
-              />
+            <Rating
+              emptySymbol={ <MdStarOutline style={{ fontSize: 25, color : '#959595' }} /> }
+              fullSymbol={ <MdStar style={{ fontSize: 25,  color : '#c65e11' }} /> }
+              fractions={ 1 }
+              onClick = { (e) => this.commentRateFunc(e) }
+              initialRating={ (ratings && ratings) || 0 }
+            />
           </div>
           <h2 className = { 'font-size-12px unionbank-color text-align-center' }>{ this.checkRatings(ratings) }</h2>
           {
@@ -959,6 +960,8 @@ class TeamGoalsFragment extends BaseMVPView {
                           selectedTitle,
                           selectedDescription,
                           selectedMembers,
+                          startDate,
+                          dueDate,
                         ) => {
                           this.setState({
                             goalTypeParam: 'team',
@@ -969,6 +972,8 @@ class TeamGoalsFragment extends BaseMVPView {
                             selectedMembers,
                             showTeamGoal: true,
                             showTeamGoalDetails: true,
+                            startDate : startDate,
+                            dueDate: dueDate,
                            })
                           this.presenter.getGoalTask(resp.id, 'team')
                           this.presenter.getGoalComment(resp.id, pageNumber, pageItem, 'team')
@@ -1173,30 +1178,24 @@ class TeamGoalsFragment extends BaseMVPView {
                     </h2>
                   </div>
                   <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ description ? description : 'Goals allow you to create effective objectives for yourself or employees.' }</h2>
+                  <br/>
+                  <h4 className = { 'font-size-12px color-gray' }>
+                    {// { startDate === '' ||  dueDate=== '' &&  `${moment(startDate) + -' '+ moment(dueDate)}` }
+                  }
+                  </h4>
                 </div>
-                {
-                  // this.checkApprovalStatus(statusId) &&
-                  <div>
+                <div>
                   <br/>
                   <Line/>
                   <div className = { 'padding-10px' }>
-                    {
-                      // <div className = { 'header-column' }>
-                      //   <div>
-                      //     <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
-                      //     <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
-                      //   </div>
-                      //   <h2>
-                      //   {
-                      //     goalId &&
-                      //     <span
-                      //       className = { 'icon-check icon-add-img' }
-                      //       onClick = { () => this.setState({ addTask: false }) }
-                      //     />
-                      //   }
-                      //   </h2>
-                      // </div>
-                    }
+                    <div className = { 'header-column' }>
+                      <div>
+                        <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
+                        <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                      </div>
+                      <h2>
+                      </h2>
+                    </div>
                     {
                       // addTask &&
                       // <div>
@@ -1266,6 +1265,11 @@ class TeamGoalsFragment extends BaseMVPView {
                       <br/>
                     </div>
                     {
+                      commentLoader ?
+                      <center>
+                        <GenericLoader show = { commentLoader }/>
+                      </center>
+                      :
                       commentArray.length !==0 ?
                         commentArray.commentDetails.map((resp, key) =>(
                           <CommentsListComponent
@@ -1312,7 +1316,6 @@ class TeamGoalsFragment extends BaseMVPView {
                     }
                   </div>
                 </div>
-                }
                 <Line/>
                 <div className = { 'padding-10px' }>
                   <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Goal History</h2>
@@ -1341,6 +1344,11 @@ class TeamGoalsFragment extends BaseMVPView {
                     <h2></h2>
                   </div>
                   <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ selectedDescription ? selectedDescription : 'Description' }</h2>
+                  <br/>
+                  <h4 className = { 'font-size-12px' }>
+                    {// { moment(startDate && startDate).format('MMM DD YYYY') - moment(dueDate && dueDate).format('MMM DD YYYY') }
+                    }
+                  </h4>
                 </div>
                 {
                   selectedTitle &&
@@ -1360,7 +1368,11 @@ class TeamGoalsFragment extends BaseMVPView {
                       selectedMembers ?
                       selectedMembers.map((details, key) =>
                         <div
-                          onClick = { () => this.setState({ showMemberGoal: true }) }
+                          onClick = { () =>
+                            this.setState({
+                              showMemberGoal: true,
+                              statusId: details.status,
+                            }) }
                           className = { 'cursor-pointer team-goal-grid-percentage' }>
                           <div className = { 'squad-profile-picture' }>
                             <h2 className = { 'squad-initial-text' }>
@@ -1384,6 +1396,49 @@ class TeamGoalsFragment extends BaseMVPView {
                   {
                     showMemberGoal &&
                       <div>
+                        <div className = { 'padding-10px' }>
+                          <div className = { 'header-column' }>
+                            <div>
+                              <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
+                              <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>Enter the activities that would help you achieve your goal (Be Specific).</h2>
+                            </div>
+                            <h2>
+                            </h2>
+                          </div>
+                        </div>
+                          {
+                            taskLoader ?
+                            <center>
+                              <GenericLoader show = { taskLoader }/>
+                            </center>
+                            :
+                            taskArray &&
+                            taskArray.length !== 0 ?
+                              <TasksListComponent
+                                cardHolder = { taskArray }
+                                onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
+                                  taskId,
+                                  taskDescription,
+                                  isCompleted,
+                                  showTaskOption: true
+                                }) }
+                                changeTask = { (taskId, isCompleted) => this.presenter.updateGoalTask(taskId, null, isCompleted)  }
+                              />
+                            :
+                            <h2 className = { 'text-align-center font-weight-lighter font-size-14px' }>No task</h2>
+                          }
+                          <br/>
+                          {
+                            this.checkIfLineMangerOrCompleted(statusId, isLineManager) &&
+                            <center>
+                              <GenericButton
+                                text = { 'SUBMIT GOAL RATING' }
+                                onClick = { () => this.setState({ showRatingModal : true }) }
+                                className = { 'global-button profile-button-medium cursor-pointer' }
+                              />
+                            </center>
+                          }
+                        <br/>
                         <Line/>
                         <div className = { 'padding-10px' }>
                           <div className = { 'header-column' }>

@@ -69,7 +69,7 @@ class AddGoalsFormComponent extends Component {
     } = this.props
     const minimumDate = '01/01/'+new Date().getFullYear()
     const maximumDate = '12/31/'+new Date().getFullYear()
-    
+
     return (
       <div className = { 'goal-container' }>
       <br/>
@@ -105,7 +105,6 @@ class AddGoalsFormComponent extends Component {
                 errorMessage = { startDateErrorMessage }
                 minDate = { moment(minimumDate) }
                 maxDate = { moment(maximumDate) }
-                readOnly
               />
               <DatePicker
                 text = { 'Due Date' }
@@ -118,7 +117,6 @@ class AddGoalsFormComponent extends Component {
                 errorMessage = { dueDateErrorMessage }
                 minDate = { startDate ? moment(startDate) : this.checkDateIfLast(startDate) }
                 maxDate = { moment(maximumDate) }
-                readOnly
               />
             </div>
             <div className = { 'grid-global' }>

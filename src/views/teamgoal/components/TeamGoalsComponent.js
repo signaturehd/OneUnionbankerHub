@@ -74,6 +74,8 @@ class TeamGoalsComponent extends Component {
                   teamTitle,
                   description,
                   participants,
+                  startDate,
+                  dueDate,
                 ) }>
                 <div className = { 'padding-15' }>
                   <div className = { 'header-column-1' }>

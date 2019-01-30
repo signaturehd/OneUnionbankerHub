@@ -95,7 +95,6 @@ class RequestedGoalsComponent extends Component {
               </div>
               <div className = { 'header-column-1 cursor-pointer' } onClick = { () =>
                  {
-                   if(resp.approvalStatus === 2) {
                      onSelected(
                        resp.id,
                        resp.title,
@@ -110,7 +109,6 @@ class RequestedGoalsComponent extends Component {
                        resp.isCompleted,
                        resp.rating && resp.rating ? resp.rating : 0.0
                      )
-                   }
                  }}>
                 <div>
                   {
