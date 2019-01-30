@@ -302,6 +302,7 @@ class NavigationView extends BaseMVPView {
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            hideProfileMenu = { () => this.hideProfileMenu() }
             tempPreEmployment = { preEmploymentStatus }
             selected={ selected }
             profillePosition = { profillePosition }
