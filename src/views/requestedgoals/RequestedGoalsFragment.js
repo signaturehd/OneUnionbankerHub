@@ -259,16 +259,16 @@ class RequestedGoalsFragment extends BaseMVPView {
 
     if(!goalTitle) {
       this.setState({ goalTitleErrorMessage: 'Required field' })
-    } else if (!description) {
-      this.setState({ descriptionErrorMessage: 'Required field' })
+    }  else if (!goalTypeId) {
+      this.setState({ goalTypeErrorMessage: 'Required field' })
     } else if (!startDate) {
       this.setState({ startDateErrorMessage: 'Required field' })
     } else if (!dueDate) {
       this.setState({ dueDateErrorMessage: 'Required field' })
+    } else if (!description) {
+      this.setState({ descriptionErrorMessage: 'Required field' })
     } else if (!priorityId) {
       this.setState({ priorityErrorMessage: 'Required field' })
-    } else if (!goalTypeId) {
-      this.setState({ goalTypeErrorMessage: 'Required field' })
     }
     else {
       this.presenter.addRequestedGoals (
@@ -609,12 +609,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       {
         showGoalTypeModal &&
         <SingleInputModal
-          label = { 'Select Priority' }
+          label = { 'Select Goal Type' }
           inputArray = { goalTypeArray }
           selectedArray = { (goalTypeId, goalType) => this.setState({
               goalTypeId,
               goalType,
-              showGoalTypeModal: false
+              showGoalTypeModal: false,
+              goalTypeErrorMessage: ''
             })
           }
           onClose = { () => this.setState({ showGoalTypeModal: false }) }

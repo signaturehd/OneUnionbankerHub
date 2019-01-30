@@ -167,6 +167,7 @@ export default class RequestCoachPresenter {
     this.updateGoalsInteractor.execute(goalId, startDate, dueDate)
     .do(data => {
       this.getGoals()
+      this.view.hideSubmitLoader()
     })
     .subscribe(
       data => {
@@ -204,6 +205,7 @@ export default class RequestCoachPresenter {
       )
       .do(data => {
         this.getTeamGoals(goalType)
+        this.view.hideSubmitLoader()
       })
       .subscribe (
         data => {
@@ -243,6 +245,7 @@ export default class RequestCoachPresenter {
       )
       .do(data => {
         this.getSquadGoals(goalType)
+        this.view.hideSubmitLoader()
       })
       .subscribe (
         data => {
@@ -267,6 +270,7 @@ export default class RequestCoachPresenter {
     )
     .do(data => {
       this.getGoalTask(storedGoalId)
+      this.view.hideSubmitLoader()
     })
     .subscribe(
       data => {
@@ -292,6 +296,7 @@ export default class RequestCoachPresenter {
       )
       .do(data => {
         this.getGoalTask(storedGoalId)
+        this.view.hideSubmitLoader()
       })
       .subscribe  (
         data => {
@@ -353,6 +358,7 @@ export default class RequestCoachPresenter {
     )
     .do(data => {
       this.getGoalComment(storedGoalId, pageNumber, pageItem, goalType)
+      this.view.hideSubmitLoader()
     })
     .subscribe(
       data => {
@@ -371,6 +377,7 @@ export default class RequestCoachPresenter {
       this.deleteGoalsInteractor.execute(goalId)
       .do(data => {
         this.getGoals()
+        this.view.hideCircularLoader()
       })
       .subscribe(
         data => {
@@ -391,6 +398,7 @@ export default class RequestCoachPresenter {
       this.deleteTaskInteractor.execute(taskId)
       .do(data => {
         this.getGoalTask(goalId)
+        this.view.hideSubmitLoader()
       })
       .subscribe(
         data => {
@@ -410,6 +418,7 @@ export default class RequestCoachPresenter {
       this.deleteCommentInteractor.execute(commentId)
       .do(data => {
         this.getGoalComment(storedGoalId, storedPageNumber, storedPageItem, storedGoalType)
+        this.view.hideSubmitLoader()
       })
       .subscribe(
         data => {

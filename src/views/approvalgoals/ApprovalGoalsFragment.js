@@ -74,7 +74,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
   }
 
   setGoalsForConfirmation (confirmationArray) {
-    this.setState({ showConfirmation: confirmationArray.length !== 0 && true })
+    this.setState({ showConfirmation: true })
     this.setState({ confirmationArray })
   }
 

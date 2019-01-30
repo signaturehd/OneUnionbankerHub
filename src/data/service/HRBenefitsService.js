@@ -2069,7 +2069,7 @@ export default class HRBenefitsService {
      formData.append(resp.name, resp.file)
    ))
    formData.append('body', JSON.stringify(objectParam))
-   return tghis.apiClient.post('v1/leases/laptop',  formData, {
+   return this.apiClient.post('v1/leases/laptop',  formData, {
      headers : { token }
    })
   }

@@ -40,7 +40,6 @@ class AddGoalsFormComponent extends Component {
     }
   }
 
-
   render () {
     const {
       goalTitle,
@@ -70,6 +69,7 @@ class AddGoalsFormComponent extends Component {
     } = this.props
     const minimumDate = '01/01/'+new Date().getFullYear()
     const maximumDate = '12/31/'+new Date().getFullYear()
+    
     return (
       <div className = { 'goal-container' }>
       <br/>

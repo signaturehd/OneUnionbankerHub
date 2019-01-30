@@ -135,6 +135,7 @@ export default class RewardsPresenter {
               isChecked: !resp.isChecked ? true : false,
               lastName: resp.lastName,
               firstName: resp.firstName,
+              middleName: resp.middleName,
               employeeNumber: resp.employeeNumber
             })
           }
@@ -205,6 +206,7 @@ export default class RewardsPresenter {
                 isChecked: false,
                 lastName: resp.lastName,
                 firstName: resp.firstName,
+                middleName: resp.middleName,
                 employeeNumber: resp.employeeNumber
               })
             }
@@ -296,6 +298,7 @@ export default class RewardsPresenter {
               isChecked : !resp.isChecked ? true : false,
               lastName: resp.lastName,
               firstName: resp.firstName,
+              middleName: resp.middleName,
               employeeNumber: resp.employeeNumber,
             })
             updateListId.push(employeeId)
@@ -305,6 +308,7 @@ export default class RewardsPresenter {
               name: resp.lastName + ', ' + resp.firstName + ' '+resp.middleName,
               isChecked : resp.isChecked,
               lastName: resp.lastName,
+              middleName: resp.middleName,
               firstName: resp.firstName,
               employeeNumber: resp.employeeNumber,
             })
