@@ -113,7 +113,6 @@ export default class CertificateOfEmploymentPresenter {
   }
 
   validateInput(){
-    console.log(storedVLTo)
     if(storedTypeOFCoeObject.id === 3) {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({

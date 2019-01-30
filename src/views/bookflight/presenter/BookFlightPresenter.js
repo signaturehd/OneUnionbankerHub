@@ -52,14 +52,7 @@ export default class BookFlightPresenter {
     attachmentsData,
     attachmentsData2
   ) {
-    console.log(
-      totalCostOfFlight,
-      totalServiceCharge,
-      departureTime,
-      returnTime)
     try {
-
-
       if(isDomestic) {
         if (returnTime === '0') {
           store.dispatch(NotifyActions.addNotify({
