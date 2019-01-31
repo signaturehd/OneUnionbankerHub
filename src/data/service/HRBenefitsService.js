@@ -2434,9 +2434,15 @@ export default class HRBenefitsService {
   }
 
   markAsCompletedWithType (token, markParam) {
-    return this.apiClient.post(`v1/goals/${markParam.id}/remarks`, markParam.body, {
-      headers: { token }
-    })
+    if(markParam.type === 1) {
+      return this.apiClient.post(`v1/goals/${markParam.id}/remarks`, markParam.body, {
+        headers: { token }
+      })
+    } else {
+      return this.apiClient.post(`v1/goals/${markParam.id}/completion?goalType=personal`, markParam.body, {
+        headers: { token }
+      })
+    }
   }
 
   addTeamGoals (token, teamGoalsParam) {
