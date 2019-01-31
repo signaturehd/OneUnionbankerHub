@@ -126,6 +126,37 @@ export default class PensionFundsPresenter {
       console.log(e)
     }
   }
+
+  setPaymentCheckerPresenter(check , id) {
+    let newData
+    let formsData = []
+
+    pensionData.paymentHistory.map((resp) => {
+console.log(pensionData)
+      if(id === resp.id) {
+        formsData.push({
+          id : resp.id,
+          isChecked : !check ? true : false,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturn
+        })
+
+      } else {
+        formsData.push({
+          id : resp.id,
+          isChecked : resp.isChecked,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturn
+        })
+      }
+      const objectParam = {
+        paymentHistory : formsData
+      }
+      this.setPensionFundsPresenter(objectParam)
+    })
+  }
   //
   // getPensionFunds () {
   //   this.getPensionFundsInteractor.execute()

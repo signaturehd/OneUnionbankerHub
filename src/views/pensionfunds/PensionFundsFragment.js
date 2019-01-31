@@ -118,7 +118,14 @@ class PensionFundsFragment extends BaseMVPView {
                     <PensionDetailsFragment
                       tabsId = { tabsId }
                       tabsIdFunc = { (tabsId) => this.setState({ tabsId }) }
-                      pensionFundsData = { pensionFundsData } /> :
+                      pensionFundsData = { pensionFundsData }
+                      changePaymentFunc = { (bool , id) => {
+                        try{
+                          this.presenter.setPaymentCheckerPresenter(bool, id)
+                        } catch(e){
+                          console.log(e)
+                        }
+                      } }/> :
                     <PensionFundsDocumentsFragment
                       statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
                       statusCodeReturnFunc = { (stepperStatus) => this.setState({ stepperStatus }) }

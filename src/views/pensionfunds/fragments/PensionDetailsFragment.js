@@ -24,7 +24,8 @@ class PensionDetailsFragment extends Component {
     const {
       tabsId,
       tabsIdFunc,
-      pensionFundsData
+      pensionFundsData,
+      changePaymentFunc
     } = this.props
 
     return (
@@ -55,7 +56,8 @@ class PensionDetailsFragment extends Component {
         </div>
         <div>
           <PensionFundsPaymentHistoryComponent
-            pensionFundsData = { pensionFundsData }/>
+            pensionFundsData = { pensionFundsData }
+            changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
         </div>
       </div>
     )
