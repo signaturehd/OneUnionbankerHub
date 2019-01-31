@@ -131,13 +131,6 @@ export default class CertificateOfEmploymentPresenter {
       } else if(storedVisaObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
-          message : 'Please select Country',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedVisaObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
           message : 'Please select VISA',
           type: 'warning',
           duration: 5000,
