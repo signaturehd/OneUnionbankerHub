@@ -582,7 +582,7 @@ class RequestedGoalsFragment extends BaseMVPView {
           onClose={ () => {
             this.setState({ showNoticeResponseModal : false })
           }}
-          noticeResponse={ noticeResponse }
+          noticeResponse={ noticeResponse ? noticeResponse : 'Goal details has been updated.' }
         />
       }
       {

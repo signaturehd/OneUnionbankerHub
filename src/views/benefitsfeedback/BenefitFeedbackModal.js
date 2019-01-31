@@ -74,7 +74,7 @@ class BenefitFeedbackModal extends BaseMVPView {
                 <Rating
                   emptySymbol={<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
                   fullSymbol={<MdStar style={{ fontSize: 30,  color : '#c65e11' }} />}
-                  onChange={ e => this.commentShowIfLowRate(e) }
+                  onChange={ (e) => this.commentShowIfLowRate(e) }
                   initialRating={ rating && rating }
                   fractions={ 2 }
                 />
