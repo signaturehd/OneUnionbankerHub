@@ -2223,7 +2223,7 @@ export default class HRBenefitsService {
   /* Events Budget */
 
   validateEventsBudget (token) {
-    return this.apiClient.get('v1/events/validate', {
+    return this.apiClient.get('v1/events/validate?pageNumber=1&pageItem=1', {
       headers: { token }
     })
   }
