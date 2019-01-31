@@ -18,6 +18,9 @@ import {
   GenericButton
 } from '../../ub-components/'
 
+let id
+
+
 class PensionFundsFragment extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -25,7 +28,7 @@ class PensionFundsFragment extends BaseMVPView {
       loader : false,
       stepperStatus: 1,
       showCodeModal: false,
-      showDevelopmentModal: true,
+      showDevelopmentModal: false,
       tabsId : 'week'
     }
   }
@@ -71,7 +74,16 @@ class PensionFundsFragment extends BaseMVPView {
           <PensionCodeModals
             submitCodeFunc = { () =>{} }
             codeTextFunc = { (codeText) => this.setState({ codeText }) }
-            codeText = { codeText }/>
+            codeText = { codeText }
+            cancelCodeFunc = { () => {
+              try{
+                this.setState({ showCodeModal : false })
+                this.presenter.setDocumentsCheckerPresenter(true,id)
+              } catch(e)
+              {
+                console.log(e)
+              }
+            }}/>
         }
         {
           loader ?
@@ -92,6 +104,7 @@ class PensionFundsFragment extends BaseMVPView {
                     onClick = { () => {
                       this.props.history.push('/')
                       this.setState({ showDevelopmentModal: false })
+                      this.presenter.setDocumentsCheckerPresenter(false, 1)
                     } }
                     />
                 </center>
@@ -112,6 +125,7 @@ class PensionFundsFragment extends BaseMVPView {
                       stepperStatus = { stepperStatus }
                       changeCheckedFunc = { (e, e1) => {
                         try {
+                          id = e1
                           this.presenter.setDocumentsCheckerPresenter(e, e1)
                           this.setState({ showCodeModal : true })
                         } catch(e) {

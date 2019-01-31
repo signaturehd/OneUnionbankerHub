@@ -14,7 +14,9 @@ class PensionCodeModals extends Component {
     const {
       codeText,
       codeTextFunc,
-      submitCodeFunc
+      submitCodeFunc,
+      cancelCodeFunc,
+      id
     } = this.props
 
     return (
@@ -34,6 +36,11 @@ class PensionCodeModals extends Component {
             text = { 'Submit' }
             onClick = { () => submitCodeFunc() }
             />
+            <GenericButton
+              className = { 'profile-button-small' }
+              text = { 'Cancel' }
+              onClick = { () => cancelCodeFunc() }
+              />
         </center>
       </Modal>
     )
