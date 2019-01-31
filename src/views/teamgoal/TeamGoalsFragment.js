@@ -366,7 +366,9 @@ class TeamGoalsFragment extends BaseMVPView {
         goalComment,
         pageNumber,
         pageItem,
-        goalTypeParam)
+        goalTypeParam,
+        employeeId
+      )
       this.setState({ goalComment: '', goalCommentErrorMessage: '' })
 
     }
@@ -962,7 +964,8 @@ class TeamGoalsFragment extends BaseMVPView {
                           selectedMembers,
                           startDate,
                           dueDate,
-                          employeeId
+                          employeeId,
+                          goalId
                         ) => {
                           this.setState({
                             goalTypeParam: 'team',
@@ -976,6 +979,7 @@ class TeamGoalsFragment extends BaseMVPView {
                             startDate : startDate,
                             dueDate: dueDate,
                             employeeId : employeeId,
+                            goalId : goalId,
                            })
                           this.presenter.getGoalTask(resp.id, 'team')
                           this.presenter.getGoalComment(resp.id, pageNumber, pageItem, 'team')
@@ -1026,9 +1030,9 @@ class TeamGoalsFragment extends BaseMVPView {
                          })
                          this.presenter.getTeamGoals('squad')
                          this.setState({ showReviewComponent: false })
-                        // this.presenter.getGoalTask(goalId)
-                        // this.presenter.getGoalComment(goalId, pageNumber, pageItem)
-                        // this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                         this.presenter.getGoalTask(resp.id, 'squad')
+                         this.presenter.getGoalComment(resp.id, pageNumber, pageItem, 'squad')
+                         this.presenter.getGoalsHistory(resp.id, pageNumber, pageItem)
                         }
                      }
                      onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }

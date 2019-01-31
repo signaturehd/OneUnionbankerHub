@@ -204,11 +204,16 @@ export default class RequestCoachPresenter {
     pageNumber,
     pageItem
   ){
+    const goalParam = {
+      goalId: goalId,
+      employeeId: '',
+      status: 'requested',
+    }
     storedGoalType = personal
     this.view.showCommentLoader(true)
     this.addGoalCommentInteractor.execute(goalCommentParam(
         personal,
-        goalId,
+        goalParam,
         goalComment
       )
     )

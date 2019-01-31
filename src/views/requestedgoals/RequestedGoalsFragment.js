@@ -314,12 +314,12 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitComment() {
-    const { goalId, goalComment, pageNumber, pageItem, personal } = this.state
+    const { goalId, goalComment, pageNumber, pageItem, selectedTypeId } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
     else {
-      this.presenter.addGoalComment(personal, goalId, goalComment, pageNumber, pageItem)
+      this.presenter.addGoalComment(selectedTypeId, goalId, goalComment, pageNumber, pageItem)
       this.setState({ goalComment: '', goalCommentErrorMessage: '' })
 
     }
@@ -494,7 +494,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       return 'team'
     } else if (isSquad === 1) {
       return 'squad'
-    } else {
+    } else if (isTeam === 0 || isSquad === 0) {
       return 'personal'
     }
   }
@@ -563,7 +563,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       isSquadGoal,
       selectedTypeId
     } = this.state
-
+    console.log(selectedTypeId, isTeamGoal)
     const {
       isLineManager,
       filterId,
@@ -905,8 +905,6 @@ class RequestedGoalsFragment extends BaseMVPView {
               <div className = { 'scroll-y padding-10px' }>
                 <RequestedGoalsComponent
                   filterId = { filterId }
-                  isTeamGoal = { isTeamGoal }
-                  isSquadGoal = { isSquadGoal }
                   searchString = { searchString }
                   cardHolder = { goalsArray }
                   isLineManager = { isLineManager }
@@ -1093,7 +1091,23 @@ class RequestedGoalsFragment extends BaseMVPView {
                         </div>
                         <h2>
                         {
+                          selectedTypeId === 'team' &&
                           isTeamGoal === 0 &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addTask: true }) }
+                          />
+                        }
+                        {
+                          selectedTypeId === 'personal' &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addTask: true }) }
+                          />
+                        }
+                        {
+                          selectedTypeId === 'squad' &&
+                          isSquadGoal === 0 &&
                           <span
                             className = { 'icon-check icon-add-img' }
                             onClick = { () => this.setState({ addTask: true }) }

@@ -266,12 +266,15 @@ export default class RewardsPresenter {
         const employeeId = data.id
         membersData && membersData.map((resp, key) => {
           if(employeeId === resp.id) {
-            selectedList.push({
-              id: resp.id,
-              name: resp.name,
-              isChecked : !resp.isChecked ? true : false
-            })
-            updateListId.push(employeeId)
+            if(!this.checkIdIfExist(resp.id)) {
+              selectedList.push({
+                id: resp.id,
+                name: resp.name,
+                isChecked : !resp.isChecked ? true : false
+              })
+              updateListId.push(employeeId)
+              storedId = updateListId
+            }
           } else {
             updateList.push({
               id: resp.id,

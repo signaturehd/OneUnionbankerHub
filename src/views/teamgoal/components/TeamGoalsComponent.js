@@ -55,7 +55,8 @@ class TeamGoalsComponent extends Component {
       typeId,
       participants,
       priorityFunc,
-      onSelected
+      onSelected,
+      goalId
     } = this.props
 
     const { index, viewMoreText } = this.state
@@ -77,6 +78,7 @@ class TeamGoalsComponent extends Component {
                   startDate,
                   dueDate,
                   details.employeeId,
+                  goalId
                 ) }>
                 <div className = { 'padding-15' }>
                   <div className = { 'header-column-1' }>

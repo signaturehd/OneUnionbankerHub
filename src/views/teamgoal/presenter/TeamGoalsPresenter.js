@@ -28,7 +28,7 @@ import addRatingGoalsParam from '../../../domain/param/AddRatingGoalsParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
-let storedGoalId = '', storedPageNumber = '', storedPageItem = '', storedGoalType = ''
+let storedGoalId = '', storedPageNumber = '', storedPageItem = '', storedGoalType = '', storedEmployeeId = ''
 
 export default class RequestCoachPresenter {
   constructor (container) {
@@ -316,14 +316,21 @@ export default class RequestCoachPresenter {
     goalComment,
     pageNumber,
     pageItem,
-    goalType
+    goalType,
+    employeeId
   ){
     storedGoalType = goalType
+    storedEmployeeId = employeeId
+    const goalParam = {
+      goalId: goalId,
+      employeeId: employeeId,
+      status: 'manager'
+    }
     this.view.checkCommentLoader(true)
     this.addGoalCommentInteractor.execute(
       addGoalCommentParam(
         goalType,
-        goalId,
+        goalParam,
         goalComment,
       )
     )

@@ -52,7 +52,6 @@ class RequestedGoalsComponent extends Component {
       filterId,
       searchString,
       isLineManager,
-      isTeamGoal
     } = this.props
 
     const {
@@ -157,6 +156,7 @@ class RequestedGoalsComponent extends Component {
                   </div>
                   <div></div>
                   <div>
+                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start: <b>{ moment(resp.startDate).format('MMM DD, YYYY') }</b></h2>
                     <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(resp.endDate).format('MMM DD, YYYY') }</b></h2>
                   </div>
                 </div>

@@ -2339,9 +2339,15 @@ export default class HRBenefitsService {
   }
 
   addGoalComment (token, goalCommentParam) {
-    return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body, {
-      headers : { token }
-    })
+    if(goalCommentParam.status === 'manager') {
+      return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body, {
+        headers : { token }
+      })
+    } else if (goalCommentParam.status ==='requested') {
+      return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body2, {
+        headers : { token }
+      })
+    }
   }
 
   addSquadGoalComment (token, squadGoalParam) {
