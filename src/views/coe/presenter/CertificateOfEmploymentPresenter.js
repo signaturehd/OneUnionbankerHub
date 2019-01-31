@@ -267,8 +267,8 @@ export default class CertificateOfEmploymentPresenter {
       storedPurposeObject.id,
       storedVisaObject.id,
       storedTypeOFCoeObject.type,
-      moment(storedVLFrom).format('MM/DD/YYYY'),
-      moment(storedVLTo).format('MM/DD/YYYY')
+      moment(storedVLFrom).format('MM/DD/YYYY') === 'Invalid date' ? '' : moment(storedVLFrom).format('MM/DD/YYYY'),
+      moment(storedVLTo).format('MM/DD/YYYY') === 'Invalid date' ? '' : moment(storedVLTo).format('MM/DD/YYYY')
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
