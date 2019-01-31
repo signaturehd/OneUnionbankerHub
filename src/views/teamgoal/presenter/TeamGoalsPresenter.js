@@ -322,9 +322,9 @@ export default class RequestCoachPresenter {
     this.view.checkCommentLoader(true)
     this.addGoalCommentInteractor.execute(
       addGoalCommentParam(
+        goalType,
         goalId,
         goalComment,
-        goalType
       )
     )
     .do(data => {

@@ -905,8 +905,11 @@ class RequestedGoalsFragment extends BaseMVPView {
               <div className = { 'scroll-y padding-10px' }>
                 <RequestedGoalsComponent
                   filterId = { filterId }
+                  isTeamGoal = { isTeamGoal }
+                  isSquadGoal = { isSquadGoal }
                   searchString = { searchString }
                   cardHolder = { goalsArray }
+                  isLineManager = { isLineManager }
                   priorityFunc = { (resp) => this.priorityFunc(resp) }
                   onSelected = { (
                     goalId,
@@ -962,15 +965,21 @@ class RequestedGoalsFragment extends BaseMVPView {
               goalTitle ?
               <div className = { 'padding-10px' }>
                 <div className = { 'padding-10px' }>
-                  <div className = { 'header-column card-background padding-10px' }>
+                  <div className = { 'header-column-3x card-background padding-10px' }>
                     <h2 className = { 'font-weight-bold text-align-left font-size-16px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                     {
-                      goalId &&
+                      isTeamGoal === 0 &&
                       <span
                         className = { 'icon-check icon-edit-white-img' }
                         onClick = { () => this.setState({ showForm: true, editMode: true }) }
                       />
                     }
+                    <h2>
+                    {
+                      isTeamGoal === 0 &&
+                      <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id, resp.isSquadGoal, resp.isTeamGoal) }/>
+                    }
+                    </h2>
                   </div>
 
                   <div className = { 'details-columns padding-10px' }>
@@ -1084,7 +1093,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                         </div>
                         <h2>
                         {
-                          goalId &&
+                          isTeamGoal === 0 &&
                           <span
                             className = { 'icon-check icon-add-img' }
                             onClick = { () => this.setState({ addTask: true }) }
@@ -1142,6 +1151,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                             {
                               taskArray.length !== 0 ?
                                 <TasksListComponent
+                                  isLineManager = { isLineManager }
                                   cardHolder = { taskArray }
                                   onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
                                     taskId,

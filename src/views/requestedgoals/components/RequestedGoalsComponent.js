@@ -50,7 +50,9 @@ class RequestedGoalsComponent extends Component {
       onSelected,
       onDeleted,
       filterId,
-      searchString
+      searchString,
+      isLineManager,
+      isTeamGoal
     } = this.props
 
     const {
@@ -88,10 +90,7 @@ class RequestedGoalsComponent extends Component {
             <div className = { 'padding-15' }>
               <div className = { 'header-column' }>
                 <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
-                {
-                  resp.approvalStatus !== 5 &&
-                  <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id, resp.isSquadGoal, resp.isTeamGoal) }/>
-                }
+                <h2></h2>
               </div>
               <div className = { 'header-column-1 cursor-pointer' } onClick = { () =>
                  {

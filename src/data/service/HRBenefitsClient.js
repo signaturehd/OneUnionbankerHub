@@ -1712,4 +1712,9 @@ export default class HRBenefitsClient {
     return this.service.getBir2316List(token)
     .pipe(ServiceErrorOperator())
   }
+
+  requestBIR2316 (token, year) {
+    return this.service.requestBIR2316(token, year)
+    .pipe(ServiceErrorOperator())
+  }
 }

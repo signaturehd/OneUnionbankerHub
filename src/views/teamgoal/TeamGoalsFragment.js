@@ -356,7 +356,7 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   submitComment() {
-    const { goalId, goalTypeParam, selectedTeamId, goalComment, pageNumber, pageItem } = this.state
+    const { goalId, employeeId, goalTypeParam, selectedTeamId, goalComment, pageNumber, pageItem } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
@@ -947,7 +947,7 @@ class TeamGoalsFragment extends BaseMVPView {
                     teamGoalsArray.length !== 0 ?
                     teamGoalsArray.map((resp, key) =>
                       <TeamGoalsComponent
-                        teamId = { resp.id }
+                        goalId = { resp.id }
                         teamTitle = { resp.title }
                         description = { resp.description }
                         startDate = { resp.startDate }
@@ -962,6 +962,7 @@ class TeamGoalsFragment extends BaseMVPView {
                           selectedMembers,
                           startDate,
                           dueDate,
+                          employeeId
                         ) => {
                           this.setState({
                             goalTypeParam: 'team',
@@ -974,6 +975,7 @@ class TeamGoalsFragment extends BaseMVPView {
                             showTeamGoalDetails: true,
                             startDate : startDate,
                             dueDate: dueDate,
+                            employeeId : employeeId,
                            })
                           this.presenter.getGoalTask(resp.id, 'team')
                           this.presenter.getGoalComment(resp.id, pageNumber, pageItem, 'team')
