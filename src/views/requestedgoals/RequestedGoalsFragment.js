@@ -563,7 +563,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       isSquadGoal,
       selectedTypeId
     } = this.state
-    console.log(selectedTypeId, isTeamGoal)
+
     const {
       isLineManager,
       filterId,

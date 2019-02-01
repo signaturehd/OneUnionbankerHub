@@ -96,7 +96,6 @@ export default class RequestCoachPresenter {
   }
 
   markAsCompletedWithType (remarks, id, type, goalId) {
-    console.log(goalId)
     this.view.showCircularLoader()
     this.addMarkAsCompletedWithTypeInteractor.execute(
       addMarkAsCompletedWithTypeParam(type, id, remarks, goalId))
