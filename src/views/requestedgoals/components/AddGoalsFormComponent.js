@@ -96,6 +96,7 @@ class AddGoalsFormComponent extends Component {
             <div className = { 'grid-global' }>
               <DatePicker
                 text = { 'Start Date' }
+                minDate = { moment(minimumDate) }
                 selected = {  startDate && moment(startDate) }
                 onChange = { (e) => {
                     startDateFunc(e)
@@ -103,7 +104,6 @@ class AddGoalsFormComponent extends Component {
                 }
                 dateFormat = { 'MM/DD/YYYY' }
                 errorMessage = { startDateErrorMessage }
-                minDate = { moment(minimumDate) }
                 maxDate = { moment(maximumDate) }
               />
               <DatePicker
