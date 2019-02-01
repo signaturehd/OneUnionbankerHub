@@ -19,13 +19,14 @@ class MobileIosUserGuideComponent extends Component {
         <div className = { 'text-align-left mobile-view-grid-row-text' }>
           <div>
             <br/>
-            <h4 className = { 'unionbank-white-color mobile-view-title-detail' }>User Guide</h4>
+            <h4 className = { 'unionbank-white-color mobile-view-title-steps-detail' }>User Guide</h4>
           </div>
           <div className = { 'text-align-left' }>
             <br/>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail font-size-14px' }>Download One UnionBanker Hub</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail font-size-14px' }>on an iOS device</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Download One UnionBanker Hub</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>on an iOS device</h4>
           </div>
+          <br/>
           <br/>
           <div>
             <div
@@ -35,27 +36,37 @@ class MobileIosUserGuideComponent extends Component {
               }}>
               <div>
                 <div>
-                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail' }>Steps</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-title-steps-detail' }>Steps</h4>
                 </div>
                 <br/>
                 <div className = { 'text-align-left' }>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 1: Launch Settings from your home screen</h4>
+                  <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 2: Select General</h4>
+                  <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 3: Scroll down and select Device Management</h4>
+                  <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 4: Select UNIONBANK OF THE PHILIPPINES</h4>
+                  <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
                 </div>
                 <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>As we move further in the development process of One</h4>
+                <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>UnionBanker Hub, we understand that having this app</h4>
+                <br/>
                 <h4
                   style = {{
                     marginBottom: '10px'
                   }}
                   className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>available on Apple Store would be the more</h4>
+                  <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Currently we are dedicating the full efforts of our</h4>
+                <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>development team towards a release in the Apple Store</h4>
+                <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>by August 2018 or sooner.</h4>
+                <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Thank you for using 1UHub!</h4>
               </div>
               <div>
