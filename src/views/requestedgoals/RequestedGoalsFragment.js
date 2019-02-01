@@ -1092,7 +1092,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                         <h2>
                         {
                           selectedTypeId === 'team' &&
-                          isTeamGoal === 0 &&
+                          isTeamGoal === 1 &&
                           <span
                             className = { 'icon-check icon-add-img' }
                             onClick = { () => this.setState({ addTask: true }) }
