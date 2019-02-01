@@ -42,17 +42,22 @@ export default class MyGoalsPresenter {
   }
 
   approveGoal (goalType, goalId, isApprove, rejectedRemarks) {
-    this.view.showCircularLoader()
-    this.approveGoalsInteractor.execute(approvalGoalsParam(goalType, goalId, isApprove, rejectedRemarks))
-    .subscribe(
-      data => {
-        this.view.hideCircularLoader()
-        this.getForApprovalGoals()
-        this.view.noticeResponse(data)
-      },
-      errors => {
-        this.view.hideCircularLoader()
-      }
-    )
+    try {
+      this.view.showCircularLoader()
+      this.approveGoalsInteractor.execute(approvalGoalsParam(goalType, goalId, isApprove, rejectedRemarks))
+      .subscribe(
+        data => {
+          this.view.hideCircularLoader()
+          this.getForApprovalGoals()
+          this.getGoalsForConfirmation()
+          this.view.noticeResponse(data)
+        },
+        errors => {
+          this.view.hideCircularLoader()
+        }
+      )
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
