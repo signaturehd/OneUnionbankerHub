@@ -103,8 +103,14 @@ export default class RequestCoachPresenter {
     .subscribe(
       data => {
         this.view.hideSubmitLoader()
-        this.view.noticeResponse(data)
         this.view.resetValue()
+        store.dispatch(NotifyActions.addNotify({
+           title : 'Success' ,
+           message : 'Successfully updated goal. ',
+           type : 'warning',
+           duration : 5000
+         })
+       )
       },
       errors => {
         this.view.hideSubmitLoader()

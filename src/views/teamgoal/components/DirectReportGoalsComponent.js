@@ -117,6 +117,7 @@ class DirectReportGoalsComponent extends Component {
                       <div>
                       </div>
                       <div>
+                        <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start: <b>{ moment(details.startDate).format('MMM DD, YYYY') }</b></h2>
                         <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(details.endDate).format('MMM DD, YYYY') }</b></h2>
                       </div>
                     </div>
