@@ -164,9 +164,13 @@ export default class RequestCoachPresenter {
     })
   }
 
-  updateGoals (goalId, startDate, dueDate) {
+  updateGoals (goalId, goalType, startDate, dueDate) {
+    const objectParam = {
+      goalId: goalId,
+      goalType: goalType,
+    }
     this.view.showSubmitLoader()
-    this.updateGoalsInteractor.execute(goalId, startDate, dueDate)
+    this.updateGoalsInteractor.execute(objectParam, startDate, dueDate)
     .do(data => {
       this.getGoals()
       this.view.hideSubmitLoader()

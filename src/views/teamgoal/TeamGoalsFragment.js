@@ -346,7 +346,7 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   onEdit() {
-    const { goalId, startDate, dueDate } = this.state
+    const { goalId, startDate, dueDate, goalTypeParam } = this.state
 
     if(!startDate) {
       this.setState({ startDateErrorMessage: 'Required field' })
@@ -355,6 +355,7 @@ class TeamGoalsFragment extends BaseMVPView {
     } else {
       this.presenter.updateGoals (
         goalId,
+        goalTypeParam,
         moment(startDate).format('YYYY-MM-DD'),
         moment(dueDate).format('YYYY-MM-DD')
       )
@@ -1459,6 +1460,7 @@ class TeamGoalsFragment extends BaseMVPView {
                       <h2></h2>
                     </div>
                     {
+                      selectedMembers &&
                       selectedMembers.length !== 0 ?
                       selectedMembers.participants.map((details, key) =>
                        <div>
@@ -1750,6 +1752,7 @@ class TeamGoalsFragment extends BaseMVPView {
                           </h2>
                         </div>
                         {
+                          selectedMembers &&
                           selectedMembers ?
                           selectedMembers.map((details, key) =>
                             <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.name }</h2>

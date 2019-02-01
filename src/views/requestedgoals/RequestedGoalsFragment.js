@@ -284,7 +284,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   onEdit() {
-    const { goalId, startDate, dueDate } = this.state
+    const { goalId, startDate, dueDate, isTeamGoal, isSquadGoal } = this.state
 
     if(!startDate) {
       this.setState({ startDateErrorMessage: 'Required field' })
@@ -293,6 +293,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     } else {
       this.presenter.updateGoals (
         goalId,
+        this.checkIdType(isTeamGoal, isSquadGoal),
         moment(startDate).format('YYYY-MM-DD'),
         moment(dueDate).format('YYYY-MM-DD')
       )

@@ -94,9 +94,14 @@ export default class RequestCoachPresenter {
     })
   }
 
-  updateGoals (goalId, startDate, dueDate) {
+  updateGoals (goalId, goalType, startDate, dueDate) {
+    const objectParam = {
+      goalId: goalId,
+      goalType: goalType,
+    }
+    console.log(objectParam)
     this.view.showSubmitLoader()
-    this.updateGoalsInteractor.execute(goalId, startDate, dueDate)
+    this.updateGoalsInteractor.execute(objectParam, startDate, dueDate)
     .do(data => {
       this.getGoals()
     })
@@ -104,13 +109,7 @@ export default class RequestCoachPresenter {
       data => {
         this.view.hideSubmitLoader()
         this.view.resetValue()
-        store.dispatch(NotifyActions.addNotify({
-           title : 'Success' ,
-           message : 'Successfully updated goal. ',
-           type : 'warning',
-           duration : 5000
-         })
-       )
+        this.view.noticeResponse(data)
       },
       errors => {
         this.view.hideSubmitLoader()
