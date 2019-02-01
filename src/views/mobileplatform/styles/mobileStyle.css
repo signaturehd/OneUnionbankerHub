@@ -1,5 +1,12 @@
-.mobile-font {
+@font-face {
+  font-family: 'Gotham Book';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Gotham Book'), url('GOTHAMBOOK.woff') format('woff');
+}
 
+.mobile-view-grid-row > *{
+  font-family: 'Gotham Book' !important;
 }
 
 .image-feature {

@@ -47,9 +47,12 @@ class MobileHeaderComponent extends Component {
               </div>
               <div className = { 'text-align-left' }>
                 <br/>
+                <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Download the Premier employee lifestyle </h4>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>app of the Unionbank of the Philippines</h4>
                 <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail-small' }>Designed with U in mind.</h4>
+                <br/>
+                <br/>
               </div>
               {
                 platformUsed === 'android' &&

@@ -24,6 +24,10 @@ class MobileView extends BaseMVPView {
     }
   }
 
+  openPrivacy () {
+     window.open('https://www.unionbankph.com/online/privacy-policy')
+   }
+
   render () {
     const {
       platformUsed
@@ -89,6 +93,7 @@ class MobileView extends BaseMVPView {
                   <br/>
                   <center>
                     <h4
+                      onClick = { () => this.openPrivacy() }
                       className = { 'font-weight-normal unionbank-color mobile-view-label-detail-small' }>Check our Data Privacy Statement</h4>
                     <br/>
                     <h2

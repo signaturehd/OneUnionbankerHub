@@ -23,10 +23,10 @@ class MobileIosUserGuideComponent extends Component {
           </div>
           <div className = { 'text-align-left' }>
             <br/>
-            <br/>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Download One UnionBanker Hub</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>on an iOS device</h4>
           </div>
+          <br/>
           <br/>
           <br/>
           <br/>
@@ -41,19 +41,26 @@ class MobileIosUserGuideComponent extends Component {
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-title-steps-detail' }>Steps</h4>
                 </div>
                 <br/>
+                <br/>
                 <div className = { 'text-align-left' }>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 1: Launch Settings from your home screen</h4>
                   <br/>
+                  <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 2: Select General</h4>
+                  <br/>
                   <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 3: Scroll down and select Device Management</h4>
                   <br/>
+                  <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 4: Select UNIONBANK OF THE PHILIPPINES</h4>
+                  <br/>
                   <br/>
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
                 </div>
                 <br/>
+                <br/>
                 <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>As we move further in the development process of One UnionBanker Hub, we understand having this app available on the Apple Store would be more user-friendly option</h4>
+                <br/>
                 <br/>
                 <h4
                   style = {{
