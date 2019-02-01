@@ -2476,7 +2476,7 @@ export default class HRBenefitsService {
   }
 
   getDirectReportGoals (token, status) {
-    return this.apiClient.get(`v1/goals/reports?goalType=personal&status=2,8`, {
+    return this.apiClient.get(`v1/goals/reports?goalType=personal&status=2,6,8`, {
       headers: { token }
     })
   }

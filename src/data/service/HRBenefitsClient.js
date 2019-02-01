@@ -1716,5 +1716,20 @@ export default class HRBenefitsClient {
   requestBIR2316 (token, year) {
     return this.service.requestBIR2316(token, year)
     .pipe(ServiceErrorOperator())
+    .flatMap(resp => {
+        return this.service.getPdf(token, resp)
+      }
+    )
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+
+        reader.readAsDataURL(resp.data)
+      })
+    )
   }
 }

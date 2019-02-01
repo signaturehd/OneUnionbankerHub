@@ -46,83 +46,61 @@ class TeamGoalsComponent extends Component {
 
   render () {
     const {
-      teamId,
-      teamTitle,
-      description,
-      startDate,
-      dueDate,
-      priorityId,
-      typeId,
-      participants,
       priorityFunc,
       onSelected,
-      goalId
+      teamGoalsArray
     } = this.props
 
     const { index, viewMoreText } = this.state
-    const isVisible = (participants && participants.length > 1) ? '' : 'hide'
-
     return (
-      <div className = { 'padding-15px' }>
-        <div>
-          {
-            participants &&
-            participants.map((details, key) =>
-
-              <Card className = { 'cursor-pointer' }
-                onClick = { () => onSelected(
-                  teamTitle,
-                  description,
-                  participants,
-                  startDate,
-                  dueDate,
-                  details.employeeId,
-                  goalId
-                ) }>
-                <div className = { 'padding-15' }>
-                  <div className = { 'header-column-1' }>
+      <div>
+        {
+          teamGoalsArray.length !== 0 ?
+          teamGoalsArray.map((resp,key) =>
+            <div className = { 'padding-15px' }>
+              <div>
+                <Card className = { 'cursor-pointer' }
+                  onClick = { () => onSelected(
+                    resp.title,
+                    resp.description,
+                    resp,
+                    resp.startDate,
+                    resp.dueDate,
+                    resp.id,
+                  ) }>
+                  <div className = { 'padding-15' }>
+                    <div className = { 'header-column-1' }>
+                      <div>
+                        <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
+                      </div>
+                      <div className = { 'text-align-right' }>
+                        <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>{this.checkTpye(resp.type)}</span></h2>
+                      </div>
+                    </div>
+                    <div></div>
                     <div>
-                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ teamTitle }</h2>
-                    </div>
-                    <div className = { 'text-align-right' }>
-                      <h2 className = { 'margin-10px font-size-12px font-weight-lighter' }><span className = { 'border-team color-gray' }>{this.checkTpye(typeId)}</span></h2>
-                    </div>
-                  </div>
-                  <div></div>
-                  <div>
-                    <Line/>
-                    <div className = { 'grid-footer-column margin-5px' }>
-                      <div>
-                        <h2
-                          className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(priorityId)}` }>{ priorityFunc(priorityId) }</h2>
-                      </div>
-                      <div></div>
-                      <div>
-                        <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start: <b>{ moment(startDate).format('MMM DD, YYYY') }</b></h2>
-                        <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(dueDate).format('MMM DD, YYYY') }</b></h2>
+                      <Line/>
+                      <div className = { 'grid-footer-column margin-5px' }>
+                        <div>
+                          <h2
+                            className = { `margin-5px text-align-right font-size-12px font-weight-bold color-${priorityFunc(resp.priority)}` }>{ priorityFunc(resp.priority) }</h2>
+                        </div>
+                        <div></div>
+                        <div>
+                          <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start: <b>{ moment(resp.startDate).format('MMM DD, YYYY') }</b></h2>
+                          <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(resp.dueDate).format('MMM DD, YYYY') }</b></h2>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                </div>
-              </Card>
-            )
-          }
-          <button
-            type = { 'button' }
-            className = { `viewmore tooltip ${ isVisible }` }
-            onClick = {
-              () => {
-                if(index === cardHolder.length)
-                  this.setState({ index : 1, viewMoreText : 'View more' })
-                else
-                  this.setState({ index : cardHolder.length, viewMoreText : 'View less' })
-              }
-            }>
-            <img src={ require('../../../images/icons/horizontal.png') } />
-            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-          </button>
-        </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          )
+          :
+          <center><h2>No record</h2></center>
+        }
       </div>
     )
   }

@@ -125,8 +125,11 @@ class RequestedGoalsComponent extends Component {
                       resp.approvalStatus === 5 ?
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
                       :
-                      resp.approvalStatus === 6 &&
+                      resp.approvalStatus === 6 ?
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                      :
+                      resp.approvalStatus === 8 &&
+                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Low' }>For Rating</h2>
                   }
                 </div>
                 <div>

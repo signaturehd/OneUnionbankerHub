@@ -611,7 +611,7 @@ class TeamGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
-
+    console.log(teamGoalsArray)
     return (
     <div>
       { super.render() }
@@ -963,51 +963,39 @@ class TeamGoalsFragment extends BaseMVPView {
                       <CircularLoader show = { enabledLoader }/>
                     </center>
                     :
-                    teamGoalsArray.length !== 0 ?
-                    teamGoalsArray.map((resp, key) =>
-                      <TeamGoalsComponent
-                        goalId = { resp.id }
-                        teamTitle = { resp.title }
-                        description = { resp.description }
-                        startDate = { resp.startDate }
-                        dueDate = { resp.dueDate }
-                        priorityId = { resp.priority }
-                        participants = { resp.participants }
-                        typeId = { resp.type }
-                        priorityFunc = { (resp) => this.priorityFunc(resp) }
-                        onSelected = { (
-                          selectedTitle,
-                          selectedDescription,
-                          selectedMembers,
-                          startDate,
-                          dueDate,
-                          employeeId,
-                          goalId
-                        ) => {
+                    <TeamGoalsComponent
+                      teamGoalsArray = { teamGoalsArray }
+                      priorityFunc = { (resp) => this.priorityFunc(resp) }
+                      onSelected = { (
+                        selectedTitle,
+                        selectedDescription,
+                        selectedMembers,
+                        startDate,
+                        dueDate,
+                        goalId
+                      ) => {
+                        try {
                           this.setState({
                             goalTypeParam: 'team',
                             selectedTitle,
-                            goalId: resp.id,
-                            goalTitle: resp.title,
+                            goalId: goalId,
                             selectedDescription,
                             selectedMembers,
                             showTeamGoal: true,
                             showTeamGoalDetails: true,
                             startDate : startDate,
                             dueDate: dueDate,
-                            employeeId : employeeId,
-                            goalId : goalId,
                            })
-                          this.presenter.getGoalTask(resp.id, 'team')
-                          this.presenter.getGoalComment(resp.id, pageNumber, pageItem, 'team')
-                          this.presenter.getGoalsHistory(resp.id, pageNumber, pageItem)
+                        } catch (e) {
+                          console.log(e)
                         }
-                       }
-                       onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
-                      />
-                    )
-                    :
-                    <center><h2>No record</h2></center>
+                        this.presenter.getGoalTask(goalId, 'team')
+                        this.presenter.getGoalComment(goalId, pageNumber, pageItem, 'team')
+                        this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
+                      }
+                     }
+                     onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                    />
                 }
               </div>
             }
@@ -1388,13 +1376,14 @@ class TeamGoalsFragment extends BaseMVPView {
                       <h2></h2>
                     </div>
                     {
-                      selectedMembers ?
-                      selectedMembers.map((details, key) =>
+                      selectedMembers.length !== 0 ?
+                      selectedMembers.participants.map((details, key) =>
                         <div
                           onClick = { () =>
                             this.setState({
                               showMemberGoal: true,
                               statusId: details.status,
+                              employeeId: details.employeeId,
                             }) }
                           className = { 'cursor-pointer team-goal-grid-percentage' }>
                           <div className = { 'squad-profile-picture' }>

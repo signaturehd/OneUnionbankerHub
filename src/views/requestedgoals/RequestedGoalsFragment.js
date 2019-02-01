@@ -966,7 +966,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <div className = { 'header-column-3x card-background padding-10px' }>
                     <h2 className = { 'font-weight-bold text-align-left font-size-16px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                     {
-                      isTeamGoal === 0 &&
+                      !isLineManager &&
                       <span
                         className = { 'icon-check icon-edit-white-img' }
                         onClick = { () => this.setState({ showForm: true, editMode: true }) }
@@ -975,6 +975,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                     <h2>
                     {
                       isTeamGoal === 0 &&
+                      isSquadGoal === 0 &&
                       <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id, resp.isSquadGoal, resp.isTeamGoal) }/>
                     }
                     </h2>
