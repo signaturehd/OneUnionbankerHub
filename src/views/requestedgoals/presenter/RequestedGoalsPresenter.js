@@ -338,14 +338,21 @@ export default class RequestCoachPresenter {
 
   markAsCompletedWithType (
     businessOutcome,
-    isTeamGoal
+    isTeamGoal,
+    type,
+    goalId
   ){
+    console.log(businessOutcome,
+    isTeamGoal,
+    type,
+    goalId)
     this.view.showSubmitLoader()
     this.addMarkAsCompletedWithTypeInteractor.execute(
       markParam(
+        type,
         isTeamGoal,
-        storedGoalId,
         businessOutcome,
+        goalId
       )
     )
     .subscribe(

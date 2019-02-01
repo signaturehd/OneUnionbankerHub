@@ -464,11 +464,11 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   postMarkAsCompleted() {
-    const { businessOutcome, isTeamGoal } = this.state
+    const { businessOutcome, isTeamGoal, goalId, selectedTypeId } = this.state
 
     if(businessOutcome !== '') {
       this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
-      this.presenter.markAsCompletedWithType(businessOutcome, isTeamGoal)
+      this.presenter.markAsCompletedWithType(businessOutcome, isTeamGoal, selectedTypeId, goalId)
     } else {
       this.setState ({ businessOutcomeErrorMessage: 'Required field' })
     }
@@ -1173,8 +1173,6 @@ class RequestedGoalsFragment extends BaseMVPView {
                         <div>
                           {
                             parseInt(percentageTask) === 100 &&
-                            isSquadGoal !== 0 &&
-                            isTeamGoal !== 0 &&
                             <div className= { 'text-align-right' }>
                               <GenericButton
                                 text = { 'Mark as completed' }
