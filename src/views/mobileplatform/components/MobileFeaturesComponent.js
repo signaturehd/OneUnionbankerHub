@@ -19,9 +19,9 @@ class MobileFeaturesComponent extends Component {
             </div>
             <div className = { 'text-align-left' }>
               <br/>
-              <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail'  }>There's so many things that you can do
+              <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small'  }>There's so many things that you can do
                 <br/>
-                with <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }> One UnionBanker Hub!</b>
+                with <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }> One UnionBanker Hub!</b>
               </h4>
             </div>
             <div></div>
@@ -38,8 +38,8 @@ class MobileFeaturesComponent extends Component {
               marginTop: '-120px'
             }}
             className = { 'text-align-right' }>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>HR Services right at your fingerprints!</h4>
-            <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }>Use the My Benefits Module today!</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>HR Services right at your fingerprints!</h4>
+            <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }>Use the My Benefits Module today!</h4>
           </div>
       </div>
     )

@@ -59,7 +59,7 @@
 .mobile-view-googleplay-detail {
   background-size:contain;
   background-repeat: no-repeat;
-  height: 120px;
+  height: 100px;
   margin-top: 22px;
   width: auto;
 }
@@ -71,7 +71,7 @@
 .mobile-view-appstore-detail {
   background-repeat: no-repeat;
   background-size:contain;
-  height: 120px;
+  height: 100px;
   margin-top: 22px;
   width: auto;
 }
@@ -108,6 +108,17 @@
 .mobile-view-label-detail {
   letter-spacing: 0.3pt;
   font-size: 3rem;
+}
+
+.mobile-view-label-detail-small {
+  letter-spacing: 0.3pt;
+  font-size: 2.5rem;
+}
+
+.mobile-view-title {
+  letter-spacing: 0.3pt;
+  font-size:5rem;
+  font-weight:500;
 }
 
 .mobile-view-label-steps-detail {

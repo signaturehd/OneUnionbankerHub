@@ -37,19 +37,19 @@ class MobileHeaderComponent extends Component {
               <span className = { 'mobile-view-ubplogo mobile-view-ubplogo-detail' }/>
               <div className = { 'text-align-left mobile-view-grid-row-text' }>
                 <div>
-                  <h4 className = { 'unionbank-white-color mobile-view-title-detail' }>One Place,</h4>
+                  <h4 className = { 'unionbank-white-color mobile-view-title' }>One Place,</h4>
                 </div>
                 <div>
-                  <h4 className = { 'unionbank-white-color mobile-view-title-detail' }>JUST FOR
-                    <b className = { 'unionbank-color mobile-view-title-detail' }> U</b>
+                  <h4 className = { 'unionbank-white-color mobile-view-title' }>JUST FOR
+                    <b className = { 'unionbank-color mobile-view-title' }> U</b>
                   </h4>
                 </div>
               </div>
               <div className = { 'text-align-left' }>
                 <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Download the Premier employee lifestyle </h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>app of the Unionbank of the Philippines</h4>
-                <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail' }>Designed with U in mind.</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Download the Premier employee lifestyle </h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>app of the Unionbank of the Philippines</h4>
+                <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail-small' }>Designed with U in mind.</h4>
               </div>
               {
                 platformUsed === 'android' &&
@@ -68,14 +68,16 @@ class MobileHeaderComponent extends Component {
               {
                 platformUsed === 'ios' &&
                 <div>
+                <br/>
                   <h4
                     style ={{
                         textDecoration: 'underline',
                     }}
                     onClick = { () => iosUserGuideFunc(true) }
-                    className = { 'mobile-font-size font-weight-lighter unionbank-white-color mobile-view-label-detail' }>View Download Instruction.</h4>
+                    className = { 'mobile-font-size font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>View Download Instruction.</h4>
                 </div>
               }
+              <br/>
             </div>
           }
         </div>

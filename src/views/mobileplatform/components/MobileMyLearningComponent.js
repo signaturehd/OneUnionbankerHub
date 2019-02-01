@@ -23,12 +23,12 @@ class MobileMyLearningComponent extends Component {
             width : '100%'
           }}/>
           <div className = { 'text-align-right margin-auto' }>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Borrow a book?</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Listen to a Podcast?</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Enroll to training?</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Develop yourself</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>through
-              <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }> My Learning.</b>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Borrow a book?</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Listen to a Podcast?</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Enroll to training?</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Develop yourself</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>through
+              <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }> My Learning.</b>
             </h4>
           </div>
       </div>

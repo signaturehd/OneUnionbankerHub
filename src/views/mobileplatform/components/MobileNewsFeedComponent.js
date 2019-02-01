@@ -21,9 +21,9 @@ class MobileNewsFeedComponent extends Component {
             height: '100%',
             width : '100%'
           }}/>
-          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Stay connected with the latest about UnionBank</h4>
-          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>through our
-            <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }> dynamic newsfeed</b>
+          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Stay connected with the latest about UnionBank</h4>
+          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>through our
+            <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }> dynamic newsfeed</b>
           </h4>
       </div>
     )

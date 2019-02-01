@@ -23,9 +23,11 @@ class MobileIosUserGuideComponent extends Component {
           </div>
           <div className = { 'text-align-left' }>
             <br/>
+            <br/>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Download One UnionBanker Hub</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>on an iOS device</h4>
           </div>
+          <br/>
           <br/>
           <br/>
           <div>
@@ -51,23 +53,13 @@ class MobileIosUserGuideComponent extends Component {
                   <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
                 </div>
                 <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>As we move further in the development process of One</h4>
-                <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>UnionBanker Hub, we understand that having this app</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>As we move further in the development process of One UnionBanker Hub, we understand having this app available on the Apple Store would be more user-friendly option</h4>
                 <br/>
                 <h4
                   style = {{
                     marginBottom: '10px'
                   }}
-                  className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>available on Apple Store would be the more</h4>
-                  <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Currently we are dedicating the full efforts of our</h4>
-                <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>development team towards a release in the Apple Store</h4>
-                <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>by August 2018 or sooner.</h4>
-                <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Thank you for using 1UHub!</h4>
+                  className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Currently we are dedicating the full efforts of our development team towards a release in the Apple Store by August 2018 or sooner. <br/> Thank you for using 1UHub!</h4>
               </div>
               <div>
                 <img
