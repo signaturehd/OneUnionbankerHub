@@ -2415,7 +2415,7 @@ export default class HRBenefitsService {
   }
 
   getTeamGoals (token, goalType) {
-    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=1,2,8`, {
+    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=1,2,5,8`, {
       headers: { token }
     })
   }
