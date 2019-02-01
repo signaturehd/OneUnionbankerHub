@@ -245,7 +245,6 @@ class ApprovalGoalsFragment extends BaseMVPView {
                         confirmationArray &&
                         confirmationArray.length !== 0 ?
                         confirmationArray.map((resp, key) =>
-                          resp.isTeamGoal === 1 &&
                           <ConfirmGoalsComponent
                             onSelected = { (
                               goalId,
@@ -316,8 +315,8 @@ class ApprovalGoalsFragment extends BaseMVPView {
                           approvalStatus = { approvalStatus }
                           description = { description }
                           priorityId = { priorityId }
-                          startDate = { startDate }
-                          dueDate = { dueDate }
+                          startDate = { resp.startDate }
+                          dueDate = { resp.endDate }
                           goalTypeId = { goalTypeId }
                           rejectedRemarks = { rejectedRemarks }
                           showRejectRemarksModal = { showRejectRemarksModal }

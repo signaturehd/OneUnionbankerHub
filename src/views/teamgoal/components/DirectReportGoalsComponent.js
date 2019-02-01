@@ -73,7 +73,8 @@ class DirectReportGoalsComponent extends Component {
                   details.endDate,
                   priorityFunc(details.priority),
                   details.statusId,
-                  details.type
+                  details.type,
+                  details.remarks.employee
                 ) }>
                 <div className = { 'padding-15' }>
                   <div className = { 'header-column-1' }>

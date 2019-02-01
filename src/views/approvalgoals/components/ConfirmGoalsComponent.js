@@ -43,7 +43,7 @@ class ConfirmGoalsComponent extends Component {
       type,
       description,
       startDate,
-      endDate,
+      dueDate,
       isSquadGoal,
       goalId,
       isTeamGoal,
@@ -61,7 +61,7 @@ class ConfirmGoalsComponent extends Component {
             type,
             description,
             startDate,
-            endDate,
+            dueDate,
             isSquadGoal,
             isTeamGoal
           )
@@ -127,7 +127,7 @@ class ConfirmGoalsComponent extends Component {
                   <div>
                     <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start Date: <b>{ moment(startDate).format('MMM DD, YYYY') }</b></h2>
                     <br/>
-                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(endDate).format('MMM DD, YYYY') }</b></h2>
+                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(dueDate).format('MMM DD, YYYY') }</b></h2>
                   </div>
                 </div>
               </div>

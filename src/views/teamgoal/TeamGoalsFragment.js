@@ -48,6 +48,8 @@ class TeamGoalsFragment extends BaseMVPView {
       squadType: 'squad',
       enabledLoader : false,
       submitLoader: false,
+      showMarkAsCompleted: false,
+      ifYesCompleted: false,
       taskLoader: false,
       commentLoader: false,
       showNoticeResponseModal : false,
@@ -110,7 +112,10 @@ class TeamGoalsFragment extends BaseMVPView {
       selectedName: '',
       selectedImageUrl: '',
       squadCommentList: '',
+      businessOutcomeLabel: '',
       goalTypeParam: '',
+      businessOutcome: '',
+      businessOutcomeErrorMessage: '',
       onChangeValue: '',
       selectedMembers: [],
       memberId: '',
@@ -266,7 +271,6 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   goalCommentFunc (goalComment) {
-    console.log(this.state.commentArray)
     this.setState({ goalComment })
   }
 
@@ -517,8 +521,21 @@ class TeamGoalsFragment extends BaseMVPView {
     return isBool
   }
 
+  postMarkAsCompleted() {
+    const { businessOutcome, isTeamGoal, goalTypeParam, goalId } = this.state
+
+    if(businessOutcome !== '') {
+      this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
+      this.presenter.markAsCompletedWithType(businessOutcome, isTeamGoal, goalTypeParam, goalId)
+    } else {
+      this.setState ({ businessOutcomeErrorMessage: 'Required field' })
+    }
+  }
+
   render () {
     const {
+      showMarkAsCompleted,
+      ifYesCompleted,
       teamType,
       squadType,
       enabledLoader,
@@ -599,7 +616,10 @@ class TeamGoalsFragment extends BaseMVPView {
       showRatingModal,
       showRateOptions,
       showTabDetails,
-      employeeId
+      employeeId,
+      businessOutcome,
+      businessOutcomeErrorMessage,
+      businessOutcomeLabel,
     } = this.state
 
     const {
@@ -614,7 +634,7 @@ class TeamGoalsFragment extends BaseMVPView {
     let totalCount = taskArray && taskArray.length
     let taskCompleted  = this.checkIfTaskCompleted(taskArray)
     let percentageTask = taskArray && (taskCompleted /totalCount) * 100
-    console.log(teamGoalsArray)
+
     return (
     <div>
       { super.render() }
@@ -649,6 +669,60 @@ class TeamGoalsFragment extends BaseMVPView {
           }
           onClose = { () => this.setState({ showPriorityModal: false }) }
         />
+      }
+      {
+        showMarkAsCompleted &&
+        <Modal>
+          {
+            ifYesCompleted ?
+            <div>
+              <h4>Business Outcome</h4>
+              <h4 className = { 'font-size-10px font-weight-normal' }>Please input the actual outcome of the completed goal</h4>
+              <br/>
+              <GenericInput
+                text = { 'Business Outcome' }
+                type = { 'textarea' }
+                value = { businessOutcome }
+                onChange = { (e) => this.setState({ businessOutcome: e.target.value, businessOutcomeErrorMessage: '' }) }
+                errorMessage = { businessOutcomeErrorMessage }
+              />
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Cancel' }
+                  className = { 'profile-button-small cursor-pointer global-button' }
+                  onClick = { () => this.setState({ showMarkAsCompleted: false, ifYesCompleted: false }) }
+                />
+                <GenericButton
+                  text = { 'Submit' }
+                  className = { 'profile-button-small cursor-pointer global-button' }
+                  onClick = { () => {
+                    try {
+                      this.postMarkAsCompleted()
+                    } catch (e) {
+                      console.log(e)
+                    }
+                  } }
+                />
+              </div>
+            </div>
+            :
+            <center>
+              <h2>The Goal is completed. Do you want to mark as completed?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'No' }
+                  onClick = { () => this.setState({ showMarkAsCompleted: false }) }
+                />
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => this.setState({ ifYesCompleted: true }) }
+                />
+              </div>
+            </center>
+          }
+        </Modal>
       }
       {
         showGoalTypeModal &&
@@ -912,10 +986,12 @@ class TeamGoalsFragment extends BaseMVPView {
                           dueDate,
                           priorityName,
                           statusId,
-                          goalTypeId
+                          goalTypeId,
+                          businessOutcomeLabel
                         ) => {
                           this.setState({
                             goalId,
+                            businessOutcomeLabel,
                             goalTitle,
                             description,
                             startDate,
@@ -992,6 +1068,7 @@ class TeamGoalsFragment extends BaseMVPView {
                         } catch (e) {
                           console.log(e)
                         }
+                        this.setState({ goalId: resp.id })
                         this.presenter.getGoalTask(goalId, 'team')
                         this.presenter.getGoalComment(goalId, pageNumber, pageItem, 'team')
                         this.presenter.getGoalsHistory(goalId, pageNumber, pageItem)
@@ -1036,6 +1113,7 @@ class TeamGoalsFragment extends BaseMVPView {
                           selectedMembers,
                           goalTypeParam: 'squad'
                          })
+                         this.setState({ goalId: resp.id })
                          this.presenter.getTeamGoals('squad')
                          this.setState({ showReviewComponent: false })
                          this.presenter.getGoalTask(resp.id, 'squad')
@@ -1202,6 +1280,8 @@ class TeamGoalsFragment extends BaseMVPView {
                   <br/>
                   <Line/>
                   <div className = { 'padding-10px' }>
+                    <h2 className = { 'font-size-12px' }> Business Outcome : { businessOutcomeLabel && businessOutcomeLabel }</h2>
+                    <br/>
                     <div className = { 'header-column' }>
                       <div>
                         <h2 className = { 'font-weight-bold text-align-left font-size-14px' }>Tasks</h2>
@@ -1381,28 +1461,32 @@ class TeamGoalsFragment extends BaseMVPView {
                     {
                       selectedMembers.length !== 0 ?
                       selectedMembers.participants.map((details, key) =>
-                        <div
-                          onClick = { () =>
-                            this.setState({
-                              showMemberGoal: true,
-                              statusId: details.status,
-                              employeeId: details.employeeId,
-                            }) }
-                          className = { 'cursor-pointer team-goal-grid-percentage' }>
-                          <div className = { 'squad-profile-picture' }>
-                            <h2 className = { 'squad-initial-text' }>
-                              { details &&  convertInitial(details.fullName && details.fullName) }
-                            </h2>
-                          </div>
-                          <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.fullName }</h2>
-                          <div className = { 'text-align-right' }>
-                            <Progress
-                              type = { 'circle' }
-                              height = { 25 }
-                              width = { 25 }
-                              percent = { this.checkEmployeePercentageStatus(details.totalTask, details.completedTask ) || 0} />
-                          </div>
-                        </div>
+                       <div>
+                         <div
+                           onClick = { () =>
+                             this.setState({
+                               showMemberGoal: true,
+                               statusId: details.status,
+                               employeeId: details.employeeId,
+                             }) }
+                           className = { 'cursor-pointer team-goal-grid-percentage' }>
+                           <div className = { 'squad-profile-picture' }>
+                             <h2 className = { 'squad-initial-text' }>
+                               { details &&  convertInitial(details.fullName && details.fullName) }
+                             </h2>
+                           </div>
+                           <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>{ details.fullName }</h2>
+                           <div className = { 'text-align-right' }>
+                             <Progress
+                               type = { 'circle' }
+                               height = { 25 }
+                               width = { 25 }
+                               percent = { this.checkEmployeePercentageStatus(details.totalTask, details.completedTask ) || 0} />
+                           </div>
+                         </div>
+                         <h2 className={ 'font-size-10px' }>Business Outcome: { details.businessOutcome  }</h2>
+                         <br/>
+                       </div>
                       )
                       :
                       <h2 className = { 'font-weight-lighter text-align-left font-size-12px' }>No record</h2>
@@ -1561,7 +1645,7 @@ class TeamGoalsFragment extends BaseMVPView {
                             <GenericButton
                               className = { 'profile-button-small text-align-right cursor-pointer global-button' }
                               text = { 'Mark as Completed' }
-                              onClick = { () => this.presenter.test() }
+                              onClick = { () => this.setState({ showMarkAsCompleted : true  }) }
                               />
                           </div>
                           <br/>

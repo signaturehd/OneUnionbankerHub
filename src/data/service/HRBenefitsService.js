@@ -2445,7 +2445,7 @@ export default class HRBenefitsService {
         headers: { token }
       })
     } else {
-      return this.apiClient.post(`v1/goals/${markParam.id}/completion?goalType=personal`, markParam.body, {
+      return this.apiClient.post(`v1/goals/${markParam.goalId}/completion?goalType=${markParam.type}`, markParam.body, {
         headers: { token }
       })
     }

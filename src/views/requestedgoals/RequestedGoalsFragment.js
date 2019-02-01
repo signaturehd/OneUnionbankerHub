@@ -1012,8 +1012,11 @@ class RequestedGoalsFragment extends BaseMVPView {
                           approvalStatus === 5 ?
                           <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>Deletion for approval</h2>
                           :
-                          approvalStatus === 6 &&
+                          approvalStatus === 6 ?
                           <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low description-title' }>Completed</h2>
+                          :
+                          approvalStatus === 8 &&
+                          <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low description-title' }>For Rating</h2>
                       }
                     </div>
                     <div className = { 'details-rows' }>
@@ -1152,8 +1155,9 @@ class RequestedGoalsFragment extends BaseMVPView {
 
                         <div>
                           {
-                            isSquadGoal !== 1 &&
-                            parseInt(percentageTask) === 100 &&
+                            approvalStatus === 8 &&
+                            isSquadGoal !== 0 &&
+                            isTeamGoal !== 0 &&
                             <div className= { 'text-align-right' }>
                               <GenericButton
                                 text = { 'Mark as completed' }
