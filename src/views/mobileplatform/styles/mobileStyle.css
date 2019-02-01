@@ -93,6 +93,11 @@
   font-size: 3rem;
 }
 
+.mobile-view-label-steps-detail {
+  letter-spacing: 0.3pt;
+  font-size: 1.5rem;
+}
+
 
 @media (max-width:768px) {
   .mobile-view-label-detail {

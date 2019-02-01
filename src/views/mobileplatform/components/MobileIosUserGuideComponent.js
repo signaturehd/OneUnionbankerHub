@@ -35,35 +35,35 @@ class MobileIosUserGuideComponent extends Component {
               }}>
               <div>
                 <div>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-30px mobile-view-label-detail' }>Steps</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail' }>Steps</h4>
                 </div>
                 <br/>
                 <div className = { 'text-align-left' }>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 1: Launch Settings from your home screen</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 2: Select General</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 3: Scroll down and select Device Management</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 4: Select UNIONBANK OF THE PHILIPPINES</h4>
-                  <h4 className = { 'font-weight-bold unionbank-white-color font-size-8px' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 1: Launch Settings from your home screen</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 2: Select General</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 3: Scroll down and select Device Management</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 4: Select UNIONBANK OF THE PHILIPPINES</h4>
+                  <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-steps-detail' }>Step 5: Select Trust "UNIONBANK OF THE PHILIPPINES"</h4>
                 </div>
                 <br/>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>As we move further in the development process of One</h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>UnionBanker Hub, we understand that having this app</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>As we move further in the development process of One</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>UnionBanker Hub, we understand that having this app</h4>
                 <h4
                   style = {{
                     marginBottom: '10px'
                   }}
-                  className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>available on Apple Store would be the more</h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>Currently we are dedicating the full efforts of our</h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>development team towards a release in the Apple Store</h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>by August 2018 or sooner.</h4>
-                <h4 className = { 'font-weight-lighter unionbank-white-color font-size-8px' }>Thank you for using 1UHub!</h4>
+                  className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>available on Apple Store would be the more</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Currently we are dedicating the full efforts of our</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>development team towards a release in the Apple Store</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>by August 2018 or sooner.</h4>
+                <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-steps-detail' }>Thank you for using 1UHub!</h4>
               </div>
               <div>
                 <img
                   src = { require('../../../images/mobileview/user guide.png') }
                   style = {{
                     height: '100%',
-                    width : '60%'
+                    width : '100%'
                   }}/>
               </div>
             </div>
