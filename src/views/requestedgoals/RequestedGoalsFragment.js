@@ -1172,7 +1172,7 @@ class RequestedGoalsFragment extends BaseMVPView {
 
                         <div>
                           {
-                            approvalStatus === 8 &&
+                            parseInt(percentageTask) === 100 &&
                             isSquadGoal !== 0 &&
                             isTeamGoal !== 0 &&
                             <div className= { 'text-align-right' }>
