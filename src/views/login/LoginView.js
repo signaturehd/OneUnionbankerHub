@@ -266,13 +266,13 @@ class LoginView extends BaseMVPView {
 
     /* Prod Version 6.3.0 */
 
-    /* UAT 7.0.0*/
+    /* UAT 7.4.9*/
 
     /* Added new Team Goals */
 
     let version = 7
-    let majorVersion = 4
-    let minorVersion = 9
+    let majorVersion = 0
+    let minorVersion = 0
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
