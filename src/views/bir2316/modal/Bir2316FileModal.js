@@ -63,9 +63,6 @@ class Bir2316FileModal extends Component {
           </center>
         }
             <center>
-              <GenericButton
-                text={ 'Report Issue' }
-                onClick={ () => this.setState({ showFeedback : true,   }) }/>
             </center>
       </Modal>
 
