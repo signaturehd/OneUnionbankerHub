@@ -89,15 +89,9 @@ class MobileView extends BaseMVPView {
                   <br/>
                   <center>
                     <h4
-                      style = {{
-                        fontSize : '12pt'
-                      }}
                       className = { 'font-weight-normal unionbank-color mobile-view-label-detail' }>Check our Data Privacy Statement</h4>
                     <br/>
                     <h2
-                      style = {{
-                        fontSize : '8pt'
-                      }}
                       className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>&#169; 2018 Union Bank of the Philippines</h2>
                   </center>
                 </div>

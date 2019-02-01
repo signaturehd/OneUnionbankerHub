@@ -53,15 +53,17 @@ class MobileHeaderComponent extends Component {
               </div>
               {
                 platformUsed === 'android' &&
-                <span
+                <div
                   onClick = { () =>  this.downloadAndroid() }
-                  className = { 'cursor-pointer mobile-view-googleplay mobile-view-googleplay-detail' }/>
+                  className = { 'cursor-pointer mobile-view-googleplay mobile-view-googleplay-detail' }>
+                </div>
               }
               {
                 platformUsed === 'ios' &&
-                  <span
+                  <div
                     onClick = { () => this.downloadIOS() }
-                    className = { 'cursor-pointer mobile-view-appstore mobile-view-appstore-detail' }/>
+                    className = { 'cursor-pointer mobile-view-appstore mobile-view-appstore-detail' }>
+                  </div>
               }
               {
                 platformUsed === 'ios' &&
@@ -71,7 +73,7 @@ class MobileHeaderComponent extends Component {
                         textDecoration: 'underline',
                     }}
                     onClick = { () => iosUserGuideFunc(true) }
-                    className = { 'font-size-10px font-weight-lighter unionbank-white-color mobile-view-label-detail' }>View Download Instruction.</h4>
+                    className = { 'mobile-font-size font-weight-lighter unionbank-white-color mobile-view-label-detail' }>View Download Instruction.</h4>
                 </div>
               }
             </div>

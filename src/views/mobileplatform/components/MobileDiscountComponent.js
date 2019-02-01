@@ -18,7 +18,6 @@ class MobileDiscountComponent extends Component {
           display: 'grid',
           height: 'auto',
           gridTemplateColumns: '1fr 1fr',
-          fontSize: '11pt',
           }}>
           <div
             className = { 'text-align-left margin-auto' }>

@@ -1,3 +1,10 @@
+h4 {
+  font-size: 3rem;
+}
+
+.mobile-font-sixe {
+  font-size: 2rem;
+}
 
 .mobile-view-grid-row {
   padding-top: 40px;
@@ -44,10 +51,10 @@
 }
 
 .mobile-view-googleplay-detail {
-  background-size: 120px;
+  background-size:contain;
   background-repeat: no-repeat;
-  height: 80px;
-  margin-top: -25px;
+  height: 120px;
+  margin-top: 22px;
   width: auto;
 }
 
@@ -56,9 +63,9 @@
 }
 
 .mobile-view-appstore-detail {
-  background-size: 120px;
   background-repeat: no-repeat;
-  height: 40px;
+  background-size:contain;
+  height: 120px;
   margin-top: 22px;
   width: auto;
 }
@@ -81,10 +88,16 @@
 
 .mobile-view-title-detail {
   letter-spacing: 1pt;
-  font-size: 30pt;
   font-weight: 500;
 }
 
 .mobile-view-label-detail {
   letter-spacing: 0.3pt;
+}
+
+
+@media (max-width:768px) {
+  h4 {
+    font-size:2rem !important;
+  }
 }

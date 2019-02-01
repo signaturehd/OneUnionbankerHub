@@ -18,7 +18,6 @@ class MobileOnboardingComponents extends Component {
           display: 'grid',
           height: 'auto',
           gridTemplateColumns: '1fr 1fr',
-          fontSize: '11pt',
           }}>
           <img
             src = { require('../../../images/mobileview/on boarding.png') }
