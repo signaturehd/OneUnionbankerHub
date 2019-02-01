@@ -100,6 +100,7 @@ export default class RequestCoachPresenter {
     this.addMarkAsCompletedWithTypeInteractor.execute(
       addMarkAsCompletedWithTypeParam(type, id, remarks, goalId))
     .subscribe(data=> {
+      this.view.noticeResponse(data)
       this.view.hideCircularLoader()
     },error => {
       this.view.hideCircularLoader()

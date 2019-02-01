@@ -522,11 +522,11 @@ class TeamGoalsFragment extends BaseMVPView {
   }
 
   postMarkAsCompleted() {
-    const { businessOutcome, isTeamGoal, goalTypeParam, goalId } = this.state
+    const { businessOutcome, isTeamGoal, goalTypeParam, goalId, squadId } = this.state
 
     if(businessOutcome !== '') {
       this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
-      this.presenter.markAsCompletedWithType(businessOutcome, isTeamGoal, goalTypeParam, goalId)
+      this.presenter.markAsCompletedWithType(businessOutcome, isTeamGoal, goalTypeParam, squadId)
     } else {
       this.setState ({ businessOutcomeErrorMessage: 'Required field' })
     }
@@ -1642,11 +1642,14 @@ class TeamGoalsFragment extends BaseMVPView {
                         <div>
                           <div className = { 'grid-global' }>
                             <h4 className = { 'font-weight-lighter font-size-16px' }>Reviews</h4>
-                            <GenericButton
-                              className = { 'profile-button-small text-align-right cursor-pointer global-button' }
-                              text = { 'Mark as Completed' }
-                              onClick = { () => this.setState({ showMarkAsCompleted : true  }) }
-                              />
+                            {
+                              isPO &&
+                              <GenericButton
+                                className = { 'profile-button-small text-align-right cursor-pointer global-button' }
+                                text = { 'Mark as Completed' }
+                                onClick = { () => this.setState({ showMarkAsCompleted : true  }) }
+                                />
+                            }
                           </div>
                           <br/>
                           <div>

@@ -371,6 +371,7 @@ class MyGoalsFragment extends BaseMVPView {
                   showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
                 :
                 <ApprovalGoalsFragment
+                  isPO = { isPO }
                   isLineManager = { isLineManager }
                   />
               }

@@ -444,6 +444,14 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
   }
 
+  onDeleted (goalId, isTeamGoal, isSquadGoal) {
+    this.setState({
+      goalId,
+      showDeleteModal: true,
+      selectedTypeId: this.checkIdType(isTeamGoal, isSquadGoal)
+    })
+  }
+
   checkApprovalStatus (approvalStatus) {
     return approvalStatus !== 1 &&
     approvalStatus !== 3
@@ -966,7 +974,8 @@ class RequestedGoalsFragment extends BaseMVPView {
                   <div className = { 'header-column-3x card-background padding-10px' }>
                     <h2 className = { 'font-weight-bold text-align-left font-size-16px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                     {
-                      !isLineManager &&
+                      isTeamGoal === 0 &&
+                      isSquadGoal === 0 &&
                       <span
                         className = { 'icon-check icon-edit-white-img' }
                         onClick = { () => this.setState({ showForm: true, editMode: true }) }
@@ -976,7 +985,14 @@ class RequestedGoalsFragment extends BaseMVPView {
                     {
                       isTeamGoal === 0 &&
                       isSquadGoal === 0 &&
-                      <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id, resp.isSquadGoal, resp.isTeamGoal) }/>
+                      <span className = { 'icon-check icon-delete-img' } onClick = { () =>
+                        {
+                          try {
+                            this.onDeleted(goalId, isTeamGoal, isSquadGoal)
+                          } catch (e) {
+                            console.log(e)
+                          }
+                        } }/>
                     }
                     </h2>
                   </div>
