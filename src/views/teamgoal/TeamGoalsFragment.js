@@ -498,6 +498,23 @@ class TeamGoalsFragment extends BaseMVPView {
     return parseInt(totalPercentage)
   }
 
+  checkIfExist (id) {
+    let storedId = [...id]
+    let isBool = false
+    if(storedId.length !== 0) {
+      storedId.push(id)
+    } else {
+      storedId.map((resp) => {
+        if(id !== resp) {
+          isBool = true
+        } else {
+          isBool = false
+        }
+      })
+    }
+    return isBool
+  }
+
   render () {
     const {
       teamType,
