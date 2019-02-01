@@ -475,10 +475,11 @@ export default class RequestCoachPresenter {
     })
   }
 
-  addRatingGoal (goalType, id, ratings, remarks) {
+  addRatingGoal (goalType, id, ratings, remarks, employeeId) {
     const objectParam = {
       type: goalType,
       id: id,
+      employeeId: employeeId
     }
     this.view.showSubmitLoader()
     this.addRatingGoalsInteractor.execute(addRatingGoalsParam(objectParam, ratings, remarks))

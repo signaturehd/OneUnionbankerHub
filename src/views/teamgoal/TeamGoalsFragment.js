@@ -88,6 +88,7 @@ class TeamGoalsFragment extends BaseMVPView {
       goalEditComment: '',
       goalId: '',
       goalTitle: '',
+      employeeId: '',
       goalTitleErrorMessage: '',
       description: '',
       descriptionErrorMessage: '',
@@ -224,6 +225,7 @@ class TeamGoalsFragment extends BaseMVPView {
     this.setState({
       showTabDetails : false,
       showRemarksText : false,
+      showTeamGoalDetails : false,
       remarksText : '',
       goalComment: '' })
   }
@@ -596,7 +598,8 @@ class TeamGoalsFragment extends BaseMVPView {
       remarksText,
       showRatingModal,
       showRateOptions,
-      showTabDetails
+      showTabDetails,
+      employeeId
     } = this.state
 
     const {
@@ -769,7 +772,7 @@ class TeamGoalsFragment extends BaseMVPView {
                   className = { 'profile-button-small' }
                   text= { 'yes' }
                   onClick = { () => {
-                      this.presenter.addRatingGoal(goalTypeParam, goalId, ratings, remarksText)
+                      this.presenter.addRatingGoal(goalTypeParam, goalId, ratings, remarksText, employeeId)
                       this.setState({ showRatingModal: false })
                     }
                   }

@@ -3,6 +3,7 @@ export default (goalParam, rate, remarks) => ({
   goalType: goalParam.type,
   body : {
     rate,
-    remarks
+    remarks,
+    employeeId: goalParam.employeeId,
   }
 })
