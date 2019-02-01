@@ -64,7 +64,6 @@ class TeamGoalsComponent extends Component {
 
     return (
       <div className = { 'padding-15px' }>
-      {
         <div>
           {
             participants &&
@@ -124,7 +123,6 @@ class TeamGoalsComponent extends Component {
             <span className={ 'tooltiptext' }>{ viewMoreText }</span>
           </button>
         </div>
-      }
       </div>
     )
   }
