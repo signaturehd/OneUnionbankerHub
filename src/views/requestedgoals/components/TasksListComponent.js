@@ -37,7 +37,7 @@ class TasksListComponent extends Component {
   }
 
   render () {
-    const { goalId, cardHolder, onSelected, changeTask } = this.props
+    const { goalId, cardHolder, onSelected, changeTask, isLineManager } = this.props
     return (
       <div>
       {

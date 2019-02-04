@@ -239,9 +239,12 @@ class CertificateOfEmploymentFragment extends BaseMVPView {
             vlTo = { vlTo }
             vlFromFunc = { (resp) => {
               this.presenter.setStoredVLFrom(resp)
+              this.presenter.setStoredTo('')
               this.setState({ vlTo : '' })
             } }
-            vlToFunc = { (resp) => this.presenter.setStoredVLTo(resp) }
+            vlToFunc = { (resp) =>
+              this.presenter.setStoredVLTo(resp)
+            }
             showTypeModalFunc = { () =>
               this.setState({ showTypeModal : true }) }
             showPurposeModalFunc = { () =>

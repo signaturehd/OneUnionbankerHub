@@ -24,6 +24,10 @@ class MobileView extends BaseMVPView {
     }
   }
 
+  openPrivacy () {
+     window.open('https://www.unionbankph.com/online/privacy-policy')
+   }
+
   render () {
     const {
       platformUsed
@@ -89,16 +93,11 @@ class MobileView extends BaseMVPView {
                   <br/>
                   <center>
                     <h4
-                      style = {{
-                        fontSize : '12pt'
-                      }}
-                      className = { 'font-weight-normal unionbank-color mobile-view-label-detail' }>Check our Data Privacy Statement</h4>
+                      onClick = { () => this.openPrivacy() }
+                      className = { 'font-weight-normal unionbank-color mobile-view-label-detail-small' }>Check our Data Privacy Statement</h4>
                     <br/>
                     <h2
-                      style = {{
-                        fontSize : '8pt'
-                      }}
-                      className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>&#169; 2018 Union Bank of the Philippines</h2>
+                      className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>&#169; 2018 Union Bank of the Philippines</h2>
                   </center>
                 </div>
               }

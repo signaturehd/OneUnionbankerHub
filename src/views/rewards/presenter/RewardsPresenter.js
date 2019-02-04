@@ -135,6 +135,7 @@ export default class RewardsPresenter {
               isChecked: !resp.isChecked ? true : false,
               lastName: resp.lastName,
               firstName: resp.firstName,
+              middleName: resp.middleName,
               employeeNumber: resp.employeeNumber
             })
           }
@@ -205,6 +206,7 @@ export default class RewardsPresenter {
                 isChecked: false,
                 lastName: resp.lastName,
                 firstName: resp.firstName,
+                middleName: resp.middleName,
                 employeeNumber: resp.employeeNumber
               })
             }
@@ -264,12 +266,15 @@ export default class RewardsPresenter {
         const employeeId = data.id
         membersData && membersData.map((resp, key) => {
           if(employeeId === resp.id) {
-            selectedList.push({
-              id: resp.id,
-              name: resp.name,
-              isChecked : !resp.isChecked ? true : false
-            })
-            updateListId.push(employeeId)
+            if(!this.checkIdIfExist(resp.id)) {
+              selectedList.push({
+                id: resp.id,
+                name: resp.name,
+                isChecked : !resp.isChecked ? true : false
+              })
+              updateListId.push(employeeId)
+              storedId = updateListId
+            }
           } else {
             updateList.push({
               id: resp.id,
@@ -296,6 +301,7 @@ export default class RewardsPresenter {
               isChecked : !resp.isChecked ? true : false,
               lastName: resp.lastName,
               firstName: resp.firstName,
+              middleName: resp.middleName,
               employeeNumber: resp.employeeNumber,
             })
             updateListId.push(employeeId)
@@ -305,6 +311,7 @@ export default class RewardsPresenter {
               name: resp.lastName + ', ' + resp.firstName + ' '+resp.middleName,
               isChecked : resp.isChecked,
               lastName: resp.lastName,
+              middleName: resp.middleName,
               firstName: resp.firstName,
               employeeNumber: resp.employeeNumber,
             })
@@ -345,7 +352,7 @@ export default class RewardsPresenter {
     else if (!employeeMessage) {
       store.dispatch(NotifyActions.addNotify({
         title: 'Required',
-        message: 'You have to choose an employee first.',
+        message: 'Please enter personal message to selected employees.',
         type: 'warning',
         duration: 5000
       }))

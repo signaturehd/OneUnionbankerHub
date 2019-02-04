@@ -26,7 +26,7 @@ let withSalary = [
     name: 'With Salary w/ Approved Vacation Leave'
   }, {
     id: 4,
-    name : 'With Salary w/ Available Vacation Leave'
+    name : 'With Salary w/ Available Leave Balance'
   }
 ]
 
@@ -128,20 +128,40 @@ export default class CertificateOfEmploymentPresenter {
           type: 'warning',
           duration: 5000,
         }))
-      } else if(storedVisaObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select Country',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedVisaObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select VISA',
-          type: 'warning',
-          duration: 5000,
-        }))
+      } else if(storedPurposeObject.id === 38) {
+          if(storedVisaObject === ''){
+              store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select Country',
+              type: 'warning',
+              duration: 5000,
+            }))
+          } else if (storedVisaObject === '') {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VISA',
+              type: 'warning',
+              duration: 5000,
+            }))
+          } else {
+            if(storedVLFrom === '' || !storedVLFrom) {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VL Date From field',
+              type: 'warning',
+              duration: 5000,
+            }))
+          } else if(storedVLTo === '' || !storedVLTo) {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VL Date To field',
+              type: 'warning',
+              duration: 5000,
+            }))
+          }else{
+              this.view.setEditable(true)
+          }
+        }
       } else if(storedVLFrom === '') {
           store.dispatch(NotifyActions.addNotify({
             title: 'Certificate of Employment',
@@ -157,14 +177,14 @@ export default class CertificateOfEmploymentPresenter {
           duration: 5000,
         }))
       } else {
-        if(storedVLFrom === '' || storedVLFrom === null) {
+        if(storedVLFrom === '' || !storedVLFrom) {
             store.dispatch(NotifyActions.addNotify({
               title: 'Certificate of Employment',
               message : 'Please select VL Date From field',
               type: 'warning',
               duration: 5000,
             }))
-        } else if(storedVLTo === '' || storedVLTo === null) {
+        } else if(storedVLTo === '' || !storedVLTo) {
           store.dispatch(NotifyActions.addNotify({
             title: 'Certificate of Employment',
             message : 'Please select VL Date To field',
@@ -191,14 +211,14 @@ export default class CertificateOfEmploymentPresenter {
           type: 'warning',
           duration: 5000,
         }))
-      } else if(storedVLFrom === '') {
+      } else if(storedVLFrom === '' || !storedVLFrom) {
           store.dispatch(NotifyActions.addNotify({
             title: 'Certificate of Employment',
             message : 'Please select VL Date From field',
             type: 'warning',
             duration: 5000,
           }))
-      } else if(storedVLTo === '') {
+      } else if(storedVLTo === '' || !storedVLTo) {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
           message : 'Please select VL Date To field',
@@ -267,8 +287,8 @@ export default class CertificateOfEmploymentPresenter {
       storedPurposeObject.id,
       storedVisaObject.id,
       storedTypeOFCoeObject.type,
-      moment(storedVLFrom).format('MM/DD/YYYY'),
-      moment(storedVLTo).format('MM/DD/YYYY')
+      moment(storedVLFrom).format('MM/DD/YYYY') === 'Invalid date' ? '' : moment(storedVLFrom).format('MM/DD/YYYY'),
+      moment(storedVLTo).format('MM/DD/YYYY') === 'Invalid date' ? '' : moment(storedVLTo).format('MM/DD/YYYY')
     ))
     .subscribe(data => {
       this.view.checkLoader(false)

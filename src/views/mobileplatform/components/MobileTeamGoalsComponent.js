@@ -19,11 +19,12 @@ class MobileTeamGoalsComponent extends Component {
         <div
           style = {{
             marginTop: '50px',
+            alignSelf: 'center',
           }}
           className = { 'text-align-left' }>
-          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>A transparent goals and</h4>
-          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>performance module</h4>
-          <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }>Just For U.</h4>
+          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>A transparent goals and</h4>
+          <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>performance module</h4>
+          <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }>Just For U.</h4>
         </div>
         <div className = { 'text-align-right' }>
           <img

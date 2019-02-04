@@ -259,16 +259,16 @@ class RequestedGoalsFragment extends BaseMVPView {
 
     if(!goalTitle) {
       this.setState({ goalTitleErrorMessage: 'Required field' })
-    } else if (!description) {
-      this.setState({ descriptionErrorMessage: 'Required field' })
+    }  else if (!goalTypeId) {
+      this.setState({ goalTypeErrorMessage: 'Required field' })
     } else if (!startDate) {
       this.setState({ startDateErrorMessage: 'Required field' })
     } else if (!dueDate) {
       this.setState({ dueDateErrorMessage: 'Required field' })
+    } else if (!description) {
+      this.setState({ descriptionErrorMessage: 'Required field' })
     } else if (!priorityId) {
       this.setState({ priorityErrorMessage: 'Required field' })
-    } else if (!goalTypeId) {
-      this.setState({ goalTypeErrorMessage: 'Required field' })
     }
     else {
       this.presenter.addRequestedGoals (
@@ -284,7 +284,7 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   onEdit() {
-    const { goalId, startDate, dueDate } = this.state
+    const { goalId, startDate, dueDate, isTeamGoal, isSquadGoal } = this.state
 
     if(!startDate) {
       this.setState({ startDateErrorMessage: 'Required field' })
@@ -293,6 +293,7 @@ class RequestedGoalsFragment extends BaseMVPView {
     } else {
       this.presenter.updateGoals (
         goalId,
+        this.checkIdType(isTeamGoal, isSquadGoal),
         moment(startDate).format('YYYY-MM-DD'),
         moment(dueDate).format('YYYY-MM-DD')
       )
@@ -314,12 +315,12 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   submitComment() {
-    const { goalId, goalComment, pageNumber, pageItem, personal } = this.state
+    const { goalId, goalComment, pageNumber, pageItem, selectedTypeId } = this.state
     if(!goalComment) {
       this.setState({ goalCommentErrorMessage: 'Required field' })
     }
     else {
-      this.presenter.addGoalComment(personal, goalId, goalComment, pageNumber, pageItem)
+      this.presenter.addGoalComment(selectedTypeId, goalId, goalComment, pageNumber, pageItem)
       this.setState({ goalComment: '', goalCommentErrorMessage: '' })
 
     }
@@ -364,6 +365,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       taskDescriptionErrorMessage: '',
       goalComment: '',
       goalCommentErrorMessage: '',
+      businessOutcome: '',
       addTask: false,
       addComment: false,
       editMode: false,
@@ -443,6 +445,14 @@ class RequestedGoalsFragment extends BaseMVPView {
     }
   }
 
+  onDeleted (goalId, isTeamGoal, isSquadGoal) {
+    this.setState({
+      goalId,
+      showDeleteModal: true,
+      selectedTypeId: this.checkIdType(isTeamGoal, isSquadGoal)
+    })
+  }
+
   checkApprovalStatus (approvalStatus) {
     return approvalStatus !== 1 &&
     approvalStatus !== 3
@@ -454,11 +464,11 @@ class RequestedGoalsFragment extends BaseMVPView {
   }
 
   postMarkAsCompleted() {
-    const { businessOutcome } = this.state
+    const { businessOutcome, isTeamGoal, goalId, selectedTypeId } = this.state
 
     if(businessOutcome !== '') {
       this.setState({ showMarkAsCompleted: false, ifYesCompleted: false })
-      this.presenter.markAsCompletedWithType( businessOutcome)
+      this.presenter.markAsCompletedWithType(businessOutcome, isTeamGoal, selectedTypeId, goalId)
     } else {
       this.setState ({ businessOutcomeErrorMessage: 'Required field' })
     }
@@ -493,7 +503,7 @@ class RequestedGoalsFragment extends BaseMVPView {
       return 'team'
     } else if (isSquad === 1) {
       return 'squad'
-    } else {
+    } else if (isTeam === 0 || isSquad === 0) {
       return 'personal'
     }
   }
@@ -582,7 +592,7 @@ class RequestedGoalsFragment extends BaseMVPView {
           onClose={ () => {
             this.setState({ showNoticeResponseModal : false })
           }}
-          noticeResponse={ noticeResponse }
+          noticeResponse={ noticeResponse ? noticeResponse : 'Goal details has been updated.' }
         />
       }
       {
@@ -609,12 +619,13 @@ class RequestedGoalsFragment extends BaseMVPView {
       {
         showGoalTypeModal &&
         <SingleInputModal
-          label = { 'Select Priority' }
+          label = { 'Select Goal Type' }
           inputArray = { goalTypeArray }
           selectedArray = { (goalTypeId, goalType) => this.setState({
               goalTypeId,
               goalType,
-              showGoalTypeModal: false
+              showGoalTypeModal: false,
+              goalTypeErrorMessage: ''
             })
           }
           onClose = { () => this.setState({ showGoalTypeModal: false }) }
@@ -632,7 +643,7 @@ class RequestedGoalsFragment extends BaseMVPView {
               />
               <GenericButton
                 text = { 'Yes' }
-                onClick = { () => {this.presenter.deleteGoal(goalId), this.setState({ showDeleteModal: false })} }
+                onClick = { () => {this.presenter.deleteGoal(goalId, selectedTypeId), this.setState({ showDeleteModal: false })} }
               />
             </div>
           </center>
@@ -905,6 +916,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                   filterId = { filterId }
                   searchString = { searchString }
                   cardHolder = { goalsArray }
+                  isLineManager = { isLineManager }
                   priorityFunc = { (resp) => this.priorityFunc(resp) }
                   onSelected = { (
                     goalId,
@@ -944,7 +956,12 @@ class RequestedGoalsFragment extends BaseMVPView {
                       showRemarksText : false })
                     }
                   }
-                  onDeleted = { (goalId) => this.setState({ goalId, showDeleteModal: true }) }
+                  onDeleted = { (goalId, isSquadGoal, isTeamGoal) =>
+                    this.setState({
+                      goalId,
+                      showDeleteModal: true,
+                      selectedTypeId: this.checkIdType(isTeamGoal, isSquadGoal)
+                    }) }
                 />
               </div>
               :
@@ -955,15 +972,30 @@ class RequestedGoalsFragment extends BaseMVPView {
               goalTitle ?
               <div className = { 'padding-10px' }>
                 <div className = { 'padding-10px' }>
-                  <div className = { 'header-column card-background padding-10px' }>
+                  <div className = { 'header-column-3x card-background padding-10px' }>
                     <h2 className = { 'font-weight-bold text-align-left font-size-16px color-white' }>{ goalTitle ? goalTitle : 'Goal' }</h2>
                     {
-                      goalId &&
+                      isTeamGoal === 0 &&
+                      isSquadGoal === 0 &&
                       <span
                         className = { 'icon-check icon-edit-white-img' }
                         onClick = { () => this.setState({ showForm: true, editMode: true }) }
                       />
                     }
+                    <h2>
+                    {
+                      isTeamGoal === 0 &&
+                      isSquadGoal === 0 &&
+                      <span className = { 'icon-check icon-delete-img' } onClick = { () =>
+                        {
+                          try {
+                            this.onDeleted(goalId, isTeamGoal, isSquadGoal)
+                          } catch (e) {
+                            console.log(e)
+                          }
+                        } }/>
+                    }
+                    </h2>
                   </div>
 
                   <div className = { 'details-columns padding-10px' }>
@@ -997,8 +1029,11 @@ class RequestedGoalsFragment extends BaseMVPView {
                           approvalStatus === 5 ?
                           <h2 className = { 'text-align-center font-size-12px font-weight-lighter description-title' }>Deletion for approval</h2>
                           :
-                          approvalStatus === 6 &&
+                          approvalStatus === 6 ?
                           <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low description-title' }>Completed</h2>
+                          :
+                          approvalStatus === 8 &&
+                          <h2 className = { 'text-align-center font-size-12px font-weight-lighter color-Low description-title' }>For Rating</h2>
                       }
                     </div>
                     <div className = { 'details-rows' }>
@@ -1077,7 +1112,23 @@ class RequestedGoalsFragment extends BaseMVPView {
                         </div>
                         <h2>
                         {
-                          goalId &&
+                          selectedTypeId === 'team' &&
+                          isTeamGoal === 1 &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addTask: true }) }
+                          />
+                        }
+                        {
+                          selectedTypeId === 'personal' &&
+                          <span
+                            className = { 'icon-check icon-add-img' }
+                            onClick = { () => this.setState({ addTask: true }) }
+                          />
+                        }
+                        {
+                          selectedTypeId === 'squad' &&
+                          isSquadGoal === 0 &&
                           <span
                             className = { 'icon-check icon-add-img' }
                             onClick = { () => this.setState({ addTask: true }) }
@@ -1134,6 +1185,7 @@ class RequestedGoalsFragment extends BaseMVPView {
                             {
                               taskArray.length !== 0 ?
                                 <TasksListComponent
+                                  isLineManager = { isLineManager }
                                   cardHolder = { taskArray }
                                   onSelected = { (taskId, taskDescription, isCompleted) => this.setState({
                                     taskId,

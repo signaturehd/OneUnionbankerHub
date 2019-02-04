@@ -26,6 +26,7 @@ export default class Bir2316Presenter {
         this.view.hideCircularLoader()
         this.view.setBIRList(data)
       }, error => {
+        this.view.hideCircularLoader()
         console.log(error);
       })
   }
@@ -37,6 +38,7 @@ export default class Bir2316Presenter {
         this.view.hideCircularLoader()
         this.view.setBIR2316File(data)
       }, e => {
+        this.view.hideCircularLoader()
         console.log(e);
       })
   }

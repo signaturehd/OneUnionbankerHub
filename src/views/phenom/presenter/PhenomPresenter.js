@@ -22,17 +22,17 @@ export default class PhenomPresenter {
 
   getPhenomDiscounts () {
     phenomData = []
-    this.view.showCircularLoader(true)
+    this.view.showCircularLoader()
     this.getPhenomDiscountsInteractor.execute()
-      .subscribe(resp => {
-          phenomData.push(resp)
-          if (phenomData.length !== 0) {
-            this.view.showPhenomDiscountList(phenomData)
-            this.view.showCircularLoader()
-          }
-        }, e => {
-          this.view.showCircularLoader()
-      })
+    .subscribe(resp => {
+      phenomData.push(resp)
+      if (phenomData.length !== 0) {
+        this.view.showPhenomDiscountList(phenomData)
+      }
+      this.view.hideCircularLoader()
+    }, e => {
+      this.view.hideCircularLoader()
+    })
     // .subscribe(data => {
     //   this.view.showCircularLoader(false)
     //   this.view.showPhenomDiscountList(data)
@@ -60,13 +60,13 @@ export default class PhenomPresenter {
   }
 
   getPhenomSelectedDiscounts (id) {
-    this.view.showCircularLoader(true)
+    this.view.showCircularLoader()
     this.getPhenomDetailsInteractor.execute(id)
     .subscribe(data => {
       this.view.showPhenomDetails(data, true)
-      this.view.showCircularLoader(false)
+      this.view.hideCircularLoader()
     }, error => {
-      this.view.showCircularLoader(false)
+      this.view.hideCircularLoader()
     })
   }
 

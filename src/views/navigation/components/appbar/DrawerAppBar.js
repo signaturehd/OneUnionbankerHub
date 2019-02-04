@@ -40,7 +40,8 @@ class DrawerAppBar extends Component {
       firstName,
       profillePosition,
       selected,
-      tempPreEmployment
+      tempPreEmployment,
+      hideProfileMenu
     } = this.props
 
     const style = {
@@ -207,7 +208,7 @@ class DrawerAppBar extends Component {
       >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
-            <div>
+            <div onClick = { () => hideProfileMenu() } >
             {
               // <img
               //   style={ style.navbar }
@@ -322,7 +323,7 @@ class DrawerAppBar extends Component {
                             resp.id !== 13 &&
                             resp.id !== 14 &&
                             <li
-                              onClick = { () => resp.action() }
+                              onClick = { () => { resp.action() , hideProfileMenu() } }
                               key = { key }
                               className = { 'appbar-list' }>
                               <div className = { 'appbar-icon-grid' }>
@@ -351,7 +352,7 @@ class DrawerAppBar extends Component {
                                 resp.id !== 11 &&
                                 resp.id !== 12 &&
                                 <li
-                                  onClick = { () => resp.action() }
+                                  onClick = { () => { resp.action() , hideProfileMenu() } }
                                   key = { key }
                                   className = { 'appbar-list' }>
                                   <div className = { 'appbar-icon-grid' }>
@@ -376,7 +377,7 @@ class DrawerAppBar extends Component {
                                   appBarList.map((resp, key) =>
                                     resp.id !== 11 &&
                                     <li
-                                      onClick = { () => resp.action() }
+                                      onClick = { () => { resp.action() , hideProfileMenu() }  }
                                       key = { key }
                                       className = { 'appbar-list' }>
                                       <div className = { 'appbar-icon-grid' }>
@@ -397,7 +398,7 @@ class DrawerAppBar extends Component {
 
                                     resp.id !== 12 &&
                                     <li
-                                      onClick = { () => resp.action() }
+                                      onClick = { () => { resp.action() , hideProfileMenu() } }
                                       key = { key }
                                       className = { 'appbar-list' }>
                                       <div className = { 'appbar-icon-grid' }>

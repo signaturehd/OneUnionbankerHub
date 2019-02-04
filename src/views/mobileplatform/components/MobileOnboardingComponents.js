@@ -18,7 +18,6 @@ class MobileOnboardingComponents extends Component {
           display: 'grid',
           height: 'auto',
           gridTemplateColumns: '1fr 1fr',
-          fontSize: '11pt',
           }}>
           <img
             src = { require('../../../images/mobileview/on boarding.png') }
@@ -28,10 +27,10 @@ class MobileOnboardingComponents extends Component {
             }}/>
           <div
             className = { 'text-align-right margin-auto' }>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>Experience a unique</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>digital on-boarding so</h4>
-            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail' }>you're ready to</h4>
-            <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail' }>#OwnTheFuture!</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Experience a unique</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>digital on-boarding so</h4>
+            <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>you're ready to</h4>
+            <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }>#OwnTheFuture!</h4>
           </div>
         </div>
       </div>

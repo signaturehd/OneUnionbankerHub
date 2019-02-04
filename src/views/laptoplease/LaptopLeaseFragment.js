@@ -225,8 +225,13 @@ class LaptopLeaseFragment extends BaseMVPView {
               showNoticeResponseModal &&
               <ResponseModal
                 onClose={ () => {
-                  this.resetValue()
-                  this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+                  try {
+
+                      this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
+                      this.resetValue()
+                  } catch (e) {
+                    console.log(e)
+                  }
                 }}
                 noticeResponse={ noticeResponse }
               />
@@ -312,7 +317,22 @@ class LaptopLeaseFragment extends BaseMVPView {
                 <i
                   className={ 'back-arrow' }
                   onClick = { () => {
-                    this.setState({ cardOptionComponent : true })
+                    this.setState({
+                      cardOptionComponent : true,
+                      //bank to purchase
+                      laptopDetailsName: '',
+                      selectedLaptopDetails: '',
+                      termsName: '',
+                      deliveryOptionName: '',
+                      laptopLeaseAttachment: '',
+                      //employee to purchase
+                      vendor: '',
+                      termsName: '',
+                      orDate: '',
+                      orNumber: '',
+                      amount: '',
+                      laptopLeaseAttachment: '',
+                    })
                     this.resetValue()
                    }
                   }>

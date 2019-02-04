@@ -94,17 +94,22 @@ export default class RequestCoachPresenter {
     })
   }
 
-  updateGoals (goalId, startDate, dueDate) {
+  updateGoals (goalId, goalType, startDate, dueDate) {
+    const objectParam = {
+      goalId: goalId,
+      goalType: goalType,
+    }
+    console.log(objectParam)
     this.view.showSubmitLoader()
-    this.updateGoalsInteractor.execute(goalId, startDate, dueDate)
+    this.updateGoalsInteractor.execute(objectParam, startDate, dueDate)
     .do(data => {
       this.getGoals()
     })
     .subscribe(
       data => {
         this.view.hideSubmitLoader()
-        this.view.noticeResponse(data)
         this.view.resetValue()
+        this.view.noticeResponse(data)
       },
       errors => {
         this.view.hideSubmitLoader()
@@ -204,15 +209,21 @@ export default class RequestCoachPresenter {
     pageNumber,
     pageItem
   ){
+    const goalParam = {
+      goalId: goalId,
+      employeeId: '',
+      status: 'requested',
+    }
+    storedGoalType = personal
     this.view.showCommentLoader(true)
     this.addGoalCommentInteractor.execute(goalCommentParam(
         personal,
-        goalId,
+        goalParam,
         goalComment
       )
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, personal, pageNumber, pageItem)
     })
     .subscribe(
       data => {
@@ -237,7 +248,7 @@ export default class RequestCoachPresenter {
       goalComment
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, storedGoalType, pageNumber, pageItem)
     })
     .subscribe(
       data => {
@@ -250,10 +261,15 @@ export default class RequestCoachPresenter {
     )
   }
 
-  deleteGoal (goalId) {
+  deleteGoal (goalId, goalType) {
+    storedGoalType = goalType
+    const objectParam = {
+      goalId : goalId,
+      goalType : goalType
+    }
     this.view.showCircularLoader()
     try {
-      this.deleteGoalsInteractor.execute(goalId)
+      this.deleteGoalsInteractor.execute(objectParam)
       .do(data => {
         this.getGoals(storedGoalType)
       })
@@ -321,14 +337,22 @@ export default class RequestCoachPresenter {
   }
 
   markAsCompletedWithType (
-    businessOutcome
+    businessOutcome,
+    isTeamGoal,
+    type,
+    goalId
   ){
+    console.log(businessOutcome,
+    isTeamGoal,
+    type,
+    goalId)
     this.view.showSubmitLoader()
     this.addMarkAsCompletedWithTypeInteractor.execute(
       markParam(
-        storedGoalType,
-        storedGoalId,
+        type,
+        isTeamGoal,
         businessOutcome,
+        goalId
       )
     )
     .subscribe(

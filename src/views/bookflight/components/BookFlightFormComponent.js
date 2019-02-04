@@ -58,6 +58,10 @@ class BookFlightFormComponent extends Component {
       onClose,
       attachmentsData,
       attachmentsData2,
+      showEditButton,
+      showEditButtonFunc,
+      submitForm,
+      submitFormFunc,
       submitFunc,
     } = this.props
 
@@ -117,6 +121,7 @@ class BookFlightFormComponent extends Component {
           <GenericInput
             text = { departureDate }
             type = { 'time' }
+            disabled = { showEditButton }
             value = { departureTime }
             onChange = { (e) => departureTimeFunc(e.target.value) }
           />
@@ -126,10 +131,12 @@ class BookFlightFormComponent extends Component {
             <div>
             <h2>RETURN</h2>
             <GenericInput
-            text = { returnDate }
-            type = { 'time' }
-            value = { returnTime }
-            onChange = { (e) => returnTimeFunc(e.target.value) }
+              text = { returnDate }
+              type = { 'time' }
+              disabled = { showEditButton }
+              disabled = { showEditButton }
+              value = { returnTime }
+              onChange = { (e) => returnTimeFunc(e.target.value) }
             />
             </div>
           }
@@ -139,12 +146,14 @@ class BookFlightFormComponent extends Component {
             <GenericInput
               text = { 'Total Cost of Flight' }
               type = { 'number' }
+              disabled = { showEditButton }
               value = { totalCostOfFlight == 0 ? '' : totalCostOfFlight }
               onChange = { (e) => totalCostOfFlightFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Service Charge' }
               type = { 'number' }
+              disabled = { showEditButton }
               value = { totalServiceCharge == 0 ? '' : totalServiceCharge }
               onChange = { (e) => totalServiceChargeFunc(e.target.value) }
             />
@@ -161,13 +170,14 @@ class BookFlightFormComponent extends Component {
             <GenericInput
               text = { 'Value-Added Tax' }
               type = { 'number' }
-              value = { valueAddedTax == 0 ? '' : valueAddedTax }
+              disabled = { showEditButton }
+              value = { valueAddedTax === 0 ? '' : valueAddedTax }
               onChange = { (e) => valueAddedTaxFunc(e.target.value) }
             />
             <GenericInput
               text = { 'Total Amount' }
               disabled = { true }
-              value = { totalAmount.toLocaleString() }
+              value = { totalAmount ? totalAmount.toLocaleString() : 0 }
             />
           </div>
         </div>
@@ -176,6 +186,7 @@ class BookFlightFormComponent extends Component {
           <MultipleAttachments
             placeholder = { 'Form Attachments' }
             fileArray = { attachmentsData }
+            disabled = { showEditButton }
             setFile = { (attachmentsData) => this.setState(attachmentsData) }
           />
           :
@@ -187,10 +198,30 @@ class BookFlightFormComponent extends Component {
         }
 
         <center>
-          <GenericButton
-            text = { 'Continue' }
-            onClick = { () => submitFunc() }
-          />
+          {
+            showEditButton ?
+            <center>
+              <br/>
+              <Line/>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Edit'  }
+                  className = { 'profile-button-medium' }
+                  onClick = { () => showEditButtonFunc(false) }
+                  />
+                <GenericButton
+                  text = { 'Submit'  }
+                  className = { 'profile-button-medium' }
+                  onClick = { () => submitFormFunc() }
+                  />
+              </div>
+            </center> :
+            <GenericButton
+              text = { 'Continue' }
+              onClick = { () => submitFunc() }
+            />
+          }
         </center>
       </div>
       <div></div>

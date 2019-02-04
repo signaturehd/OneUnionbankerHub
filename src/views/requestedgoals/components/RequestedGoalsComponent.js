@@ -50,7 +50,8 @@ class RequestedGoalsComponent extends Component {
       onSelected,
       onDeleted,
       filterId,
-      searchString
+      searchString,
+      isLineManager,
     } = this.props
 
     const {
@@ -88,14 +89,10 @@ class RequestedGoalsComponent extends Component {
             <div className = { 'padding-15' }>
               <div className = { 'header-column' }>
                 <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-lighter' }>{ resp.title }</h2>
-                {
-                  resp.approvalStatus !== 5 &&
-                  <span className = { 'icon-check icon-delete-img' } onClick = { () => onDeleted(resp.id) }/>
-                }
+                <h2></h2>
               </div>
               <div className = { 'header-column-1 cursor-pointer' } onClick = { () =>
                  {
-                   if(resp.approvalStatus === 2) {
                      onSelected(
                        resp.id,
                        resp.title,
@@ -110,7 +107,6 @@ class RequestedGoalsComponent extends Component {
                        resp.isCompleted,
                        resp.rating && resp.rating ? resp.rating : 0.0
                      )
-                   }
                  }}>
                 <div>
                   {
@@ -129,8 +125,11 @@ class RequestedGoalsComponent extends Component {
                       resp.approvalStatus === 5 ?
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-gray' }>Deletion for approval</h2>
                       :
-                      resp.approvalStatus === 6 &&
+                      resp.approvalStatus === 6 ?
                       <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Low' }>Completed</h2>
+                      :
+                      resp.approvalStatus === 8 &&
+                      <h2 className = { 'margin-10px text-align-left font-size-12px font-weight-bold color-Low' }>For Rating</h2>
                   }
                 </div>
                 <div>
@@ -160,6 +159,7 @@ class RequestedGoalsComponent extends Component {
                   </div>
                   <div></div>
                   <div>
+                    <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Start: <b>{ moment(resp.startDate).format('MMM DD, YYYY') }</b></h2>
                     <h2 className = { 'text-align-right font-size-11px font-weight-lighter color-gray' }>Due: <b>{ moment(resp.endDate).format('MMM DD, YYYY') }</b></h2>
                   </div>
                 </div>

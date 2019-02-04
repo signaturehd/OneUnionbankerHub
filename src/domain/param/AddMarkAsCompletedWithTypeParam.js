@@ -1,11 +1,13 @@
 export default (
   type,
   id,
-  remarks
+  remarks,
+  goalId
 ) => ({
   body : {
     remarks,
   },
   id,
   type,
+  goalId
 })
