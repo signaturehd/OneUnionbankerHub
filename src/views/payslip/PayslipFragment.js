@@ -7,6 +7,8 @@ import ConnectView from '../../utils/ConnectView'
 import Presenter from './presenter/PayslipPresenter'
 
 import PayslipCardComponent from './components/PayslipCardComponent'
+import NoDataListComponent from '../common/components/NoDataListedComponent'
+
 import PayslipDetailsModal from './modals/PayslipDetailsModal'
 import { Card, Modal, GenericButton, GenericSelect } from '../../ub-components'
 
@@ -91,6 +93,12 @@ class PayslipFragment extends BaseMVPView {
         <div>
           <h2 className={ 'header-margin-default text-align-left' }> My Pay </h2>
           <h2>View your most recent payslip</h2>
+        {
+          payslipList.length ===0 &&
+          <NoDataListComponent
+            text = { 'No Payslip Listed' }
+          />
+        }
         </div>
         <br/>
           <PayslipCardComponent
