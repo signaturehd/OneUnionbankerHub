@@ -20,15 +20,17 @@ export default function ServiceErrorOperator () {
         if (code === 200) {
           subscriber.next(body)
         } else if (code === 400) {
-          body.errors.map((error, key) => (
-            store.dispatch(NotifyActions.addNotify({
-                title : 'One UnionBanker Hub',
-                message : error.message,
-                type : 'warning',
-                duration : 5000
-              })
-            )
-          ))
+          if (Array.isArray(body.errors)) {
+            body.errors.map((error, key) => (
+              store.dispatch(NotifyActions.addNotify({
+                  title : 'One UnionBanker Hub',
+                  message : error.message,
+                  type : 'warning',
+                  duration : 2000
+                })
+              )
+            ))
+          }
           subscriber.error(new GenericError(body))
         } else if (code === 401) {
           store.dispatch(LoginActions.showReloginModal(true))
@@ -38,7 +40,7 @@ export default function ServiceErrorOperator () {
               title : 'One UnionBanker Hub',
               message : 'It seems that we\'ve encountered a problem.',
               type : 'danger',
-              duration : 5000
+              duration : 2000
             })
           )
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))
