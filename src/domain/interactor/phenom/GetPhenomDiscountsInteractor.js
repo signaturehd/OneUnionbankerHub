@@ -8,6 +8,9 @@ export default class GetPhenomDiscountsInteractor {
   execute () {
     return Observable.create(emitter => {
       this.client.getPhenomDiscounts(this.client.getToken())
+        .catch((e) =>
+          Observable.of([])
+        )
         .flatMap(phenoms => Observable.from(phenoms))
         .flatMap(phenom => Observable.zip(
           this.client.getPhenomImage(this.client.getToken(), phenom.rewardImage),
@@ -18,11 +21,14 @@ export default class GetPhenomDiscountsInteractor {
             updatedPhenom.vendor.imageBlob = imageBlob
             return updatedPhenom
           }))
-        .subscribe(phenom => {
-          emitter.next(phenom)
-        },
-         e => emitter.error(e),
-        () => emitter.complete())
+        .subscribe(phenom => emitter.next(phenom),
+         e => {
+           emitter.complete(e)
+         },
+         e => {
+          emitter.error()
+        }
+      )
     })
   }
 }

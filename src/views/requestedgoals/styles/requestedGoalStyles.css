@@ -100,6 +100,11 @@
   grid-template-columns: 2fr .1fr;
 }
 
+.header-column-3x {
+  display: grid;
+  grid-template-columns: 2fr .1fr .1fr;
+}
+
 /* Comment */
 .comment-grid {
   display: grid;
@@ -132,5 +137,10 @@
 }
 
 .details-title {
+  padding: 5px;
   background-color: #f1f1f1;
+}
+
+.description-title {
+  padding: 5px;
 }

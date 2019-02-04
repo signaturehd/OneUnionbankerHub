@@ -22,14 +22,13 @@ class NewsFragment extends BaseMVPView {
       news: [],
       show : false,
       searchString : '',
-      showLoader: true,
+      showLoader: false,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
-      this.presenter.getNews()
-      setTimeout(() => this.setState({ showLoader : false }), 3000)
+    this.presenter.getNews()
   }
 
   updateSearch (e) {
@@ -38,6 +37,10 @@ class NewsFragment extends BaseMVPView {
 
   showNews (news) {
     this.setState({ news })
+  }
+
+  showLoader (showLoader) {
+    this.setState({ showLoader })
   }
 
   render () {
@@ -86,13 +89,13 @@ class NewsFragment extends BaseMVPView {
             showLoader ?
             <div className = {'news-loader'} >
               <center>
-                <CircularLoader show = {true} />
+                <CircularLoader show = {showLoader} />
               </center>
-            </div>   :
+            </div>:
             <div>
             {
-            newsList &&
-            newsList.map((news, i) =>
+              newsList &&
+              newsList.map((news, i) =>
               news.status === 1 &&
                 <div>
                   <NewsHeadlinesCardComponent

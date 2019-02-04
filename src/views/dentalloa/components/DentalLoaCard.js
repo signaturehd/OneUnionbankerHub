@@ -85,7 +85,6 @@ class DentalLoaCard extends Component {
                   text = { text2 }
                   errorMessage = { branch ? '' : healthwayBranchErrorMessage } />
                 <DatePicker
-                  readOnly
                   minDate = { moment() }
                   disabled = { showEditSubmitButton }
                   selected = {  preferredDate && moment(preferredDate) }

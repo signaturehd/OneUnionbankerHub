@@ -60,7 +60,10 @@ class TransactionCardComponent extends Component {
               <br/>
           </div>
           <div className = { 'grid-global' }>
-            <div>
+            <div style={{
+                alignItems: 'center',
+                margin: 'auto'
+              }}>
               <GenericButton
                 className = { `transaction-button-default transaction-component-status-${
                   benefitStatus

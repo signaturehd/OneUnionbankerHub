@@ -168,3 +168,22 @@
   border-radius: 5px;
   background-color: #FFFDE7;
 }
+
+.direct-profile-picture {
+  background-color: #ff8a00;
+  box-shadow: inset 0px 0px 0px 0px #ffffff;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.direct-profile-picture {
+  background-color: #ff8a00;
+  box-shadow: inset 0px 0px 0px 0px #ffffff;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}

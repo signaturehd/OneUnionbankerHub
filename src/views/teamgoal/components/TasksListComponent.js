@@ -42,13 +42,13 @@ class TasksListComponent extends Component {
       <div>
       {
         cardHolder.map((resp, key) =>
-          <div className={ 'comment-border margin-5px padding-5px employee-column' }>
+          <Card className={ 'comment-border margin-5px padding-5px employee-column' }>
             <Checkbox
               checked = { resp.isCompleted }
             />
-            <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }
+          <h2 className = { 'text-align-left margin-auto font-size-14px font-weight-lighter' }
             onClick = { () => onSelected(resp.id, resp.description, resp.isCompleted) }>{resp.description}</h2>
-          </div>
+          </Card>
         )
       }
       </div>

@@ -323,7 +323,7 @@ class PersonalInfoFragment extends Component {
                     </div>
                     <div className={ 'font-size-16px' }>
                       <a>
-                        { profile.workClass ?  profile.workClass : '(Not Yet Provided)' }
+                        { profile && profile.workClass ?  profile.workClass : '(Not Yet Provided)' }
                       </a>
                     </div>
                   </div>
@@ -357,7 +357,7 @@ class PersonalInfoFragment extends Component {
                     </div>
                     <div className={ 'font-size-16px' }>
                       <a>
-                        { lineManager ? lineManager : '(Not Yet Provided)' }
+                        { lineManager && lineManager ? lineManager : '(Not Yet Provided)' }
                       </a>
                     </div>
                   </div>

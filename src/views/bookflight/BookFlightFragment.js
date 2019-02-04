@@ -32,6 +32,7 @@ class BookFlightFragment extends BaseMVPView {
     super(props)
     this.state = {
       enabledLoader : false,
+      showEditButton : false,
       submitLoader : false,
       showNoticeResponseModal : false,
       showTicketModal : false,
@@ -149,7 +150,11 @@ class BookFlightFragment extends BaseMVPView {
     })
   }
 
-  submit () {
+  setEditable (showEditButton) {
+    this.setState({ showEditButton })
+  }
+
+  submitFormFunc () {
     const {
       requestId,
       totalCostOfFlight,
@@ -163,28 +168,76 @@ class BookFlightFragment extends BaseMVPView {
       attachmentsData2
     } = this.state
 
-    isDomestic ?
-    this.presenter.addBookFlight(
+    if(isDomestic) {
+      this.presenter.addBookFlight(
+        isDomestic,
+        requestId,
+        totalCostOfFlight,
+        totalServiceCharge,
+        departureTime,
+        returnTime,
+        valueAddedTax,
+        travelGroupId,
+        attachmentsData
+      )
+    } else {
+      this.presenter.addBookFlight(
+        isDomestic,
+        requestId,
+        totalCostOfFlight,
+        totalServiceCharge,
+        departureTime,
+        returnTime,
+        valueAddedTax,
+        travelGroupId,
+        attachmentsData2
+      )
+    }
+  }
+
+  submit () {
+    const {
       requestId,
       totalCostOfFlight,
       totalServiceCharge,
       departureTime,
       returnTime,
+      isDomestic,
       valueAddedTax,
       travelGroupId,
-      attachmentsData
-    )
-    :
-    this.presenter.addBookFlight(
-      requestId,
-      totalCostOfFlight,
-      totalServiceCharge,
-      departureTime,
-      returnTime,
-      valueAddedTax,
-      travelGroupId,
+      attachmentsData,
       attachmentsData2
-    )
+    } = this.state
+    try {
+
+      if(isDomestic) {
+        this.presenter.validateSubmission(
+          isDomestic,
+          requestId,
+          totalCostOfFlight,
+          totalServiceCharge,
+          departureTime,
+          returnTime,
+          valueAddedTax,
+          travelGroupId,
+          attachmentsData
+        )
+      } else {
+        this.presenter.validateSubmission(
+          isDomestic,
+          requestId,
+          totalCostOfFlight,
+          totalServiceCharge,
+          departureTime,
+          returnTime,
+          valueAddedTax,
+          travelGroupId,
+          attachmentsData2
+        )
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   navigate () {
@@ -221,7 +274,8 @@ class BookFlightFragment extends BaseMVPView {
       travelGroupId,
       travelGroup,
       attachmentsData,
-      attachmentsData2
+      attachmentsData2,
+      showEditButton
     } = this.state
 
     const { percentage } = this.props
@@ -270,6 +324,7 @@ class BookFlightFragment extends BaseMVPView {
           {
             showForm ?
             <BookFlightFormComponent
+              showEditButton = { showEditButton }
               showTicketModal = { showTicketModal }
               showNoticeResponseModal = { showNoticeResponseModal }
               noticeResponse = { noticeResponse }
@@ -300,6 +355,7 @@ class BookFlightFragment extends BaseMVPView {
               showTravelGroup = { showTravelGroup }
               travelGroupId = { travelGroupId }
               travelGroup = { travelGroup }
+              showEditButtonFunc = { (showEditButton) => this.setState({ showEditButton }) }
               showTravelGroupFunc = { () => this.setState({ showTravelGroup : true }) }
               travelGroupHeadFunc = { (travelGroupId, travelGroup) =>
                 this.setState({
@@ -313,6 +369,7 @@ class BookFlightFragment extends BaseMVPView {
               attachmentsData = { attachmentsData }
               attachmentsData2 = { attachmentsData2 }
               submitFunc = { () => this.submit() }
+              submitFormFunc = { () => this.submitFormFunc() }
             />
             :
             enabledLoader ?
