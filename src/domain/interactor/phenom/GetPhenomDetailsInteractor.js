@@ -8,11 +8,13 @@ export default class GetPhenomDetailsInteractor {
     return Observable.create(emitter => {
       this.client.getPhenomSelectedDiscounts(this.client.getToken(), id)
       // .flatMap(phenoms => Observable.from(phenoms))
+      .catch(() =>
+        Observable.of('')
+      )
       .flatMap(phenom => Observable.zip(
         this.client.getPhenomImage(this.client.getToken(), phenom.rewardImage),
         this.client.getVendorImage(this.client.getToken(), phenom.rewardLogo),
         (rewardImageBlob, imageBlob) => {
-          console.log(phenom)
           const updatedPhenom = phenom
           updatedPhenom.rewardImage = rewardImageBlob
           updatedPhenom.rewardLogo = imageBlob
