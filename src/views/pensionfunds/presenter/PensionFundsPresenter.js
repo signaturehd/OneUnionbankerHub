@@ -1,6 +1,7 @@
 import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsInteractor'
 import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDocumentsInteractor'
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
+import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
 
 let mockData = {
   'totalUnits': '15.34',
@@ -59,13 +60,14 @@ let mockDataDocuments = {
   ]
 }
 
-let agreementData  = '', pensionData = ''
+let agreementData  = '', pensionData = '', pensionHistory = []
 
 export default class PensionFundsPresenter {
   constructor (container) {
     this.getPensionValidateInteractor = new GetPensionValidateInteractor(container.get('HRBenefitsClient'))
-    // this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
-    // this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsHistoryInteractor = new GetPensionFundsHistoryInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -132,7 +134,6 @@ export default class PensionFundsPresenter {
     let formsData = []
 
     pensionData.paymentHistory.map((resp) => {
-console.log(pensionData)
       if(id === resp.id) {
         formsData.push({
           id : resp.id,
@@ -157,26 +158,38 @@ console.log(pensionData)
       this.setPensionFundsPresenter(objectParam)
     })
   }
-  //
-  // getPensionFunds () {
-  //   this.getPensionFundsInteractor.execute()
-  //   this.view.showCircularLoader(true)
-  //   .subscribe(data => {
-  //     this.view.setPensionFundsData(data)
-  //     this.view.showCircularLoader(false)
-  //   }, error => {
-  //     this.view.showCircularLoader(false)
-  //   })
-  // }
-  //
-  // getPensionFundsDocuments () {
-  //   this.getPensionFundsDocumentsInteractor.execute()
-  //   this.view.showCircularLoader(true)
-  //   .subscribe(data => {
-  //     this.view.setPensionFundsData(data)
-  //     this.view.showCircularLoader(false)
-  //   }, error => {
-  //     this.view.showCircularLoader(false)
-  //   })
-  // }
+
+  getPensionFunds () {
+    this.view.showCircularLoader(true)
+    this.getPensionFundsInteractor.execute()
+    .subscribe(data => {
+      this.view.setTotalPensionFundsData(data)
+      this.view.showCircularLoader(false)
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
+  getPensionFundsHistory () {
+    this.view.showCircularLoader(true)
+    this.getPensionFundsHistoryInteractor.execute()
+    .subscribe(data => {
+      setPensionFundHistory = data
+      this.view.setPensionFundHistory(data)
+      this.view.showCircularLoader(false)
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
+  getPensionFundsDocuments () {
+    this.getPensionFundsDocumentsInteractor.execute()
+    this.view.showCircularLoader(true)
+    .subscribe(data => {
+      this.view.setPensionDocumentsData(data)
+      this.view.showCircularLoader(false)
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
 }

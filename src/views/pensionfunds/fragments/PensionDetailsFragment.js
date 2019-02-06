@@ -25,6 +25,7 @@ class PensionDetailsFragment extends Component {
       tabsId,
       tabsIdFunc,
       pensionFundsData,
+      totalPensionFundsData,
       changePaymentFunc
     } = this.props
 
@@ -37,7 +38,7 @@ class PensionDetailsFragment extends Component {
           <br/>
           <div className = { 'funds-grid-content-detail' }>
             <PensionDetailsComponent
-              pensionFundsData= { pensionFundsData }/>
+              totalPensionFundsData= { totalPensionFundsData }/>
             <div>
             </div>
           </div>

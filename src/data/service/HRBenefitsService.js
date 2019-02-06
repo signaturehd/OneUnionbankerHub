@@ -2529,13 +2529,19 @@ export default class HRBenefitsService {
   /* Pension Funds */
 
   getPensionFundsDocuments (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('/appian/pension/v1/agreements', {
       headers : { token }
     })
   }
 
   getPensionFunds (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('/appian/pension/v1/investments', {
+      headers : { token }
+    })
+  }
+
+  getPensionFundsHistory (token) {
+    return this.rootClient.get('/appian/pension/v1/', {
       headers : { token }
     })
   }
