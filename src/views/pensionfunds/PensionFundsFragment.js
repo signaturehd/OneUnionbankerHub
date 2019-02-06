@@ -34,7 +34,7 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    // this.presenter.getPensionFunds()
+    this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
     this.presenter.getMockData()
   }
@@ -45,6 +45,18 @@ class PensionFundsFragment extends BaseMVPView {
 
   setPensionFundsData (pensionFundsData) {
     this.setState({ pensionFundsData })
+  }
+
+  setPensionDocumentsData (pensionFundsDocuments) {
+    this.setState({ pensionFundsDocuments })
+  }
+
+  setPensionFundHistory (pensionFundsHistory) {
+    this.setState({ pensionFundsHistory })
+  }
+
+  setTotalPensionFundsData (totalPensionFundsData) {
+    this.setState({ totalPensionFundsData })
   }
 
   setPensionFundsDocumentsData (pensionFundsDocumentsData) {
@@ -59,7 +71,10 @@ class PensionFundsFragment extends BaseMVPView {
     const {
       loader,
       pensionFundsData,
+      totalPensionFundsData,
+      pensionFundsDocuments,
       pensionFundsDocumentsData,
+      pensionFundsHistory,
       stepperStatus,
       codeText,
       showCodeModal,
@@ -119,6 +134,7 @@ class PensionFundsFragment extends BaseMVPView {
                       tabsId = { tabsId }
                       tabsIdFunc = { (tabsId) => this.setState({ tabsId }) }
                       pensionFundsData = { pensionFundsData }
+                      totalPensionFundsData = { totalPensionFundsData }
                       changePaymentFunc = { (bool , id) => {
                         try{
                           this.presenter.setPaymentCheckerPresenter(bool, id)
@@ -140,7 +156,9 @@ class PensionFundsFragment extends BaseMVPView {
                         }
                       } }
                       showCodeModalFunc = { (showCodeModal) => this.setState({ showCodeModal }) }
-                      pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }/>
+                      pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }
+                      pensionFundsDocuments = { pensionFundsDocuments && pensionFundsDocuments }
+                      />
                   }
                 </div>
                 <div></div>

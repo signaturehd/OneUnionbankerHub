@@ -1676,6 +1676,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getPensionFundsHistory (token) {
+    return this.service.getPensionFundsHistory (token)
+    .pipe(ServiceErrorOperator())
+  }
+
   getPensionValidate (token) {
     return this.service.getPensionValidate(token)
     .pipe(ServiceErrorOperator())
