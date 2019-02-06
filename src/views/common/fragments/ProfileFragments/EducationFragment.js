@@ -13,7 +13,7 @@ class EducationFragment extends Component {
     super(props)
     this.state = {
       index : 3,
-      viewMoreText: 'view more, Education',
+      viewMoreText: 'view more, education',
     }
   }
 

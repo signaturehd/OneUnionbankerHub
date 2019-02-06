@@ -17,7 +17,7 @@ class SkillsFragment extends Component {
     super(props)
     this.state = {
       index : 3,
-      viewMoreText: 'view more, work & experience',
+      viewMoreText: 'view more, skills',
     }
   }
 

@@ -13,7 +13,7 @@ class CertificateFragment extends Component {
     super(props)
     this.state = {
       index : 3,
-      viewMoreText: 'view more, work & experience',
+      viewMoreText: 'view more, certificates',
     }
   }
 
@@ -70,9 +70,9 @@ class CertificateFragment extends Component {
                 onClick = {
                   () => {
                     if(index === profileCertificate.length)
-                      this.setState({ index : 3, viewMoreText : 'view less, work & experience' })
+                      this.setState({ index : 3, viewMoreText : 'view less, certificates' })
                     else
-                      this.setState({ index : profileCertificate.length, viewMoreText : 'view more, work & experience' })
+                      this.setState({ index : profileCertificate.length, viewMoreText : 'view more, certificates' })
                   }
                 }>
                 <img src={ require('../../../../images/icons/horizontal.png') } />
