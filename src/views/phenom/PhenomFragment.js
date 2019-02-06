@@ -123,11 +123,11 @@ class PhenomFragment extends BaseMVPView {
                   <h2 className={ 'phenoms-header header-margin-default text-align-left unionbank-color' }> Phenom Prime </h2>
                   <h2>We &#39;ve got these special deals, Just for U!</h2>
                   {
-                    phenomDataList.length === 0 &&
-                    <NoDataListedComponent
+                   phenomDataList.length === 0 &&
+                     <NoDataListedComponent
                       text={ 'No Phenom Listed' }
-                    />
-                  }
+                     />
+                   }
                 </div>
                 <div></div>
                 <div></div>
