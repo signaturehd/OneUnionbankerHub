@@ -121,7 +121,9 @@ class PensionFundsFragment extends BaseMVPView {
                       pensionFundsData = { pensionFundsData }
                       changePaymentFunc = { (bool , id) => {
                         try{
+                          this.presenter.setPaymentCheckRefresh('false')
                           this.presenter.setPaymentCheckerPresenter(bool, id)
+
                         } catch(e){
                           console.log(e)
                         }

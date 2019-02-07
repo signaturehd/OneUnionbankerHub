@@ -18,19 +18,19 @@ let mockData = {
       'datePayment': '01/02/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }, {
       'id': 3,
       'datePayment': '03/03/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }, {
       'id': 4,
       'datePayment': '04/04/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }
   ]
 }
@@ -127,20 +127,21 @@ export default class PensionFundsPresenter {
     }
   }
 
-  setPaymentCheckerPresenter(check , id) {
+  setPaymentCheckerPresenter(check , id , key) {
     let newData
     let formsData = []
-
+    console.log(check,id,key)
     pensionData.paymentHistory.map((resp) => {
-console.log(pensionData)
+    //console.log(pensionData)
       if(id === resp.id) {
         formsData.push({
           id : resp.id,
           isChecked : !check ? true : false,
           datePayment : resp.datePayment,
           totalInvestment: resp.totalInvestment,
-          totalReturn: resp.totalReturn
+          totalReturn: resp.totalReturnq
         })
+
 
       } else {
         formsData.push({
@@ -151,6 +152,26 @@ console.log(pensionData)
           totalReturn: resp.totalReturn
         })
       }
+      const objectParam = {
+        paymentHistory : formsData
+      }
+      this.setPensionFundsPresenter(objectParam)
+    })
+  }
+
+  setPaymentCheckRefresh(){
+    let newData
+    let formsData = []
+    pensionData.paymentHistory.map((resp) => {
+
+        formsData.push({
+          id : resp.id,
+          isChecked : false,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturn
+        })
+
       const objectParam = {
         paymentHistory : formsData
       }
