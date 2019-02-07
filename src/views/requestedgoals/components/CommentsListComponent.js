@@ -17,6 +17,7 @@ import {
 } from '../../../ub-components/'
 
 import { format } from '../../../utils/numberUtils'
+import { convertInitial } from '../../../utils/initialUtils'
 import moment from 'moment'
 
 import { Progress } from 'react-sweet-progress'
@@ -56,6 +57,7 @@ class CommentsListComponent extends Component {
       updateComment,
       deleteCommentFunc,
       employeeNumber,
+      dateTime,
       respEmployeeNumber
     } = this.props
 
@@ -119,7 +121,10 @@ class CommentsListComponent extends Component {
           </Modal>
         }
         <div className = { 'employee-column' }>
-          <img src = { require('../../../images/1uhub.png') } width = { '50px' } height = { '50px' }/>
+          <div className = { 'team-profile-picture' }>
+            <h2 className = { 'team-initial-text' }>{ convertInitial(employeeName && employeeName) }</h2>
+            <small></small>
+          </div>
           {
             onEditComment ?
             <div>
@@ -149,14 +154,19 @@ class CommentsListComponent extends Component {
             <br/>
             </div>
             :
-            <div className={ 'comment-border margin-5px padding-5px cursor-pointer' } onClick = { () =>
+            <div className={ 'requestComment-border margin-5px padding-5px cursor-pointer' } onClick = { () =>
               {
                 employeeNumber === respEmployeeNumber &&
                 this.setState({ showCommentOption: true, goalEditComment: goalComment })
               }
             }>
               <h2 className = { 'text-align-left font-size-12px font-weight-bold unionbank-color' }>{employeeName}</h2>
-              <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{goalComment}</h2>
+              <div className = { 'grid-global' }>
+                <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{goalComment}</h2>
+                <div className = { 'text-align-right' }>
+                  <h2 className = { 'text-align-right font-size-10px font-weight-lighter' }>{moment(dateTime).fromNow()}</h2>
+                </div>
+              </div>
             </div>
           }
         </div>

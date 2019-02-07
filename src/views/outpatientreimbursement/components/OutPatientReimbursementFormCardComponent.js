@@ -54,6 +54,10 @@ class OutPatientReimbursementFormCardComponent extends Component {
     amountErrorMessage,
     procedureArray,
     employeeName,
+    limit,
+    othersText,
+    othersTextBool,
+    othersTextFunc,
   } = this.props
 
   return (
@@ -85,15 +89,15 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 errorMessage = { dependentErrorMessage }
                 />
               <GenericInput
+                type = { 'textarea' }
                 value = { diagnosisText }
                 onChange = { (e) => diagnosisValueFunc(e.target.value) }
                 text = { 'Diagnosis' }
                 disabled = { showEditSubmitButton }
-                errorMessage = { diagnosisErrorMessage }
-                type = { 'text' }/>
+                errorMessage = { diagnosisErrorMessage }/>
               <DatePicker
                 selected = { preferredDate }
-                readOnly
+                //readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
                 maxDate = { moment() }
@@ -116,6 +120,7 @@ class OutPatientReimbursementFormCardComponent extends Component {
                   </div>
                   <div>
                     <GenericButton
+                      disabled = { showEditSubmitButton }
                       className = { 'outpatient-procedure' }
                       onClick = { () => procedureModalFunc(true) }
                       text = { 'Procedure' }/>
@@ -124,36 +129,90 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 {
                   showProcedureInput &&
                   procedureArray.map((resp, key) =>
-                    <div className = { 'outpatient-card-procedure-grid' }>
-                      <GenericInput
-                        hint = { 'Enter Amount' }
-                        text = { resp.name }
-                        value = { resp.amount ? resp.amount : '' }
-                        errorMessage = {
-                          resp.amount === 0  &&
-                          'Please enter an amount for the selected procedure'
+                  <div>
+                    {
+                      resp.id === 8 ?
+                      <div className = { 'outpatient-card-procedure-grid' }>
+                        <div className = { 'grid-global' }>
+                          <GenericInput
+                            hint = { 'Enter Procedure' }
+                            text = { resp.name }
+                            value = { othersText }
+                            disabled = { showEditSubmitButton }
+                            onChange = { (e) => {
+                              const updateProcedures = [...procedureArray]
+                              updateProcedures[key].otherProcedure = e.target.value
+                              othersTextFunc(e.target.value)
+                              }
+
+                            }
+                          />
+                          <GenericInput
+                            hint = { 'Enter Amount' }
+                            text = { resp.name }
+                            maxLength = { limit.toString().length }
+                            value = { resp.amount ? resp.amount : '' }
+                            errorMessage = {
+                              resp.amount === 0  &&
+                              'Please enter an amount for the selected procedure'
+                            }
+                            disabled = { showEditSubmitButton }
+                            onChange = { e =>
+                              {
+                               const updatedProcedures = [...procedureArray]
+                               updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                               selectedProcedureAmountFunc(updatedProcedures)
+                              }
+                            }
+                            type = { 'text' } />
+                        </div>
+                        {
+                          !showEditSubmitButton &&
+                          <img
+                            className = { 'close-button-global' }
+                            src = { require('../../../images/x-circle-global.png') }
+                            onClick = { () => {
+                              procedureArray.splice(key, 1)
+                              selectedProcedureAmountFunc(procedureArray)
+                            }}
+                          />
                         }
-                        disabled = { showEditSubmitButton }
-                        onChange = { e =>
-                          {
-                           const updatedProcedures = [...procedureArray]
-                           updatedProcedures[key].amount = parseInt(e.target.value) || 0
-                           selectedProcedureAmountFunc(updatedProcedures)
+                      </div>
+                     :
+                      <div className = { 'outpatient-card-procedure-grid' }>
+                        <GenericInput
+                          hint = { 'Enter Amount' }
+                          text = { resp.name }
+                          maxLength = { limit.toString().length }
+                          value = { resp.amount ? resp.amount : '' }
+                          errorMessage = {
+                            resp.amount === 0  &&
+                            'Please enter an amount for the selected procedure'
                           }
-                        }
-                        type = { 'text' } />
-                      {
-                        !showEditSubmitButton &&
-                        <img
-                          className = { 'close-button-global' }
-                          src = { require('../../../images/x-circle-global.png') }
-                          onClick = { () => {
-                            procedureArray.splice(key, 1)
-                            selectedProcedureAmountFunc(procedureArray)
-                          }}
-                        />
-                      }
-                    </div>
+                          disabled = { showEditSubmitButton }
+                          onChange = { e =>
+                            {
+                             const updatedProcedures = [...procedureArray]
+                             updatedProcedures[key].otherProcedure = ''
+                             updatedProcedures[key].amount = parseInt(e.target.value) || 0
+                             selectedProcedureAmountFunc(updatedProcedures)
+                            }
+                          }
+                          type = { 'text' } />
+                          {
+                            !showEditSubmitButton &&
+                            <img
+                              className = { 'close-button-global' }
+                              src = { require('../../../images/x-circle-global.png') }
+                              onClick = { () => {
+                                procedureArray.splice(key, 1)
+                                selectedProcedureAmountFunc(procedureArray)
+                              }}
+                            />
+                          }
+                      </div>
+                    }
+                  </div>
                   )
                 }
               </div>

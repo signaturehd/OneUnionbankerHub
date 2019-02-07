@@ -24,6 +24,7 @@ class BenefitFeedbackModal extends BaseMVPView {
     }
 
     this.addRating = this.addRating.bind(this)
+    this.commentShowIfLowRate = this.commentShowIfLowRate.bind(this)
   }
 
   addRating () {
@@ -55,15 +56,14 @@ class BenefitFeedbackModal extends BaseMVPView {
     const { onClose } = this.props
 
     return (
-      <Modal>
+      <Modal
+        >
         { super.render() }
         <div className={ 'benefit-feedback' } >
           {
             submitLoader ?
-            <center>
-              <h3>Please wait while we are submitting your feedback</h3>
-              <CircularLoader show={ true }/>
-            </center>            :
+            <CircularLoader show={ true }/>
+               :
             <div>
               <center>
                 <img
@@ -76,7 +76,7 @@ class BenefitFeedbackModal extends BaseMVPView {
                 <Rating
                   emptySymbol={<MdStarOutline style={{ fontSize: 30, color : '#c65e11' }} />}
                   fullSymbol={<MdStar style={{ fontSize: 30,  color : '#c65e11' }} />}
-                  onChange={ e => this.commentShowIfLowRate(e) }
+                  onClick={ this.commentShowIfLowRate }
                   initialRating={ rating && rating }
                   fractions={ 2 }
                 />

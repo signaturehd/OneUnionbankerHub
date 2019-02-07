@@ -167,6 +167,16 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getAccountNumber()
   }
 
+  /* Selected Pin Code */
+
+  setPinCode (status) {
+    this.sessionProvider.setPinCode(status)
+  }
+
+  getPinCode () {
+    return this.sessionProvider.getPinCode()
+  }
+
   setPreEmploymentStatus (preEmploymentStatus) {
     this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
   }
@@ -249,6 +259,11 @@ export default class HRBenefitsClient {
 
   getBooksComments (token , itemId, page, items) {
     return this.service.getBooksComments(token , itemId, page, items)
+      .pipe(ServiceErrorOperator())
+  }
+
+  addBookRequestCancel (token, objectParam) {
+    return this.service.addBookRequestCancel(token, objectParam)
       .pipe(ServiceErrorOperator())
   }
 
@@ -732,6 +747,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getHospitalBranch (token, id) {
+    return this.service.getHospitalBranch(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   addMedicalScheduling (
     token,
     addMedicalSchedulingParam
@@ -890,7 +910,9 @@ export default class HRBenefitsClient {
 
   getPhenomImage (token, file) {
     return this.service.getPhenomImage(token, file)
-      .pipe(ServiceErrorOperator())
+      .map(resp => {
+        return resp.data
+      })
       .flatMap(resp =>
         Observable.create(observer => {
           const reader = new FileReader()
@@ -905,7 +927,9 @@ export default class HRBenefitsClient {
 
   getVendorImage (token, file) {
     return this.service.getVendorImage(token, file)
-      .pipe(ServiceErrorOperator())
+      .map(resp => {
+        return resp.data
+      })
       .flatMap(resp =>
         Observable.create(observer => {
           const reader = new FileReader()
@@ -1483,8 +1507,8 @@ export default class HRBenefitsClient {
   }
 
   /* My Goals */
-  getGoals (token) {
-    return this.service.getGoals(token)
+  getGoals (token, goalType) {
+    return this.service.getGoals(token, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1503,8 +1527,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  approveGoal (token, goalId, isApprove, rejectedRemarks) {
-    return this.service.approveGoal(token, goalId, isApprove, rejectedRemarks)
+  approveGoal (token, approvalGoalsParam) {
+    return this.service.approveGoal(token, approvalGoalsParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1513,8 +1537,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalTask (token, goalId, taskDescription) {
-    return this.service.addGoalTask(token,  goalId, taskDescription)
+  addGoalTask (token, goalTaskParam) {
+    return this.service.addGoalTask(token, goalTaskParam)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1523,13 +1547,18 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  addGoalComment (token, goalId, goalComment) {
-    return this.service.addGoalComment(token,  goalId, goalComment)
+  addGoalComment (token, goalCommentParam) {
+    return this.service.addGoalComment(token, goalCommentParam)
     .pipe(ServiceErrorOperator())
   }
 
   getGoalComment (token, goalId, pageNumber, pageItem) {
     return this.service.getGoalComment(token, goalId, pageNumber, pageItem)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getSquadGoalComment (token, goalId, pageNumber, pageItem, goalType) {
+    return this.service.getSquadGoalComment(token, goalId, pageNumber, pageItem, goalType)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1558,14 +1587,64 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
-  getTeamGoals (token, status) {
-    return this.service.getTeamGoals(token, status)
+  getTeamGoals (token, goalType) {
+    return this.service.getTeamGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addSquadGoalComment (token, squadCommentParam) {
+    return this.service.addSquadGoalComment(token, squadCommentParam)
     .pipe(ServiceErrorOperator())
   }
 
   getGoalsHistory (token, goalId, pageNumber, pageItem) {
     return this.service.getGoalsHistory(token, goalId, pageNumber, pageItem)
     .pipe(ServiceErrorOperator())
+  }
+
+  addRatingGoal (token, ratingParam) {
+    return this.service.addRatingGoal(token, ratingParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  markAsCompleted (token, markParam) {
+    return this.service.markAsCompleted(token, markParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  markAsCompletedWithType (token, markParam) {
+    return this.service.markAsCompletedWithType(token, markParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addTeamGoals (token, teamGoalsParam) {
+    return this.service.addTeamGoals(token, teamGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addSquadGoals (token, squadGoalsParam) {
+    return this.service.addSquadGoals(token, squadGoalsParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getSquadGoals (token, goalType) {
+    return this.service.getSquadGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getMembersGoals (token, goalType) {
+    return this.service.getMembersGoals(token, goalType)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getDirectReportGoals (token, status) {
+    return this.service.getDirectReportGoals(token, status)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGoalsForConfirmation (token) {
+    return this.service.getGoalsForConfirmation(token)
+      .pipe(ServiceErrorOperator())
   }
 
   /* Certificaqte of Employment */
@@ -1583,5 +1662,74 @@ export default class HRBenefitsClient {
   submitCoe (token, bodyParam) {
     return this.service.submitCoe(token, bodyParam)
     .pipe(ServiceErrorOperator())
+  }
+
+  // PensionFunds
+
+  getPensionFunds (token) {
+    return this.service.getPensionFunds(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsDocuments (token) {
+    return this.service.getPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionValidate (token) {
+    return this.service.getPensionValidate(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  // Reward Goals
+  getRewardsDNAMoment (token, id) {
+    return this.service.getRewardsDNAMoment(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardAwards (token) {
+    return this.service.getRewardAwards(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardPoints (token) {
+    return this.service.getRewardPoints(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitAwards (token, objectParam) {
+    return this.service.submitAwards(token, objectParam)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getEligibleInRewards (token, type, string) {
+    return this.service.getEligibleInRewards(token, type, string)
+    .pipe(ServiceErrorOperator())
+  }
+
+  // Bir2316 My Documents
+  getBir2316List (token) {
+    return this.service.getBir2316List(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  requestBIR2316 (token, year) {
+    return this.service.requestBIR2316(token, year)
+    .pipe(ServiceErrorOperator())
+    .flatMap(resp => {
+        return this.service.getPdf(token, resp)
+      }
+    )
+    .flatMap(resp =>
+      Observable.create(observer => {
+        const reader = new FileReader()
+        reader.onerror = err => observer.error(err)
+        reader.onabort = err => observer.error(err)
+        reader.onload = () => observer.next(reader.result)
+        reader.onloadend = () => observer.complete()
+
+        reader.readAsDataURL(resp.data)
+      })
+    )
   }
 }

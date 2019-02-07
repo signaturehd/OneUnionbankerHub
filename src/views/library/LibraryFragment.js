@@ -25,13 +25,13 @@ class LibraryFragment extends BaseMVPView {
       showRating : false,
       showBook : false,
       showBorrowed : false,
-      showRecommendation : false,
       showBorrowedFiltered : false,
       searchString : '',
       pageNumber : null,
       borrowedPageNumber: null,
       refresh : 0,
       booksCommentList : [],
+      showConfirmation : false,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
@@ -80,14 +80,15 @@ class LibraryFragment extends BaseMVPView {
     }
   }
 
-  showRecommendation (recommended, totalCount) {
-    if (this.state.recommended.length === 0) {
-      this.setState({ recommended })
+  showRecommendation (recommend, totalCount) {
+    const { recommended } = this.state
+    if (recommended.length === 0) {
+      this.setState({ recommended: recommend })
     } else {
-      if(totalCount === this.state.recommended.length) {
+      if(totalCount === recommended.length) {
       } else {
-        const updateRecommendedBooks = [...this.state.recommended]
-        updateRecommendedBooks.push(...recommended)
+        const updateRecommendedBooks = [...recommended]
+        updateRecommendedBooks.push(recommend)
         this.setState({ recommended: updateRecommendedBooks })
       }
     }
@@ -142,6 +143,10 @@ class LibraryFragment extends BaseMVPView {
     this.presenter.getBooksComments(bookId, pageNumber, '')
   }
 
+  hideConfirmation () {
+    this.setState({ showConfirmation : false })
+  }
+
   render () {
     const {
       filteredBook,
@@ -154,6 +159,7 @@ class LibraryFragment extends BaseMVPView {
       pageNumber,
       borrowedPageNumber,
       booksCommentList,
+      showConfirmation,
     } = this.state
 
     const filteredBooks = books
@@ -161,67 +167,79 @@ class LibraryFragment extends BaseMVPView {
 
     return (
       <div>
-      { super.render() }
-      <div className={ 'header-margin-container' }>
-        <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
-      </div>
-      <input type = 'text'
-         className = {'booksSearchBar'}
-         ref='search'
-         placeholder = {'Search Books'}
-         value = { this.state.searchString }
-         onChange = { this.updateSearch } />
-        <div className = { 'tabs-container' }>
-          <input
-            className = { 'input-tab' }
-            id='tab2'
-            type='radio'
-            defaultChecked
-            onClick = { () => this.props.history.push('/mylearning/books/recommended') }
-            name='tabs' />
-          <label  htmlFor='tab2'>Recommended</label>
+        { super.render() }
+        <div className = { 'library-container-content' }>
+          <div></div>
+          <div>
+            <div className={ 'header-margin-container' }>
+              <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
+            </div>
+            <br/>
+            <input type = 'text'
+               className = {'booksSearchBar'}
+               ref='search'
+               placeholder = {'Search Books'}
+               value = { this.state.searchString }
+               onChange = { this.updateSearch } />
+            <div className = { 'tabs-container' }>
+              <input
+                className = { 'library-input-tab' }
+                id='library-tab2'
+                type='radio'
+                defaultChecked
+                onClick = { () => this.props.history.push('/mylearning/books/recommended') }
+                name='tabs' />
+              <label  htmlFor='library-tab2'>Recommended</label>
 
-          <input
-            className = { 'input-tab' }
-            id='tab3'
-            onClick = { () => this.props.history.push('/mylearning/books/history') }
-            type='radio'
-            name='tabs' />
-          <label  htmlFor = 'tab3' >Borrowed</label>
-          <input
-            className = { 'input-tab' }
-            id='tab1'
-            type='radio'
-            name='tabs'
-            onClick = { () => this.props.history.push('/mylearning/books/all') } />
-          <label  htmlFor = 'tab1'>All Books</label>
-          <section id='content1'>
-              <Switch>
-                <Route path = '/mylearning/books/recommended'
-                  render = { props =>
-                    <BookRecommendationFragment
-                      getComments = { (bookId) => this.getCommentsMethod(bookId) }
-                      booksCommentList = { booksCommentList }
-                      page = { pageNumber => this.getBooks(pageNumber) }
-                      presenter = { this.presenter }
-                      recommended = { recommended }
-                      filteredBooks = { filteredBooks }/>
-                    }/>
-                <Route path = '/mylearning/books/history'
-                  render = { props =>
-                    <BookBorrowedFragment
-                      presenter = { this.presenter }
-                      borrowed = { borrowed }/>
-                    }/>
-                <Route path = '/mylearning/books/all'
-                  render = { props =>
-                    <BookListFragment
-                      page = { pageNumber => this.getBooks(pageNumber) }
-                      presenter = { this.presenter }
-                      filteredBooks = { filteredBooks }/>
-                    }/>
-             </Switch>
-          </section>
+              <input
+                className = { 'library-input-tab' }
+                id='library-tab3'
+                onClick = { () => this.props.history.push('/mylearning/books/history') }
+                type='radio'
+                name='tabs' />
+              <label  htmlFor = 'library-tab3' >Borrowed</label>
+              <input
+                className = { 'library-input-tab' }
+                id='library-tab1'
+                type='radio'
+                name='tabs'
+                onClick = { () => this.props.history.push('/mylearning/books/all') } />
+              <label  htmlFor = 'library-tab1'>All Books</label>
+              <section id='content1'>
+                  <Switch>
+                    <Route path = '/mylearning/books/recommended'
+                      render = { props =>
+                        <BookRecommendationFragment
+                          getComments = { (bookId) => this.getCommentsMethod(bookId) }
+                          booksCommentList = { booksCommentList }
+                          page = { pageNumber => this.getBooks(pageNumber) }
+                          presenter = { this.presenter }
+                          recommended = { recommended }
+                          filteredBooks = { filteredBooks }/>
+                        }/>
+                    <Route path = '/mylearning/books/history'
+                      render = { props =>
+                        <BookBorrowedFragment
+                          showConfirmation = { showConfirmation }
+                          presenter = { this.presenter }
+                          confirmation = { (id) => this.presenter.addBookRequestCancel(id) }
+                          cancelRequest = { (showConfirmation) => {
+                            this.setState({ showConfirmation })
+                          } }
+                          borrowed = { borrowed }/>
+                        }/>
+                    <Route path = '/mylearning/books/all'
+                      render = { props =>
+                        <BookListFragment
+                          page = { pageNumber => this.getBooks(pageNumber) }
+                          presenter = { this.presenter }
+                          filteredBooks = { filteredBooks }/>
+                        }/>
+                 </Switch>
+              </section>
+            </div>
+          </div>
+          <div></div>
         </div>
       </div>
     )

@@ -53,21 +53,22 @@ export default class SettingsPresenter {
        try {
          this.view.hideLoading()
          this.view.showProfileBackground(profile)
-         this.view.showProfile(profile.employee)
-         this.view.showRank(profile.rank)
-         this.view.showLineManager(profile.employee.lineManager)
+         this.view.showProfile(profile && profile.employee)
+         this.view.showRank(profile && profile.rank)
+         this.view.showLineManager(profile && profile.employee.lineManager)
          this.view.showProfileDependent(profile.dependents)
-         this.view.showAccountNumber(profile.accountNumber)
+         this.view.showAccountNumber(profile && profile.accountNumber)
        } catch (e) {
          console.log(e)
        }
      }, e => {
-       this.view.showProfileBackground(e.message)
-       this.view.showProfile(e.message.employee)
-       this.view.showRank(e.message.rank)
-       this.view.showLineManager(e.message.employee.lineManager)
-       this.view.showProfileDependent(e.message.dependents)
-       this.view.showAccountNumber(e.message.accountNumber)
+       this.view.hideLoading()
+       this.view.showProfileBackground(e && e.message)
+       this.view.showProfile(e && e.message.employee)
+       this.view.showRank(e && e.message.rank)
+       this.view.showLineManager(e && e.message.employee.lineManager)
+       this.view.showProfileDependent(e && e.message.dependents)
+       this.view.showAccountNumber(e && e.message.accountNumber)
       // TODO prompt generic error
     })
    }

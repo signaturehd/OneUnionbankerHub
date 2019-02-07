@@ -41,9 +41,18 @@ class ComplianceFragment extends BaseMVPView {
 
     const MyCompliance = () => (
       <div className = { 'mycompliance-container' }>
-        <div>
-          <h2 className={ 'header-margin-default text-align-left' }> My Compliance </h2>
-          <h2> Be an Informed risk-taker. Which reference would you like to read today? </h2>
+        <div className = { 'mycompliance-header-grid' }>
+          <div>
+            <i
+              onClick = { () => this.props.history.push('/coe') }
+              className = { 'back-arrow' }></i>
+          </div>
+          <div>
+            <div>
+              <h2 className={ 'header-margin-default text-align-left' }> My Compliance </h2>
+              <h2> Be an Informed risk-taker. Which reference would you like to read today? </h2>
+            </div>
+          </div>
         </div>
         {
           showAccountNumberModal &&
@@ -85,14 +94,18 @@ class ComplianceFragment extends BaseMVPView {
     </div>)
 
     return (
-      <div>
-        <Switch>
-          <Route path = '/mycompliance/codeofconduct' render = { props =>
-            <CodeOfConductFragment
-              profileHasCOC = { profileHasCOC }
-              { ...props } /> } />
-            <Route path = '/mycompliance' render = {  MyCompliance } />
-        </Switch>
+      <div className = { 'mycompliance-grid-container-x3' }>
+        <div></div>
+        <div>
+          <Switch>
+            <Route path = '/mycompliance/codeofconduct' render = { props =>
+              <CodeOfConductFragment
+                profileHasCOC = { profileHasCOC }
+                { ...props } /> } />
+              <Route path = '/mycompliance' render = {  MyCompliance } />
+          </Switch>
+        </div>
+        <div></div>
       </div>
     )
   }

@@ -40,7 +40,7 @@ class HistoryListComponent extends Component {
         {
           <div className={ 'grid-global margin-5px padding-5px' }>
             <h2 className = { 'text-align-left font-size-12px font-weight-bold' }>{action}</h2>
-            <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{dateTime}</h2>
+          <h2 className = { 'text-align-left font-size-12px font-weight-lighter' }>{moment(dateTime).fromNow()}</h2>
           </div>
         }
         <Line/>

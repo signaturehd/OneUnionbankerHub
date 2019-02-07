@@ -43,7 +43,8 @@
 
 .contact-title {
   font-weight: initial;
-  color: #ff8a00;
+  color: #4f4c49;
+  font-size: 12px;
 }
 
 .contact-icon-settings {
@@ -51,8 +52,8 @@
   cursor: pointer;
   background-color: transparent;
   display: block;
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: auto;
   background-repeat: no-repeat;
 }
 
@@ -82,6 +83,14 @@
 
 .employeeId {
   background-image: url('../../../../images/icons/IdCardOrange.png');
+}
+
+.badgeStringComponent {
+  background-image: url('../../../../images/icons/ic_prating.png');
+}
+
+.pointStringComponent {
+  background-image: url('../../../../images/rewards/Rewards-Orange.png');
 }
 
 .employeeContact {

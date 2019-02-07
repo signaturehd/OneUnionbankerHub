@@ -16,6 +16,16 @@
   color: #090909;
 }
 
+.laptoplease-card-option {
+  padding : 20px;
+  margin: auto;
+}
+
+.laptoplease-option-grid {
+  display: grid;
+  grid-template-columns: .3fr 1fr .3fr;
+}
+
 .carview-submit {
   border-radius: 5px;
   text-align: center;
@@ -83,15 +93,6 @@
   grid-tecarate-columns: 50% 50%;
 }
 
-.car-image-view {
-  position: relative;
-  background: url('../../../../images/uploadicon-grey.jpg') no-repeat center center;
-  background-size: 50px;
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 20px;
-}
 .car-image-layer {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;

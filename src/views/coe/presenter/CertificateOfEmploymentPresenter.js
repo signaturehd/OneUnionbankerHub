@@ -12,7 +12,7 @@ import moment from 'moment'
 
 /* Variables */
 let storedTypeOFCoeObject = '', storedPurposeObject = '', storedVisaObject = ''
-let storedApprovedVLFrom = '', storedApprovedVLTo = ''
+let storedApprovedVLFrom = '', storedApprovedVLTo = '', storedVLTo = '', storedVLFrom = ''
 
 let withSalary = [
   {
@@ -21,6 +21,12 @@ let withSalary = [
   }, {
     id : 1,
     name : 'Without Salary'
+  }, {
+    id : 3,
+    name: 'With Salary w/ Approved Vacation Leave'
+  }, {
+    id: 4,
+    name : 'With Salary w/ Available Leave Balance'
   }
 ]
 
@@ -48,6 +54,16 @@ export default class CertificateOfEmploymentPresenter {
   setStoredPurposeObject (data) {
     storedPurposeObject = data
     this.view.setPurposeBody(data)
+  }
+
+  setStoredVLFrom (data) {
+    storedVLFrom = data
+    this.view.setVLFromBody(data)
+  }
+
+  setStoredVLTo (data) {
+    storedVLTo = data
+    this.view.setVLToBody(data)
   }
 
   getCoeSalary () {
@@ -96,8 +112,155 @@ export default class CertificateOfEmploymentPresenter {
     })
   }
 
-  validateInput () {
-    if(storedPurposeObject && storedPurposeObject.purpose !== 37) {
+  validateInput(){
+    if(storedTypeOFCoeObject.id === 3) {
+      if(storedTypeOFCoeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select the type of Certificate of Employment',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Purpose',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject.id === 38) {
+          if(storedVisaObject === ''){
+              store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select Country',
+              type: 'warning',
+              duration: 5000,
+            }))
+          } else if (storedVisaObject === '') {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VISA',
+              type: 'warning',
+              duration: 5000,
+            }))
+          } else {
+            if(storedVLFrom === '' || !storedVLFrom) {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VL Date From field',
+              type: 'warning',
+              duration: 5000,
+            }))
+          } else if(storedVLTo === '' || !storedVLTo) {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VL Date To field',
+              type: 'warning',
+              duration: 5000,
+            }))
+          }else{
+              this.view.setEditable(true)
+          }
+        }
+      } else if(storedVLFrom === '') {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Certificate of Employment',
+            message : 'Please select VL Date From field',
+            type: 'warning',
+            duration: 5000,
+          }))
+      } else if(storedVLTo === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VL Date To field',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else {
+        if(storedVLFrom === '' || !storedVLFrom) {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Certificate of Employment',
+              message : 'Please select VL Date From field',
+              type: 'warning',
+              duration: 5000,
+            }))
+        } else if(storedVLTo === '' || !storedVLTo) {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Certificate of Employment',
+            message : 'Please select VL Date To field',
+            type: 'warning',
+            duration: 5000,
+          }))
+        }else{
+            this.view.setEditable(true)
+        }
+
+      }
+    }else if (storedTypeOFCoeObject.id === 3) {
+      if(storedTypeOFCoeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select the type of Certificate of Employment',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Purpose',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVLFrom === '' || !storedVLFrom) {
+          store.dispatch(NotifyActions.addNotify({
+            title: 'Certificate of Employment',
+            message : 'Please select VL Date From field',
+            type: 'warning',
+            duration: 5000,
+          }))
+      } else if(storedVLTo === '' || !storedVLTo) {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VL Date To field',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else {
+        this.view.setEditable(true)
+      }
+    } else if (storedPurposeObject.id === 38) {
+      if(storedTypeOFCoeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select the type of Certificate of Employment',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedPurposeObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Purpose',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVisaObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select Country',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else if(storedVisaObject === '') {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Certificate of Employment',
+          message : 'Please select VISA',
+          type: 'warning',
+          duration: 5000,
+        }))
+      } else {
+        this.view.setEditable(true)
+      }
+    } else {
       if(storedTypeOFCoeObject === '') {
         store.dispatch(NotifyActions.addNotify({
           title: 'Certificate of Employment',
@@ -115,32 +278,6 @@ export default class CertificateOfEmploymentPresenter {
       } else {
         this.view.setEditable(true)
       }
-    } else {
-      console.log(storedPurposeObject)
-      if(storedTypeOFCoeObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select the type of COE',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedPurposeObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select your purpose',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else if(storedVisaObject === '') {
-        store.dispatch(NotifyActions.addNotify({
-          title: 'Certificate of Employment',
-          message : 'Please select VISA',
-          type: 'warning',
-          duration: 5000,
-        }))
-      } else {
-        this.view.setEditable(true)
-      }
     }
   }
 
@@ -150,6 +287,8 @@ export default class CertificateOfEmploymentPresenter {
       storedPurposeObject.id,
       storedVisaObject.id,
       storedTypeOFCoeObject.type,
+      moment(storedVLFrom).format('MM/DD/YYYY') === 'Invalid date' ? '' : moment(storedVLFrom).format('MM/DD/YYYY'),
+      moment(storedVLTo).format('MM/DD/YYYY') === 'Invalid date' ? '' : moment(storedVLTo).format('MM/DD/YYYY')
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
@@ -160,10 +299,13 @@ export default class CertificateOfEmploymentPresenter {
          duration : 7000
        })
      )
-     storedPurposeObject =''
-     storedTypeOFCoeObject =''
-     storedVisaObject =''
+     this.setStoredVisaObject('')
+     this.setStoredTypeOFCoeObject('')
+     this.setStoredPurposeObject('')
+     this.setStoredVLFrom('')
+     this.setStoredVLTo('')
      this.view.navigateLearning()
+     this.view.backToList()
     }, error => {
       this.view.checkLoader(false)
     })

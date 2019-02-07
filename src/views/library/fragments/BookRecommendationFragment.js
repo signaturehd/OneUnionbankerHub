@@ -88,32 +88,31 @@ class BookRecommendationFragment extends Component {
       bookQuantity,
       title,
       comments,
-      bookPage
+      bookPage,
     } = this.state
-
     const BookRecommendation = () => (
       <div className = {'library-container'}>
         {
-          recommended.map((book, key) =>
+          recommended.map((book, key) => (
             <BookCardComponent
               rateBook = { (id, rating, comments) => this.addRating(id, rating, comments) }
-              detail = { book } key = { key }
+              detail = { book && book }
+              key = { key }
               getComments = { (id) => this.getCommentsMethod(id) }
               onClick = { (details, view) => this.setState({ details, view }) }
             />
-          )
+          ))
         }
         {
           view &&
           <BookViewModal
            rateBook = { (bookId, bookRating, comments) => this.setState({ bookId, bookRating, comments, showConfirmationRateModal : true, title : 'Rate' }) }
            reserveBook = { (bookId, bookQuantity) => this.setState({ bookId, bookQuantity, showConfirmationReserveModal : true, title : 'Reserve' }) }
-           details = { details }
-           booksCommentList  = { booksCommentList }
+           details = { details && details }
+           booksCommentList  = { booksCommentList && booksCommentList }
            onClose = { () => this.setState({ view : false }) }
           />
         }
-
         {
           showConfirmationReserveModal &&
           <BookConfirmationModal
@@ -128,7 +127,6 @@ class BookRecommendationFragment extends Component {
             onClose = { () => this.setState({ showConfirmationReserveModal : false }) }
           />
         }
-
         {
           showConfirmationRateModal &&
           <BookConfirmationModal
@@ -149,7 +147,10 @@ class BookRecommendationFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/mylearning/books/recommended'  render = { BookRecommendation } />
+          <Route
+            exact path = '/mylearning/books/recommended'
+            render = { BookRecommendation }
+            />
         </Switch>
       </div>
     )

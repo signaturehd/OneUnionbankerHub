@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'Gotham Book';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Gotham Book'), url('GOTHAMBOOK.woff') format('woff');
+}
+
+.mobile-view-grid-row > *{
+  font-family: 'Gotham Book' !important;
+}
+
+.image-feature {
+  height: 100%;
+  width: 100%;
+  margin-top: -120px;
+}
+
+.mobile-font-sixe {
+  font-size: 2rem;
+}
+
+.mobile-view-grid-row {
+  padding-top: 40px;
+  /* grid-template-rows: .05fr 1fr .05fr; */
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
+}
+
+.mobile-view-grid-row-x6 {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+/* Header  Component Style */
+
+.mobile-view-header-components {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.mobile-view-ios-components {
+  padding-left: 30px;
+}
+
+.mobile-view-header-grid-detail {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+}
+
+.mobile-view-ubplogo {
+  background-image : url('../../../images/mobileview/UBP Logo.png');
+}
+
+.mobile-view-ubplogo-detail {
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 120px;
+  width: auto;
+}
+
+.mobile-view-googleplay {
+  background-image : url('../../../images/Googleplay.png');
+}
+
+.mobile-view-googleplay-detail {
+  background-size:contain;
+  background-repeat: no-repeat;
+  height: 100px;
+  margin-top: 22px;
+  width: auto;
+}
+
+.mobile-view-appstore {
+  background-image : url('../../../images/APPLE.png');
+}
+
+.mobile-view-appstore-detail {
+  background-repeat: no-repeat;
+  background-size:contain;
+  height: 100px;
+  margin-top: 22px;
+  width: auto;
+}
+
+.mobile-view-phone-vertical {
+  background-image : url('../../../images/mobileview/login phone.png');
+}
+
+.mobile-view-phone-vertical-detail {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100px;
+  width: 100px;
+}
+
+.mobile-view-grid-row-text {
+  display: grid;
+  grid-template-rows: .5fr .5fr;
+}
+
+.mobile-view-title-detail {
+  letter-spacing: 1pt;
+  font-weight: 500;
+  font-size: 3rem;
+}
+
+.mobile-view-title-steps-detail {
+  letter-spacing: 1pt;
+  font-weight: 500;
+  font-size: 4rem;
+}
+
+
+.mobile-view-label-detail {
+  letter-spacing: 0.3pt;
+  font-size: 3rem;
+}
+
+.mobile-view-label-detail-small {
+  letter-spacing: 0.3pt;
+  font-size: 2.5rem;
+}
+
+.mobile-view-title {
+  letter-spacing: 0.3pt;
+  font-size:5rem;
+  font-weight:500;
+}
+
+.mobile-view-label-steps-detail {
+  letter-spacing: 0.3pt;
+  font-size: 1.8rem;
+}
+
+
+@media (max-width:768px) {
+  .mobile-view-label-detail {
+    font-size: 2rem;
+  }
+}

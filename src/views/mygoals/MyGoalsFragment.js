@@ -21,7 +21,7 @@ import {
 
 import GoalApprovalFormComponent from '../mygoals/components/GoalApprovalFormComponent'
 import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
-import ApprovedGoalsComponent from '../mygoals/components/ApprovedGoalsComponent'
+import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 import TeamGoalsFragment from '../teamgoal/TeamGoalsFragment'
 
@@ -62,6 +62,9 @@ class MyGoalsFragment extends BaseMVPView {
       goalType : '',
       approvalStatus: '',
       rejectedRemarks: '',
+      filterId: 0,
+      filterName: '',
+      searchString: '',
       goalsArray : [],
       approvalArray : [],
       priorityArray : [
@@ -87,16 +90,27 @@ class MyGoalsFragment extends BaseMVPView {
           id: 2,
           name: 'Developemental'
         }
+      ],
+      filterArray : [
+        {
+          id: 0,
+          name: 'All'
+        },
+        {
+          id: 1,
+          name: 'Requested'
+        },
+        {
+          id: 2,
+          name: 'Approved'
+        }
       ]
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount() {
-    this.presenter.getForApprovalGoals()
-  }
-
-  getForApprovalGoals(approvalArray) {
-    this.setState({ approvalArray })
+    this.props.setSelectedNavigation(14)
   }
 
   noticeResponse (noticeResponse) {
@@ -203,60 +217,49 @@ class MyGoalsFragment extends BaseMVPView {
     })
   }
 
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
+  }
+
   render () {
-    const { isLineManager, employeeNumber } = this.props
+    const { isLineManager, isPO, employeeNumber } = this.props
     const {
       enabledLoader,
+      searchString,
       showNoticeResponseModal,
       noticeResponse,
       goalsArray,
-      approvalArray,
       showForm,
       showPriorityModal,
       showGoalTypeModal,
       editMode,
+      filterId,
+      filterName,
       forApproval,
       showApprovalForm,
       priorityArray,
-      employeeName,
-      goalId,
-      goalTitle,
-      description,
-      startDate,
-      dueDate,
-      priorityId,
-      priorityName,
-      goalTypeId,
-      goalType,
-      goalTypeArray,
-      approvalStatus,
-      rejectedRemarks,
-      showRejectRemarksModal,
+      filterArray,
       showRequestCoachForm,
-      showTeamGoal
+      showTeamGoal,
+      showFilterModal
     } = this.state
 
     return (
       <div>
         {
-          enabledLoader ?
-          <Modal>
-            <center>
-              <h2>Please wait...</h2>
-              <CircularLoader show = { enabledLoader }/>
-            </center>
-          </Modal>
-          :
-          showNoticeResponseModal &&
-          <ResponseModal
-            onClose={ () => {
-              this.resetValue(),
-              this.setState({ showNoticeResponseModal : false })
-            }}
-            noticeResponse={ noticeResponse ? noticeResponse : 'You have successfully Approved this Goal Request.' }
+          showFilterModal &&
+          <SingleInputModal
+            label = { 'Select status' }
+            inputArray = { filterArray }
+            selectedArray = { (filterId, filterName) => this.setState({
+                filterId,
+                filterName,
+                showFilterModal: false
+              })
+            }
+            onClose = { () => this.setState({ showFilterModal: false }) }
           />
         }
-
         {
           showRequestCoachForm ?
           <RequestCoachFragment
@@ -268,165 +271,114 @@ class MyGoalsFragment extends BaseMVPView {
               <i className = { 'back-arrow' } onClick = { this.navigate.bind(this) }></i>
             </div>
             <div>
-              <div>
-                <h2 className={ 'header-margin-default text-align-left' }>My Goals</h2>
-                <div className = { 'grid-global' }>
-                  <h2 className={ 'font-size-16px text-align-left' }>Below are the list of your goals</h2>
+              <div className={ 'mygoal-banner-grid' }>
+                <div className={ 'mygoal-header-default' }>
+                  <div></div>
+                  <div>
+                    <div className={ 'mygoal-banner-grid-content' }>
+                      <div></div>
+                      <div className={ 'mygoal-header-title' }>
+                        <h2 className = { 'mygoal-header-title' }>My Goals</h2>
+                        <h2 className = { 'font-size-16px text-align-left' }>Exhibit Magis At Work. Let&#39;s continue to Own the Future together.</h2>
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </div>
-                <div className = { 'tabs-container' }>
-                <input
-                  className = { 'input-tab' }
-                  id = { 'tab1' }
-                  type = { 'radio' }
-                  name = { 'tabs' }
-                  defaultChecked = { true }
-                  onClick = { () => {
-                      this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
-                      this.props.history.push('/mygoals/request')
-                    }
-                  }/>
-                <label className = { 'travel-icon-tab' } htmlFor='tab1'>Individual Goals</label>
-
-                {
-                  isLineManager &&
-                  <label>
-                      <input
-                        className = { 'input-tab' }
-                        id = { 'tab2' }
-                        type = { 'radio' }
-                        name = { 'tabs' }
-                        onClick = { () => {
-                            this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
-                            this.props.history.push('/mygoals/team')
-                          }
-                        }/>
-                      <label className = { 'travel-icon-tab' } htmlFor='tab2'>Team Goals</label>
-                  </label>
-                }
-
-                {
-                  isLineManager &&
-                  <label>
+              <div className = { 'grid-filter' }>
+                <div className = { 'padding-10px mygoal-filter-margin' }>
+                  <GenericInput
+                    hint = { 'Search goal name' }
+                    refCallback = { 'search' }
+                    type = { 'text' }
+                    value = { searchString }
+                    onChange = { this.updateSearch }
+                  />
+                </div>
+                <div></div>
+                <div className = { 'grid-tabs' }>
+                  <div></div>
+                  <div className = { 'mygoal-tabs padding-10px' }>
                     <input
-                      className = { 'input-tab' }
-                      id = { 'tab3' }
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab1' }
+                      type = { 'radio' }
+                      name = { 'tabs' }
+                      defaultChecked = { true }
+                      onClick = { () => {
+                        this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
+                        this.props.history.push('/mygoals/request')
+                      }
+                    }/>
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab1'>Individual Goals</label>
+
+                    <input
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab2' }
                       type = { 'radio' }
                       name = { 'tabs' }
                       onClick = { () => {
-                          this.setState({ forApproval : true })
-                          this.props.history.push('/mygoals/approved')
-                        }
-                      }/>
-                    <label className = { 'travel-icon-tab' } htmlFor='tab3'>For Approval</label>
-                  </label>
-                }
-                <section>
-                  <Switch>
-                    <Route exact path='/mygoals/request/RequestedGoalsFragment'
-                      render={ props => <RequestedGoalsFragment { ...props } /> }/>
-                    <Route exact path='/mygoals/team/TeamGoalsFragment'
-                      render={ props => <TeamGoalsFragment { ...props } /> }/>
-                    <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
-                      render={ props => <ApprovedGoalsComponent { ...props } /> }/>
-                   </Switch>
-                </section>
-
-                {
-                  !forApproval ?
-                    showTeamGoal ?
-                    <TeamGoalsFragment
-                      employeeNumber = { employeeNumber }
-                    />
-                    :
-                    <RequestedGoalsFragment
-                      employeeNumber = { employeeNumber }
-                      showRequestCoachForm = { showRequestCoachForm }
-                      showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
-                  :
-                  showApprovalForm ?
-                  <GoalApprovalFormComponent
-                    employeeName = { employeeName }
-                    goalId = { goalId }
-                    goalTitle = { goalTitle }
-                    approvalStatus = { approvalStatus }
-                    description = { description }
-                    priorityId = { priorityId }
-                    startDate = { startDate }
-                    dueDate = { dueDate }
-                    goalTypeId = { goalTypeId }
-                    rejectedRemarks = { rejectedRemarks }
-                    showRejectRemarksModal = { showRejectRemarksModal }
-                    showRejectRemarksFunc = { () => this.setState({ showRejectRemarksModal : true }) }
-                    rejectedRemarksFunc = { (resp) => this.setState({ rejectedRemarks: resp }) }
-                    onApprovalSubmit = { (goalId, isApproved, rejectedRemarks) => {
-                        this.onApprovalSubmit(goalId, isApproved, rejectedRemarks)
-                        this.resetValue()
+                        this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
+                        this.props.history.push('/mygoals/team')
                       }
+                    }/>
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team / Squad Goals</label>
+
+                    <input
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab3' }
+                      type = { 'radio' }
+                      name = { 'tabs' }
+                      onClick = { () => {
+                        this.setState({ forApproval : true })
+                        this.props.history.push('/mygoals/approved')
+                      }
+                    }/>
+
+                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>Goals Confirmation</label>
+                    {
+                      // <section>
+                      //   <Switch>
+                      //     <Route exact path='/mygoals/request/RequestedGoalsFragment'
+                      //     render={ props => <RequestedGoalsFragment { ...props } /> }/>
+                      //     <Route exact path='/mygoals/team/TeamGoalsFragment'
+                      //     render={ props => <TeamGoalsFragment { ...props } /> }/>
+                      //     <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
+                      //     render={ props => <ApprovedGoalsComponent { ...props } /> }/>
+                      //   </Switch>
+                      // </section>
                     }
-                    onClose = { () => this.setState({ showRejectRemarksModal: false }) }
-                  />
-                  :
-                    approvalArray.length !== 0 ?
-                    approvalArray.map((resp, key) =>
-
-                    <ApprovedGoalsComponent
-                      employeeName = { resp.name }
-                      imageUrl = { resp.imageUrl }
-                      cardHolder = { resp.goalDetails }
-                      priorityFunc = { (resp) => this.priorityFunc(resp) }
-                      goalId = { goalId }
-                      goalTitle = { goalTitle }
-                      approvalStatus = { approvalStatus }
-                      description = { description }
-                      priorityId = { priorityId }
-                      startDate = { startDate }
-                      dueDate = { dueDate }
-                      goalTypeId = { goalTypeId }
-                      rejectedRemarks = { rejectedRemarks }
-                      showRejectRemarksModal = { showRejectRemarksModal }
-                      showRejectRemarksFunc = { () => this.setState({ showRejectRemarksModal : true }) }
-                      rejectedRemarksFunc = { (resp) => this.setState({ rejectedRemarks: resp }) }
-                      onApprovalSubmit = { (goalId, isApproved, rejectedRemarks) => {
-                          this.onApprovalSubmit(goalId, isApproved, rejectedRemarks)
-                          this.resetValue()
-                        }
-                      }
-                      onClose = { () => this.setState({ showRejectRemarksModal: false }) }
-                      showApprovalFormFunc = {
-                        (
-                          employeeName,
-                          goalId,
-                          goalTitle,
-                          approvalStatus,
-                          description,
-                          priorityId,
-                          startDate,
-                          dueDate,
-                          goalTypeId
-                        ) =>
-                        this.setState ({
-                          employeeName,
-                          goalId,
-                          goalTitle,
-                          approvalStatus,
-                          description,
-                          priorityId,
-                          startDate,
-                          dueDate,
-                          goalTypeId
-                        })
-                      }
-                    />
-                    )
-                    :
-                    <center><h2>No record</h2></center>
-                }
+                  </div>
+                </div>
               </div>
+              {
+                !forApproval ?
+                showTeamGoal ?
+                <TeamGoalsFragment
+                  employeeNumber = { employeeNumber }
+                  isLineManager = { isLineManager }
+                  isPO = { isPO }
+                />
+                :
+                <RequestedGoalsFragment
+                  searchString = { searchString }
+                  filterId = { filterId }
+                  employeeNumber = { employeeNumber }
+                  isLineManager = { isLineManager }
+                  showRequestCoachForm = { showRequestCoachForm }
+                  showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
+                :
+                <ApprovalGoalsFragment
+                  isPO = { isPO }
+                  isLineManager = { isLineManager }
+                  />
+              }
             </div>
           </div>
         }
-        </div>
+      </div>
     )
   }
 }

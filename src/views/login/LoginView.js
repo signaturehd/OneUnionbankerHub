@@ -264,13 +264,15 @@ class LoginView extends BaseMVPView {
       history
     } = this.props
 
-    /* Prod Version 5.1.1 */
+    /* Prod Version 6.3.0 */
 
-    /* UAT 6.0.0*/
+    /* UAT 7.4.9*/
 
-    let version = 6
-    let majorVersion = 8
-    let minorVersion = 3
+    /* Added new Team Goals */
+
+    let version = 7
+    let majorVersion = 0
+    let minorVersion = 0
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
@@ -375,13 +377,9 @@ class LoginView extends BaseMVPView {
                   <br/>
                   {
                     resetLoader ?
-                    <center className = { 'login-loader' }>
-                      <br/><br/><br/><br/>
-                      <h2>Please wait while we we&#39;re validating the information.</h2>
-                      <br/>
-                      <br/>
-                      <CircularLoader show = { resetLoader }/>
-                    </center>
+                    <CircularLoader
+                      validateLoading = { false }
+                      show = { resetLoader }/>
                     :
                     <LoginComponent
                       requestEmailFunc = { () =>
@@ -473,7 +471,7 @@ class LoginView extends BaseMVPView {
               {
                 // <img className = { 'login-logo' } src = { require('../../images/drawer/1uhub_halloween_logo.jpg')} />
               }
-              <img className = { 'login-logo' } src = { require('../../images/WEB and LOGO/1uhub_logo_christmas-01.png')} />
+              <img className = { 'login-logo' } src = { require('../../images/WEB and LOGO/1UHub Logo_Gotham_2.png')} />
                 <br/>
                 <GenericInput
                   onChange = { e =>
@@ -494,9 +492,16 @@ class LoginView extends BaseMVPView {
                 </span>
                 {
                   disabled ?
-                  <center className = { 'login-loader' }>
-                    <CircularLoader show = { true }/>
-                  </center>              :
+                  <div style = {{ marginBottom: '12px'}}>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <CircularLoader
+                    validateLoading = { false }
+                    show = { true }/>
+                  <br/>
+                  <br/>
+                  </div>        :
                   <div>
                     <GenericButton
                       disabled = { disabled }

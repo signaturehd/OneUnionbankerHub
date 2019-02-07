@@ -23,27 +23,45 @@ class Notice extends BaseMVPView {
       showValidatedCofirmation: false,
       showCancelCofirmation: false,
       showPinCodeModal : false,
+      showDisagreeModal : false,
       tranId : '',
       isAgree: '',
       benId : '',
+      enabledLoader : false,
     }
-    this.onFailed = this.onFailed.bind(this)
+  }
+
+  componentDidMount () {
+    try {
+      this.presenter.getPinCode()
+
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   isAgree (tranId, isAgree, benId) {
     this.setState({ tranId, isAgree, benId })
   }
 
-  isAgreementConfirm (tranId, isAgree, benId) {
-    this.presenter.updateNotice(tranId, isAgree, benId)
+  isAgreementConfirm (tranId, isAgree, benId, code) {
+    this.presenter.updateNotice(tranId, isAgree, benId, code)
   }
 
   onSuccess (response) {
     this.props.onDismiss(false, response)
   }
 
-  onFailed (response) {
-    this.props.onDismiss(false)
+  onFailed () {
+    this.setState({ disableSubmit : false, showPinCodeModal : false })
+  }
+
+  circularLoader (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
+  setPinCodeStatus (showPinCode) {
+    this.setState({ showPinCode })
   }
 
   render () {
@@ -56,7 +74,10 @@ class Notice extends BaseMVPView {
       showPinCodeModal,
       tranId,
       isAgree,
-      benId
+      benId,
+      showDisagreeModal,
+      enabledLoader,
+      showPinCode
     } = this.state
 
     return (
@@ -83,32 +104,66 @@ class Notice extends BaseMVPView {
           )
         }
         {
+          enabledLoader &&
+          <CircularLoader
+            show = { enabledLoader }/>
+        }
+        {
+          showDisagreeModal &&
+          <Modal>
+            <center>
+              <h2>By disagreeing, your application will not proceed. Are you sure you want to cancel?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Cancel' }
+                  onClick = { () => this.setState({ showDisagreeModal : false }) }
+                />
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => {
+                    this.setState({ isDimissable : true, disableSubmit: true, showDisagreeModal: false })
+                    this.presenter.updateNotice(noticeResponse.transactionId.toString(), 0, benefitId, '')
+                  } }
+                />
+              </div>
+            </center>
+          </Modal>
+        }
+        {
           showPinCodeModal &&
           <NoticePinModal
-            onSubmitAgreement = { () => this.isAgreementConfirm(tranId, isAgree, benId) }
+            onSubmitAgreement = { (code) => this.isAgreementConfirm(tranId, isAgree, benId, code) }
+            enabledLoader = { enabledLoader }
           />
         }
         {
-          disableSubmit || isDismissable ?
+          disableSubmit ?
           <center>
-            <CircularLoader show={true}/>
-          </center>          :
+          </center>   :
           <div>
           <center>
             <br/>
             <br/>
             <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
-              onClick = { () => {
-                this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true })
-                this.isAgree(noticeResponse.transactionId.toString(), 0, benefitId)
-                }
+              onClick = { () =>
+                this.setState({ showDisagreeModal : true })
               }
             />
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () => {
-                this.setState({ isDimissable : true, disableSubmit: true, showPinCodeModal : true  })
-                this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
-              }
+                  try {
+                    if(showPinCode) {
+                      this.setState({ disableSubmit: true })
+                      this.presenter.updateNotice(noticeResponse.transactionId.toString(), 1, benefitId, '')
+                    } else {
+                      this.setState({ disableSubmit: true, showPinCodeModal : true })
+                      this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
+                    }
+                  } catch (e) {
+                    console.log(e)
+                  }
+                }
               }
             />
           </center>

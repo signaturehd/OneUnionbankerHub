@@ -42,14 +42,9 @@ class ReleasingCenterModal extends Component {
               />
             ))
           )          :
-          <center>
-            <h3>Releasing Center is Loading Please wait</h3>
-            <br/>
-            <br/>
-            <CircularLoader show={true}/>
-            <br/>
-            <br/>
-          </center>
+          <CircularLoader
+            validateLoading = { true }
+            show={true}/>
         }
         </div>
       </Modal>

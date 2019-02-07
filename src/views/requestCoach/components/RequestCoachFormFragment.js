@@ -40,7 +40,7 @@ class RequestCoachFormFragment extends Component {
               text = { 'Preferred Date' }
               selected = { preferredDate && moment(preferredDate) }
               onChange = { (e) => preferredDateFunc(e) }
-              minDate = { moment(minimumDate) }
+              minDate = { moment() }
               maxDate = { moment(maximumDate) }
             />
             <GenericInput

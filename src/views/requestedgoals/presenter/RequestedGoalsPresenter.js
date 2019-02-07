@@ -11,11 +11,18 @@ import AddGoalCommentInteractor from '../../../domain/interactor/goals/AddGoalCo
 import DeleteGoalsInteractor from '../../../domain/interactor/goals/DeleteGoalsInteractor'
 import DeleteTaskInteractor from '../../../domain/interactor/goals/DeleteTaskInteractor'
 import DeleteCommentInteractor from '../../../domain/interactor/goals/DeleteCommentInteractor'
+import AddMarkAsCompletedWithTypeInteractor from '../../../domain/interactor/goals/AddMarkAsCompletedWithTypeInteractor'
+import AddRatingGoalsInteractor from '../../../domain/interactor/goals/AddRatingGoalsInteractor'
+
 import requestedGoalsParam from '../../../domain/param/AddRequestedGoalsParam'
+import addRatingGoalsParam from '../../../domain/param/AddRatingGoalsParam'
+import goalCommentParam from '../../../domain/param/AddGoalCommentParam'
+import goalTaskParam from '../../../domain/param/AddGoalTaskParam'
+import markParam from '../../../domain/param/AddMarkAsCompletedWithTypeParam'
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
-
-let storedGoalId = '', storedPageNumber = '', storedPageItem = ''
+import moment from 'moment'
+let storedGoalId = '', storedPageNumber = '', storedPageItem = '', storedGoalType= ''
 
 export default class RequestCoachPresenter {
   constructor (container) {
@@ -32,15 +39,17 @@ export default class RequestCoachPresenter {
     this.deleteGoalsInteractor = new DeleteGoalsInteractor(container.get('HRBenefitsClient'))
     this.deleteTaskInteractor = new DeleteTaskInteractor(container.get('HRBenefitsClient'))
     this.deleteCommentInteractor = new DeleteCommentInteractor(container.get('HRBenefitsClient'))
+    this.addMarkAsCompletedWithTypeInteractor = new AddMarkAsCompletedWithTypeInteractor(container.get('HRBenefitsClient'))
+    this.addRatingGoalsInteractor = new AddRatingGoalsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getGoals () {
+  getGoals (goalType) {
     this.view.showCircularLoader()
-    this.getRequestedGoalsInteractor.execute()
+    this.getRequestedGoalsInteractor.execute(goalType)
     .subscribe(data => {
       this.view.hideCircularLoader()
       this.view.getRequestedGoals(data)
@@ -50,23 +59,34 @@ export default class RequestCoachPresenter {
     })
   }
 
-  getGoalTask (goalId) {
+  getGoalTask (goalId, goalType) {
     storedGoalId = goalId
+    storedGoalType = goalType
+    const objectParam = {
+      goalId: goalId,
+      goalType: goalType,
+    }
     this.view.showTaskLoader()
-    this.getGoalTaskInteractor.execute(goalId)
+    this.getGoalTaskInteractor.execute(objectParam)
       .subscribe(data => {
         this.view.hideTaskLoader()
         this.view.getTasklist(data)
+        // this.view.checkIfShowMarkAsCompleted(this.view.checkIfGoalCompleted(data))
       }, error => {
         this.view.hideTaskLoader()
         store.dispatch(NotifyActions.resetNotify())
     })
   }
 
-  getGoalComment (goalId, pageNumber, pageItem) {
+  getGoalComment (goalId, goalType, pageNumber, pageItem) {
     storedPageNumber = pageNumber
     storedPageItem = pageItem
-    this.getGoalCommentInteractor.execute(goalId, pageNumber, pageItem)
+    storedGoalType = goalType
+    const objectParam = {
+      goalId: goalId,
+      goalType : goalType,
+    }
+    this.getGoalCommentInteractor.execute(objectParam, pageNumber, pageItem)
     .subscribe(data => {
       this.view.getCommentList(data)
       }, error => {
@@ -74,17 +94,22 @@ export default class RequestCoachPresenter {
     })
   }
 
-  updateGoals (goalId, startDate, dueDate) {
+  updateGoals (goalId, goalType, startDate, dueDate) {
+    const objectParam = {
+      goalId: goalId,
+      goalType: goalType,
+    }
+    console.log(objectParam)
     this.view.showSubmitLoader()
-    this.updateGoalsInteractor.execute(goalId, startDate, dueDate)
+    this.updateGoalsInteractor.execute(objectParam, startDate, dueDate)
     .do(data => {
       this.getGoals()
     })
     .subscribe(
       data => {
         this.view.hideSubmitLoader()
-        this.view.noticeResponse(data)
         this.view.resetValue()
+        this.view.noticeResponse(data)
       },
       errors => {
         this.view.hideSubmitLoader()
@@ -98,9 +123,10 @@ export default class RequestCoachPresenter {
     startDate,
     dueDate,
     priorityId,
-    goalTypeId
+    goalTypeId,
+    personal
   ){
-    this.view.showSubmitLoader()
+      this.view.showSubmitLoader()
       this.addRequestedGoalsInteractor.execute(requestedGoalsParam(
           goalTitle,
           description,
@@ -110,11 +136,9 @@ export default class RequestCoachPresenter {
           goalTypeId
         )
       )
-      .do(data => {
-        this.getGoals()
-      })
       .subscribe (
         data => {
+          this.getGoals(personal)
           this.view.hideSubmitLoader()
           this.view.noticeResponse(data)
           this.view.resetValue()
@@ -130,12 +154,14 @@ export default class RequestCoachPresenter {
     taskDescription
   ){
     this.view.showSubmitLoader()
-    this.addGoalTaskInteractor.execute(
-      goalId,
-      taskDescription
+    this.addGoalTaskInteractor.execute(goalTaskParam(
+        storedGoalType,
+        goalId,
+        taskDescription
+      )
     )
     .do(data => {
-      this.getGoalTask(storedGoalId)
+      this.getGoalTask(storedGoalId, storedGoalType)
     })
     .subscribe(
       data => {
@@ -152,22 +178,23 @@ export default class RequestCoachPresenter {
     taskDescription,
     isCompleted
   ){
-    this.view.showSubmitLoader()
     try {
+      const objectParam = {
+        taskId: taskId,
+        goalType: storedGoalType,
+      }
       this.updateGoalTaskInteractor.execute(
-        taskId,
+        objectParam,
         taskDescription,
         isCompleted
       )
       .do(data => {
-        this.getGoalTask(storedGoalId)
+        this.getGoalTask(storedGoalId, storedGoalType)
       })
       .subscribe  (
         data => {
-          this.view.hideSubmitLoader()
         },
         errors => {
-          this.view.hideSubmitLoader()
         }
       )
     } catch (e) {
@@ -176,18 +203,27 @@ export default class RequestCoachPresenter {
   }
 
   addGoalComment (
+    personal,
     goalId,
     goalComment,
     pageNumber,
     pageItem
   ){
+    const goalParam = {
+      goalId: goalId,
+      employeeId: '',
+      status: 'requested',
+    }
+    storedGoalType = personal
     this.view.showCommentLoader(true)
-    this.addGoalCommentInteractor.execute(
-      goalId,
-      goalComment
+    this.addGoalCommentInteractor.execute(goalCommentParam(
+        personal,
+        goalParam,
+        goalComment
+      )
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, personal, pageNumber, pageItem)
     })
     .subscribe(
       data => {
@@ -212,7 +248,7 @@ export default class RequestCoachPresenter {
       goalComment
     )
     .do(data => {
-      this.getGoalComment(storedGoalId, pageNumber, pageItem)
+      this.getGoalComment(storedGoalId, storedGoalType, pageNumber, pageItem)
     })
     .subscribe(
       data => {
@@ -225,12 +261,17 @@ export default class RequestCoachPresenter {
     )
   }
 
-  deleteGoal (goalId) {
+  deleteGoal (goalId, goalType) {
+    storedGoalType = goalType
+    const objectParam = {
+      goalId : goalId,
+      goalType : goalType
+    }
     this.view.showCircularLoader()
     try {
-      this.deleteGoalsInteractor.execute(goalId)
+      this.deleteGoalsInteractor.execute(objectParam)
       .do(data => {
-        this.getGoals()
+        this.getGoals(storedGoalType)
       })
       .subscribe(
         data => {
@@ -292,6 +333,51 @@ export default class RequestCoachPresenter {
       this.view.getHistoryList(data)
       }, error => {
         store.dispatch(NotifyActions.resetNotify())
+    })
+  }
+
+  markAsCompletedWithType (
+    businessOutcome,
+    isTeamGoal,
+    type,
+    goalId
+  ){
+    console.log(businessOutcome,
+    isTeamGoal,
+    type,
+    goalId)
+    this.view.showSubmitLoader()
+    this.addMarkAsCompletedWithTypeInteractor.execute(
+      markParam(
+        type,
+        isTeamGoal,
+        businessOutcome,
+        goalId
+      )
+    )
+    .subscribe(
+      data => {
+        this.view.noticeResponse(data)
+        this.view.hideSubmitLoader()
+        this.getGoals(storedGoalType)
+        this.view.resetValue()
+      },
+      errors => {
+        this.view.hideSubmitLoader()
+      }
+    )
+  }
+
+  addRatingGoal (id, ratings, remarks) {
+    this.view.showSubmitLoader()
+    this.addRatingGoalsInteractor.execute(addRatingGoalsParam(id, ratings, remarks))
+    .subscribe(data => {
+      this.view.noticeResponse(data)
+      this.view.resetRemarks()
+      this.getGoals(storedGoalType)
+      this.view.hideSubmitLoader()
+    }, error => {
+      this.view.hideSubmitLoader()
     })
   }
 }

@@ -92,11 +92,7 @@
 }
 
 .transaction-component-button{
-  border-radius: 0px;
   color: #ff8a00;
-  border: 0px;
-  box-shadow: none;
-  background: transparent;
   cursor: pointer;
   min-width: 80px;
   font-weight: bold;
@@ -120,47 +116,92 @@
 }
 
 .transaction-button-default {
-  min-width: 200px;
+  color: #ff8a00;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status {
-  color: #fff;
-  background: #09af00;
+  color: #09af00;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status-credited {
-  color: #fff;
-  background: #00c853;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
+  color: #00c853;
 }
 
 .transaction-component-status-confirmation {
-  color: #fff;
-  background: #2d9ee0;
+  color: #2d9ee0;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status-cancel {
-  color: #fff;
-  background: #d50000;
+  color: #d50000;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status-reconciliation {
-  border-radius: 1px;
-  color: #fff;
-  background: #ff8a00;
+  color: #ff8a00;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status-crediting {
-  color: #fff;
-  background: #09af00;
+  color: #09af00;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status-process {
-  color: #fff;
-  background: #00a1ff;
+  color: #00a1ff;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-component-status-clear {
-  background: #fff;
+  min-width: 130px;
+  height: 30px;
+  border: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: left;
 }
 
 .transaction-card-icon-settings {

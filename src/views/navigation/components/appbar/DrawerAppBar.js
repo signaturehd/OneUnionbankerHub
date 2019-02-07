@@ -39,7 +39,9 @@ class DrawerAppBar extends Component {
       profileImage,
       firstName,
       profillePosition,
-      selected
+      selected,
+      tempPreEmployment,
+      hideProfileMenu
     } = this.props
 
     const style = {
@@ -70,36 +72,51 @@ class DrawerAppBar extends Component {
       name: 'My Personal Information',
       imageStyle : 'settings',
       action : () => history.push('/settings'),
-    },,{
-      id: 10,
-      name: 'Phenom Prime',
-      imageStyle : 'phenom',
-      action : () => history.push('/phenom'),
-    },{
-      id: 13,
-      name: 'My Travel',
-      imageStyle : 'travel',
-      action : () => history.push('/mytravel'),
     },{
       id: 14,
       name: 'My Goals & Performance',
       imageStyle : 'goals',
       action : () => history.push('/mygoals'),
     },{
-      id: 9,
-      name: 'My Compliance',
-      imageStyle : 'compliance',
-      action : () => history.push('/mycompliance'),
+      id: 17,
+      name: 'Rewards & Recognition',
+      imageStyle : 'rewards',
+      action : () => history.push('/myrewards'),
     },{
       id: 7,
-      name: 'My COE',
+      name: 'My Documents',
       imageStyle : 'coe',
       action : () => history.push('/coe'),
+    },{
+      id: 13,
+      name: 'My Travel',
+      imageStyle : 'travel',
+      action : () => history.push('/mytravel'),
+    },{
+      id: 15,
+      name: 'My Future',
+      imageStyle : 'future',
+      action : () => history.push('/pensionfunds'),
+    },{
+      id: 11,
+      name: 'Pre-Employment',
+      imageStyle : 'preemployment',
+      action : () => history.push('/preemployment'),
+    },{
+      id: 12,
+      name: 'Post-Employment',
+      imageStyle : 'postemployment',
+      action : () => history.push('/postemployment'),
     },{
       id: 1,
       name: 'FAQs',
       imageStyle : 'faqs',
       action : () => history.push('/faqs'),
+    },{
+      id: 10,
+      name: 'Phenom Prime',
+      imageStyle : 'phenom',
+      action : () => history.push('/phenom'),
     },{
       id: 3,
       name: 'Logout',
@@ -111,36 +128,36 @@ class DrawerAppBar extends Component {
       id: 0,
       name: 'Home',
       imageStyle : 'news',
-      imageActive: require('../../../../images/NAVIGATION BAR/HOME - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/HOME - Grey.png'),
+      imageActive: require('../../../../images/drawer/home-orange.png'),
+      imageInactive: require('../../../../images/drawer/home-grey.png'),
       action : () => history.push('/'),
     },{
       id: 1,
       name: 'My Benefits',
       imageStyle : 'benefits',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Benefits - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Benefits - Grey.png'),
+      imageActive: require('../../../../images/drawer/my-benefits-orange.png'),
+      imageInactive: require('../../../../images/drawer/my-benefits-grey.png'),
       action : () => history.push('/mybenefits')
     },{
       id: 8,
       name: 'My Pay',
       imageStyle : 'pay',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Pay - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Pay - Grey.png'),
+      imageActive: require('../../../../images/drawer/my-pay-orange.png'),
+      imageInactive: require('../../../../images/drawer/my-pay-grey.png'),
       action : () => history.push('/payslip')
     },{
       id: 4,
       name: 'My Learning',
       imageStyle : 'learning',
-      imageActive: require('../../../../images/NAVIGATION BAR/My Learning - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/My Learning - Grey.png'),
+      imageActive: require('../../../../images/drawer/my-learning-orange.png'),
+      imageInactive: require('../../../../images/drawer/my-learning-grey.png'),
       action : () => history.push('/mylearning'),
     },{
       id: 6,
       name: 'Feedback',
       imageStyle : 'feedback',
-      imageActive: require('../../../../images/NAVIGATION BAR/Feedback - Orange.png'),
-      imageInactive: require('../../../../images/NAVIGATION BAR/Feedback - Grey.png'),
+      imageActive: require('../../../../images/drawer/feedback-orange.png'),
+      imageInactive: require('../../../../images/drawer/feedback-grey.png'),
       action : () => history.push('/feedback'),
     }]
 
@@ -186,13 +203,21 @@ class DrawerAppBar extends Component {
     }
 
     return (
-      <AppBar>
+      <AppBar
+        className = { 'appbar-style-color' }
+      >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
-            <div>
+            <div onClick = { () => hideProfileMenu() } >
+            {
+              // <img
+              //   style={ style.navbar }
+              //   src={ require('../../../../images/union-logo.png') }
+              //   className={'_img-ub-logo'}/>
+            }
               <img
                 style={ style.navbar }
-                src={ require('../../../../images/union-logo.png') }
+                src={ require('../../../../images/mobileview/UBP Logo 2.png') }
                 className={'_img-ub-logo'}/>
             </div>
             <div
@@ -211,11 +236,10 @@ class DrawerAppBar extends Component {
                             className = { `viewmore tooltip ` }>
                               <img
                                 style = {{
-                                  height : 50,
+                                  height : 35,
                                 }}
                                 src={ `${ selected === resp.id ? resp.imageActive : resp.imageInactive }` }
                               />
-                            <span className={ 'tooltiptext' }>{ resp.name }</span>
                           </button>
                         <div></div>
                       </div>
@@ -281,20 +305,117 @@ class DrawerAppBar extends Component {
                       </div>
                     </li>
                     {
-                      appBarList.map((resp, key) =>
-                        <li
-                          onClick = { () => resp.action() }
-                          key = { key }
-                          className = { 'appbar-list' }>
-                          <div className = { 'appbar-icon-grid' }>
-                            <span
-                              className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
-                            <a>
-                              { resp.name }
-                            </a>
+                      tempPreEmployment === 1 || tempPreEmployment === 2 ?
+                      <div>
+                        {
+                          appBarList.map((resp, key) =>
+                            resp.id !== 0 &&
+                            resp.id !== 1 &&
+                            resp.id !== 2 &&
+                            resp.id !== 3 &&
+                            resp.id !== 4 &&
+                            resp.id !== 5 &&
+                            resp.id !== 6 &&
+                            resp.id !== 8 &&
+                            resp.id !== 9 &&
+                            resp.id !== 10 &&
+                            resp.id !== 12 &&
+                            resp.id !== 13 &&
+                            resp.id !== 14 &&
+                            <li
+                              onClick = { () => { resp.action() , hideProfileMenu() } }
+                              key = { key }
+                              className = { 'appbar-list' }>
+                              <div className = { 'appbar-icon-grid' }>
+                                <span
+                                  className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                <a>
+                                  { resp.name }
+                                </a>
+                              </div>
+                            </li>
+                          )
+                        }
+                      </div>
+
+                      :
+                      <div>
+                        {
+                          tempPreEmployment === 6 ||
+                          tempPreEmployment === 0 ||
+                          tempPreEmployment === null ||
+                          tempPreEmployment === undefined ?
+                          <div>
+                            {
+
+                              appBarList.map((resp, key) =>
+                                resp.id !== 11 &&
+                                resp.id !== 12 &&
+                                <li
+                                  onClick = { () => { resp.action() , hideProfileMenu() } }
+                                  key = { key }
+                                  className = { 'appbar-list' }>
+                                  <div className = { 'appbar-icon-grid' }>
+                                    <span
+                                      className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                    <a>
+                                      { resp.name }
+                                    </a>
+                                  </div>
+                                </li>
+                              )
+                            }
+                          </div> :
+                          <div>
+                            {
+                              tempPreEmployment === 3 ||
+                              tempPreEmployment === 4 ||
+                              tempPreEmployment === 5 ?
+
+                              <div>
+                                {
+                                  appBarList.map((resp, key) =>
+                                    resp.id !== 11 &&
+                                    <li
+                                      onClick = { () => { resp.action() , hideProfileMenu() }  }
+                                      key = { key }
+                                      className = { 'appbar-list' }>
+                                      <div className = { 'appbar-icon-grid' }>
+                                        <span
+                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                        <a>
+                                          { resp.name }
+                                        </a>
+                                      </div>
+                                    </li>
+                                  )
+                                }
+                              </div>
+                              :
+                              <div>
+                                {
+                                  appBarList.map((resp, key) =>
+
+                                    resp.id !== 12 &&
+                                    <li
+                                      onClick = { () => { resp.action() , hideProfileMenu() } }
+                                      key = { key }
+                                      className = { 'appbar-list' }>
+                                      <div className = { 'appbar-icon-grid' }>
+                                        <span
+                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                        <a>
+                                          { resp.name }
+                                        </a>
+                                      </div>
+                                    </li>
+                                  )
+                                }
+                              </div>
+                            }
                           </div>
-                        </li>
-                      )
+                        }
+                      </div>
                     }
                   </ul>
                 </div>

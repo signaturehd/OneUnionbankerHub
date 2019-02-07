@@ -57,9 +57,10 @@ class EducationAidFormCardComponent extends Component {
       courseText,
       courseTextFunc,
       courseTextErrorMessage,
-      academicYearText,
-      showAcademicYearFunc,
-      academicYearTextErrorMessage,
+      academicYearFromText,
+      academicYearFromTextErrorMessage,
+      academicYearToText,
+      academicYearToTextErrorMessage,
       semesterText,
       semesterErrorMessage,
       showSemesterFunc,
@@ -78,7 +79,12 @@ class EducationAidFormCardComponent extends Component {
       showFormReview,
       onSubmitFunc,
       editFormDataFunc,
-      setAttachmentArrayFunc
+      setAttachmentArrayFunc,
+      academicYearToFunc,
+      academicYearFromFunc,
+      academicYearToErrorMessage,
+      showAcademicYearFromFunc,
+      showAcademicYearToFunc,
     }=this.props
 
     return (
@@ -120,13 +126,23 @@ class EducationAidFormCardComponent extends Component {
               disabled = { showEditSubmitButton }
               text={ 'Course' }
               type={ 'text' }/>
-            <GenericInput
-              value={ academicYearText }
-              onClick={ () => showAcademicYearFunc() }
-              text={ 'Academic Year' }
-              disabled = { showEditSubmitButton }
-              errorMessage = { academicYearTextErrorMessage }
-              type={ 'text' }/>
+            <div className = { 'grid-global' }>
+              <GenericInput
+                value={ academicYearFromText }
+                onClick={ () => showAcademicYearFromFunc() }
+                errorMessage = { academicYearFromTextErrorMessage }
+                disabled = { showEditSubmitButton }
+                text={ 'From Year' }
+                type={ 'text' }/>
+              <GenericInput
+                value={ academicYearToText }
+                onClick={ () => showAcademicYearToFunc() }
+                errorMessage = { academicYearToTextErrorMessage }
+                disabled = { showEditSubmitButton }
+                text={ 'To Year' }
+                type={ 'text' }/>
+            </div>
+
             <GenericInput
               value={ semesterText }
               onClick={ () => showSemesterFunc() }

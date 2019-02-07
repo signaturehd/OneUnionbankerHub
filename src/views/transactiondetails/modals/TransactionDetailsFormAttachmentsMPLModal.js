@@ -23,7 +23,7 @@ class TransactionDetailsFormAttachmentsMPLModal extends Component {
         attachments.map((resp, key) =>
         <img
           key = { key }
-          className = { 'transaction-attachments _img-ub-logo' }
+          className = { 'transaction-attachments _img-ub-logo-transaction-details' }
           src = { resp }
         />
         )

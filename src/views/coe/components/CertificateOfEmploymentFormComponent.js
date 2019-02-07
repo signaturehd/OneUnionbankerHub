@@ -33,14 +33,24 @@ class CertificateOfEmploymentFormComponent extends Component {
       typeOfCoeBody,
       visa,
       visaBody,
+      vlFrom,
+      vlTo,
+      vlFromFunc,
+      vlToFunc,
       onContinue,
-      onEdit
+      onEdit,
+      backToList
   	} = this.props
 
     return (
       <div className = {'coe-container'} >
         <div className = { 'coe-grid-column-2' }>
-          <div></div>
+          <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { () => backToList() }>
+            </i>
+          </div>
           <div className={ 'coe-form-coed' }>
             <h4 className = { 'font-size-24px font-weight-bold' }>Certificate of Employment Form</h4>
             <br/>
@@ -48,7 +58,6 @@ class CertificateOfEmploymentFormComponent extends Component {
             <br/>
             <div className={ 'coe-form-coed-body' }>
               <GenericInput
-                errorMessage = { '' }
                 text = { 'Type Of Certificate' }
                 disabled = { showEditMode }
                 readOnly
@@ -56,7 +65,6 @@ class CertificateOfEmploymentFormComponent extends Component {
                 onClick = { () => showTypeModalFunc() }
                 />
               <GenericInput
-                errorMessage = { '' }
                 text = { 'Purpose' }
                 disabled = { showEditMode }
                 readOnly
@@ -65,15 +73,43 @@ class CertificateOfEmploymentFormComponent extends Component {
                 />
               {
                 purposeBody &&
-                purposeBody.id === 37 &&
-                <GenericInput
-                  errorMessage = { '' }
-                  text = { 'VISA' }
-                  disabled = { showEditMode }
-                  readOnly
-                  value = { visaBody && visaBody.visa }
-                  onClick = { () => showVisaModalFunc() }
+                purposeBody.id === 38 &&
+                <div>
+                  <GenericInput
+                    text = { 'VISA' }
+                    disabled = { showEditMode }
+                    readOnly
+                    value = { visaBody && visaBody.visa }
+                    onClick = { () => showVisaModalFunc() }
                   />
+                </div>
+              }
+              {
+                typeOfCoeBody &&
+                typeOfCoeBody.id === 3 &&
+                <div>
+                  <h2 className = { 'font-size-14px' }>Vacation Leave</h2>
+                  <div className = { 'grid-global' }>
+                    <DatePicker
+                      minDate = { moment() }
+                      text = { 'From' }
+                      disabled = { showEditMode }
+                      selected = { vlFrom }
+                      onChange = { (e) => {
+                        vlFromFunc(e)
+                      } }
+                    />
+                    <DatePicker
+                      minDate = { vlFrom }
+                      disabled = { showEditMode }
+                      text = { 'To' }
+                      selected = { vlTo }
+                      onChange = { (e) => {
+                        vlToFunc(e)
+                      } }
+                    />
+                  </div>
+                </div>
               }
               <br/>
               <Line/>

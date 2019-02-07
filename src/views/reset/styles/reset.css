@@ -15,6 +15,10 @@
   background-image: url('../../../images/icons/success-icon.png');
 }
 
+.upload-fail-icon {
+  background-image: url('../../../images/icons/icons8-cancel-96.png');
+}
+
 .security-icon-settings {
   background-size: cover;
   cursor: pointer;
