@@ -16,17 +16,17 @@ export default class GiftsPresenter {
     category && category.map((data, key) => {
       let setCategory = [...categoryList]
       if(!this.checkIdIfExist(data.category.toLowerCase())) {
-        setCategory.push(data.category.toLowerCase())
+        setCategory.push(data.category)
         categoryList = setCategory
       }
     })
-    console.log(categoryList)
+    this.view.setCategoryTypeList(categoryList)
   }
 
   checkIdIfExist (id) {
     let isBool = false
     for (var i in categoryList) {
-      if (categoryList[i] === id) {
+      if (categoryList[i].toLowerCase() === id) {
         isBool = true
         break
       }
@@ -35,13 +35,22 @@ export default class GiftsPresenter {
   }
 
   getRewardGifts () {
+    this.view.circularLoader(true)
     this.getRewardGiftsInteractor.execute()
     .subscribe(data => {
+      this.view.circularLoader(false)
       this.view.setRewardGifts(data)
       this.setCategoryType(data)
     }, error => {
-
+      this.view.circularLoader(false)
     })
   }
 
+  getRewardGiftsDetails (id) {
+    this.getRewardGiftsDetailsInteractor.execute(id)
+    .subscribe(data => {
+      this.view.setRewardGiftsDetails(data)
+    }, error => {
+    })
+  }
 }
