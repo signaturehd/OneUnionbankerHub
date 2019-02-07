@@ -178,26 +178,43 @@ export default class PensionFundsPresenter {
       this.setPensionFundsPresenter(objectParam)
     })
   }
-  //
-  // getPensionFunds () {
-  //   this.getPensionFundsInteractor.execute()
-  //   this.view.showCircularLoader(true)
-  //   .subscribe(data => {
-  //     this.view.setPensionFundsData(data)
-  //     this.view.showCircularLoader(false)
-  //   }, error => {
-  //     this.view.showCircularLoader(false)
-  //   })
-  // }
-  //
-  // getPensionFundsDocuments () {
-  //   this.getPensionFundsDocumentsInteractor.execute()
-  //   this.view.showCircularLoader(true)
-  //   .subscribe(data => {
-  //     this.view.setPensionFundsData(data)
-  //     this.view.showCircularLoader(false)
-  //   }, error => {
-  //     this.view.showCircularLoader(false)
-  //   })
-  // }
+
+
+  setUnitSummary(variable){
+      let items
+
+  if(variable === 'week'){
+     items = [1,2,3,4,5,6,7];
+   }else if(variable === 'month'){
+     items = [1,2,3]
+   }else if(variable === 'quarterly'){
+     items = [1,2,3,4,5,6]
+   }else if(variable === 'year'){
+     items = [1,2,3,4,5,6,7,8,9,10,11,12]
+   }
+
+  this.view.setChartPensionData(items)
+
+}
+
+// getPensionFunds () {
+//   this.getPensionFundsInteractor.execute()
+//   this.view.showCircularLoader(true)
+//   .subscribe(data => {
+//     this.view.setPensionFundsData(data)
+//     this.view.showCircularLoader(false)
+//   }, error => {
+//     this.view.showCircularLoader(false)
+//   })
+// }
+
+// getPensionFundsDocuments () {
+//   this.getPensionFundsDocumentsInteractor.execute()
+//   this.view.showCircularLoader(true)
+//   .subscribe(data => {
+//     this.view.setPensionFundsData(data)
+//     this.view.showCircularLoader(false)
+//   }, error => {
+//     this.view.showCircularLoader(false)
+//   })
 }

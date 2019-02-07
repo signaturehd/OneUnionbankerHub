@@ -37,6 +37,7 @@ class PensionFundsFragment extends BaseMVPView {
     // this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
     this.presenter.getMockData()
+  
   }
 
   showCircularLoader (loader) {
@@ -51,6 +52,9 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ pensionFundsDocumentsData })
   }
 
+  setChartPensionData(pensionChartData){
+    this.setState({pensionChartData})
+  }
   navigate () {
     this.props.history.push('/phenom')
   }
@@ -64,7 +68,8 @@ class PensionFundsFragment extends BaseMVPView {
       codeText,
       showCodeModal,
       tabsId,
-      showDevelopmentModal
+      showDevelopmentModal,
+      pensionChartData
     } = this.state
 
     return (
@@ -116,8 +121,13 @@ class PensionFundsFragment extends BaseMVPView {
                   {
                     stepperStatus === 4 ?
                     <PensionDetailsFragment
+                    pensionChartData = { pensionChartData }
                       tabsId = { tabsId }
-                      tabsIdFunc = { (tabsId) => this.setState({ tabsId }) }
+                      tabsIdFunc = { (tabsId) => {
+                        this.setState({ tabsId })
+                        this.presenter.setUnitSummary(tabsId)
+                      }
+                      }
                       pensionFundsData = { pensionFundsData }
                       changePaymentFunc = { (bool , id) => {
                         try{

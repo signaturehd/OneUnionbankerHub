@@ -25,7 +25,8 @@ class PensionDetailsFragment extends Component {
       tabsId,
       tabsIdFunc,
       pensionFundsData,
-      changePaymentFunc
+      changePaymentFunc,
+      pensionChartData
     } = this.props
 
     return (
@@ -52,7 +53,9 @@ class PensionDetailsFragment extends Component {
               />
             <div></div>
           </div>
-          <PensionFundsChartComponent />
+          <PensionFundsChartComponent
+          pensionChartData = { pensionChartData }
+          />
         </div>
         <div>
           <PensionFundsPaymentHistoryComponent
