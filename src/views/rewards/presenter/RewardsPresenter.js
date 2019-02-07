@@ -73,19 +73,23 @@ export default class RewardsPresenter {
       staticImage: '',
       leftText: '10% OFF in Zalora',
       rightText: '13, 000 points',
+      action: () => history.push('/gifts')
     },
     {
       id: 1,
       staticImage: '',
       leftText: '20% OFF in Carola',
       rightText: '23, 000 points',
+      action: () => history.push('/gifts')
     },
     {
       id: 2,
       staticImage: '',
       leftText: '30% OFF in Valora',
       rightText: '33, 000 points',
-    }]
+      action: () => history.push('/gifts')
+    }
+  ]
     this.view.setRedeemData(redeemData)
   }
 

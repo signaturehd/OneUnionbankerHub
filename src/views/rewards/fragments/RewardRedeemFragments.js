@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Card } from '../../../ub-components'
-
+import { Card, GenericButton } from '../../../ub-components'
+import { Route } from 'react-router-dom'
 import staticImage from '../../../images/ubp-bg.png'
 
 class Redeem extends Component {
@@ -8,6 +8,7 @@ class Redeem extends Component {
   render () {
     const {
       redeemData,
+      history
     } = this.props
 
     return (
@@ -16,6 +17,7 @@ class Redeem extends Component {
         {
           redeemData&&redeemData.map((value, idx) => (
             <Card
+              onClick = { () => history.push(`/gifts/${value.id}`) }
                className="myrewards-container-component">
               <img className={'myrewards-card-image '} src={staticImage} />
               <div className={'myrewards-grid myrewards-card-image-text'}>
@@ -25,6 +27,12 @@ class Redeem extends Component {
             </Card>
           ))
         }
+        <center>
+        <GenericButton
+          text={ 'View Page' }
+          className={ 'profile-button-medium cursor-pointer global-button' }
+          onClick={() => history.push('/gifts')}/>
+        </center>
       </div>
     )
   }

@@ -1,0 +1,36 @@
+.gifts-image {
+  display: block;
+  width: -webkit-fill-available;
+  height: 250px;
+}
+
+.gifts-text {
+  color: white;
+  margin-top: 110px;
+  font-size: 60px;
+  text-shadow: 2px 2px #ff0000;
+}
+
+.gifts-banner {
+  background-image: url('../../../images/rewards/giftsBanner.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.gifts-container{
+	display: grid;
+  grid-template-rows: auto auto auto;
+
+}
+
+.gifts-main-item1{
+	grid-row: 1/3;
+}
+
+.gifts-main-item2{
+	grid-row: 2/3;
+}
+
+.gifts-main-item3{
+	grid-row: 3/3;
+}

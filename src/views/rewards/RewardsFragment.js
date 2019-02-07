@@ -232,7 +232,9 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       </div>
                     </div>
                     {
-                      // <RewardRedeemFragment redeemData = {redeemData} />
+                      <RewardRedeemFragment
+												redeemData = {redeemData}
+												history = {history} />
                     }
                     <div></div>
                   </div>
