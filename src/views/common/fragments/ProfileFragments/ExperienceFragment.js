@@ -11,12 +11,23 @@ class ExperienceComponent extends Component {
 
   constructor (props) {
     super(props)
+    this.state = {
+      index : 3,
+      viewMoreText: 'view more, work & experience',
+    }
   }
 
   render () {
     const {
+      index,
+      viewMoreText
+    } = this.state
+    
+    const {
       profileExperience,
     }=this.props
+
+    const isVisible = (profileExperience && profileExperience.length > 4) ? '' : 'hide'
 
     return (
       <div>
@@ -25,35 +36,52 @@ class ExperienceComponent extends Component {
           <br/>
             {
               profileExperience ?
-
-              profileExperience.map((experience, key)=>
-                <div
-                  key={ key }
-                  className={ 'components-view' }>
-                  <div className={ 'text-align-center' }>
-                    <img
-                      className={ 'components-image' }
+              <div>
+                {
+                  profileExperience.slice(0, index).map((experience, key)=>
+                    <div
                       key={ key }
-                      src={ defaultImage }/>
-                  </div>
-                  <div>
-                    <h2 className={ 'font-size-18px font-weight-normal' }>
-                      Name : { experience.name }
-                    </h2>
-                    <h3 className={ 'font-size-17px font-weight-lighter' }>
-                      Level : { experience.level }
-                    </h3>
-                    <h4 className={ 'font-size-15px font-weight-lighter' }>
-                      { `${ experience.startYear } - ${ experience.endYear } `  }
-                    </h4>
-                    <h5 className={ 'font-size-15px font-weight-lighter' }>
-                      Address : { experience.addreess }
-                    </h5>
-                  </div>
-                </div>
-              )
+                      className={ 'components-view' }>
+                      <div className={ 'text-align-center' }>
+                        <img
+                          className={ 'components-image' }
+                          key={ key }
+                          src={ defaultImage }/>
+                      </div>
+                      <div>
+                        <h2 className={ 'font-size-18px font-weight-normal' }>
+                          Name : { experience.name }
+                        </h2>
+                        <h3 className={ 'font-size-17px font-weight-lighter' }>
+                          Level : { experience.level }
+                        </h3>
+                        <h4 className={ 'font-size-15px font-weight-lighter' }>
+                          { `${ experience.startYear } - ${ experience.endYear } `  }
+                        </h4>
+                        <h5 className={ 'font-size-15px font-weight-lighter' }>
+                          Address : { experience.addreess }
+                        </h5>
+                      </div>
+                    </div>
+                  )
+                }
+                <button
+                  type = { 'button' }
+                  className = { `viewmore tooltip ${isVisible}` }
+                  onClick = {
+                    () => {
+                      if(index === profileExperience.length)
+                        this.setState({ index : 3, viewMoreText : 'view less, work & experience' })
+                      else
+                        this.setState({ index : profileExperience.length, viewMoreText : 'view more, work & experience' })
+                    }
+                  }>
+                  <img src={ require('../../../../images/icons/horizontal.png') } />
+                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                </button>
+              </div>
               :
-              <center><h3>No Information Available</h3></center>
+              <center><h3>No Experience Yet</h3></center>
 
             }
         </Card>
