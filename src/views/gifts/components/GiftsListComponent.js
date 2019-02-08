@@ -13,7 +13,6 @@ class GiftsListComponent extends Component {
   render () {
     const {
       resp,
-      filterTitle,
       rewardGiftsId
     } = this.props
 
