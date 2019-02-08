@@ -128,15 +128,30 @@ class GiftsFragment extends BaseMVPView {
 				        {
 									rewardGifts &&
 				          rewardGifts.length !== 0 ?
-									<div className = { 'gifts-grid-x4' }>
-					          {
-											rewardGifts.map((resp, key) =>
-												<GiftsListComponent
-													rewardGiftsId = { rewardGiftsId }
-													filterTitle = { filterTitle }
-													resp = { resp }
-												/>
-											)
+									<div>
+										{
+											filterTitle.toLowerCase() === 'everything' ?
+											<div className = { 'gifts-grid-x4' }>
+							          {
+													rewardGifts.map((resp, key) =>
+														<GiftsListComponent
+															rewardGiftsId = { rewardGiftsId }
+															resp = { resp }
+														/>
+													)
+												}
+											</div> :
+											<div className = { 'gifts-grid-x4' }>
+							          {
+													rewardGifts.map((resp, key) =>
+														resp.category.toLowerCase() === filterTitle.toLowerCase() &&
+														<GiftsListComponent
+															rewardGiftsId = { rewardGiftsId }
+															resp = { resp }
+														/>
+													)
+												}
+											</div>
 										}
 									</div>
 									:
