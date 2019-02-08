@@ -9,7 +9,6 @@ import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftsBanner from './components/GiftsBanner'
 import GiftsListComponent from './components/GiftsListComponent'
-import GiftsListComponentNavigation from './components/GiftsListComponentNavigation'
 
 class GiftsFragment extends BaseMVPView {
 	constructor (props) {
@@ -18,7 +17,6 @@ class GiftsFragment extends BaseMVPView {
 			loader : false,
 			filterTitle : 'everything',
 			rewardGiftsId : [],
-			isActive : true
 		}
 	}
 
@@ -59,120 +57,99 @@ class GiftsFragment extends BaseMVPView {
 			loader,
 			rewardGiftsType,
 			filterTitle,
-			isActive
 		} = this.state
 
 		return (
-			<div>
-			{
-				isActive ?
-				<div>
-					<GiftsListComponentNavigation
-						rewardGifts = { rewardGifts }
-					/>
-					<center>
-		        <GenericButton
-		          text={ 'View Page' }
-		          className={ 'profile-button-medium cursor-pointer global-button' }
-		          onClick={ () => {
-								this.setState({ isActive : false })
-								history.push('/gifts')
-							}}/>
-	        </center>
-				</div>
-				:
-				<div className={ 'gifts-container' }>
-					<center>
-						<div className={ 'gifts-main-item1' }>
-							<GiftsBanner/>
-						</div>
-						<div className={ 'gifts-main-item2' }>
-						</div>
-						<div className={ 'gifts-main-item3' }>
-						{
-							loader ?
-							<CircularLoader
-								show = { loader }
-								validateLoading = { true }
-							/>
-							:
-							<div className = { 'gifts-grid-columnt-3x' }>
-								<div></div>
+			<div className={ 'gifts-container' }>
+				<center>
+					<div className={ 'gifts-main-item1' }>
+						<GiftsBanner/>
+					</div>
+					<div className={ 'gifts-main-item2' }>
+					</div>
+					<div className={ 'gifts-main-item3' }>
+					{
+						loader ?
+						<CircularLoader
+							show = { loader }
+							validateLoading = { true }
+						/>
+						:
+						<div className = { 'gifts-grid-columnt-3x' }>
+							<div></div>
+							<div>
+								<br/>
 								<div>
-									<br/>
-									<div>
-										{
-											filterTitle.toLowerCase() === 'everything' ?
-											<div
-												style = {{
-														display: 'flex',
-														textAlign: 'center',
-														margin: 'auto',
-													}}>
-												{
-													rewardGiftsType &&
-													rewardGiftsType.map((resp, key) =>
-														<h4
-															onClick = { () => this.setState({ filterTitle : resp }) }
-															className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
-													)
-												}
-											</div> :
-											<div
-												style = {{
-														display: 'flex',
-														textAlign: 'center',
-														margin: 'auto',
-													}}>
-												{
-													rewardGiftsType &&
-													rewardGiftsType.map((resp, key) =>
-													resp.category.toLowerCase() === filterTitle.toLowerCase() &&
+									{
+										filterTitle.toLowerCase() === 'everything' ?
+										<div
+											style = {{
+													display: 'flex',
+													textAlign: 'center',
+													margin: 'auto',
+												}}>
+											{
+												rewardGiftsType &&
+												rewardGiftsType.map((resp, key) =>
 													<h4
 														onClick = { () => this.setState({ filterTitle : resp }) }
 														className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
-													)
-												}
-											</div>
-										}
-									</div>
-									<br/>
-									<Line />
-									<br/>
-									<br/>
-									<center>
-										<br/>
-										<h4 className = { 'gifts-title-feature' }>Features</h4>
-										<br/>
-
-									</center>
-					        {
-										rewardGifts &&
-					          rewardGifts.length !== 0 ?
-										<div className = { 'gifts-grid-x4' }>
-						          {
-												rewardGifts.map((resp, key) =>
-													<GiftsListComponent
-														rewardGiftsId = { rewardGiftsId }
-														filterTitle = { filterTitle }
-														resp = { resp }
-													/>
+												)
+											}
+										</div> :
+										<div
+											style = {{
+													display: 'flex',
+													textAlign: 'center',
+													margin: 'auto',
+												}}>
+											{
+												rewardGiftsType &&
+												rewardGiftsType.map((resp, key) =>
+												resp.category.toLowerCase() === filterTitle.toLowerCase() &&
+												<h4
+													onClick = { () => this.setState({ filterTitle : resp }) }
+													className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
 												)
 											}
 										</div>
-										:
-										<NoDataListedComponent
-											text = { 'No Reward/s' }
-											/>
 									}
 								</div>
-								<div></div>
+								<br/>
+								<Line />
+								<br/>
+								<br/>
+								<center>
+									<br/>
+									<h4 className = { 'gifts-title-feature' }>Features</h4>
+									<br/>
+
+								</center>
+				        {
+									rewardGifts &&
+				          rewardGifts.length !== 0 ?
+									<div className = { 'gifts-grid-x4' }>
+					          {
+											rewardGifts.map((resp, key) =>
+												<GiftsListComponent
+													rewardGiftsId = { rewardGiftsId }
+													filterTitle = { filterTitle }
+													resp = { resp }
+												/>
+											)
+										}
+									</div>
+									:
+									<NoDataListedComponent
+										text = { 'No Reward/s' }
+										/>
+								}
 							</div>
-						}
+							<div></div>
 						</div>
-				  </center>
-				</div>
-			}
+					}
+					</div>
+			  </center>
 			</div>
 
 		)
