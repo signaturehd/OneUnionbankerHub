@@ -58,7 +58,7 @@ class EducationGroupAidFragment extends BaseMVPView {
       durationOfPremium : [],
       attachmentsData : [],
       attachmentArray : [],
-      effectivityDate : moment(),
+      effectivityDate : '',
     }
   }
 
@@ -111,8 +111,7 @@ class EducationGroupAidFragment extends BaseMVPView {
     this.setState({ orDate : data.format('MM/DD/YYYY'), orDateErrorMessage : '' })
   }
 
-  dateFunc (date) {
-    const { premiumMonths } = this.state
+  dateFunc (date, premiumMonths) {
     const eDate = (premiumMonths ? moment(date).add(premiumMonths, 'months') : moment())
     const eDateText = date.format('LL') + ( eDate ? ' - ' + eDate.format('LL') : '' )
     this.setState({ effectivityDate : date, effectiveDate: eDate.format('MM/DD/YYYY'), effectivityDateText: eDateText })
@@ -269,6 +268,10 @@ class EducationGroupAidFragment extends BaseMVPView {
       attachmentArray
     } = this.state
 
+    const {
+      isLineManager
+    } = this.props
+
     return (
       <div>
 
@@ -336,7 +339,7 @@ class EducationGroupAidFragment extends BaseMVPView {
                 showDOPModal : false,
                 DOPErrorMessage : ''
               })
-              this.dateFunc(effectivityDate)
+              this.dateFunc(effectivityDate, premiumMonths)
               }
             }
             onClose = { () => this.setState({ showDOPModal : false }) }
@@ -367,6 +370,7 @@ class EducationGroupAidFragment extends BaseMVPView {
              <CircularLoader show = { enabledLoader }/>
            </center> :
           <FormComponent
+            isLineManager = { isLineManager }
             dependentName = { dependentName }
             dependentMonths = { dependentMonths }
             dependentErrorMessage = { dependentErrorMessage }
@@ -377,9 +381,9 @@ class EducationGroupAidFragment extends BaseMVPView {
             premiumMonths = { premiumMonths }
             premiumDuration = { premiumDuration }
             DOPErrorMessage = { DOPErrorMessage }
+            effectivityDateText = { effectivityDateText }
             effectiveDate = { effectiveDate }
             effectivityDate = { effectivityDate }
-            effectivityDateText = { effectivityDateText }
             orDate = { orDate }
             orDateErrorMessage = { orDateErrorMessage }
             orNumber = { orNumber }
@@ -389,7 +393,7 @@ class EducationGroupAidFragment extends BaseMVPView {
             showPremiumFunc = { (resp) => this.showPremiumModal(resp) }
             companyFunc = { (resp) => this.companyFunc(resp) }
             desiredAmountFunc = { (resp) => this.desiredAmountFunc(resp) }
-            dateFunc = { (resp) => this.dateFunc(resp) }
+            dateFunc = { (resp, resp1) => this.dateFunc(resp, resp1) }
             setAttachmentArrayFunc = { (updatedAttachments) => this.setFileAttachments(updatedAttachments) }
             showFormReview = { (resp) => this.showFormReviewFieldDisabled(resp) }
             orDateFunc = { (resp) => this.orDateFunc(resp) }
