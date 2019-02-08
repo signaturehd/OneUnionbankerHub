@@ -6,6 +6,7 @@ import ConnectView from '../../utils/ConnectView'
 import './style/GiftsStyle.css'
 import { CircularLoader, Line } from '../../ub-components/'
 
+import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftsBanner from './components/GiftsBanner'
 import GiftsListComponent from './components/GiftsListComponent'
 
@@ -14,6 +15,8 @@ class GiftsFragment extends BaseMVPView {
 		super(props)
 		this.state = {
 			loader : false,
+			filterTitle : 'everything',
+			rewardGiftsId : [],
 		}
 	}
 
@@ -22,11 +25,23 @@ class GiftsFragment extends BaseMVPView {
 	}
 
 	setRewardGifts (rewardGifts) {
+		this.getGiftsId(rewardGifts)
 		this.setState({ rewardGifts })
 	}
 
+	getGiftsId (gifts) {
+		try {
+			let listId = [...this.state.rewardGiftsId]
+			gifts && gifts.map((resp) => {
+				listId.push(resp.id)
+			})
+			this.setState({ rewardGiftsId : listId })
+		} catch (e) {
+			 console.log(e)
+		}
+	}
+
 	setCategoryTypeList (rewardGiftsType) {
-		console.log(rewardGiftsType)
 		this.setState({ rewardGiftsType })
 	}
 
@@ -37,8 +52,10 @@ class GiftsFragment extends BaseMVPView {
 	render () {
 		const {
 			rewardGifts,
+			rewardGiftsId,
 			loader,
-			rewardGiftsType
+			rewardGiftsType,
+			filterTitle,
 		} = this.state
 
 		return (
@@ -56,22 +73,46 @@ class GiftsFragment extends BaseMVPView {
 							<CircularLoader
 								show = { loader }
 								validateLoading = { true }
-								/>
+							/>
 							:
 							<div className = { 'gifts-grid-columnt-3x' }>
 								<div></div>
 								<div>
 									<br/>
-									<div style = {{
-											display: 'flex',
-											textAlign: 'center',
-											margin: 'auto',
-										}}>
+									<div>
 										{
-											rewardGiftsType &&
-											rewardGiftsType.map((resp, key) =>
-												<h4 className = { ' gifts-header-style' }>{resp}</h4>
-											)
+											filterTitle.toLowerCase() === 'everything' ?
+											<div
+												style = {{
+														display: 'flex',
+														textAlign: 'center',
+														margin: 'auto',
+													}}>
+												{
+													rewardGiftsType &&
+													rewardGiftsType.map((resp, key) =>
+														<h4
+															onClick = { () => this.setState({ filterTitle : resp }) }
+															className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
+													)
+												}
+											</div> :
+											<div
+												style = {{
+														display: 'flex',
+														textAlign: 'center',
+														margin: 'auto',
+													}}>
+												{
+													rewardGiftsType &&
+													rewardGiftsType.map((resp, key) =>
+													resp.category.toLowerCase() === filterTitle.toLowerCase() &&
+													<h4
+														onClick = { () => this.setState({ filterTitle : resp }) }
+														className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
+													)
+												}
+											</div>
 										}
 									</div>
 									<br/>
@@ -83,9 +124,25 @@ class GiftsFragment extends BaseMVPView {
 										<h4 className = { 'gifts-title-feature' }>Features</h4>
 										<br/>
 									</center>
-									<GiftsListComponent
-										rewardGifts = { rewardGifts }
-									/>
+					        {
+										rewardGifts &&
+					          rewardGifts.length !== 0 ?
+										<div className = { 'gifts-grid-x4' }>
+						          {
+												rewardGifts.map((resp, key) =>
+													<GiftsListComponent
+														rewardGiftsId = { rewardGiftsId }
+														filterTitle = { filterTitle }
+														resp = { resp }
+													/>
+												)
+											}
+										</div>
+										:
+										<NoDataListedComponent
+											text = { 'No Reward/s' }
+											/>
+									}
 								</div>
 								<div></div>
 							</div>

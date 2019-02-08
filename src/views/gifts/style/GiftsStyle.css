@@ -45,8 +45,7 @@
 .gifts-grid-x4 {
   display: grid;
   column-gap: 2%;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  margin-bottom: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;;
 }
 
 .gifts-card-rewards {
@@ -58,12 +57,55 @@
 .gifts-title-feature {
   font-size: 1.25em;
   color: #e74c3c;
-  font-weight: bold;
+  font-weight: 100;
 }
 
 .gifts-header-style {
   color: #ee7421;
+  font-weight: bold;
   text-align: center;
   margin: 0px 1em;
   font-size: 14px;
+}
+
+.gifts-location-alignment {
+  margin-bottom: auto;
+}
+
+.gifts-know-more {
+  display: block;
+  padding: 0.5em 0.25em;
+  max-width: 80px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0.5em;
+  font-size: 0.75em;
+  background-color: #ee7421;
+  color: #fff;
+}
+
+/* Card Flip Transition */
+.flip {
+  -webkit-perspective: 800;
+}
+
+.flip .egifts-card.flipped {
+  -webkit-transform: rotatey(-180deg);
+}
+
+.flip .egifts-card {
+  -webkit-transform-style: preserve-3d;
+  margin-bottom: 20px;
+  -webkit-transition: 0.5s;
+}
+
+.flip .egifts-card .face {
+  -webkit-backface-visibility: hidden;
+}
+
+.flip .egifts-card .front {
+}
+
+.flip .egifts-card .back {
+  -webkit-transform: rotatey(180deg);
 }
