@@ -4,11 +4,12 @@ import Presenter from './presenter/GiftsPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import './style/GiftsStyle.css'
-import { CircularLoader, Line } from '../../ub-components/'
+import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftsBanner from './components/GiftsBanner'
 import GiftsListComponent from './components/GiftsListComponent'
+import GiftsListComponentNavigation from './components/GiftsListComponentNavigation'
 
 class GiftsFragment extends BaseMVPView {
 	constructor (props) {
@@ -17,6 +18,7 @@ class GiftsFragment extends BaseMVPView {
 			loader : false,
 			filterTitle : 'everything',
 			rewardGiftsId : [],
+			isActive : true
 		}
 	}
 
@@ -50,16 +52,37 @@ class GiftsFragment extends BaseMVPView {
 	}
 
 	render () {
+		const { history } = this.props
 		const {
 			rewardGifts,
 			rewardGiftsId,
 			loader,
 			rewardGiftsType,
 			filterTitle,
+			isActive
 		} = this.state
 
 		return (
 			<div>
+				{
+				isActive ?
+				<div>
+					<div>
+						<GiftsListComponentNavigation
+							rewardGifts = { rewardGifts }
+						/>
+					</div>
+				<center>
+        <GenericButton
+          text={ 'View Page' }
+          className={ 'profile-button-medium cursor-pointer global-button' }
+          onClick={() => {
+						history.push('/gifts')
+						this.setState({ isActive : false })
+					}}/>
+        </center>
+				</div>
+				:
 				<div className={ 'gifts-container' }>
 					<center>
 						<div className={ 'gifts-main-item1' }>
@@ -123,6 +146,7 @@ class GiftsFragment extends BaseMVPView {
 										<br/>
 										<h4 className = { 'gifts-title-feature' }>Features</h4>
 										<br/>
+
 									</center>
 					        {
 										rewardGifts &&
@@ -150,6 +174,7 @@ class GiftsFragment extends BaseMVPView {
 						</div>
 				  </center>
 				</div>
+			}
 			</div>
 
 		)

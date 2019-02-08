@@ -10,6 +10,7 @@ import './styles/myrewards.css'
 import RewardRedeemFragment from './fragments/RewardRedeemFragments'
 import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
+import GiftsFragment from '../gifts/GiftsFragment'
 
 import { format } from '../../utils/numberUtils'
 
@@ -232,9 +233,8 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       </div>
                     </div>
                     {
-                      <RewardRedeemFragment
-												redeemData = {redeemData}
-												history = {history} />
+                      <GiftsFragment
+											history = { history }/>
                     }
                     <div></div>
                   </div>
