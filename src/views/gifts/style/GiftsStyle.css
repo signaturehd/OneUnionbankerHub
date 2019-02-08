@@ -72,6 +72,17 @@
   margin-bottom: auto;
 }
 
+.gifts-know-more {
+  display: block;
+  padding: 0.5em 0.25em;
+  max-width: 80px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0.5em;
+  font-size: 0.75em;
+  background-color: #ee7421;
+  color: #fff;
+}
 
 /* Card Flip Transition */
 .flip {
@@ -79,7 +90,7 @@
 }
 
 .flip .egifts-card.flipped {
-  -webkit-transform: rotatey(180deg);
+  -webkit-transform: rotatey(-180deg);
 }
 
 .flip .egifts-card {
@@ -89,12 +100,12 @@
 }
 
 .flip .egifts-card .face {
-  -webkit-backface-visibility: hidden ;
+  -webkit-backface-visibility: hidden;
 }
 
 .flip .egifts-card .front {
 }
 
 .flip .egifts-card .back {
-  -webkit-transform: rotatex(-180deg);
+  -webkit-transform: rotatey(180deg);
 }

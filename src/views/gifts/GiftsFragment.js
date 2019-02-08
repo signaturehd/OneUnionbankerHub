@@ -6,6 +6,7 @@ import ConnectView from '../../utils/ConnectView'
 import './style/GiftsStyle.css'
 import { CircularLoader, Line } from '../../ub-components/'
 
+import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftsBanner from './components/GiftsBanner'
 import GiftsListComponent from './components/GiftsListComponent'
 
@@ -123,18 +124,25 @@ class GiftsFragment extends BaseMVPView {
 										<h4 className = { 'gifts-title-feature' }>Features</h4>
 										<br/>
 									</center>
-									<div className = { 'gifts-grid-x4' }>
 					        {
-					          rewardGifts &&
-					          rewardGifts.map((resp, key) =>
-											<GiftsListComponent
-												rewardGiftsId = { rewardGiftsId }
-												filterTitle = { filterTitle }
-												resp = { resp }
+										rewardGifts &&
+					          rewardGifts.length !== 0 ?
+										<div className = { 'gifts-grid-x4' }>
+						          {
+												rewardGifts.map((resp, key) =>
+													<GiftsListComponent
+														rewardGiftsId = { rewardGiftsId }
+														filterTitle = { filterTitle }
+														resp = { resp }
+													/>
+												)
+											}
+										</div>
+										:
+										<NoDataListedComponent
+											text = { 'No Reward/s' }
 											/>
-										)
 									}
-									</div>
 								</div>
 								<div></div>
 							</div>

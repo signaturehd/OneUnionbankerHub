@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card } from '../../../ub-components/'
+import { Card, GenericButton } from '../../../ub-components/'
 
 class GiftsListComponent extends Component {
 	constructor (props) {
@@ -105,6 +105,12 @@ class GiftsListComponent extends Component {
                       className = { 'unionbank-white-color' }>{resp.name}</h4>
                   </div>
                   <div className = { 'gifts-location-alignment' }>
+                    <center>
+                      <GenericButton
+                        className = { 'gifts-know-more' }
+                        text = { 'SHOW MORE' }
+                        />
+                    </center>
                     <h4
                       style = {{
                         fontSize: '.7em',
