@@ -29,7 +29,7 @@ class PensionFundsFragment extends BaseMVPView {
       stepperStatus: 1,
       showCodeModal: false,
       showDevelopmentModal: false,
-      tabsId : 'week'
+      tabsId : 'year'
     }
   }
 
@@ -37,7 +37,8 @@ class PensionFundsFragment extends BaseMVPView {
     // this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
     this.presenter.getMockData()
-  
+    this.presenter.setUnitSummary('year')
+
   }
 
   showCircularLoader (loader) {

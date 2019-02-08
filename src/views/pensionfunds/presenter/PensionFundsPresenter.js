@@ -181,19 +181,69 @@ export default class PensionFundsPresenter {
 
 
   setUnitSummary(variable){
-      let items
+  let unit = []
+  let items = []
 
-  if(variable === 'week'){
-     items = [1,2,3,4,5,6,7];
-   }else if(variable === 'month'){
-     items = [1,2,3]
-   }else if(variable === 'quarterly'){
-     items = [1,2,3,4,5,6]
-   }else if(variable === 'year'){
-     items = [1,2,3,4,5,6,7,8,9,10,11,12]
+  if(variable === 'week' || variable === 'WEEK'){
+
+    const x = [1,2,3,4,5].map(x => {
+
+        if(x === 1){
+            return (  x+'st' +' Week')
+        }else if(x === 2 ){
+            return (  x+'nd' +' Week')
+        }
+        else if(x % 3 === 0 ){
+            return (  x+' rd' +' Week' )
+        }else{
+            return (x+'th' + ' Week')
+        }
+      })
+
+      items = x
+
+   }else if(variable === 'month' || variable === 'MONTH'){
+
+     const x = [1,2,3,4,5].map(x => {
+
+           if(x === 1){
+           return (  x+'st' +' Month')
+           }else if(x % 3 === 0 ){
+           return (  x+' rd' +' Month' )
+           }else{
+             return (x+'th' + ' Month')
+           }
+       })
+
+       items = x
+
+   }else if(variable === 'quarterly' || variable === 'QUARTERLY'){
+
+     const x = [1,2,3,4,5].map(x => {
+
+           if(x === 1){
+           return (  x+'st' +' Quarter')
+           }else if(x % 3 === 0 ){
+           return (  x+' rd' +' Quarter' )
+           }else{
+             return (x+'th' + ' Quarter')
+           }
+       })
+
+       items = x
+
+   }else if(variable === 'year' || variable === 'YEAR'){
+
+     const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
+       return (
+         x + ' Year'
+         )
+       })
+       items = x
+
    }
 
-  this.view.setChartPensionData(items)
+   this.view.setChartPensionData(items)
 
 }
 
