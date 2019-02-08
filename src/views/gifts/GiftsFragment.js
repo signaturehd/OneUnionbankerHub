@@ -15,7 +15,7 @@ class GiftsFragment extends BaseMVPView {
 		this.state = {
 			loader : false,
 			filterTitle : 'everything',
-			selectedCard : false
+			rewardGiftsId : [],
 		}
 	}
 
@@ -24,7 +24,20 @@ class GiftsFragment extends BaseMVPView {
 	}
 
 	setRewardGifts (rewardGifts) {
+		this.getGiftsId(rewardGifts)
 		this.setState({ rewardGifts })
+	}
+
+	getGiftsId (gifts) {
+		try {
+			let listId = [...this.state.rewardGiftsId]
+			gifts && gifts.map((resp) => {
+				listId.push(resp.id)
+			})
+			this.setState({ rewardGiftsId : listId })
+		} catch (e) {
+			 console.log(e)
+		}
 	}
 
 	setCategoryTypeList (rewardGiftsType) {
@@ -38,10 +51,10 @@ class GiftsFragment extends BaseMVPView {
 	render () {
 		const {
 			rewardGifts,
+			rewardGiftsId,
 			loader,
 			rewardGiftsType,
 			filterTitle,
-			selectedCard
 		} = this.state
 
 		return (
@@ -65,23 +78,6 @@ class GiftsFragment extends BaseMVPView {
 								<div></div>
 								<div>
 									<br/>
-									<div
-										onClick = { () => {
-											this.setState({ selectedCard: true })
-									 	} }
-										onMouseLeave = { () => {
-											this.setState({ selectedCard: false })
-										} }
-										className={ 'flip' }>
-						        <div className={ `card ${ selectedCard && 'flipped' }` }>
-					            <div className={ `face front` }>
-					                Front
-					            </div>
-					            <div className={ `face back` }>
-					                Back
-					            </div>
-						        </div>
-							    </div>
 									<div>
 										{
 											filterTitle.toLowerCase() === 'everything' ?
@@ -127,10 +123,18 @@ class GiftsFragment extends BaseMVPView {
 										<h4 className = { 'gifts-title-feature' }>Features</h4>
 										<br/>
 									</center>
-									<GiftsListComponent
-										filterTitle = { filterTitle }
-										rewardGifts = { rewardGifts }
-									/>
+									<div className = { 'gifts-grid-x4' }>
+					        {
+					          rewardGifts &&
+					          rewardGifts.map((resp, key) =>
+											<GiftsListComponent
+												rewardGiftsId = { rewardGiftsId }
+												filterTitle = { filterTitle }
+												resp = { resp }
+											/>
+										)
+									}
+									</div>
 								</div>
 								<div></div>
 							</div>
