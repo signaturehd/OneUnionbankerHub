@@ -64,23 +64,21 @@ class GiftsFragment extends BaseMVPView {
 
 		return (
 			<div>
-				{
+			{
 				isActive ?
 				<div>
-					<div>
-						<GiftsListComponentNavigation
-							rewardGifts = { rewardGifts }
-						/>
-					</div>
-				<center>
-        <GenericButton
-          text={ 'View Page' }
-          className={ 'profile-button-medium cursor-pointer global-button' }
-          onClick={() => {
-						history.push('/gifts')
-						this.setState({ isActive : false })
-					}}/>
-        </center>
+					<GiftsListComponentNavigation
+						rewardGifts = { rewardGifts }
+					/>
+					<center>
+		        <GenericButton
+		          text={ 'View Page' }
+		          className={ 'profile-button-medium cursor-pointer global-button' }
+		          onClick={ () => {
+								this.setState({ isActive : false })
+								history.push('/gifts')
+							}}/>
+	        </center>
 				</div>
 				:
 				<div className={ 'gifts-container' }>

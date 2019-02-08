@@ -96,6 +96,19 @@
   color: #fff;
 }
 
+.gifts-merchandise-tagline {
+  font-family: Georgia, Times New Roman, serif;
+  font-style: italic;
+  line-height: 1.5em;
+  color: #333;
+  font-size: 0.75em;
+  display: table-cell;
+  vertical-align: middle;
+  height: 84px;
+  max-height: 84px;
+  width: 124px;
+}
+
 /* Card Flip Transition */
 .flip {
   -webkit-perspective: 800;

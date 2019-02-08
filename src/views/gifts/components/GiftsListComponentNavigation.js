@@ -7,7 +7,6 @@ class GiftsListComponentNavigation extends Component {
     const {
       rewardGifts
     } = this.props
-    console.log(rewardGifts)
 
     return (
       <div className = { 'gifts-grid-x5 ex1' }>
