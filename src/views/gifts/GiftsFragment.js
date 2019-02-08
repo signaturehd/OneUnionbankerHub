@@ -106,7 +106,6 @@ class GiftsFragment extends BaseMVPView {
 											{
 												rewardGiftsType &&
 												rewardGiftsType.map((resp, key) =>
-												resp.category.toLowerCase() === filterTitle.toLowerCase() &&
 												<h4
 													onClick = { () => this.setState({ filterTitle : resp }) }
 													className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
@@ -144,7 +143,7 @@ class GiftsFragment extends BaseMVPView {
 											<div className = { 'gifts-grid-x4' }>
 							          {
 													rewardGifts.map((resp, key) =>
-														resp.category.toLowerCase() === filterTitle.toLowerCase() &&
+													 filterTitle.toString().toLowerCase() === resp.category.toString().toLowerCase() &&
 														<GiftsListComponent
 															rewardGiftsId = { rewardGiftsId }
 															resp = { resp }
