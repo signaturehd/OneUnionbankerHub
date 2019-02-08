@@ -87,7 +87,8 @@
 .gifts-know-more {
   display: block;
   padding: 0.5em 0.25em;
-  max-width: 80px;
+  min-width: 70px;
+  height: 35px;
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 0.5em;
@@ -97,7 +98,7 @@
 }
 
 .gifts-merchandise-tagline {
-  font-family: Georgia, Times New Roman, serif;
+  font-family: Georgia, Times New Roman, serif !important;
   font-style: italic;
   line-height: 1.5em;
   color: #333;

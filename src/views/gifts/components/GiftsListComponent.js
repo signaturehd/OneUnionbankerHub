@@ -86,40 +86,36 @@ class GiftsListComponent extends Component {
                 className = { 'cursor-pointer gifts-card-rewards' }>
                 <div  style = {{
                     margin: '10px',
-                    textAlign: 'left',
                     display: 'grid',
                     gridTemplateRows: '1fr .05fr',
                     height: '100%',
                     minHeight: '200px',
                   }}>
                   <div>
-                    <h4 className = { 'font-size-10px unionbank-white-color' }>General</h4>
-                    <h4
+                    <img
+                      alt={ resp.name }
+                      width = { 50 }
+                      height = { 50 }
                       style = {{
-                        fontSize: '1em',
-                        fontWeight: 'bold',
-                        lineHeight: '1.5em',
-                        textShadow: '0px 0px 3px #000',
-                        textShadow: '0px 0px 3px rgba(0,0,0,0.25)',
+                        height: '50px',
+                        margin: '0 auto 8px',
+                        display: 'block',
+                        border: '1px solid #80808040'
                       }}
-                      className = { 'unionbank-white-color' }>{resp.name}</h4>
+                      src={ resp.logo }/>
                   </div>
+                  <center>
+                    <h4
+                      className = { 'gifts-merchandise-tagline' }>{resp.tagline}</h4>
+                  </center>
                   <div className = { 'gifts-location-alignment' }>
                     <center>
                       <GenericButton
+                        onClick = { () => {} }
                         className = { 'gifts-know-more' }
                         text = { 'SHOW MORE' }
                         />
                     </center>
-                    <h4
-                      style = {{
-                        fontSize: '.7em',
-                        fontWeight: 'bold',
-                        lineHeight: '1.5em',
-                        textShadow: '0px 0px 3px #000',
-                        textShadow: '0px 0px 3px rgba(0,0,0,0.25)',
-                      }}
-                      className = { 'unionbank-white-color' }>{resp.locationCount} location{ resp.locationCount === 1 ? '' : 's' }</h4>
                   </div>
                 </div>
               </Card>
