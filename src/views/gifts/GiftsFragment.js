@@ -14,6 +14,8 @@ class GiftsFragment extends BaseMVPView {
 		super(props)
 		this.state = {
 			loader : false,
+			filterTitle : 'everything',
+			selectedCard : false
 		}
 	}
 
@@ -26,7 +28,6 @@ class GiftsFragment extends BaseMVPView {
 	}
 
 	setCategoryTypeList (rewardGiftsType) {
-		console.log(rewardGiftsType)
 		this.setState({ rewardGiftsType })
 	}
 
@@ -38,7 +39,9 @@ class GiftsFragment extends BaseMVPView {
 		const {
 			rewardGifts,
 			loader,
-			rewardGiftsType
+			rewardGiftsType,
+			filterTitle,
+			selectedCard
 		} = this.state
 
 		return (
@@ -56,22 +59,63 @@ class GiftsFragment extends BaseMVPView {
 							<CircularLoader
 								show = { loader }
 								validateLoading = { true }
-								/>
+							/>
 							:
 							<div className = { 'gifts-grid-columnt-3x' }>
 								<div></div>
 								<div>
 									<br/>
-									<div style = {{
-											display: 'flex',
-											textAlign: 'center',
-											margin: 'auto',
-										}}>
+									<div
+										onClick = { () => {
+											this.setState({ selectedCard: true })
+									 	} }
+										onMouseLeave = { () => {
+											this.setState({ selectedCard: false })
+										} }
+										className={ 'flip' }>
+						        <div className={ `card ${ selectedCard && 'flipped' }` }>
+					            <div className={ `face front` }>
+					                Front
+					            </div>
+					            <div className={ `face back` }>
+					                Back
+					            </div>
+						        </div>
+							    </div>
+									<div>
 										{
-											rewardGiftsType &&
-											rewardGiftsType.map((resp, key) =>
-												<h4 className = { ' gifts-header-style' }>{resp}</h4>
-											)
+											filterTitle.toLowerCase() === 'everything' ?
+											<div
+												style = {{
+														display: 'flex',
+														textAlign: 'center',
+														margin: 'auto',
+													}}>
+												{
+													rewardGiftsType &&
+													rewardGiftsType.map((resp, key) =>
+														<h4
+															onClick = { () => this.setState({ filterTitle : resp }) }
+															className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
+													)
+												}
+											</div> :
+											<div
+												style = {{
+														display: 'flex',
+														textAlign: 'center',
+														margin: 'auto',
+													}}>
+												{
+													rewardGiftsType &&
+													rewardGiftsType.map((resp, key) =>
+													resp.category.toLowerCase() === filterTitle.toLowerCase() &&
+													<h4
+														onClick = { () => this.setState({ filterTitle : resp }) }
+														className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
+													)
+												}
+											</div>
 										}
 									</div>
 									<br/>
@@ -84,6 +128,7 @@ class GiftsFragment extends BaseMVPView {
 										<br/>
 									</center>
 									<GiftsListComponent
+										filterTitle = { filterTitle }
 										rewardGifts = { rewardGifts }
 									/>
 								</div>

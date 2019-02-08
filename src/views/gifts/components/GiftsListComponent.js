@@ -7,7 +7,6 @@ class GiftsListComponent extends Component {
     const {
       rewardGifts
     } = this.props
-    console.log(rewardGifts)
 
     return (
       <div className = { 'gifts-grid-x4' }>
@@ -17,17 +16,43 @@ class GiftsListComponent extends Component {
             <Card
               style = {{
                 backgroundImage: `url(${ resp.cardUrl })`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
                 objectFit: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'bottom',
+                backgroundSize: 'cover',
               }}
               className = { 'cursor-pointer gifts-card-rewards' }>
               <div  style = {{
                   margin: '10px',
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  display: 'grid',
+                  gridTemplateRows: '1fr .05fr',
+                  height: '100%',
+                  minHeight: '200px',
                 }}>
-                <h4 className = { 'font-size-10px unionbank-white-color' }>General</h4>
-                <h4 className = { 'font-size-14px font-weight-bold unionbank-white-color' }>{resp.name}</h4>
+                <div>
+                  <h4 className = { 'font-size-10px unionbank-white-color' }>General</h4>
+                  <h4
+                    style = {{
+                      fontSize: '1em',
+                      fontWeight: 'bold',
+                      lineHeight: '1.5em',
+                      textShadow: '0px 0px 3px #000',
+                      textShadow: '0px 0px 3px rgba(0,0,0,0.25)',
+                    }}
+                    className = { 'unionbank-white-color' }>{resp.name}</h4>
+                </div>
+                <div className = { 'gifts-location-alignment' }>
+                  <h4
+                    style = {{
+                      fontSize: '.7em',
+                      fontWeight: 'bold',
+                      lineHeight: '1.5em',
+                      textShadow: '0px 0px 3px #000',
+                      textShadow: '0px 0px 3px rgba(0,0,0,0.25)',
+                    }}
+                    className = { 'unionbank-white-color' }>{resp.locationCount} location{ resp.locationCount === 1 ? '' : 's' }</h4>
+                </div>
               </div>
             </Card>
           )
