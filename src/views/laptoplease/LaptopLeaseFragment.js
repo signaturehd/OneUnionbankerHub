@@ -192,7 +192,9 @@ class LaptopLeaseFragment extends BaseMVPView {
       laptopModelDetails,
       laptopDetailsName,
       selectedLaptopDetails,
-      laptopId
+      laptopId,
+      brand,
+      model,
     } = this.state
 
     const { history }=this.props
@@ -385,6 +387,10 @@ class LaptopLeaseFragment extends BaseMVPView {
                            getCardOptionId = { getCardOptionId }
                            vendor = { vendor }
                            terms = { termsName }
+                           model = { model }
+                           brand = { brand }
+                           brandFunc = { e => this.presenter.setBrand(e) }
+                           modelFunc = { e => this.presenter.setModel(e) }
                            showEditMode = { showEditMode }
                            vendorFunc = { (e) => this.presenter.setVendor(e) }
                            orDate = { orDate }
