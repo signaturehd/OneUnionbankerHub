@@ -33,4 +33,37 @@
 
 .gifts-main-item3{
 	grid-row: 3/3;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gifts-grid-columnt-3x {
+  display: grid;
+  grid-template-columns: .15fr 1fr .15fr;
+}
+
+.gifts-grid-x4 {
+  display: grid;
+  column-gap: 2%;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin-bottom: 10px;
+}
+
+.gifts-card-rewards {
+  padding: 10px;
+  min-height: 249px;
+  min-width: 170px;
+}
+
+.gifts-title-feature {
+  font-size: 1.25em;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.gifts-header-style {
+  color: #ee7421;
+  text-align: center;
+  margin: 0px 1em;
+  font-size: 14px;
 }
