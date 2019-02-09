@@ -6,6 +6,9 @@ import GetRewardsAwardsInteractor from '../../../domain/interactor/rewards/GetRe
 import SubmitAwardsInteractor from '../../../domain/interactor/rewards/SubmitAwardsInteractor'
 import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRewardPointsInteractor'
 import SubmitAwardsParam from '../../../domain/param/SubmitAwardsParam'
+import GetRewardGiftsDetailsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsDetailsInteractor'
+import GetRewardGiftsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsInteractor'
+
 import * as AwardsFunction from '../function/AwardsFunction'
 
 let storedRecognizedAwards = [], storedEmployeeList = [], storedId = [], storedUpdatedList = []
@@ -16,6 +19,8 @@ export default class RewardsPresenter {
     this.getRewardsAwardsInteractor = new GetRewardsAwardsInteractor(container.get('HRBenefitsClient'))
     this.getRewardPointsInteractor = new GetRewardPointsInteractor(container.get('HRBenefitsClient'))
     this.submitAwardsInteractor = new SubmitAwardsInteractor(container.get('HRBenefitsClient'))
+    this.getRewardGiftsDetailsInteractor = new GetRewardGiftsDetailsInteractor(container.get('HRBenefitsClient'))
+    this.getRewardGiftsInteractor = new GetRewardGiftsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -396,6 +401,48 @@ export default class RewardsPresenter {
       this.view.setRewardPoints(data.points)
     }, error => {
 
+    })
+  }
+
+  setCategoryType (category) {
+    category && category.map((data, key) => {
+      let setCategory = [...categoryList]
+      if(!this.checkIdIfExist(data.category.toLowerCase())) {
+        setCategory.push(data.category)
+        categoryList = setCategory
+      }
+    })
+    this.view.setCategoryTypeList(categoryList)
+  }
+
+  getRewardGifts () {
+    this.view.circularLoader(true)
+    this.getRewardGiftsInteractor.execute()
+    .subscribe(data => {
+      this.view.circularLoader(false)
+      this.view.setRewardGifts(data)
+      this.setCategoryType(data)
+    }, error => {
+      this.view.circularLoader(false)
+    })
+  }
+
+  checkIdIfExist (id) {
+    let isBool = false
+    for (var i in categoryList) {
+      if (categoryList[i].toLowerCase() === id) {
+        isBool = true
+        break
+      }
+    }
+    return isBool
+  }
+
+  getRewardGiftsDetails (id) {
+    this.getRewardGiftsDetailsInteractor.execute(id)
+    .subscribe(data => {
+      this.view.setRewardGiftsDetails(data)
+    }, error => {
     })
   }
 }

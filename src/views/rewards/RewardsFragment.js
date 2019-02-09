@@ -5,12 +5,12 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import { Card, GenericButton, CircularLoader } from '../../ub-components'
 import NoticeResponseModal from '../notice/NoticeResponseModal'
+import NoDataListedComponent from '../common/components/NoDataListedComponent'
 
 import './styles/myrewards.css'
-import RewardRedeemFragment from './fragments/RewardRedeemFragments'
+import RewardRedeemFragments from './fragments/RewardRedeemFragments'
 import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
-import GiftsFragment from '../gifts/GiftsFragment'
 
 import { format } from '../../utils/numberUtils'
 
@@ -26,7 +26,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			orNumberErrorMessage: '',
       employeeName: 'test',
       enabledCircularLoader : false,
-			selectAllIsChecked: false
+			selectAllIsChecked: false,
+			loader : false,
+			filterTitle : 'everything',
+			rewardGiftsId : [],
 		}
 	}
 
@@ -37,6 +40,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.presenter.getRewardList()
     this.presenter.getAwardData()
     this.presenter.getRedeemData()
+		this.presenter.getRewardGifts()
 	}
 
 	setRecognizedRewards (recognizedAwards) {
@@ -80,6 +84,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ enabledCircularLoader })
   }
 
+	circularLoader (loader) {
+		this.setState({ loader })
+	}
+
   setEmployeeList (membersData) {
     this.setState({ membersData })
   }
@@ -108,6 +116,27 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ membersData: [], employeeList : [], searchString : '', employeeMessage: '' })
   }
 
+	setRewardGifts (rewardGifts) {
+		this.getGiftsId(rewardGifts)
+		this.setState({ rewardGifts })
+	}
+
+	getGiftsId (gifts) {
+		try {
+			let listId = [...this.state.rewardGiftsId]
+			gifts && gifts.map((resp) => {
+				listId.push(resp.id)
+			})
+			this.setState({ rewardGiftsId : listId })
+		} catch (e) {
+			 console.log(e)
+		}
+	}
+
+	setCategoryTypeList (rewardGiftsType) {
+		this.setState({ rewardGiftsType })
+	}
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -129,7 +158,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
       awardData,
       redeemData,
 			employeeList,
-			selectAllIsChecked
+			selectAllIsChecked,
+			rewardGifts,
+			rewardGiftsId,
+			loader,
+			rewardGiftsType,
+			filterTitle,
 		} = this.state
 
 		return (
@@ -232,10 +266,25 @@ class RewardsRecognitionFragment extends BaseMVPView {
                         </div>
                       </div>
                     </div>
-                    {
-                      <GiftsFragment
-											history = { history }/>
-                    }
+										{
+											rewardGifts &&
+						          rewardGifts.length !== 0 ?
+											<div className = { 'ex1 gifts-grid-x5' }>
+							          {
+													rewardGifts.map((resp, key) =>
+														<RewardRedeemFragments
+															rewardGiftsId = { rewardGiftsId }
+															filterTitle = { filterTitle }
+															resp = { resp }
+														/>
+													)
+												}
+											</div>
+											:
+											<NoDataListedComponent
+												text = { 'No Reward/s' }
+												/>
+										}
                     <div></div>
                   </div>
                 }
