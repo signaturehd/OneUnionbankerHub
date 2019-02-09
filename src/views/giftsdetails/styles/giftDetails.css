@@ -206,7 +206,7 @@
 }
 
 .giftdetails-about-container {
-  padding: 45px 30px 75px;
+  padding: 0px 30px;
   overflow: hidden;
   margin: 0px auto;
 }
@@ -221,15 +221,16 @@
   margin-bottom: 1.5em;
 }
 
-.giftdetails-about-write-up p {
-  font-size: 0.875em;
-  line-height: 1.75em;
+.giftdetails-about-write-up {
+  font-size: 0.74em; 
   float: left;
   text-align: justify;
   margin-bottom: 2em;
-  z-index: 20;
-  opacity: 1;
-  position: relative;
+  font-family: Lato, Segoe UI, sans-serif !important;
+  word-spacing: .2em;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .giftdetails-other-info {
@@ -237,10 +238,6 @@
   margin-right: 0;
   padding-left: 30px;
   border-left: 1px solid #aaa;
-  z-index: 20;
-  opacity: 1;
-  position: relative;
-  line-height: 1.75em;
 }
 
 .giftdetails-other-info h3 {
@@ -282,15 +279,22 @@
   opacity: .5;
 }
 
+#giftdetails-about-cover {
+  padding-top: 50px;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
+}
+
+
 @media screen and (min-width: 40em) {
   .giftdetails-about-container {
     max-width: 1030px;
   }
-  .giftdetails-write-up {
-      text-align: left;
-      width: 60%;
-      padding-right: 75px;
-      margin-bottom: 0;
+  .giftdetails-about-write-up {
+    width: 60%;
+    padding-right: 75px;
+    margin-bottom: 0;
   }
   .giftdetails-other-info  {
     width: 40%;

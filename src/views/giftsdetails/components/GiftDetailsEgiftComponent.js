@@ -9,28 +9,30 @@ class GiftDetailsEgiftComponent extends Component {
     } = this.props
 
     return (
-      <div id = { 'giftdetails-denominations' }>
-        <h2>CHOOSE eGIFT</h2>
-        <ul>
-          {
-            denominations && denominations.map((resp, key) =>
-              <li
-                key = { resp.id }
-                className = { 'giftdetails-denominations' }>
-                <img
-                  className={ 'giftdetails-background' }
-                  src={ `${ resp.logo }` }
-                  style={{width: '300px'}}
-                  alt={'P100'} />
-                <div className = { 'giftdetails-details' }>
-                  <h4 className = { 'giftdetails-name' }>P{ resp.price }</h4>
-                  <span className={'giftdetails-price'}>{ resp.points } Creds</span>
-                  <p className={'giftdetails-description'}>{ resp.shortDescription ? resp.shortDescription : '(No description)'  }</p>
-                </div>
-              </li>
-            )
-          }
-        </ul>
+      <div id = { 'giftdetails-about-cover' }>
+        <div id = { 'giftdetails-denominations' }>
+          <h2>CHOOSE eGIFT</h2>
+          <ul>
+            {
+              denominations && denominations.map((resp, key) =>
+                <li
+                  key = { resp.id }
+                  className = { 'giftdetails-denominations' }>
+                  <img
+                    className={ 'giftdetails-background' }
+                    src={ `${ resp.logo }` }
+                    style={{width: '300px'}}
+                    alt={'P100'} />
+                  <div className = { 'giftdetails-details' }>
+                    <h4 className = { 'giftdetails-name' }>P{ resp.price }</h4>
+                    <span className={'giftdetails-price'}>{ resp.points } Creds</span>
+                    <p className={'giftdetails-description'}>{ resp.shortDescription ? resp.shortDescription : '(No description)'  }</p>
+                  </div>
+                </li>
+              )
+            }
+          </ul>
+        </div>
       </div>
     )
   }

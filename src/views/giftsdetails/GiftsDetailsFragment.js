@@ -57,6 +57,8 @@ class GiftsDetailsFragment extends BaseMVPView {
 							denominations = { rewardDetails && rewardDetails.denominations }
 						/>
 						<GiftDetailsAboutComponent
+							name = { rewardDetails && rewardDetails.name }
+							writeup = { rewardDetails && rewardDetails.writeup }
 						/>
 					</div>
 				}
