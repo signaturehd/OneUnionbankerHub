@@ -5,7 +5,8 @@ class GiftDetailsAboutComponent extends Component {
   render () {
     const {
       writeup,
-      name
+      name,
+      recommendations
     } = this.props
 
     return (
@@ -17,11 +18,13 @@ class GiftDetailsAboutComponent extends Component {
               <p>{ writeup }</p>
             </div>
             <div className={ 'giftdetails-other-info' }>
-              <h3>{ name } Stores</h3>
+              <h3>{ name }</h3>
               <ul>
-                <li>Puregold Price Club</li>
-                <li>Puregold Jr.</li>
-                <li>Puregold Extra</li>
+                {
+                  recommendations && recommendations.map((resp, key) =>
+                    <li key = { key }>{ resp }</li>
+                  )
+                }
               </ul>
             </div>
           </div>

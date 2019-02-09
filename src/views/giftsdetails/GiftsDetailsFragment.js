@@ -12,6 +12,7 @@ import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftDetailsBannerComponent from './components/GiftDetailsBannerComponent'
 import GiftDetailsEgiftComponent from './components/GiftDetailsEgiftComponent'
 import GiftDetailsAboutComponent from './components/GiftDetailsAboutComponent'
+import GiftDetailsFooterComponent from './components/GiftDetailsFooterComponent'
 
 class GiftsDetailsFragment extends BaseMVPView {
 	constructor (props) {
@@ -59,6 +60,12 @@ class GiftsDetailsFragment extends BaseMVPView {
 						<GiftDetailsAboutComponent
 							name = { rewardDetails && rewardDetails.name }
 							writeup = { rewardDetails && rewardDetails.writeup }
+							recommendations = { rewardDetails && rewardDetails.highlights }
+						/>
+						<GiftDetailsFooterComponent
+							name = { rewardDetails && rewardDetails.name }
+							writeup = { rewardDetails && rewardDetails.writeup }
+							recommendations = { rewardDetails && rewardDetails.highlights }
 						/>
 					</div>
 				}
