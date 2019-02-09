@@ -11,6 +11,7 @@ import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftDetailsBannerComponent from './components/GiftDetailsBannerComponent'
 import GiftDetailsEgiftComponent from './components/GiftDetailsEgiftComponent'
+import GiftDetailsAboutComponent from './components/GiftDetailsAboutComponent'
 
 class GiftsDetailsFragment extends BaseMVPView {
 	constructor (props) {
@@ -52,7 +53,11 @@ class GiftsDetailsFragment extends BaseMVPView {
 							category = { rewardDetails && rewardDetails.category }
 							locations = { rewardDetails && rewardDetails.locations }
 						/>
-						<GiftDetailsEgiftComponent/>
+						<GiftDetailsEgiftComponent
+							denominations = { rewardDetails && rewardDetails.denominations }
+						/>
+						<GiftDetailsAboutComponent
+						/>
 					</div>
 				}
 			</div>
