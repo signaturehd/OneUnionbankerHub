@@ -13,6 +13,7 @@ import GiftDetailsBannerComponent from './components/GiftDetailsBannerComponent'
 import GiftDetailsEgiftComponent from './components/GiftDetailsEgiftComponent'
 import GiftDetailsAboutComponent from './components/GiftDetailsAboutComponent'
 import GiftDetailsFooterComponent from './components/GiftDetailsFooterComponent'
+import GiftDetailsMapComponent from './components/GiftDetailsMapComponent'
 
 class GiftsDetailsFragment extends BaseMVPView {
 	constructor (props) {
