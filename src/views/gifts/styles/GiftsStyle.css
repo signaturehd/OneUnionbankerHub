@@ -4,6 +4,21 @@
   height: 250px;
 }
 
+#gifts-overlay {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  display: table;
+  background: -moz-linear-gradient(top, rgba(255,255,255,0) 25% ,rgba(0,0,0,0.5));
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: -o-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: -ms-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+}
+
 .gifts-text {
   color: white;
   margin-top: 110px;
@@ -12,9 +27,13 @@
 }
 
 .gifts-banner {
-  background-image: url('../../../images/rewards/giftsBanner.jpg');
+  padding-top: 50px;
+  height: 350px;
+  background: #333333 center center no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
 }
 
 .gifts-container{
@@ -39,7 +58,7 @@
 
 .gifts-grid-columnt-3x {
   display: grid;
-  grid-template-columns: .15fr 1fr .15fr;
+  grid-template-columns: 1fr  1fr 1fr;
 }
 
 .gifts-grid-x4 {
@@ -50,14 +69,14 @@
 
 .gifts-card-rewards {
   padding: 10px;
-  min-height: 249px;
-  min-width: 170px;
+  height: 249px;
+  width: 170px;
 }
 
 .gifts-title-feature {
   font-size: 1.25em;
   color: #e74c3c;
-  font-weight: 100;
+  font-weight: 400;
 }
 
 .gifts-header-style {
@@ -122,4 +141,57 @@
 
 .flip .egifts-card .back {
   -webkit-transform: rotatey(180deg);
+}
+
+.gifts-title-list {
+  display: flex;
+  text-align: center;
+  margin: auto;
+}
+
+/* Media Query Gifts */
+
+@media screen and (min-width: 40em) {
+  .gifts-grid-columnt-3x {
+    max-width: 1030px;
+  }
+  .gifts-grid-x4 {
+    max-width: 1030px;
+    display: grid;
+    grid-auto-columns: auto;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .gifts-grid-x4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .gifts-grid-x4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gifts-grid-x4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gifts-title-list {
+    display: block;
+    text-align: center;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .gifts-grid-x4 {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }

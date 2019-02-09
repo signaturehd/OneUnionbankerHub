@@ -1,10 +1,8 @@
-import GetRewardGiftsDetailsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsDetailsInteractor'
 import GetRewardGiftsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsInteractor'
 
 let categoryList = []
 export default class GiftsPresenter {
   constructor (container) {
-    this.getRewardGiftsDetailsInteractor = new GetRewardGiftsDetailsInteractor(container.get('HRBenefitsClient'))
     this.getRewardGiftsInteractor = new GetRewardGiftsInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -43,14 +41,6 @@ export default class GiftsPresenter {
       this.setCategoryType(data)
     }, error => {
       this.view.circularLoader(false)
-    })
-  }
-
-  getRewardGiftsDetails (id) {
-    this.getRewardGiftsDetailsInteractor.execute(id)
-    .subscribe(data => {
-      this.view.setRewardGiftsDetails(data)
-    }, error => {
     })
   }
 }

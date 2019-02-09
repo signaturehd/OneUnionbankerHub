@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Presenter from './presenter/GiftsPresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
-import './style/GiftsStyle.css'
+import './styles/GiftsStyle.css'
 import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
@@ -82,12 +82,7 @@ class GiftsFragment extends BaseMVPView {
 								<div>
 									{
 										filterTitle.toLowerCase() === 'everything' ?
-										<div
-											style = {{
-													display: 'flex',
-													textAlign: 'center',
-													margin: 'auto',
-												}}>
+										<div className = { 'gifts-title-list' }>
 											{
 												rewardGiftsType &&
 												rewardGiftsType.map((resp, key) =>
@@ -136,6 +131,7 @@ class GiftsFragment extends BaseMVPView {
 														<GiftsListComponent
 															rewardGiftsId = { rewardGiftsId }
 															resp = { resp }
+															knowMoreClick = { (id) => history.push(`/rewardgifts/details/${id}`) }
 														/>
 													)
 												}
@@ -147,6 +143,7 @@ class GiftsFragment extends BaseMVPView {
 														<GiftsListComponent
 															rewardGiftsId = { rewardGiftsId }
 															resp = { resp }
+															knowMoreClick = { (id) => history.push(`/rewardgifts/details/${id}`) }
 														/>
 													)
 												}

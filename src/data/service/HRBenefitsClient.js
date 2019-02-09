@@ -1698,7 +1698,7 @@ export default class HRBenefitsClient {
   }
 
   getRewardGiftsDetails (token, id) {
-    return this.service.getRewardGiftsDetails(token)
+    return this.service.getRewardGiftsDetails(token, id)
     .pipe(ServiceErrorOperator())
   }
 

@@ -269,17 +269,27 @@ class RewardsRecognitionFragment extends BaseMVPView {
 										{
 											rewardGifts &&
 						          rewardGifts.length !== 0 ?
-											<div className = { 'ex1 gifts-grid-x5' }>
-							          {
-													rewardGifts.map((resp, key) =>
-														<RewardRedeemFragments
-															rewardGiftsId = { rewardGiftsId }
-															filterTitle = { filterTitle }
-															resp = { resp }
-														/>
-													)
-												}
-											</div>
+											<center>
+												<h4 className = { 'header-margin-default' }>Redeem Rewards</h4>
+												<br/>
+												<div className = { 'ex1 gifts-grid-x5' }>
+													{
+														rewardGifts.map((resp, key) =>
+															<RewardRedeemFragments
+																rewardGiftsId = { rewardGiftsId }
+																filterTitle = { filterTitle }
+																resp = { resp }
+																knowMoreClick = { () => history.push(`/rewardgifts/details/${resp.id}`) }
+															/>
+														)
+													}
+												</div>
+													<GenericButton
+														className = { 'cursor-pointer global-button profile-button-small' }
+														onClick = { () => history.push('/gifts') }
+														text = { 'view all' }
+													/>
+											</center>
 											:
 											<NoDataListedComponent
 												text = { 'No Reward/s' }

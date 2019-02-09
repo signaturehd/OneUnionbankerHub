@@ -13,7 +13,8 @@ class GiftsListComponent extends Component {
   render () {
     const {
       resp,
-      rewardGiftsId
+      rewardGiftsId,
+			knowMoreClick
     } = this.props
 
     const {
@@ -47,7 +48,7 @@ class GiftsListComponent extends Component {
                     margin: '10px',
                     textAlign: 'left',
                     display: 'grid',
-                    gridTemplateRows: '1fr .05fr',
+                    gridTemplateRows: '1fr 0.15fr',
                     height: '100%',
                     minHeight: '200px',
                   }}>
@@ -86,7 +87,7 @@ class GiftsListComponent extends Component {
                 <div  style = {{
                     margin: '10px',
                     display: 'grid',
-                    gridTemplateRows: '1fr .05fr',
+                    gridTemplateRows: '1fr 0.15fr',
                     height: '100%',
                     minHeight: '200px',
                   }}>
@@ -110,7 +111,7 @@ class GiftsListComponent extends Component {
                   <div className = { 'gifts-location-alignment' }>
                     <center>
                       <GenericButton
-                        onClick = { () => {} }
+                        onClick = { () => knowMoreClick(resp.id) }
                         className = { 'gifts-know-more' }
                         text = { 'SHOW MORE' }
                         />

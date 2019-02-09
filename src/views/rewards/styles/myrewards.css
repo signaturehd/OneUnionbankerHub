@@ -11,7 +11,7 @@
 
 .myreward-grid-container {
   display: grid;
-  grid-template-columns: .05fr auto .5fr;
+  grid-template-columns: .05fr 1fr.5fr;
   grid-column-gap: 3em;
   margin-left: 40px;
   margin-right: 60px;
@@ -27,7 +27,7 @@
 
 .ex1 {
   width: 100%;
-  height: 500px;
+  height: 550px;
   overflow: scroll;
 }
 .gifts-grid-x5 {
