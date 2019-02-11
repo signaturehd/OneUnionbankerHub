@@ -9,10 +9,13 @@ class GiftDetailsBannerComponent extends Component {
       tagline,
       category,
       locations,
+      latitude,
+      longtitude
     } = this.props
 
     const locationLength = locations && locations.length
-
+    console.log(longtitude)
+    console.log(latitude)
     return (
       <div
         id={'giftdetails-cover'}

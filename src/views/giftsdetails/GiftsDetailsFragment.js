@@ -87,6 +87,8 @@ class GiftsDetailsFragment extends BaseMVPView {
 									name = { rewardDetails && rewardDetails.name }
 									category = { rewardDetails && rewardDetails.category }
 									locations = { rewardDetails && rewardDetails.locations }
+									longtitude = { rewardDetails && rewardDetails.locations[0].longtitude }
+									latitude = { rewardDetails && rewardDetails.locations[0].latitude }
 								/>
 								<GiftDetailsEgiftComponent
 									onCheckOutModal = { (showCheckoutModal, selectedRewardsArray) =>

@@ -34,6 +34,7 @@ class GiftsFragment extends BaseMVPView {
 			let listId = [...this.state.rewardGiftsId]
 			gifts && gifts.map((resp) => {
 				listId.push(resp.id)
+
 			})
 			this.setState({ rewardGiftsId : listId })
 		} catch (e) {
