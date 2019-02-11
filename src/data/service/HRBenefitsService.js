@@ -2055,6 +2055,8 @@ export default class HRBenefitsService {
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      vendor: laptopLeaseParam.vendor,
+     brand: laptopLeaseParam.brand,
+     model: laptopLeaseParam.model,
      or: {
        number : laptopLeaseParam.orNumber,
        date: laptopLeaseParam.orDate
