@@ -3,7 +3,7 @@ export default class GetDirectReportGoalsInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.getDirectReportGoals(this.client.getToken())
+  execute (status) {
+    return this.client.getDirectReportGoals(this.client.getToken(), status)
   }
 }

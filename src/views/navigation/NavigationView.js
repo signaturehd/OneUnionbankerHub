@@ -239,6 +239,10 @@ class NavigationView extends BaseMVPView {
     this.setState({ preEmploymentStatus : e })
   }
 
+  hideProfileMenu(){
+    this.setState({ profileDisplay : 'none' })
+  }
+
   render () {
     const {
       profileDisplay,
@@ -298,6 +302,7 @@ class NavigationView extends BaseMVPView {
         { super.render() }
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
+            hideProfileMenu = { () => this.hideProfileMenu() }
             tempPreEmployment = { preEmploymentStatus }
             selected={ selected }
             profillePosition = { profillePosition }
@@ -315,7 +320,9 @@ class NavigationView extends BaseMVPView {
             onCallWizard = { () => this.callWizard() }
             logout = { () => this.setState({ showLogoutModal : true }) }/>
         </header>
-        <div className="navigation-panels">
+        <div
+          className="navigation-panels"
+          onClick = { () => this.hideProfileMenu() }>
           <main
             className = { 'navigation-panel navigation-content' }
             role = { 'main' }
@@ -343,7 +350,7 @@ class NavigationView extends BaseMVPView {
                   } }
                 />
               }
-            <Drawer>
+            <Drawer  >
               <Switch>
                 <Route exact path = '/' render = {props =>
                   <HomeFragment
@@ -388,6 +395,7 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
                   <EducationGroupAidFragment { ...props }
+                    isLineManager = { isLineManager }
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                   <OpticalFragment { ...props }

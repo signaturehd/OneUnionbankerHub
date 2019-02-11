@@ -159,10 +159,18 @@ export default class LaptopLeasePresenter {
               duration : 2000
             })
           )
-        }  else if (storedDeliveryOption === '') {
+        }   else if (storedDeliveryOption === '') {
             store.dispatch(NotifyActions.addNotify({
              title: 'Laptop Lease',
              message : 'Please choose the destination of item',
+             type : 'warning',
+             duration : 2000
+           })
+         )
+       } else if (storedTerms === '') {
+            store.dispatch(NotifyActions.addNotify({
+             title: 'Laptop Lease',
+             message : 'Please choose to Payment Terms',
              type : 'warning',
              duration : 2000
            })

@@ -28,10 +28,6 @@ class SquadGoalsComponent extends Component {
     super(props)
   }
 
-  navigate () {
-    this.props.history.push('/mylearning')
-  }
-
   render () {
     const {
       memberDetails,
@@ -43,7 +39,7 @@ class SquadGoalsComponent extends Component {
     } = this.props
 
     return (
-      <div className = { 'padding-15px' }>
+      <div>
       {
           <Card className = { 'margin-10px cursor-pointer' }
             onClick = { () => onSelected(

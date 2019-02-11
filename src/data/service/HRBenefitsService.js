@@ -2066,7 +2066,7 @@ export default class HRBenefitsService {
    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
    laptopLeaseParam.attachments &&
    laptopLeaseParam.attachments.map((resp, key) =>(
-     formData.append('qoutation', resp.file)
+     formData.append(resp.name, resp.file)
    ))
    formData.append('body', JSON.stringify(objectParam))
    return this.apiClient.post('v1/leases/laptop',  formData, {
@@ -2223,7 +2223,7 @@ export default class HRBenefitsService {
   /* Events Budget */
 
   validateEventsBudget (token) {
-    return this.apiClient.get('v1/events/validate', {
+    return this.apiClient.get('v1/events/validate?pageNumber=1&pageItem=1', {
       headers: { token }
     })
   }
@@ -2268,7 +2268,7 @@ export default class HRBenefitsService {
   /* My Goals */
 
   getGoals (token, status) {
-    return this.apiClient.get(`v1/goals?goalType=${status}`, {
+    return this.apiClient.get(`v1/goals?status=`, {
       headers: { token }
     })
   }
@@ -2290,20 +2290,19 @@ export default class HRBenefitsService {
     })
   }
 
-  updateGoals (token, goalId, startDate, dueDate) {
+  updateGoals (token, updateParam, startDate, dueDate) {
     const objectParam = {
-      id: goalId,
+      id: updateParam.goalId,
       startDate: startDate,
       endDate: dueDate
     }
-
-    return this.apiClient.put(`v1/goals/personal/${goalId}`, objectParam, {
+    return this.apiClient.put(`v1/goal/${updateParam.goalId}?goalType=${ updateParam.goalType }`, objectParam, {
       headers : { token }
     })
   }
 
   getForApprovalGoals (token) {
-    return this.apiClient.get('v1/goals/reports?status=&type=&goalType=personal', {
+    return this.apiClient.get('v1/goals/reports?goalType=personal&status=1,4,5', {
       headers: { token }
     })
   }
@@ -2327,39 +2326,58 @@ export default class HRBenefitsService {
   }
 
   addGoalTask (token, goalTaskParam) {
-    return this.apiClient.post(`v1/goals/tasks?goalType=${goalTaskParam.goalType}`, goalTaskParam.body, {
+    return this.apiClient.post(`v1/goals/tasks?goalId=${goalTaskParam.body.id}&goalType=${goalTaskParam.goalType}`, goalTaskParam.body, {
       headers : { token }
     })
   }
 
-  getGoalTask (token, goalId) {
-    return this.apiClient.get(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
+  getGoalTask (token, goalTask) {
+    return this.apiClient.get(`v1/goals/tasks?goalType=${goalTask.goalType}&goalId=${goalTask.goalId}`, {
       headers: { token }
     })
   }
 
   addGoalComment (token, goalCommentParam) {
-    return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body, {
+    if(goalCommentParam.status === 'manager') {
+      return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body, {
+        headers : { token }
+      })
+    } else if (goalCommentParam.status ==='requested') {
+      return this.apiClient.post(`v1/goals/comments?goalType=${goalCommentParam.goalType}`, goalCommentParam.body2, {
+        headers : { token }
+      })
+    }
+  }
+
+  addSquadGoalComment (token, squadGoalParam) {
+    return this.apiClient.post(`v1/goals/comments?goalType=${squadGoalParam.type}`, squadGoalParam.body, {
       headers : { token }
     })
   }
 
-  getGoalComment (token, goalId, pageNumber, pageItem) {
-    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}`, {
+  getGoalComment (token, goalParam, pageNumber, pageItem) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalParam.goalId}&goalType=${goalParam.goalType}`, {
       headers: { token }
     })
   }
 
-  updateGoalTask(token, goalId, taskDescription, isCompleted) {
+  getSquadGoalComment (token, pageNumber, pageItem, goalId, goalType) {
+    return this.apiClient.get(`v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}&goalType=${goalType}`, {
+      headers: { token }
+    })
+  }
+
+  updateGoalTask(token, taskParam, taskDescription, isCompleted) {
     let updateGoal
     if (taskDescription) {
-      updateGoal = this.apiClient.put(`v1/goals/tasks?goalType=personal&goalId=${goalId}`, {
+      updateGoal = this.apiClient.put(`v1/goals/tasks/${taskParam.taskId}?goalType=${taskParam.goalType}`, {
         description: taskDescription
       }, {
         headers : { token }
       })
     } else if (isCompleted !== null) {
-      updateGoal = this.apiClient.post(`v1/goals/${goalId}/completion?goalType=personal`, {
+      updateGoal = this.apiClient.post(`v1/goals/tasks/${taskParam.taskId}?goalType=${taskParam.goalType}`, {
+        taskId: taskParam.taskId,
         isCompleted
       }, {
         headers : { token }
@@ -2378,8 +2396,8 @@ export default class HRBenefitsService {
     })
   }
 
-  deleteGoal(token, goalId) {
-    return this.apiClient.delete(`v1/goals/personal/${goalId}?isArchived=1`, {
+  deleteGoal(token, goalParam) {
+    return this.apiClient.delete(`v1/goal/${goalParam.goalId}?goalType=${goalParam.goalType}`, {
       headers : { token }
     })
   }
@@ -2397,7 +2415,13 @@ export default class HRBenefitsService {
   }
 
   getTeamGoals (token, goalType) {
-    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=2,6`, {
+    return this.apiClient.get(`v1/goals/reports?goalType=${goalType}&status=1,2,5,8`, {
+      headers: { token }
+    })
+  }
+
+  getGoalsForConfirmation (token) {
+    return this.apiClient.get(`v1/goals?status=1`, {
       headers: { token }
     })
   }
@@ -2409,15 +2433,21 @@ export default class HRBenefitsService {
   }
 
   addRatingGoal (token, ratingParam) {
-    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate`, ratingParam.body, {
+    return this.apiClient.post(`v1/goals/${ratingParam.goalId}/rate?goalType=${ratingParam.goalType}`, ratingParam.body, {
       headers: { token }
     })
   }
 
-  markAsCompleted (token, markParam) {
-    return this.apiClient.post(`v1/goals/${markParam.goalId}/completion`, markParam.body, {
-      headers: { token }
-    })
+  markAsCompletedWithType (token, markParam) {
+    if(markParam.type === 1) {
+      return this.apiClient.post(`v1/goals/${markParam.id}/remarks`, markParam.body, {
+        headers: { token }
+      })
+    } else {
+      return this.apiClient.post(`v1/goals/${markParam.goalId}/completion?goalType=${markParam.type}`, markParam.body, {
+        headers: { token }
+      })
+    }
   }
 
   addTeamGoals (token, teamGoalsParam) {
@@ -2444,8 +2474,8 @@ export default class HRBenefitsService {
     })
   }
 
-  getDirectReportGoals (token) {
-    return this.apiClient.get('v1/goals/reports?goalType=personal&type=1&status=2', {
+  getDirectReportGoals (token, status) {
+    return this.apiClient.get(`v1/goals/reports?goalType=personal&status=2,6,8`, {
       headers: { token }
     })
   }
@@ -2562,8 +2592,18 @@ export default class HRBenefitsService {
   // BIR 2316 My Documents
 
   getBir2316List (token) {
-    return this.apiClient.get('v1/bir/', {
+    return this.rootClient.get('v1/bir/history', {
       headers : { token }
     })
   }
+
+  requestBIR2316 (token, year) {
+    return this.rootClient.post('v1/bir', {
+      year
+    }, {
+      headers: { token }
+    })
+  }
+
+
 }

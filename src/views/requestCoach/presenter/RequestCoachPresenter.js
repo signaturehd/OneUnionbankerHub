@@ -24,7 +24,7 @@ export default class RequestCoachPresenter {
           this.view.noticeResponse(request)
           this.view.resetValue()
         }, e => {
-          this.view.hideCircularLoader
+          this.view.hideCircularLoader()
           this.view.noticeResponse(e)
           // TODO prompt generic error
       })

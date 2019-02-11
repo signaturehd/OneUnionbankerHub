@@ -40,7 +40,8 @@ class DrawerAppBar extends Component {
       firstName,
       profillePosition,
       selected,
-      tempPreEmployment
+      tempPreEmployment,
+      hideProfileMenu
     } = this.props
 
     const style = {
@@ -72,10 +73,30 @@ class DrawerAppBar extends Component {
       imageStyle : 'settings',
       action : () => history.push('/settings'),
     },{
-      id: 10,
-      name: 'Phenom Prime',
-      imageStyle : 'phenom',
-      action : () => history.push('/phenom'),
+      id: 14,
+      name: 'My Goals & Performance',
+      imageStyle : 'goals',
+      action : () => history.push('/mygoals'),
+    },{
+      id: 17,
+      name: 'Rewards & Recognition',
+      imageStyle : 'rewards',
+      action : () => history.push('/myrewards'),
+    },{
+      id: 7,
+      name: 'My Documents',
+      imageStyle : 'coe',
+      action : () => history.push('/coe'),
+    },{
+      id: 13,
+      name: 'My Travel',
+      imageStyle : 'travel',
+      action : () => history.push('/mytravel'),
+    },{
+      id: 15,
+      name: 'My Future',
+      imageStyle : 'future',
+      action : () => history.push('/pensionfunds'),
     },{
       id: 11,
       name: 'Pre-Employment',
@@ -87,35 +108,15 @@ class DrawerAppBar extends Component {
       imageStyle : 'postemployment',
       action : () => history.push('/postemployment'),
     },{
-      id: 13,
-      name: 'My Travel',
-      imageStyle : 'travel',
-      action : () => history.push('/mytravel'),
-    },{
-      id: 17,
-      name: 'Rewards & Recognition',
-      imageStyle : 'rewards',
-      action : () => history.push('/myrewards'),
-    },{
-      id: 14,
-      name: 'My Goals & Performance',
-      imageStyle : 'goals',
-      action : () => history.push('/mygoals'),
-    },{
-      id: 7,
-      name: 'My Documents',
-      imageStyle : 'coe',
-      action : () => history.push('/coe'),
-    },{
-      id: 15,
-      name: 'My Future',
-      imageStyle : 'future',
-      action : () => history.push('/pensionfunds'),
-    },{
       id: 1,
       name: 'FAQs',
       imageStyle : 'faqs',
       action : () => history.push('/faqs'),
+    },{
+      id: 10,
+      name: 'Phenom Prime',
+      imageStyle : 'phenom',
+      action : () => history.push('/phenom'),
     },{
       id: 3,
       name: 'Logout',
@@ -207,7 +208,7 @@ class DrawerAppBar extends Component {
       >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
-            <div>
+            <div onClick = { () => hideProfileMenu() } >
             {
               // <img
               //   style={ style.navbar }
@@ -322,7 +323,7 @@ class DrawerAppBar extends Component {
                             resp.id !== 13 &&
                             resp.id !== 14 &&
                             <li
-                              onClick = { () => resp.action() }
+                              onClick = { () => { resp.action() , hideProfileMenu() } }
                               key = { key }
                               className = { 'appbar-list' }>
                               <div className = { 'appbar-icon-grid' }>
@@ -351,7 +352,7 @@ class DrawerAppBar extends Component {
                                 resp.id !== 11 &&
                                 resp.id !== 12 &&
                                 <li
-                                  onClick = { () => resp.action() }
+                                  onClick = { () => { resp.action() , hideProfileMenu() } }
                                   key = { key }
                                   className = { 'appbar-list' }>
                                   <div className = { 'appbar-icon-grid' }>
@@ -376,7 +377,7 @@ class DrawerAppBar extends Component {
                                   appBarList.map((resp, key) =>
                                     resp.id !== 11 &&
                                     <li
-                                      onClick = { () => resp.action() }
+                                      onClick = { () => { resp.action() , hideProfileMenu() }  }
                                       key = { key }
                                       className = { 'appbar-list' }>
                                       <div className = { 'appbar-icon-grid' }>
@@ -397,7 +398,7 @@ class DrawerAppBar extends Component {
 
                                     resp.id !== 12 &&
                                     <li
-                                      onClick = { () => resp.action() }
+                                      onClick = { () => { resp.action() , hideProfileMenu() } }
                                       key = { key }
                                       className = { 'appbar-list' }>
                                       <div className = { 'appbar-icon-grid' }>
