@@ -108,6 +108,11 @@ class DrawerAppBar extends Component {
       imageStyle : 'postemployment',
       action : () => history.push('/postemployment'),
     },{
+      id: 18,
+      name: 'Digital NEO',
+      imageStyle : 'digitalneo',
+      action : () => history.push('/neo'),
+    },{
       id: 1,
       name: 'FAQs',
       imageStyle : 'faqs',

@@ -177,6 +177,16 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getPinCode()
   }
 
+  // Set New Hire Employee
+
+  getNEOStatus () {
+    return this.sessionProvider.getNEOStatus()
+  }
+
+  setNEOStatus (status) {
+    this.sessionProvider.setNEOStatus(status)
+  }
+
   setPreEmploymentStatus (preEmploymentStatus) {
     this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
   }

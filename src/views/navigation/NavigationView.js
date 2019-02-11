@@ -100,6 +100,9 @@ import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 /* Pension Funds */
 import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
 
+/* New Employee Hire */
+import NewEmployeeHireFragment from '../neo/NewEmployeeHireFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -507,6 +510,9 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/neo' render = { props =>
+                  <NewEmployeeHireFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
