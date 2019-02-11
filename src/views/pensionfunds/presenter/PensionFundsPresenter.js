@@ -64,8 +64,8 @@ let agreementData  = '', pensionData = ''
 export default class PensionFundsPresenter {
   constructor (container) {
     this.getPensionValidateInteractor = new GetPensionValidateInteractor(container.get('HRBenefitsClient'))
-    // this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
-    // this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+     this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
+      this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -242,29 +242,29 @@ export default class PensionFundsPresenter {
        items = x
 
    }
-
    this.view.setChartPensionData(items)
-
 }
 
-// getPensionFunds () {
-//   this.getPensionFundsInteractor.execute()
-//   this.view.showCircularLoader(true)
-//   .subscribe(data => {
-//     this.view.setPensionFundsData(data)
-//     this.view.showCircularLoader(false)
-//   }, error => {
-//     this.view.showCircularLoader(false)
-//   })
-// }
+    getPensionFunds () {
+      this.getPensionFundsInteractor.execute()
+      .subscribe(data => {
+        this.view.setPensionFundsData2(data)
+        //this.view.showCircularLoader(false)
+      }, error => {
+      //  alert('error')
+        // this.view.showCircularLoader(false)
+      })
+    }
 
-// getPensionFundsDocuments () {
-//   this.getPensionFundsDocumentsInteractor.execute()
-//   this.view.showCircularLoader(true)
-//   .subscribe(data => {
-//     this.view.setPensionFundsData(data)
-//     this.view.showCircularLoader(false)
-//   }, error => {
-//     this.view.showCircularLoader(false)
-//   })
+    getPensionFundsDocuments () {
+      this.getPensionFundsDocumentsInteractor.execute()
+    //  this.view.showCircularLoader(true)
+      .subscribe(data => {
+        this.view.setPensionFundsDocumentsData(data)
+      //  this.view.showCircularLoader(false)
+      }, error => {
+        alert('error')
+      //  this.view.showCircularLoader(false)
+      })
+    }
 }

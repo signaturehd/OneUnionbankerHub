@@ -34,22 +34,29 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    // this.presenter.getPensionFunds()
+    this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
     this.presenter.getMockData()
     this.presenter.setUnitSummary('year')
+    this.presenter.getPensionFundsDocuments()
+
 
   }
 
   showCircularLoader (loader) {
     this.setState({ loader })
   }
-
+  setPensionFundsData2(data){
+    console.log(data)
+  }
   setPensionFundsData (pensionFundsData) {
+    //console.log(pensionFundsData)
     this.setState({ pensionFundsData })
+
   }
 
   setPensionFundsDocumentsData (pensionFundsDocumentsData) {
+    console.log(pensionFundsDocumentsData)
     this.setState({ pensionFundsDocumentsData })
   }
 
@@ -70,7 +77,8 @@ class PensionFundsFragment extends BaseMVPView {
       showCodeModal,
       tabsId,
       showDevelopmentModal,
-      pensionChartData
+      pensionChartData,
+      data
     } = this.state
 
     return (

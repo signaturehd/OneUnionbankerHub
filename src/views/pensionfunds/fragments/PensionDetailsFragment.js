@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   Line,
   Card,
+  GenericButton
 } from '../../../ub-components/'
 
 import '../styles/fundsStyle.css'
@@ -55,7 +56,8 @@ class PensionDetailsFragment extends Component {
           </div>
           <PensionFundsChartComponent
           pensionChartData = { pensionChartData }
-          />
+          /><br/>
+          <GenericButton text = { 'Change Contribution Amount' } className = { 'funds-contribution-button' }/>
         </div>
         <div>
           <PensionFundsPaymentHistoryComponent
