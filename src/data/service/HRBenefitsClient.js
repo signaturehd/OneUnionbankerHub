@@ -1734,8 +1734,8 @@ export default class HRBenefitsClient {
   }
 
   //Squads and Workforce
-  getSquads (token) {
-    return this.service.getSquads(token)
+  getSquads (token, positionId, squadId, pageNumber) {
+    return this.service.getSquads(token, positionId, squadId, pageNumber)
       .pipe(ServiceErrorOperator())
   }
 
