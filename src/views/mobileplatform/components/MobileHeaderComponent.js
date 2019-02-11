@@ -49,15 +49,15 @@ class MobileHeaderComponent extends Component {
                 <br/>
                 <br/>
                 <h4
+                  className = { 'font-weight-lighter mobile-view-label-detail-small' }
                   style = {{
-                    color: '#fea3oa !important',
-                  }}
-                  className = { 'font-weight-bold mobile-view-label-detail-small' }>Download the Premier employee lifestyle </h4>
+                    color: 'rgba(255, 255, 255, 0.87)',
+                  }}>Download the Premier employee lifestyle </h4>
                 <h4
+                  className = { 'font-weight-lighter mobile-view-label-detail-small' }
                   style = {{
-                    color: '#fea3oa !important',
-                  }}
-                  className = { 'font-weight-bold mobile-view-label-detail-small' }>app of the Unionbank of the Philippines</h4>
+                    color: 'rgba(255, 255, 255, 0.87)',
+                  }}>app of the Unionbank of the Philippines</h4>
                 <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail-small' }>Designed with U in mind.</h4>
                 <br/>
                 <br/>
@@ -69,17 +69,10 @@ class MobileHeaderComponent extends Component {
                   className = { 'cursor-pointer mobile-view-googleplay mobile-view-googleplay-detail' }>
                 </div>
               }
-              {
-                platformUsed === 'ios' &&
-                  <div
-                    onClick = { () => this.downloadIOS() }
-                    className = { 'cursor-pointer mobile-view-appstore mobile-view-appstore-detail' }>
-                  </div>
-              }
+              <br/>
               {
                 platformUsed === 'ios' &&
                 <div>
-                <br/>
                   <h4
                     style ={{
                         textDecoration: 'underline',
@@ -87,7 +80,15 @@ class MobileHeaderComponent extends Component {
                     }}
                     onClick = { () => iosUserGuideFunc(true) }
                     className = { 'mobile-font-size font-weight-lighter unionbank-white-color' }>View Download Instruction.</h4>
+                  <br/>
                 </div>
+              }
+              {
+                platformUsed === 'ios' &&
+                  <div
+                    onClick = { () => this.downloadIOS() }
+                    className = { 'cursor-pointer mobile-view-appstore mobile-view-appstore-detail' }>
+                  </div>
               }
               <br/>
             </div>

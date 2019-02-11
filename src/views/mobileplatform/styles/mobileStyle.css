@@ -2,10 +2,17 @@
   font-family: 'Gotham Book';
   font-style: normal;
   font-weight: normal;
-  src: local('Gotham Book'), url('GOTHAMBOOK.woff') format('woff');
+  src: local('Gotham Book'), url('GOTHAMBOOK.woff') format('woff') !important;
 }
 
-.mobile-view-grid-row > *{
+@font-face {
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Gotham Pro'), url('GothamPro-Bold.woff') format('woff') !important;
+}
+
+.mobile-view-grid-row > * {
   font-family: 'Gotham Book' !important;
 }
 
@@ -103,8 +110,9 @@
 
 .mobile-view-title-detail {
   letter-spacing: 1pt;
-  font-weight: 500;
   font-size: 3rem;
+  font-weight: bold;
+  font-family: 'Gotham Pro' !important;
 }
 
 .mobile-view-title-steps-detail {
