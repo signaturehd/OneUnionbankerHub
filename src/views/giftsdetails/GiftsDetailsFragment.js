@@ -13,13 +13,22 @@ import GiftDetailsBannerComponent from './components/GiftDetailsBannerComponent'
 import GiftDetailsEgiftComponent from './components/GiftDetailsEgiftComponent'
 import GiftDetailsAboutComponent from './components/GiftDetailsAboutComponent'
 import GiftDetailsFooterComponent from './components/GiftDetailsFooterComponent'
-import GiftDetailsMapComponent from './components/GiftDetailsMapComponent'
+
+// Modal
+import GiftDetailsCheckoutModal from './modals/GiftDetailsCheckoutModal'
+// import GiftDetailsMapComponent from './components/GiftDetailsMapComponent'
+
+// Fragment
+import GiftDetailsCheckoutFragment from './fragments/GiftDetailsCheckoutFragment'
 
 class GiftsDetailsFragment extends BaseMVPView {
 	constructor (props) {
 		super(props)
 		this.state = {
 			loader : false,
+			showCheckoutModal : false,
+			showCheckoutFragment : false,
+			selectedRewardsArray : []
 		}
 	}
 
@@ -38,10 +47,28 @@ class GiftsDetailsFragment extends BaseMVPView {
 
 	render () {
 		const { history } = this.props
-		const { loader, rewardDetails } = this.state
+		const {
+			loader,
+			rewardDetails,
+			showCheckoutModal,
+			showCheckoutFragment,
+			selectedRewardsArray
+		} = this.state
 
 		return (
 			<div>
+				{
+					showCheckoutModal &&
+
+					<GiftDetailsCheckoutModal
+						onClose = { () => this.setState({ showCheckoutModal : false }) }
+						onSelectThis = { () =>
+							this.setState({
+								showCheckoutFragment : true,
+								showCheckoutModal : false,
+							}) }
+						/>
+				}
 				{
 					loader ?
 					<CircularLoader
@@ -49,25 +76,38 @@ class GiftsDetailsFragment extends BaseMVPView {
 						show = { loader }/>
 					:
 					<div>
-						<GiftDetailsBannerComponent
-							tagline = { rewardDetails && rewardDetails.tagline }
-							name = { rewardDetails && rewardDetails.name }
-							category = { rewardDetails && rewardDetails.category }
-							locations = { rewardDetails && rewardDetails.locations }
-						/>
-						<GiftDetailsEgiftComponent
-							denominations = { rewardDetails && rewardDetails.denominations }
-						/>
-						<GiftDetailsAboutComponent
-							name = { rewardDetails && rewardDetails.name }
-							writeup = { rewardDetails && rewardDetails.writeup }
-							recommendations = { rewardDetails && rewardDetails.highlights }
-						/>
-						<GiftDetailsFooterComponent
-							name = { rewardDetails && rewardDetails.name }
-							writeup = { rewardDetails && rewardDetails.writeup }
-							recommendations = { rewardDetails && rewardDetails.highlights }
-						/>
+						{
+							showCheckoutFragment ?
+							<GiftDetailsCheckoutFragment
+								/>
+							:
+							<div>
+								<GiftDetailsBannerComponent
+									tagline = { rewardDetails && rewardDetails.tagline }
+									name = { rewardDetails && rewardDetails.name }
+									category = { rewardDetails && rewardDetails.category }
+									locations = { rewardDetails && rewardDetails.locations }
+								/>
+								<GiftDetailsEgiftComponent
+									onCheckOutModal = { (showCheckoutModal, selectedRewardsArray) =>
+										{
+											this.setState({ showCheckoutModal, selectedRewardsArray })
+										}
+									}
+									denominations = { rewardDetails && rewardDetails.denominations }
+								/>
+								<GiftDetailsAboutComponent
+									name = { rewardDetails && rewardDetails.name }
+									writeup = { rewardDetails && rewardDetails.writeup }
+									recommendations = { rewardDetails && rewardDetails.highlights }
+								/>
+								<GiftDetailsFooterComponent
+									name = { rewardDetails && rewardDetails.name }
+									writeup = { rewardDetails && rewardDetails.writeup }
+									recommendations = { rewardDetails && rewardDetails.highlights }
+								/>
+							</div>
+						}
 					</div>
 				}
 			</div>

@@ -21,7 +21,11 @@ class GiftDetailsAboutComponent extends Component {
               <h3>{ name }</h3>
               <ul>
                 {
-                  recommendations && recommendations.map((resp, key) =>
+                  recommendations ?
+                    <li>(No Recommendations)</li>
+                  :
+                  recommendations && 
+                  recommendations.map((resp, key) =>
                     <li key = { key }>{ resp }</li>
                   )
                 }

@@ -5,7 +5,8 @@ class GiftDetailsEgiftComponent extends Component {
 
   render () {
     const {
-      denominations
+      denominations,
+      onCheckOutModal
     } = this.props
 
     return (
@@ -16,6 +17,7 @@ class GiftDetailsEgiftComponent extends Component {
             {
               denominations && denominations.map((resp, key) =>
                 <li
+                  onClick = { () => onCheckOutModal(true, resp) }
                   key = { resp.id }
                   className = { 'giftdetails-denominations' }>
                   <img
