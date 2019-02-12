@@ -19,11 +19,173 @@
   background: linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
 }
 
+.gifts-radio {
+  float: left;
+}
+
+.gift-checkout-title-h1 {
+  font-weight: bolder;
+  margin-bottom: 35px;
+  margin-top: 35px;
+}
+
+.gifts-border-style-double {
+  border-left-style: double;
+  border-left-color: #e1e1e1;
+  text-align: right;
+  width: 120px;
+  font-weight: bold;
+}
+
+.gift-checkout-label-textbox {
+  color: #555;
+  font-size: 12px;
+}
+
+.gift-checkout-th-color-head {
+  color: #888;
+}
+
+.gift-checkout-card-border {
+  border-radius: 3px;
+  border: 2px solid #d6d6d6;
+  box-shadow: 0 1px 2px -1px rgba(0,0,0,0.19);
+  max-width: 320px;
+  width: 100%;
+  position: fixed;
+}
+
+.gift-checkout-label-textbox2 {
+  color: #555;
+  font-size: 14px;
+  margin: 8px;
+}
+
+.gift-checkout-label-textbox3 {
+  color:  #a2a2a2;
+  font-size: 14px;
+  margin: 8px;
+}
+
+.gift-align-left {
+  text-align: left;
+  display:inline-block;
+}
+
+.gift-bold {
+  font-weight: bold;
+}
+
+.gift-align-left-td {
+  text-align: left;
+}
+
+.gift-align-right-td {
+  text-align: right;
+}
+
+
+.gift-inline2 {
+  padding: 12px 8px 8px 8px;
+}
+
+.gift-inline {
+  border-top: 1px dashed #ccc;
+  padding: 8px 8px 20px 8px;
+}
+
+.gift-align-right {
+  float: right;
+  display:inline-block;
+}
+
+.gift-checkout-details {
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 35px;
+}
+
+.gift-margin {
+  margin-bottom: 30px;
+}
+
+.gift-margin-button {
+  margin-bottom: 50px;
+}
+
+.gift-checkout-hd-color {
+  background-color: #f8f8f8;
+}
+
+.gift-margin-up {
+  margin-top: 30px;
+}
+
+.gifts-checkout-container{
+	display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-left: 140px;
+}
+
+.gifts-checkout-main-item{
+	grid-column: 1/2;
+}
+
+.gifts-checkout-main-item2{
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 80px;
+	grid-column: 2/2;
+}
+
+.gift-italic-label {
+  font-style: italic;
+  color: #555;
+}
+
+.giftpadd {
+  padding: 20px;
+}
+
+.gift-th-logo {
+  width: 100%;
+}
+
+.gift-tr {
+  padding: 10px;
+}
+
+.gift-checkout-title {
+  color: #e64c3c;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.gift-checkout-title2 {
+  color: #e64c3c;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 15px;
+}
+
+.gift-button {
+  float: right;
+  margin-right: 40px;
+}
+
 .gifts-text {
   color: white;
-  margin-top: 110px;
+  margin-top: 100px;
   font-size: 60px;
   text-shadow: 2px 2px #ff0000;
+  margin-left: 11%;
 }
 
 .gifts-banner {

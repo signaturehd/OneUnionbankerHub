@@ -104,9 +104,6 @@ class GiftsDetailsFragment extends BaseMVPView {
 									recommendations = { rewardDetails && rewardDetails.highlights }
 								/>
 								<GiftDetailsFooterComponent
-									name = { rewardDetails && rewardDetails.name }
-									writeup = { rewardDetails && rewardDetails.writeup }
-									recommendations = { rewardDetails && rewardDetails.highlights }
 								/>
 							</div>
 						}

@@ -9,6 +9,7 @@ import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftsBanner from './components/GiftsBanner'
 import GiftsListComponent from './components/GiftsListComponent'
+import GiftsCheckout from './components/GiftsCheckout'
 
 class GiftsFragment extends BaseMVPView {
 	constructor (props) {
@@ -17,6 +18,7 @@ class GiftsFragment extends BaseMVPView {
 			loader : false,
 			filterTitle : 'everything',
 			rewardGiftsId : [],
+			showGiftsCart : false
 		}
 	}
 
@@ -34,7 +36,6 @@ class GiftsFragment extends BaseMVPView {
 			let listId = [...this.state.rewardGiftsId]
 			gifts && gifts.map((resp) => {
 				listId.push(resp.id)
-
 			})
 			this.setState({ rewardGiftsId : listId })
 		} catch (e) {
@@ -58,13 +59,23 @@ class GiftsFragment extends BaseMVPView {
 			loader,
 			rewardGiftsType,
 			filterTitle,
+			showGiftsCart
 		} = this.state
 
 		return (
 			<div className={ 'gifts-container' }>
+			{
+				showGiftsCart ?
+				<div>
+					<GiftsCheckout/>
+				</div>
+				:
 				<center>
 					<div className={ 'gifts-main-item1' }>
-						<GiftsBanner/>
+						<GiftsBanner
+							showGiftCart = { (e)=> {
+								this.setState({ showGiftsCart : e })
+							} }/>
 					</div>
 					<div className={ 'gifts-main-item2' }>
 					</div>
@@ -162,6 +173,7 @@ class GiftsFragment extends BaseMVPView {
 					}
 					</div>
 			  </center>
+			}
 			</div>
 
 		)

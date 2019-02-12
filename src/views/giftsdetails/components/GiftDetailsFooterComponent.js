@@ -4,13 +4,11 @@ import staticBanner  from '../../../images/rewards/footer-logo-gray.png'
 import staticFB from '../../../images/rewards/icons8-facebook-filled-96.png'
 import staticTwitter  from '../../../images/rewards/icons8-twitter-96.png'
 import staticEmail  from '../../../images/rewards/icons8-envelope-96.png'
+import '../styles/giftDetails.css'
 
 class GiftDetailsFooterComponent extends Component {
 
   render () {
-    const {
-      denominations
-    } = this.props
 
     return (
       <div id={'giftdetails-footer-cover'}>
