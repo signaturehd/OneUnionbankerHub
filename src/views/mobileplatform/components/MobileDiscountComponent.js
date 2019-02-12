@@ -20,6 +20,9 @@ class MobileDiscountComponent extends Component {
           gridTemplateColumns: '1fr 1fr',
           }}>
           <div
+            style = {{
+              paddingLeft : '50px'
+            }}
             className = { 'text-align-left margin-auto' }>
             <h4 className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }>Get discounts</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>by checking out PHENOM,</h4>

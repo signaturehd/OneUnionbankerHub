@@ -26,6 +26,9 @@ class MobileOnboardingComponents extends Component {
               width: '100%',
             }}/>
           <div
+            style = {{
+              paddingRight: '50px',
+            }}
             className = { 'text-align-right margin-auto' }>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Experience a unique</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>digital on-boarding so</h4>
