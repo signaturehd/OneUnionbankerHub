@@ -54,12 +54,12 @@ export default class SessionProvider {
     return this.storage.getItem(NOTICE_PIN) || ''
   }
 
-  setNEOStatus (status = false) {
+  setNEOStatus (status = true) {
     this.storage.setItem(NEO_STATUS, status)
   }
 
   getNEOStatus () {
-    return this.storage.getItem(NEO_STATUS) || false
+    return this.storage.getItem(NEO_STATUS) || ''
   }
 
   setAccountNumber (accountNumber = '') {

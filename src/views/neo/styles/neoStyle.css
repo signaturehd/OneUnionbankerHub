@@ -1,0 +1,14 @@
+.neo-details-grid-content {
+  display: grid;
+  grid-template-columns: auto .3fr;
+  column-gap: 2%;
+}
+
+.neo-details-grid-video {
+  display: grid;
+  grid-template-columns: auto;
+}
+.neo-content {
+  display: grid;
+  grid-template-columns:  .03fr 1fr .03fr;
+}

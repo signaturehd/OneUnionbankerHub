@@ -4,6 +4,7 @@ export default class GenericPostNEOStatusInteractor {
   }
 
   execute (status) {
+    console.log(status)
     return this.client.setNEOStatus(status)
   }
 }
