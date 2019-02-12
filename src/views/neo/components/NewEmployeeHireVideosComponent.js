@@ -16,32 +16,37 @@ class NewEmployeeHireVideosComponent extends Component {
 
   render () {
     const {
-      neoData
+      neoData,
+      selectedVideoFunc,
     } = this.props
 
     return (
-      <div>
-        <br/>
-        <h4>Recommended Videos</h4>
-        <br/>
-        <div className = { 'neo-details-grid-video' }>
-        {
-          neoData.map((resp, key) =>
-            <Card
-              key = { key }>
-              <video 
-                  height = { '100%' }
-                  width= { '100%' } 
-                  controls>
-                  <source src={ 'http://techslides.com/demos/sample-videos/small.mp4' } type="video/mp4" />
-                  <source src={ 'http://techslides.com/demos/sample-videos/small.mp4' } type="video/ogg" />
-                  No Selected Video
-                </video>
-              <h4>{resp.description}</h4>
-            </Card>
-          )
-        }
-        </div>
+      <div className = { `neo-details-grid-video` }>
+      {
+        neoData.map((resp, key) =>
+          <Card
+            onClick = { () => selectedVideoFunc(resp) }
+            className = { 'neo-card-details cursor-pointer' }
+            key = { key }>
+            <div className = { '' }>
+              <img
+                width = { '100%' }
+                height = { '200px' }
+                src={ require('../../../images/onboarding/thumbnail.jpg') }/>
+            </div>
+            <div
+              style = {{
+                 height : '150px',
+                 padding: '25px',
+                 letterSpacing: '.5px',
+               }}>
+               <h4 className = { 'font-weight-lighter font-size-15px' }>{resp.description}</h4>
+               <br/>
+               <h4 className = { 'font-size-13px font-weight-bold' }>13.04 mins</h4>
+            </div>
+          </Card>
+        )
+      }
       </div>
     )
   }
