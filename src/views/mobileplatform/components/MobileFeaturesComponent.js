@@ -20,8 +20,9 @@ class MobileFeaturesComponent extends Component {
             <div className = { 'text-align-left' }>
               <br/>
               <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small'  }>There's so many things that you can do
-                <br/>
-                with <b className = { 'font-weight-lighter unionbank-color mobile-view-label-detail-small' }> One UnionBanker Hub!</b>
+              </h4>
+              <h4 className = { 'font-weight-bold unionbank-white-color mobile-view-label-detail-small'  }>
+                with <b className = { 'font-weight-bold unionbank-color mobile-view-label-detail-small' }> One UnionBanker Hub!</b>
               </h4>
             </div>
             <div></div>
@@ -34,7 +35,7 @@ class MobileFeaturesComponent extends Component {
         />
           <div
             style = {{
-              paddingRight: '20px',
+              paddingRight: '100px',
               marginTop: '-120px'
             }}
             className = { 'text-align-right' }>

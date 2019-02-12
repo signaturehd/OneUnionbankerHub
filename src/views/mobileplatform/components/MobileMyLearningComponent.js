@@ -14,7 +14,7 @@ class MobileMyLearningComponent extends Component {
         style = {{
           display: 'grid',
           gridTemplateColumns: 'auto auto',
-          padding: '0px 20px 0px 0px',
+          padding: '0px 20px 0px 20px',
         }}>
         <img
           src = { require('../../../images/mobileview/my learning.png') }
@@ -22,7 +22,11 @@ class MobileMyLearningComponent extends Component {
             height: 'inherit',
             width : '100%'
           }}/>
-          <div className = { 'text-align-right margin-auto' }>
+          <div
+            style = {{
+              paddingRight: '50px',
+            }}
+            className = { 'text-align-right margin-auto' }>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Borrow a book?</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Listen to a Podcast?</h4>
             <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>Enroll to training?</h4>

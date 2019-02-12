@@ -173,28 +173,24 @@ class PhenomFragment extends BaseMVPView {
                 <div className = { 'phenom-container-grid' }>
                 {
                   phenomDataList.length !== 0 &&
-                  <div>
-                    {
-                      phenomDataList.map((resp, key) =>
-                      <PhenomCardComponent
-                        key = { key }
-                        selectedDetails = { resp }
-                        vendor = { resp.vendor }
-                        id = { resp.id }
-                        rewardImage = { resp.rewardImageBlob }
-                        startDate = { resp.startDate }
-                        endDate = { resp.endDate }
-                        isHeart = { resp.isHeart }
-                        onClick = { (selectedDetails) => {
-                            this.presenter.getPhenomSelectedDiscounts(resp.id)
-                            this.setState({ showPhenomCardDetails : true })
-                          }
-                        }
-                        onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
-                        />
-                      )
+                  phenomDataList.map((resp, key) =>
+                  <PhenomCardComponent
+                    key = { key }
+                    selectedDetails = { resp }
+                    vendor = { resp.vendor }
+                    id = { resp.id }
+                    rewardImage = { resp.rewardImageBlob }
+                    startDate = { resp.startDate }
+                    endDate = { resp.endDate }
+                    isHeart = { resp.isHeart }
+                    onClick = { (selectedDetails) => {
+                        this.presenter.getPhenomSelectedDiscounts(resp.id)
+                        this.setState({ showPhenomCardDetails : true })
+                      }
                     }
-                  </div>
+                    onChangeHeart = { (id, isHeart) => this.presenter.addPhenomIsHeart(id, isHeart) }
+                    />
+                  )
                 }
                 </div>
               }
