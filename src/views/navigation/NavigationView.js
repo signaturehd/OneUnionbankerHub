@@ -16,8 +16,11 @@ import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
+
 /*Rewards and Recognition */
 import RewardsRecognitionFragment from '../rewards/RewardsFragment'
+import GiftsFragment from '../gifts/GiftsFragment'
+import GiftsDetailsFragment from '../giftsdetails/GiftsDetailsFragment'
 
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
@@ -504,6 +507,12 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/myrewards' render = { props =>
                   <RewardsRecognitionFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/gifts' render = { props =>
+                  <GiftsFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/rewardgifts/details/:id' render = { props =>
+                  <GiftsDetailsFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Card, GenericButton } from '../../../ub-components/'
 
-class RewardRedeemFragments extends Component {
+class GiftsListComponent extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
@@ -13,9 +13,8 @@ class RewardRedeemFragments extends Component {
   render () {
     const {
       resp,
-      filterTitle,
       rewardGiftsId,
-      knowMoreClick,
+			knowMoreClick
     } = this.props
 
     const {
@@ -49,7 +48,7 @@ class RewardRedeemFragments extends Component {
                     margin: '10px',
                     textAlign: 'left',
                     display: 'grid',
-                    gridTemplateRows: '1fr .05fr',
+                    gridTemplateRows: '1fr 0.15fr',
                     height: '100%',
                     minHeight: '200px',
                   }}>
@@ -83,43 +82,43 @@ class RewardRedeemFragments extends Component {
           {
             selectedCard &&
             <div className={ `face back` }>
-							<Card
-								className = { 'cursor-pointer gifts-card-rewards' }>
-								<div  style = {{
-										margin: '10px',
-										display: 'grid',
-										gridTemplateRows: '1fr 0.15fr',
-										height: '100%',
-										minHeight: '200px',
-									}}>
-									<div>
-										<img
-											alt={ resp.name }
-											width = { 50 }
-											height = { 50 }
-											style = {{
-												height: '50px',
-												margin: '0 auto 8px',
-												display: 'block',
-												border: '1px solid #80808040'
-											}}
-											src={ resp.logo }/>
-									</div>
-									<center>
-										<h4
-											className = { 'gifts-merchandise-tagline' }>{resp.tagline}</h4>
-									</center>
-									<div className = { 'gifts-location-alignment' }>
-										<center>
-											<GenericButton
-												onClick = { () => knowMoreClick(resp.id) }
-												className = { 'gifts-know-more' }
-												text = { 'SHOW MORE' }
-												/>
-										</center>
-									</div>
-								</div>
-							</Card>
+              <Card
+                className = { 'cursor-pointer gifts-card-rewards' }>
+                <div  style = {{
+                    margin: '10px',
+                    display: 'grid',
+                    gridTemplateRows: '1fr 0.15fr',
+                    height: '100%',
+                    minHeight: '200px',
+                  }}>
+                  <div>
+                    <img
+                      alt={ resp.name }
+                      width = { 50 }
+                      height = { 50 }
+                      style = {{
+                        height: '50px',
+                        margin: '0 auto 8px',
+                        display: 'block',
+                        border: '1px solid #80808040'
+                      }}
+                      src={ resp.logo }/>
+                  </div>
+                  <center>
+                    <h4
+                      className = { 'gifts-merchandise-tagline' }>{resp.tagline}</h4>
+                  </center>
+                  <div className = { 'gifts-location-alignment' }>
+                    <center>
+                      <GenericButton
+                        onClick = { () => knowMoreClick(resp.id) }
+                        className = { 'gifts-know-more' }
+                        text = { 'SHOW MORE' }
+                        />
+                    </center>
+                  </div>
+                </div>
+              </Card>
             </div>
           }
         </div>
@@ -128,4 +127,4 @@ class RewardRedeemFragments extends Component {
   }
 }
 
-export default RewardRedeemFragments
+export default GiftsListComponent

@@ -2579,6 +2579,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getRewardGiftsDetails (token, id) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants/${ id }`, {
+      headers : { token }
+    })
+  }
+
+  getRewardGifts (token) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants`, {
+      headers : { token }
+    })
+  }
+
   submitAwards (token, objectParam) {
     return this.apiClient.post(`v1/rewards`, objectParam.body, {
       headers : { token }
