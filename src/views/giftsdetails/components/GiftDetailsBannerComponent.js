@@ -14,8 +14,6 @@ class GiftDetailsBannerComponent extends Component {
     } = this.props
 
     const locationLength = locations && locations.length
-    console.log(longtitude)
-    console.log(latitude)
     return (
       <div
         id={'giftdetails-cover'}
