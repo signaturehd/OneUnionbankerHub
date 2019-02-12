@@ -6,12 +6,22 @@
 }
 
 @font-face {
+  font-family:'Gotham Bold';
+  src: url('./GothamBold.ttf');
+  src: local('Gotham-Bold'),
+  url('./GothamBold.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'Gotham Pro';
   font-style: normal;
   font-weight: normal;
   src: local('Gotham Pro'), url('GothamPro-Bold.woff') format('woff') !important;
 }
 
+.oneUhub-for-you-font {
+  font-family: 'Gotham Bold' !important;
+}
 .mobile-view-grid-row > * {
   font-family: 'Gotham Book' !important;
 }

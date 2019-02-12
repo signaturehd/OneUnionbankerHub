@@ -35,13 +35,13 @@ class MobileHeaderComponent extends Component {
             :
             <div className = { 'mobile-view-header-grid-detail' }>
               <span className = { 'mobile-view-ubplogo mobile-view-ubplogo-detail' }/>
-              <div className = { 'text-align-left mobile-view-grid-row-text' }>
+              <div className = { 'text-align-left mobile-view-grid-row-text ' }>
                 <div>
-                  <h4 className = { 'unionbank-white-color mobile-view-title font-weight-bold' }>One Place,</h4>
+                  <h4 className = { 'unionbank-white-color mobile-view-title font-weight-bold oneUhub-for-you-font' }>One Place,</h4>
                 </div>
                 <div>
-                  <h4 className = { 'unionbank-white-color mobile-view-title  font-weight-bold' }>JUST FOR
-                    <b className = { 'unionbank-color mobile-view-title font-weight-bold' }> U</b>
+                  <h4 className = { 'unionbank-white-color mobile-view-title  font-weight-bold oneUhub-for-you-font' }>JUST FOR
+                    <b className = { 'unionbank-color mobile-view-title font-weight-bold oneUhub-for-you-font' }> U</b>
                   </h4>
                 </div>
               </div>
