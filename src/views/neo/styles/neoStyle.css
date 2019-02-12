@@ -12,3 +12,28 @@
   display: grid;
   grid-template-columns:  .03fr 1fr .03fr;
 }
+
+.neo-header-grid {
+  display: grid; 
+  grid-template-columns: .15fr 1fr;
+  column-gap: .5%;
+}
+
+.neo-employee-name {
+  font-size: 20px;
+  letter-spacing: 1px;
+  padding: 2.5px 0px;
+}
+
+.neo-description {
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 2.5px 0px;
+}
+
+.neo-deadline {
+  color : red;
+  letter-spacing: 1px;
+  font-size: 11.5px;
+  padding: 3px 0px 0px 0px;
+}

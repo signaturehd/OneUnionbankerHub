@@ -8,6 +8,8 @@ import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
 import NewEmployeeHireWelcomeModal from './modals/NewEmployeeHireWelcomeModal'
 
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
+import NewEmployeeHireVideosComponent from './components/NewEmployeeHireVideosComponent'
+import NewEmployeeHireHeaderComponent from './components/NewEmployeeHireHeaderComponent'
 
 import './styles/neoStyle.css'
 
@@ -16,6 +18,7 @@ class NewEmployeeHireFragment extends BaseMVPView {
     super(props)
     this.state = {
       neoData: [],
+      neoCurrentUrl : ''
     }
   }
 
@@ -36,8 +39,9 @@ class NewEmployeeHireFragment extends BaseMVPView {
     const {
       neoData,
       showNEOModal,
+      neoCurrentUrl,
     } = this.state
-    console.log(neoData)
+
     return (
       <div>
       {
@@ -57,21 +61,25 @@ class NewEmployeeHireFragment extends BaseMVPView {
           <div></div>
           <div className = { 'neo-details-grid-content' }>
             <div>
-              <h4>wadawdawd</h4>
+              <NewEmployeeHireHeaderComponent />
+              <br/>
+              <div className = { 'padding-10px' }>
+                <video 
+                  height = { '80%' }
+                  width= { '100%' } 
+                  controls>
+                  <source src={ 'http://techslides.com/demos/sample-videos/small.mp4' } type="video/mp4" />
+                  <source src={ 'http://techslides.com/demos/sample-videos/small.mp4' } type="video/ogg" />
+                  No Selected Video
+                </video>
+              </div>
             </div>
             <div>
               {
                 neoData ?
-                <div className = { 'neo-details-grid-video' }>
-                {
-                  neoData.map((resp, key) =>
-                    <Card
-                      key = { key }>
-                      <h4>resp. name</h4>
-                    </Card>
-                  )
-                }
-                </div>
+                <NewEmployeeHireVideosComponent 
+                  neoData = { neoData }
+                />
                 :
                 <NoDataListedComponent
                   text = { 'No Recommended Videos' }
