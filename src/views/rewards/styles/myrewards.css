@@ -11,7 +11,7 @@
 
 .myreward-grid-container {
   display: grid;
-  grid-template-columns: .05fr auto .05fr;
+  grid-template-columns: .05fr 1fr.5fr;
   grid-column-gap: 3em;
   margin-left: 40px;
   margin-right: 60px;
@@ -25,6 +25,16 @@
   background-color: #E1E1E1;
 }
 
+.ex1 {
+  width: 100%;
+  height: 550px;
+  overflow: scroll;
+}
+.gifts-grid-x5 {
+  display: grid;
+  column-gap: 2%;
+  margin-bottom: 10px;
+}
 /*jom*/
 .myreward-orange-color{
   padding-right: 10px;
@@ -176,14 +186,14 @@
 
 /* rex */
 .myrewards-container-component {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
   padding-bottom: 40px;
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 .myrewards-card-image-text
