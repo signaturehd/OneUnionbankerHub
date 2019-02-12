@@ -15,7 +15,6 @@ class GiftsCheckout extends Component {
               <h1>Your Order Details</h1>
             </div>
             <div>
-              {/* egifts */}
               <h2 className={ 'gift-checkout-title' }>Selected eGift</h2>
               <table>
                 <thead>
@@ -53,9 +52,7 @@ class GiftsCheckout extends Component {
                 </tbody>
               </table>
             </div>
-
             <div>
-              {/* recipient details */}
               <h2 className={ 'gift-checkout-title gift-checkout-label-textbox' }>Your Recipient Details</h2>
               <div className={ 'gift-margin' }>
                 <span className={ 'gift-italic-label' }>How do you want us to send this eGift</span>
@@ -111,7 +108,6 @@ class GiftsCheckout extends Component {
               className={ 'gift-margin' }
             />
             <div>
-              {/* your details */}
               <h2 className={ 'gift-checkout-title' }>Your Details</h2>
               <div className={ 'gift-margin' }>
                 <span className={ 'gift-italic-label' }>Fill out your personal details</span>
@@ -146,7 +142,6 @@ class GiftsCheckout extends Component {
             <Line
               className={ 'gift-margin' }
             />
-            {/* submit button */}
             <div className={ 'gift-margin-button' }>
               <GenericButton
                 text={ 'CHECKOUT' }/>
@@ -170,7 +165,6 @@ class GiftsCheckout extends Component {
             </div>
           </div>
         </div>
-        {/* footer */}
         <div>
           <GiftDetailsFooterComponent/>
         </div>
