@@ -120,7 +120,7 @@ export default class PensionFundsPresenter {
 
   getMockData () {
     try {
-      this.setPensionFundsPresenter(mockData)
+    //  this.setPensionFundsPresenter(mockData)
       this.setAgreeementDataPresenter(mockDataDocuments)
     } catch(e) {
       console.log(e)
@@ -248,7 +248,7 @@ export default class PensionFundsPresenter {
     getPensionFunds () {
       this.getPensionFundsInteractor.execute()
       .subscribe(data => {
-        this.view.setPensionFundsData2(data)
+        this.view.setPensionFundsPresenter(data)
         //this.view.showCircularLoader(false)
       }, error => {
       //  alert('error')
@@ -260,10 +260,10 @@ export default class PensionFundsPresenter {
       this.getPensionFundsDocumentsInteractor.execute()
     //  this.view.showCircularLoader(true)
       .subscribe(data => {
-        this.view.setPensionFundsDocumentsData(data)
+        this.view.setPensionFundsDocumentsData2(data)
       //  this.view.showCircularLoader(false)
       }, error => {
-        alert('error')
+        alert('error document')
       //  this.view.showCircularLoader(false)
       })
     }
