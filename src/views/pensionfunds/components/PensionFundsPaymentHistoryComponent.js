@@ -17,7 +17,8 @@ class PensionFundsPaymentHistoryComponent extends Component {
 
   render () {
     const {
-      pensionFundsData
+      pensionFundsData,
+      changePaymentFunc
     } = this.props
 
     return (
@@ -39,7 +40,8 @@ class PensionFundsPaymentHistoryComponent extends Component {
                 className = { 'unionbank-color ' }>
                   <div className = { `funds-history-circle${ resp.isChecked ? 'active' : '' }` }></div>
               </div>
-              <Card className = { 'funds-component-card-details-grid' }>
+              <Card className = { 'funds-component-card-details-grid' }
+              onClick = { () => changePaymentFunc(resp.isChecked , resp.id)  }>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
                     { moment(resp.datePayment).format('MMM DD, YYYY') }

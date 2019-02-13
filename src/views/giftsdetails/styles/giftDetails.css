@@ -1,3 +1,26 @@
+#gifts-overlay1 {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  display: table;
+}
+
+.gift-details-cart {
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  background-repeat: no-repeat;
+}
+
+.gift-cart {
+  background-image: url('../../../images/rewards/cart.png');
+}
+
 #giftdetails-cover {
   padding-top: 50px;
   height: 500px;
