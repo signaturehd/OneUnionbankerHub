@@ -19,19 +19,19 @@ let mockData = {
       'datePayment': '01/02/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }, {
       'id': 3,
       'datePayment': '03/03/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }, {
       'id': 4,
       'datePayment': '04/04/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }
   ]
 }
@@ -122,17 +122,17 @@ export default class PensionFundsPresenter {
 
   getMockData () {
     try {
-      this.setPensionFundsPresenter(mockData)
+    //  this.setPensionFundsPresenter(mockData)
       this.setAgreeementDataPresenter(mockDataDocuments)
     } catch(e) {
       console.log(e)
     }
   }
 
-  setPaymentCheckerPresenter(check , id) {
+  setPaymentCheckerPresenter(check , id , key) {
     let newData
     let formsData = []
-
+    console.log(check,id,key)
     pensionData.paymentHistory.map((resp) => {
       if(id === resp.id) {
         formsData.push({
@@ -140,8 +140,9 @@ export default class PensionFundsPresenter {
           isChecked : !check ? true : false,
           datePayment : resp.datePayment,
           totalInvestment: resp.totalInvestment,
-          totalReturn: resp.totalReturn
+          totalReturn: resp.totalReturnq
         })
+
 
       } else {
         formsData.push({
@@ -159,37 +160,112 @@ export default class PensionFundsPresenter {
     })
   }
 
-  getPensionFunds () {
-    this.view.showCircularLoader(true)
-    this.getPensionFundsInteractor.execute()
-    .subscribe(data => {
-      this.view.setTotalPensionFundsData(data)
-      this.view.showCircularLoader(false)
-    }, error => {
-      this.view.showCircularLoader(false)
+  setPaymentCheckRefresh(){
+    let newData
+    let formsData = []
+    pensionData.paymentHistory.map((resp) => {
+
+        formsData.push({
+          id : resp.id,
+          isChecked : false,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturn
+        })
+
+      const objectParam = {
+        paymentHistory : formsData
+      }
+      this.setPensionFundsPresenter(objectParam)
     })
   }
 
-  getPensionFundsHistory () {
-    this.view.showCircularLoader(true)
-    this.getPensionFundsHistoryInteractor.execute()
-    .subscribe(data => {
-      setPensionFundHistory = data
-      this.view.setPensionFundHistory(data)
-      this.view.showCircularLoader(false)
-    }, error => {
-      this.view.showCircularLoader(false)
-    })
-  }
 
-  getPensionFundsDocuments () {
-    this.getPensionFundsDocumentsInteractor.execute()
-    this.view.showCircularLoader(true)
-    .subscribe(data => {
-      this.view.setPensionDocumentsData(data)
-      this.view.showCircularLoader(false)
-    }, error => {
-      this.view.showCircularLoader(false)
-    })
-  }
+  setUnitSummary(variable){
+  let unit = []
+  let items = []
+
+  if(variable === 'week' || variable === 'WEEK'){
+
+    const x = [1,2,3,4,5].map(x => {
+
+        if(x === 1){
+            return (  x+'st' +' Week')
+        }else if(x === 2 ){
+            return (  x+'nd' +' Week')
+        }
+        else if(x % 3 === 0 ){
+            return (  x+' rd' +' Week' )
+        }else{
+            return (x+'th' + ' Week')
+        }
+      })
+
+      items = x
+
+   }else if(variable === 'month' || variable === 'MONTH'){
+
+     const x = [1,2,3,4,5].map(x => {
+
+           if(x === 1){
+           return (  x+'st' +' Month')
+           }else if(x % 3 === 0 ){
+           return (  x+' rd' +' Month' )
+           }else{
+             return (x+'th' + ' Month')
+           }
+       })
+
+       items = x
+
+   }else if(variable === 'quarterly' || variable === 'QUARTERLY'){
+
+     const x = [1,2,3,4,5].map(x => {
+
+           if(x === 1){
+           return (  x+'st' +' Quarter')
+           }else if(x % 3 === 0 ){
+           return (  x+' rd' +' Quarter' )
+           }else{
+             return (x+'th' + ' Quarter')
+           }
+       })
+
+       items = x
+
+   }else if(variable === 'year' || variable === 'YEAR'){
+
+     const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
+       return (
+         x + ' Year'
+         )
+       })
+       items = x
+
+   }
+   this.view.setChartPensionData(items)
+}
+
+    getPensionFunds () {
+      this.getPensionFundsInteractor.execute()
+      .subscribe(data => {
+        this.view.setPensionFundsPresenter(data)
+        //this.view.showCircularLoader(false)
+      }, error => {
+      //  alert('error')
+        // this.view.showCircularLoader(false)
+      })
+    }
+
+    getPensionFundsDocuments () {
+      this.getPensionFundsDocumentsInteractor.execute()
+    //  this.view.showCircularLoader(true)
+      .subscribe(data => {
+        this.view.setPensionFundsDocumentsData2(data)
+      //  this.view.showCircularLoader(false)
+      }, error => {
+        alert('error document')
+      //  this.view.showCircularLoader(false)
+      })
+    }
 }

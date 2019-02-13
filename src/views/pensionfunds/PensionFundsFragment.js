@@ -11,6 +11,7 @@ import './styles/fundsStyle.css'
 import PensionFundsDocumentsFragment from './fragments/PensionFundsDocumentsFragment'
 import PensionDetailsFragment from './fragments/PensionDetailsFragment'
 import PensionCodeModals from './modals/PensionCodeModals'
+import PensionContributionModals from './modals/PensionContributionModals'
 
 import {
   CircularLoader,
@@ -20,7 +21,6 @@ import {
 
 let id
 
-
 class PensionFundsFragment extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -29,14 +29,19 @@ class PensionFundsFragment extends BaseMVPView {
       stepperStatus: 1,
       showCodeModal: false,
       showDevelopmentModal: false,
-      tabsId : 'week'
+      showContributionModal: false,
+      isPincode: false,
+      tabsId : 'year',
     }
   }
 
   componentDidMount () {
     this.presenter.getPensionFunds()
-    this.presenter.getPensionValidate()
+    //this.presenter.getPensionValidate()
     this.presenter.getMockData()
+    this.presenter.setUnitSummary('year')
+    this.presenter.getPensionFundsDocuments()
+
   }
 
   showCircularLoader (loader) {
@@ -47,42 +52,38 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ pensionFundsData })
   }
 
-  setPensionDocumentsData (pensionFundsDocuments) {
-    this.setState({ pensionFundsDocuments })
-  }
-
-  setPensionFundHistory (pensionFundsHistory) {
-    this.setState({ pensionFundsHistory })
-  }
-
-  setTotalPensionFundsData (totalPensionFundsData) {
-    this.setState({ totalPensionFundsData })
-  }
-
   setPensionFundsDocumentsData (pensionFundsDocumentsData) {
     this.setState({ pensionFundsDocumentsData })
   }
 
+  setChartPensionData(pensionChartData){
+    this.setState({pensionChartData})
+  }
   navigate () {
     this.props.history.push('/phenom')
   }
 
   render () {
+    const { agreementBool } = this.props
     const {
       loader,
       pensionFundsData,
-      totalPensionFundsData,
-      pensionFundsDocuments,
       pensionFundsDocumentsData,
-      pensionFundsHistory,
       stepperStatus,
       codeText,
       showCodeModal,
       tabsId,
-      showDevelopmentModal
+      showDevelopmentModal,
+      pensionChartData,
+      data,
+      pensionAgreement,
+      showContributionModal,
+      continueCodeFunc,
+      isPincode,
     } = this.state
 
     return (
+
       <div>
         {
           showCodeModal &&
@@ -98,7 +99,20 @@ class PensionFundsFragment extends BaseMVPView {
               {
                 console.log(e)
               }
-            }}/>
+            }}
+          />
+        }
+        {
+          showContributionModal &&
+           <PensionContributionModals
+              isPincode = { isPincode }
+              continueCodeFunc = { (bool) =>{
+                  this.setState({  isPincode : bool })
+                }}
+              cancelCodeFunc = { () => {
+               this.setState({ showContributionModal : false })
+                }}
+           />
         }
         {
           loader ?
@@ -109,7 +123,6 @@ class PensionFundsFragment extends BaseMVPView {
           <div>
             {
               showDevelopmentModal ?
-
               <Modal>
                 <center>
                   <h4>Retirement Fund is still under development. Please come back in the next few days to avail of this benefit. Thank you!</h4>
@@ -129,36 +142,50 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                   {
-                    stepperStatus === 4 ?
+                      stepperStatus === 4 || agreementBool === true ?
                     <PensionDetailsFragment
+                    contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
+                    //contributionModalFunc = { (showContributionModal) => setState({showContributionModal}) }
+                    pensionChartData = { pensionChartData }
                       tabsId = { tabsId }
-                      tabsIdFunc = { (tabsId) => this.setState({ tabsId }) }
+                      tabsIdFunc = { (tabsId) => {
+                        this.setState({ tabsId })
+                        this.presenter.setUnitSummary(tabsId)
+                      }
+                      }
                       pensionFundsData = { pensionFundsData }
-                      totalPensionFundsData = { totalPensionFundsData }
                       changePaymentFunc = { (bool , id) => {
                         try{
+                          this.presenter.setPaymentCheckRefresh('false')
                           this.presenter.setPaymentCheckerPresenter(bool, id)
+
                         } catch(e){
                           console.log(e)
                         }
                       } }/> :
                     <PensionFundsDocumentsFragment
-                      statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
+
+                      statusCodeFunc = { (stepperStatus,bool,id) =>
+                        id === 3 ?
+                        this.setState({showContributionModal: bool})
+
+                        :
+                        this.setState({ stepperStatus })
+
+                      }
                       statusCodeReturnFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
                       stepperStatus = { stepperStatus }
                       changeCheckedFunc = { (e, e1) => {
                         try {
                           id = e1
                           this.presenter.setDocumentsCheckerPresenter(e, e1)
-                          this.setState({ showCodeModal : true })
+                          this.setState({ showCodeModal : false })
                         } catch(e) {
                           console.log(e)
                         }
                       } }
                       showCodeModalFunc = { (showCodeModal) => this.setState({ showCodeModal }) }
-                      pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }
-                      pensionFundsDocuments = { pensionFundsDocuments && pensionFundsDocuments }
-                      />
+                      pensionFundsDocumentsData = { pensionFundsDocumentsData && pensionFundsDocumentsData }/>
                   }
                 </div>
                 <div></div>
@@ -171,4 +198,7 @@ class PensionFundsFragment extends BaseMVPView {
   }
 }
 
+PensionFundsFragment.PropTypes = {
+   agreementBool : PropTypes.Boolean,
+}
 export default ConnectView (PensionFundsFragment, Presenter)

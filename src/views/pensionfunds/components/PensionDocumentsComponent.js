@@ -56,9 +56,13 @@ class PensionDocumentsComponent extends Component {
                 }
               </div>
               <div>
-                <i
-                  className = { 'forward-arrow' }
-                  onClick = { () =>  statusCodeFunc () }></i>
+                {
+                  isChecked === true ?
+                  <i
+                    className = { 'forward-arrow' }
+                    onClick = { () =>  statusCodeFunc (true,id) }></i>
+                  :<p> </p>
+                }
               </div>
             </div>
             <div></div>
@@ -69,7 +73,7 @@ class PensionDocumentsComponent extends Component {
           <div>
             <PensionStepperComponents
               stepperStatus = { stepperStatus }
-              list = { documents }/>
+              list = { documents } />
           </div>
         </center>
       </Card>

@@ -16,8 +16,11 @@ class PensionFundsChartComponent extends Component {
   }
 
   render () {
+    const {
+      pensionChartData
+    } = this.props
     let data = {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        labels: pensionChartData,
         datasets: [
         {
           borderColor: 'white',
@@ -29,7 +32,7 @@ class PensionFundsChartComponent extends Component {
           pointHighlightFill: "white",
           backgroundColor: "rgb(255,102,0)",
           pointHighlightStroke: "white",
-          data: [2, 20, 10, 2, 25, 28, 17, 25, 10, 29]
+          data: [2, 20, 10, 2, 25, 28, 17, 25, 10, 29,50,100]
         },
       ]
     }
@@ -48,6 +51,7 @@ class PensionFundsChartComponent extends Component {
 }
 
 PensionFundsChartComponent.propTypes = {
+  pensionChartData : PropTypes.object,
 }
 
 

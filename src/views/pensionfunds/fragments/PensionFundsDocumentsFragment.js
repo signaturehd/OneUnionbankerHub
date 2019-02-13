@@ -36,7 +36,7 @@ class PensionFundsDocumentsFragment extends Component {
       stepperStatus,
       statusCodeFunc,
       statusCodeReturnFunc,
-      changeCheckedFunc
+      changeCheckedFunc,
     } = this.props
 
     return (
@@ -67,7 +67,7 @@ class PensionFundsDocumentsFragment extends Component {
                         stepperStatus = { stepperStatus }
                         isChecked = { resp.isChecked }
                         changeCheckedFunc = { (e, e1) => changeCheckedFunc(e, e1) }
-                        statusCodeFunc = { () => statusCodeFunc(this.checkIdActionCompleted(stepperStatus)) }
+                        statusCodeFunc = { (bool,id) => statusCodeFunc(this.checkIdActionCompleted(stepperStatus),bool,id) }
                         statusCodeReturnFunc = { () => statusCodeReturnFunc(this.checkIdActionCompletedReturn(stepperStatus)) }
                       />
                     )

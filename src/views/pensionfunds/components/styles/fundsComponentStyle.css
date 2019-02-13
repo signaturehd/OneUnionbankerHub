@@ -103,3 +103,11 @@
 .funds-border-stepper {
   border-bottom: 2px solid #9a91917d;
 }
+
+/* Contribution Button */
+
+.funds-contribution-button {
+  background-color: #F37201;
+  color: white;
+  float: right;
+}
