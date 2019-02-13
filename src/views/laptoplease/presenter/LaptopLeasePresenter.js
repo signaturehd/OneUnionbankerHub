@@ -13,6 +13,7 @@ import moment from 'moment'
 
 let storedAmount = '', storedTerms = '', storedDeliveryOption = '', storedLaptopModel = '', storedFile = ''
 let storedOrDate = '', storedOrNumber = '', storedVendor = '', storedCostOfAmount = '', storedLaptopId=''
+let storedBrand, storedModel
 
 export default class LaptopLeasePresenter {
   constructor (container) {
@@ -68,6 +69,16 @@ export default class LaptopLeasePresenter {
     this.view.setLaptopId(id)
   }
 
+  setModel (model) {
+    storedModel = model
+    this.view.setModel(model)
+  }
+
+  setBrand (brand) {
+    storedBrand = brand
+    this.view.setBrand(brand)
+  }
+
   resetValue () {
     this.view.setLaptopBrand('')
     this.view.setLaptopModel('')
@@ -79,6 +90,8 @@ export default class LaptopLeasePresenter {
     this.view.setFile('')
     this.view.setOrDate('')
     this.view.setOrNumber('')
+    this.view.setBrand('')
+    this.view.setModel('')
   }
 
   validateLaptopLease () {
@@ -283,6 +296,8 @@ export default class LaptopLeasePresenter {
         storedDeliveryOption,
         storedFile,
         storedOrNumber,
+        storedBrand,
+        storedModel,
         storedVendor,
         moment(storedOrDate).format('MM/DD/YYYY'),
         storedLaptopId

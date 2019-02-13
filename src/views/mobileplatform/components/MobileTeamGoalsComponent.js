@@ -20,6 +20,7 @@ class MobileTeamGoalsComponent extends Component {
           style = {{
             marginTop: '50px',
             alignSelf: 'center',
+            paddingLeft: '50px'
           }}
           className = { 'text-align-left' }>
           <h4 className = { 'font-weight-lighter unionbank-white-color mobile-view-label-detail-small' }>A transparent goals and</h4>

@@ -42,7 +42,11 @@ class LaptopLeaseCardComponent extends Component {
       setAttachments,
       getCardOptionId,
       showTerms,
-      terms
+      terms,
+      model,
+      brand,
+      brandFunc,
+      modelFunc,
     } = this.props
 
     return (
@@ -97,6 +101,22 @@ class LaptopLeaseCardComponent extends Component {
                   readOnly
                   onClick = { () => showTerms() }
                   value = { terms }
+                  />
+                <GenericInput
+                  errorMessage = { '' }
+                  onChange ={ (e) => modelFunc(e.target.value) }
+                  text = { 'Model' }
+                  disabled = { showEditMode }
+                  value = { model }
+                  maxLength = { 25 }
+                  />
+                <GenericInput
+                  errorMessage = { '' }
+                  onChange ={ (e) => brandFunc(e.target.value) }
+                  text = { 'Brand' }
+                  disabled = { showEditMode }
+                  value = { brand }
+                  maxLength = { 25 }
                   />
               </div>
                 <MultipleFileUploader

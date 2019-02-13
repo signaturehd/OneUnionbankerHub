@@ -2055,6 +2055,8 @@ export default class HRBenefitsService {
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      vendor: laptopLeaseParam.vendor,
+     brand: laptopLeaseParam.brand,
+     model: laptopLeaseParam.model,
      or: {
        number : laptopLeaseParam.orNumber,
        date: laptopLeaseParam.orDate
@@ -2579,6 +2581,18 @@ export default class HRBenefitsService {
 
   getRewardPoints (token) {
     return this.apiClient.get('v1/rewards?', {
+      headers : { token }
+    })
+  }
+
+  getRewardGiftsDetails (token, id) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants/${ id }`, {
+      headers : { token }
+    })
+  }
+
+  getRewardGifts (token) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants`, {
       headers : { token }
     })
   }
