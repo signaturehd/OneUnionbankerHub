@@ -12,31 +12,21 @@ class PensionContributionModals extends Component {
 
   render () {
     const {
-      codeText,
-      codeTextFunc,
+      amountText,
+      amountTextFunc,
       submitCodeFunc,
       cancelCodeFunc,
-      id,
       continueCodeFunc,
-      isPincode
     } = this.props
 
-    console.log(isPincode)
     return (
       <Modal>
-        {
-          isPincode ?
-        <div>
-          ttest
-        </div>
-          :
-        <div>
         <GenericInput
-          value = { codeText }
+          value = { amountText }
           text = { 'Enter your Contribution Amount' }
           type = { 'text' }
           errorMessage = { '' }
-          onChange = { (e) => codeTextFunc(e.target.value) }
+          onChange = { (e) => amountTextFunc(e.target.value) }
           />
         <br/>
         <center>
@@ -48,11 +38,9 @@ class PensionContributionModals extends Component {
           <GenericButton
             className = { 'profile-button-small' }
             text = { 'Continue' }
-            onClick = { () => continueCodeFunc(true) }
+            onClick = { () => continueCodeFunc() }
             />
-          </center>
-         </div>
-        }
+        </center>
       </Modal>
     )
   }

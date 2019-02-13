@@ -2,6 +2,9 @@ import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/G
 import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDocumentsInteractor'
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
 import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
+// POST
+import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
+import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
 
 let mockData = {
   'totalUnits': '15.34',
@@ -68,6 +71,8 @@ export default class PensionFundsPresenter {
     this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsHistoryInteractor = new GetPensionFundsHistoryInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+    this.addPensionFundsDocumentsInteractor = new AddPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+    this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -122,7 +127,7 @@ export default class PensionFundsPresenter {
 
   getMockData () {
     try {
-    //  this.setPensionFundsPresenter(mockData)
+      this.setPensionFundsPresenter(mockData)
       this.setAgreeementDataPresenter(mockDataDocuments)
     } catch(e) {
       console.log(e)
@@ -182,90 +187,117 @@ export default class PensionFundsPresenter {
 
 
   setUnitSummary(variable){
-  let unit = []
-  let items = []
+    let unit = []
+    let items = []
 
-  if(variable === 'week' || variable === 'WEEK'){
+    if(variable === 'week' || variable === 'WEEK'){
 
-    const x = [1,2,3,4,5].map(x => {
+      const x = [1,2,3,4,5].map(x => {
 
-        if(x === 1){
-            return (  x+'st' +' Week')
-        }else if(x === 2 ){
-            return (  x+'nd' +' Week')
-        }
-        else if(x % 3 === 0 ){
-            return (  x+' rd' +' Week' )
-        }else{
-            return (x+'th' + ' Week')
-        }
-      })
+          if(x === 1){
+              return (  x+'st' +' Week')
+          }else if(x === 2 ){
+              return (  x+'nd' +' Week')
+          }
+          else if(x % 3 === 0 ){
+              return (  x+' rd' +' Week' )
+          }else{
+              return (x+'th' + ' Week')
+          }
+        })
 
-      items = x
+        items = x
 
-   }else if(variable === 'month' || variable === 'MONTH'){
+     } else if(variable === 'month' || variable === 'MONTH'){
 
-     const x = [1,2,3,4,5].map(x => {
+       const x = [1,2,3,4,5].map(x => {
 
-           if(x === 1){
-           return (  x+'st' +' Month')
-           }else if(x % 3 === 0 ){
-           return (  x+' rd' +' Month' )
-           }else{
-             return (x+'th' + ' Month')
-           }
-       })
+             if(x === 1){
+             return (  x+'st' +' Month')
+             }else if(x % 3 === 0 ){
+             return (  x+' rd' +' Month' )
+             }else{
+               return (x+'th' + ' Month')
+             }
+         })
 
-       items = x
+         items = x
 
-   }else if(variable === 'quarterly' || variable === 'QUARTERLY'){
+     } else if(variable === 'quarterly' || variable === 'QUARTERLY'){
 
-     const x = [1,2,3,4,5].map(x => {
+       const x = [1,2,3,4,5].map(x => {
 
-           if(x === 1){
-           return (  x+'st' +' Quarter')
-           }else if(x % 3 === 0 ){
-           return (  x+' rd' +' Quarter' )
-           }else{
-             return (x+'th' + ' Quarter')
-           }
-       })
+             if(x === 1){
+             return (  x+'st' +' Quarter')
+             }else if(x % 3 === 0 ){
+             return (  x+' rd' +' Quarter' )
+             }else{
+               return (x+'th' + ' Quarter')
+             }
+         })
 
-       items = x
+         items = x
 
-   }else if(variable === 'year' || variable === 'YEAR'){
+     } else if(variable === 'year' || variable === 'YEAR'){
 
-     const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
-       return (
-         x + ' Year'
-         )
-       })
-       items = x
+       const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
+         return (
+           x + ' Year'
+           )
+         })
+         items = x
 
-   }
-   this.view.setChartPensionData(items)
-}
+     }
+     this.view.setChartPensionData(items)
+  }
 
-    getPensionFunds () {
-      this.getPensionFundsInteractor.execute()
+  getPensionFunds () {
+    this.getPensionFundsInteractor.execute()
+    .subscribe(data => {
+      this.view.setPensionFundsPresenter(data)
+      //this.view.showCircularLoader(false)
+    }, error => {
+    //  alert('error')
+      // this.view.showCircularLoader(false)
+    })
+  }
+
+  getPensionFundsDocuments () {
+    this.getPensionFundsDocumentsInteractor.execute()
+  //  this.view.showCircularLoader(true)
+    .subscribe(data => {
+      this.view.setPensionFundsDocumentsData2(data)
+    //  this.view.showCircularLoader(false)
+    }, error => {
+      alert('error document')
+    //  this.view.showCircularLoader(false)
+    })
+  }
+
+  addPensionFundsDocuments () {
+    try {
+      this.view.showCircularLoader(true)
+      this.addPensionFundsDocumentsInteractor.execute()
       .subscribe(data => {
-        this.view.setPensionFundsPresenter(data)
-        //this.view.showCircularLoader(false)
+        this.view.noticeResponse(data)
+        this.view.showCircularLoader(false)
       }, error => {
-      //  alert('error')
-        // this.view.showCircularLoader(false)
+        this.view.showCircularLoader(false)
       })
+    } catch (e) {
+      console.log(e)
     }
+  }
 
-    getPensionFundsDocuments () {
-      this.getPensionFundsDocumentsInteractor.execute()
-    //  this.view.showCircularLoader(true)
-      .subscribe(data => {
-        this.view.setPensionFundsDocumentsData2(data)
-      //  this.view.showCircularLoader(false)
-      }, error => {
-        alert('error document')
-      //  this.view.showCircularLoader(false)
-      })
-    }
+  addPensionContributional (amount, code) {
+    this.view.showCircularLoader(true)
+    this.addPensionContributionalInteractor.execute(amount, code)
+    .subscribe (data => {
+      this.view.noticeResponse(data)
+      this.view.showCircularLoader(false)
+      this.view.resetData()
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
 }

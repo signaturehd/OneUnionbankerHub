@@ -2536,6 +2536,25 @@ export default class HRBenefitsService {
     })
   }
 
+  addPensionFundsDocuments (token) {
+    const hasAgreedObject = {
+      hasAgreed : "1",
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
+  addPensionContributional (token, amount, code) {
+    const hasAgreedObject = {
+      amount : amount,
+      pinCode: code,
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
   getPensionFunds (token) {
     return this.rootClient.get('/appian/pension/v1/investments', {
       headers : { token }

@@ -526,6 +526,7 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }
                     agreementBool = { agreementBool }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>

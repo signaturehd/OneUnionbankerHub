@@ -16,7 +16,6 @@ class PensionCodeModals extends Component {
       codeTextFunc,
       submitCodeFunc,
       cancelCodeFunc,
-      id
     } = this.props
 
     return (
