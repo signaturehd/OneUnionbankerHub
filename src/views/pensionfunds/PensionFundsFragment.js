@@ -21,7 +21,6 @@ import {
 
 let id
 
-
 class PensionFundsFragment extends BaseMVPView {
   constructor (props) {
     super (props)
@@ -30,7 +29,8 @@ class PensionFundsFragment extends BaseMVPView {
       stepperStatus: 1,
       showCodeModal: false,
       showDevelopmentModal: false,
-      showContributionModal:false,
+      showContributionModal: false,
+      isPincode: false,
       tabsId : 'year',
     }
   }
@@ -77,7 +77,9 @@ class PensionFundsFragment extends BaseMVPView {
       pensionChartData,
       data,
       pensionAgreement,
-      showContributionModal
+      showContributionModal,
+      continueCodeFunc,
+      isPincode,
     } = this.state
 
     return (
@@ -103,14 +105,13 @@ class PensionFundsFragment extends BaseMVPView {
         {
           showContributionModal &&
            <PensionContributionModals
-           cancelCodeFunc = { () => {
-             try{
+              isPincode = { isPincode }
+              continueCodeFunc = { (bool) =>{
+                  this.setState({  isPincode : bool })
+                }}
+              cancelCodeFunc = { () => {
                this.setState({ showContributionModal : false })
-             } catch(e)
-             {
-               console.log(e)
-             }
-           }}
+                }}
            />
         }
         {
@@ -122,7 +123,6 @@ class PensionFundsFragment extends BaseMVPView {
           <div>
             {
               showDevelopmentModal ?
-
               <Modal>
                 <center>
                   <h4>Retirement Fund is still under development. Please come back in the next few days to avail of this benefit. Thank you!</h4>
@@ -144,7 +144,7 @@ class PensionFundsFragment extends BaseMVPView {
                   {
                       stepperStatus === 4 || agreementBool === true ?
                     <PensionDetailsFragment
-                    contributionModal = { () => { this.setState({ showContributionModal : true }) } }
+                    contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
                     //contributionModalFunc = { (showContributionModal) => setState({showContributionModal}) }
                     pensionChartData = { pensionChartData }
                       tabsId = { tabsId }
@@ -164,7 +164,15 @@ class PensionFundsFragment extends BaseMVPView {
                         }
                       } }/> :
                     <PensionFundsDocumentsFragment
-                      statusCodeFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
+
+                      statusCodeFunc = { (stepperStatus,bool,id) =>
+                        id === 3 ?
+                        this.setState({showContributionModal: bool})
+                        
+                        :
+                        this.setState({ stepperStatus })
+
+                      }
                       statusCodeReturnFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
                       stepperStatus = { stepperStatus }
                       changeCheckedFunc = { (e, e1) => {

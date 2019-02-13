@@ -16,11 +16,21 @@ class PensionContributionModals extends Component {
       codeTextFunc,
       submitCodeFunc,
       cancelCodeFunc,
-      id
+      id,
+      continueCodeFunc,
+      isPincode
     } = this.props
 
+    console.log(isPincode)
     return (
       <Modal>
+        {
+          isPincode ?
+        <div>
+          ttest
+        </div>
+          :
+        <div>
         <GenericInput
           value = { codeText }
           text = { 'Enter your Contribution Amount' }
@@ -32,15 +42,17 @@ class PensionContributionModals extends Component {
         <center>
           <GenericButton
             className = { 'profile-button-small' }
-            text = { 'Submit' }
-            onClick = { () => submitCodeFunc() }
+            text = { 'Cancel' }
+            onClick = { () => cancelCodeFunc() }
             />
-            <GenericButton
-              className = { 'profile-button-small' }
-              text = { 'Cancel' }
-              onClick = { () => cancelCodeFunc() }
-              />
-        </center>
+          <GenericButton
+            className = { 'profile-button-small' }
+            text = { 'Continue' }
+            onClick = { () => continueCodeFunc(true) }
+            />
+          </center>
+         </div>
+        }
       </Modal>
     )
   }
