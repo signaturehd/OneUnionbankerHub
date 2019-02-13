@@ -1,6 +1,10 @@
 import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsInteractor'
 import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDocumentsInteractor'
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
+import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
+// POST
+import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
+import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
 
 let mockData = {
   'totalUnits': '15.34',
@@ -18,19 +22,19 @@ let mockData = {
       'datePayment': '01/02/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }, {
       'id': 3,
       'datePayment': '03/03/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }, {
       'id': 4,
       'datePayment': '04/04/2019',
       'totalInvestment': '20000',
       'totalReturn': '2000',
-      'isChecked' : true,
+      'isChecked' : false,
     }
   ]
 }
@@ -59,13 +63,16 @@ let mockDataDocuments = {
   ]
 }
 
-let agreementData  = '', pensionData = ''
+let agreementData  = '', pensionData = '', pensionHistory = []
 
 export default class PensionFundsPresenter {
   constructor (container) {
     this.getPensionValidateInteractor = new GetPensionValidateInteractor(container.get('HRBenefitsClient'))
-    // this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
-    // this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsHistoryInteractor = new GetPensionFundsHistoryInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+    this.addPensionFundsDocumentsInteractor = new AddPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
+    this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -126,26 +133,171 @@ export default class PensionFundsPresenter {
       console.log(e)
     }
   }
-  //
-  // getPensionFunds () {
-  //   this.getPensionFundsInteractor.execute()
-  //   this.view.showCircularLoader(true)
-  //   .subscribe(data => {
-  //     this.view.setPensionFundsData(data)
-  //     this.view.showCircularLoader(false)
-  //   }, error => {
-  //     this.view.showCircularLoader(false)
-  //   })
-  // }
-  //
-  // getPensionFundsDocuments () {
-  //   this.getPensionFundsDocumentsInteractor.execute()
-  //   this.view.showCircularLoader(true)
-  //   .subscribe(data => {
-  //     this.view.setPensionFundsData(data)
-  //     this.view.showCircularLoader(false)
-  //   }, error => {
-  //     this.view.showCircularLoader(false)
-  //   })
-  // }
+
+  setPaymentCheckerPresenter(check , id , key) {
+    let newData
+    let formsData = []
+    console.log(check,id,key)
+    pensionData.paymentHistory.map((resp) => {
+      if(id === resp.id) {
+        formsData.push({
+          id : resp.id,
+          isChecked : !check ? true : false,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturnq
+        })
+
+
+      } else {
+        formsData.push({
+          id : resp.id,
+          isChecked : resp.isChecked,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturn
+        })
+      }
+      const objectParam = {
+        paymentHistory : formsData
+      }
+      this.setPensionFundsPresenter(objectParam)
+    })
+  }
+
+  setPaymentCheckRefresh(){
+    let newData
+    let formsData = []
+    pensionData.paymentHistory.map((resp) => {
+
+        formsData.push({
+          id : resp.id,
+          isChecked : false,
+          datePayment : resp.datePayment,
+          totalInvestment: resp.totalInvestment,
+          totalReturn: resp.totalReturn
+        })
+
+      const objectParam = {
+        paymentHistory : formsData
+      }
+      this.setPensionFundsPresenter(objectParam)
+    })
+  }
+
+
+  setUnitSummary(variable){
+    let unit = []
+    let items = []
+
+    if(variable === 'week' || variable === 'WEEK'){
+
+      const x = [1,2,3,4,5].map(x => {
+
+          if(x === 1){
+              return (  x+'st' +' Week')
+          }else if(x === 2 ){
+              return (  x+'nd' +' Week')
+          }
+          else if(x % 3 === 0 ){
+              return (  x+' rd' +' Week' )
+          }else{
+              return (x+'th' + ' Week')
+          }
+        })
+
+        items = x
+
+     } else if(variable === 'month' || variable === 'MONTH'){
+
+       const x = [1,2,3,4,5].map(x => {
+
+             if(x === 1){
+             return (  x+'st' +' Month')
+             }else if(x % 3 === 0 ){
+             return (  x+' rd' +' Month' )
+             }else{
+               return (x+'th' + ' Month')
+             }
+         })
+
+         items = x
+
+     } else if(variable === 'quarterly' || variable === 'QUARTERLY'){
+
+       const x = [1,2,3,4,5].map(x => {
+
+             if(x === 1){
+             return (  x+'st' +' Quarter')
+             }else if(x % 3 === 0 ){
+             return (  x+' rd' +' Quarter' )
+             }else{
+               return (x+'th' + ' Quarter')
+             }
+         })
+
+         items = x
+
+     } else if(variable === 'year' || variable === 'YEAR'){
+
+       const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
+         return (
+           x + ' Year'
+           )
+         })
+         items = x
+
+     }
+     this.view.setChartPensionData(items)
+  }
+
+  getPensionFunds () {
+    this.getPensionFundsInteractor.execute()
+    .subscribe(data => {
+      this.view.setPensionFundsPresenter(data)
+      //this.view.showCircularLoader(false)
+    }, error => {
+    //  alert('error')
+      // this.view.showCircularLoader(false)
+    })
+  }
+
+  getPensionFundsDocuments () {
+    this.getPensionFundsDocumentsInteractor.execute()
+  //  this.view.showCircularLoader(true)
+    .subscribe(data => {
+      this.view.setPensionFundsDocumentsData2(data)
+    //  this.view.showCircularLoader(false)
+    }, error => {
+      alert('error document')
+    //  this.view.showCircularLoader(false)
+    })
+  }
+
+  addPensionFundsDocuments () {
+    try {
+      this.view.showCircularLoader(true)
+      this.addPensionFundsDocumentsInteractor.execute()
+      .subscribe(data => {
+        this.view.noticeResponse(data)
+        this.view.showCircularLoader(false)
+      }, error => {
+        this.view.showCircularLoader(false)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  addPensionContributional (amount, code) {
+    this.view.showCircularLoader(true)
+    this.addPensionContributionalInteractor.execute(amount, code)
+    .subscribe (data => {
+      this.view.noticeResponse(data)
+      this.view.showCircularLoader(false)
+      this.view.resetData()
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
 }

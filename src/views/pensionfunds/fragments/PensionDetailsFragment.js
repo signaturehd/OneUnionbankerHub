@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   Line,
   Card,
+  GenericButton
 } from '../../../ub-components/'
 
 import '../styles/fundsStyle.css'
@@ -12,6 +13,7 @@ import PensionDetailsComponent from '../components/PensionDetailsComponent'
 import PensionFundsPaymentHistoryComponent from '../components/PensionFundsPaymentHistoryComponent'
 import PensionFundsChartComponent from '../components/PensionFundsChartComponent'
 import PensionCharTabsComponent from '../components/PensionCharTabsComponent'
+import NoDataListedComponent from '../../common/components/NoDataListedComponent'
 
 import { format } from '../../../utils/numberUtils'
 
@@ -24,7 +26,10 @@ class PensionDetailsFragment extends Component {
     const {
       tabsId,
       tabsIdFunc,
-      pensionFundsData
+      pensionFundsData,
+      changePaymentFunc,
+      pensionChartData,
+      contributionModal
     } = this.props
 
     return (
@@ -51,11 +56,25 @@ class PensionDetailsFragment extends Component {
               />
             <div></div>
           </div>
-          <PensionFundsChartComponent />
+          <PensionFundsChartComponent
+              pensionChartData = { pensionChartData }
+          /><br/>
+          <GenericButton
+              text = { 'Change Contribution Amount' }
+              className = { 'funds-contribution-button' }
+              onClick = { () => contributionModal() }
+          />
         </div>
         <div>
+        {
+          pensionFundsData && pensionFundsData !== 0 ?
           <PensionFundsPaymentHistoryComponent
-            pensionFundsData = { pensionFundsData }/>
+            pensionFundsData = { pensionFundsData }
+            changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
+            :
+          <NoDataListedComponent
+            text = { ' No Pension Data' }/>
+        }
         </div>
       </div>
     )

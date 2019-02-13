@@ -2531,13 +2531,38 @@ export default class HRBenefitsService {
   /* Pension Funds */
 
   getPensionFundsDocuments (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('appian/pension/v1/agreements', {
+      headers : { token }
+    })
+  }
+
+  addPensionFundsDocuments (token) {
+    const hasAgreedObject = {
+      hasAgreed : "1",
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
+  addPensionContributional (token, amount, code) {
+    const hasAgreedObject = {
+      amount : amount,
+      pinCode: code,
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
       headers : { token }
     })
   }
 
   getPensionFunds (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('/appian/pension/v1/investments', {
+      headers : { token }
+    })
+  }
+
+  getPensionFundsHistory (token) {
+    return this.rootClient.get(`appian/pension/v1`, {
       headers : { token }
     })
   }
