@@ -103,6 +103,7 @@ import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 /* Pension Funds */
 import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
 
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
@@ -129,6 +130,7 @@ class NavigationView extends BaseMVPView {
       employeeNumber : '',
       profileDisplay : 'none',
       profillePosition: '',
+      agreementBool: ''
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -140,6 +142,8 @@ class NavigationView extends BaseMVPView {
     this.setState ({ displayShow : sideBar })
     this.setState({ displayNavIcon : topBar })
   }
+
+
 
   showProfile (profile) {
     this.setState({
@@ -161,6 +165,10 @@ class NavigationView extends BaseMVPView {
 
   hideEnrollPin (hasPIN) {
     this.setState({ hasPIN })
+  }
+
+  showAgreementStatus (agreementBool) {
+    this.setState({ agreementBool })
   }
 
   validateInputPIN (e) {
@@ -191,6 +199,7 @@ class NavigationView extends BaseMVPView {
 
     this.presenter.getPreEmploymentStatus()
     this.presenter.getLibraries()
+
     const mediaQuery = window.matchMedia('(min-width: 1300px)')
       if (mediaQuery.matches) {
         this.setDisplay('none', 'none')
@@ -267,7 +276,8 @@ class NavigationView extends BaseMVPView {
       isPO,
       employeeNumber,
       profillePosition,
-      storeWidth
+      storeWidth,
+      agreementBool
     } = this.state
 
     const { history, login, profilePicture } = this.props
@@ -276,7 +286,6 @@ class NavigationView extends BaseMVPView {
         display : displayShow
       }
     }
-
     const locationPath = history.location.pathname
     const name = profile && profile.fullname
     let initials = []
@@ -516,6 +525,8 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }
+                    agreementBool = { agreementBool }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
