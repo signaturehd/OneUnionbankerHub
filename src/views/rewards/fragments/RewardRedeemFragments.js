@@ -51,7 +51,7 @@ class RewardRedeemFragments extends Component {
                     display: 'grid',
                     gridTemplateRows: '1fr .05fr',
                     height: '100%',
-                    minHeight: '200px',
+                    maxHeight: '200px',
                   }}>
                   <div>
                     <h4 className = { 'font-size-10px unionbank-white-color' }>General</h4>

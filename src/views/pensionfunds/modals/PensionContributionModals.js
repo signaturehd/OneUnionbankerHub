@@ -29,7 +29,7 @@ class PensionContributionModals extends Component {
           onChange = { (e) => amountTextFunc(e.target.value) }
           />
         <br/>
-        <center>
+        <center className = { 'grid-global' }>
           <GenericButton
             className = { 'profile-button-small' }
             text = { 'Cancel' }
