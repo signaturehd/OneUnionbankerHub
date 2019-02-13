@@ -54,13 +54,14 @@ class GiftsDetailsFragment extends BaseMVPView {
 			showCheckoutFragment,
 			selectedRewardsArray
 		} = this.state
-
+		console.log(selectedRewardsArray)
 		return (
 			<div>
 				{
 					showCheckoutModal &&
 
 					<GiftDetailsCheckoutModal
+						selectedRewardsArray = { selectedRewardsArray }
 						onClose = { () => this.setState({ showCheckoutModal : false }) }
 						onSelectThis = { () =>
 							this.setState({

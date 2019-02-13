@@ -8,7 +8,8 @@ class GiftDetailsCheckoutModal extends Component {
   render () {
     const {
       onClose,
-      onSelectThis
+      onSelectThis,
+      selectedRewardsArray
     } = this.props
 
     return (
@@ -19,7 +20,7 @@ class GiftDetailsCheckoutModal extends Component {
         >
         <div
           style = {{
-            backgroundImage: `url(//s3.amazonaws.com/images.giftaway.ph/o/1b3cd420-3662-4f6f-8357-7840d9546d01.jpg)`
+            backgroundImage: `url(${selectedRewardsArray.logo})`
           }}
           className = { 'giftdetails-banner-modal' }>
         </div>
@@ -48,7 +49,7 @@ class GiftDetailsCheckoutModal extends Component {
             <Line/>
           </div>
           <p className = { 'giftdetails-modal-description' }>
-            Steam Wallet 500
+            { selectedRewardsArray.shortDescription ? selectedRewardsArray.shortDescription : '(No Description Provided)' }
           </p>
           <div
             className = { 'grid-global padding-10px giftdetails-action' }>
