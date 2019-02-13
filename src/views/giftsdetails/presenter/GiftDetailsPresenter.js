@@ -1,5 +1,7 @@
 import GetRewardGiftsDetailsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsDetailsInteractor'
 
+let selectedRewardsArrayList = []
+
 export default class GiftsPresenter {
   constructor (container) {
     this.getRewardGiftsDetailsInteractor = new GetRewardGiftsDetailsInteractor(container.get('HRBenefitsClient'))
@@ -18,5 +20,33 @@ export default class GiftsPresenter {
     }, error => {
       this.view.circularLoader(false)
     })
+  }
+
+  getGiftsList (list) {
+    let updateList = [...selectedRewardsArrayList]
+    const id = list.id
+    if(selectedRewardsArrayList.length === 0) {
+      updateList.push(list)
+      selectedRewardsArrayList = updateList
+    } else {
+      selectedRewardsArrayList.map((resp, key) => {
+        if(!this.checkIdIfExist(id)) {
+          updateList.push(list)
+          selectedRewardsArrayList = updateList
+        }
+      })
+    }
+    this.view.setSelectedGiftList (selectedRewardsArrayList)
+  }
+
+  checkIdIfExist (id) {
+    let isBool = false
+    for (var i in selectedRewardsArrayList) {
+      if (selectedRewardsArrayList[i].id === id) {
+        isBool = true
+        break
+      }
+    }
+    return isBool
   }
 }

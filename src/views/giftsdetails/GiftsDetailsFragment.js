@@ -28,13 +28,16 @@ class GiftsDetailsFragment extends BaseMVPView {
 			loader : false,
 			showCheckoutModal : false,
 			showCheckoutFragment : false,
-			selectedRewardsArray : []
 		}
 	}
 
 	componentDidMount () {
     const id = this.props.match.params.id
     this.presenter.getRewardGiftsDetails(id)
+	}
+
+	setSelectedGiftList (selectedRewardsArray) {
+		this.setState({ selectedRewardsArray })
 	}
 
 	circularLoader (loader) {
@@ -52,22 +55,25 @@ class GiftsDetailsFragment extends BaseMVPView {
 			rewardDetails,
 			showCheckoutModal,
 			showCheckoutFragment,
-			selectedRewardsArray
+			selectedRewardsArray,
+			selectedGifts,
+			showGiftCartFragment,
 		} = this.state
-		console.log(selectedRewardsArray)
+
 		return (
 			<div>
 				{
 					showCheckoutModal &&
 
 					<GiftDetailsCheckoutModal
-						selectedRewardsArray = { selectedRewardsArray }
+						selectedRewardsArray = { selectedGifts }
 						onClose = { () => this.setState({ showCheckoutModal : false }) }
-						onSelectThis = { () =>
+						onSelectThis = { (list) => {
+							this.presenter.getGiftsList(list)
 							this.setState({
-								showCheckoutFragment : true,
 								showCheckoutModal : false,
-							}) }
+							})
+						}}
 						/>
 				}
 				{
@@ -80,10 +86,12 @@ class GiftsDetailsFragment extends BaseMVPView {
 						{
 							showCheckoutFragment ?
 							<GiftDetailsCheckoutFragment
-								/>
-							:
+								backToList = { () => this.setState({ showCheckoutFragment : false }) }
+							/>
+						:
 							<div>
 								<GiftDetailsBannerComponent
+									showGiftCart = { () => this.setState({ showCheckoutFragment : true })}
 									tagline = { rewardDetails && rewardDetails.tagline }
 									name = { rewardDetails && rewardDetails.name }
 									category = { rewardDetails && rewardDetails.category }
@@ -92,9 +100,9 @@ class GiftsDetailsFragment extends BaseMVPView {
 									latitude = { rewardDetails && rewardDetails.locations[0].latitude }
 								/>
 								<GiftDetailsEgiftComponent
-									onCheckOutModal = { (showCheckoutModal, selectedRewardsArray) =>
+									onCheckOutModal = { (showCheckoutModal, selectedGifts) =>
 										{
-											this.setState({ showCheckoutModal, selectedRewardsArray })
+											this.setState({ showCheckoutModal, selectedGifts })
 										}
 									}
 									denominations = { rewardDetails && rewardDetails.denominations }
@@ -108,6 +116,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 								/>
 							</div>
 						}
+
 					</div>
 				}
 			</div>

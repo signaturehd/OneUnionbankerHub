@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import staticBanner  from '../../../images/rewards/giftsBanner.jpg'
+import { GenericButton } from '../../../ub-components/'
 
 class GiftDetailsBannerComponent extends Component {
 
@@ -10,7 +11,8 @@ class GiftDetailsBannerComponent extends Component {
       category,
       locations,
       latitude,
-      longtitude
+      longtitude,
+      showGiftCart
     } = this.props
 
     const locationLength = locations && locations.length
@@ -20,11 +22,20 @@ class GiftDetailsBannerComponent extends Component {
         style = {{
           backgroundImage: `url(${staticBanner})`,
         }}>
-
         <div className = { 'giftdetails-container' }>
           <div
             id = { 'giftdetails-info' }
             className = { 'gift-details-content' }>
+            <div id = { 'gifts-overlay1' }>
+              <span
+                onClick={ () => showGiftCart() }
+                className = { 'gift-cart gift-details-cart' }/>
+              <GenericButton
+                text={ 'Checkout' }
+                className={ 'gift-button' }
+                onClick={ () => showGiftCart() }
+              />
+            </div>
             <br/><br/>
             <br/><br/>
             <br/><br/>

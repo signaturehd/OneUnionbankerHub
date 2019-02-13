@@ -20,7 +20,7 @@ class GiftDetailsCheckoutModal extends Component {
         >
         <div
           style = {{
-            backgroundImage: `url(${selectedRewardsArray.logo})`
+            backgroundImage: `url(${selectedRewardsArray && selectedRewardsArray.logo})`
           }}
           className = { 'giftdetails-banner-modal' }>
         </div>
@@ -62,7 +62,7 @@ class GiftDetailsCheckoutModal extends Component {
             </div>
             <div className = { 'text-align-right margin-auto' }>
               <GenericButton
-                onClick = { () => onSelectThis() }
+                onClick = { () => onSelectThis(selectedRewardsArray) }
                 text = { 'SELECT THIS' }
                 className = { 'giftdetails-select' }
               />
