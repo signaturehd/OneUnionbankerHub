@@ -194,49 +194,45 @@ export default class PensionFundsPresenter {
 
       const x = [1,2,3,4,5].map(x => {
 
-          if(x === 1){
-              return (  x+'st' +' Week')
-          }else if(x === 2 ){
-              return (  x+'nd' +' Week')
-          }
-          else if(x % 3 === 0 ){
-              return (  x+' rd' +' Week' )
-          }else{
-              return (x+'th' + ' Week')
-          }
-        })
+        if (x === 1) {
+            return (  x+'st' +' Week')
+        } else if (x === 2 ){
+            return (  x+'nd' +' Week')
+        } else if (x % 3 === 0 ){
+            return (  x+' rd' +' Week' )
+        } else {
+            return (x+'th' + ' Week')
+        }
+      })
 
-        items = x
+      items = x
 
      } else if(variable === 'month' || variable === 'MONTH'){
 
        const x = [1,2,3,4,5].map(x => {
+         if(x === 1){
+           return (  x+'st' +' Month')
+         } else if(x % 3 === 0 ){
+           return (  x+' rd' +' Month' )
+         } else{
+           return (x+'th' + ' Month')
+         }
+       })
 
-             if(x === 1){
-             return (  x+'st' +' Month')
-             }else if(x % 3 === 0 ){
-             return (  x+' rd' +' Month' )
-             }else{
-               return (x+'th' + ' Month')
-             }
-         })
-
-         items = x
+       items = x
 
      } else if(variable === 'quarterly' || variable === 'QUARTERLY'){
 
        const x = [1,2,3,4,5].map(x => {
-
-             if(x === 1){
-             return (  x+'st' +' Quarter')
-             }else if(x % 3 === 0 ){
-             return (  x+' rd' +' Quarter' )
-             }else{
-               return (x+'th' + ' Quarter')
-             }
-         })
-
-         items = x
+         if(x === 1){
+           return (  x+'st' +' Quarter')
+         }  else if(x % 3 === 0 ){
+           return (  x+' rd' +' Quarter' )
+         }  else{
+           return (x+'th' + ' Quarter')
+         }
+       })
+       items = x
 
      } else if(variable === 'year' || variable === 'YEAR'){
 

@@ -47,7 +47,15 @@ class PensionDetailsFragment extends Component {
           </div>
           <br/>
           <br/>
-          <h4 className = { 'letter-spacing-2 font-weight-lighter font-size-25px' }>Unit Summary</h4>
+          <div className = { 'grid-global' }>
+            <h4 className = { ' margin-auto letter-spacing-2 font-weight-lighter font-size-25px' }>Unit Summary</h4>
+            <GenericButton
+              className = { 'cursor-pointer profile-button-medium' }
+              text = { 'Change Contribution Amount' }
+              className = { 'funds-contribution-button' }
+              onClick = { () => contributionModal() }
+            />
+          </div>
           <br/>
           <div className = { 'grid-global' }>
             <PensionCharTabsComponent
@@ -59,11 +67,6 @@ class PensionDetailsFragment extends Component {
           <PensionFundsChartComponent
               pensionChartData = { pensionChartData }
           /><br/>
-          <GenericButton
-              text = { 'Change Contribution Amount' }
-              className = { 'funds-contribution-button' }
-              onClick = { () => contributionModal() }
-          />
         </div>
         <div>
         {
