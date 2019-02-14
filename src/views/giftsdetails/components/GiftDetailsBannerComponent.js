@@ -14,7 +14,8 @@ class GiftDetailsBannerComponent extends Component {
       latitude,
       longtitude,
       showGiftCart,
-      logo
+      logo,
+      totalPoints
     } = this.props
 
     const locationLength = locations && locations.length
@@ -29,14 +30,17 @@ class GiftDetailsBannerComponent extends Component {
             id = { 'giftdetails-info' }
             className = { 'gift-details-content' }>
             <div id = { 'gifts-overlay1' }>
-              <span
-                onClick={ () => showGiftCart() }
-                className = { 'gift-cart gift-details-cart' }/>
-              <GenericButton
-                text={ 'Checkout' }
-                className={ 'gift-button' }
-                onClick={ () => showGiftCart() }
-              />
+              <div
+                style = {{
+                  paddingRight: '50px'
+                }}
+                className = { 'text-align-right cursor-pointer' }>
+                <img
+                  height = { '50' }
+                  width = { '50' }
+                  onClick={ () => showGiftCart() }
+                  src = { require('../../../images/rewards/cart.png') }/>
+              </div>
             </div>
             <br/>
             <div style = {{

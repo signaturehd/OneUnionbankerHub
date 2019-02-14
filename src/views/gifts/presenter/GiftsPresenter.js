@@ -11,6 +11,7 @@ export default class GiftsPresenter {
   }
 
   setCategoryType (category) {
+    categoryList = []
     category && category.map((data, key) => {
       let setCategory = [...categoryList]
       if(!this.checkIdIfExist(data.category.toLowerCase())) {
@@ -18,6 +19,7 @@ export default class GiftsPresenter {
         categoryList = setCategory
       }
     })
+    categoryList.push('Everything')
     this.view.setCategoryTypeList(categoryList)
   }
 
