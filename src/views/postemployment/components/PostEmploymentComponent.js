@@ -11,6 +11,7 @@ import {
 import PostEmploymetBIR1905Fragment from '../fragments/PostEmploymetBIR1905Fragment'
 import PostEmploymentBIR2316Fragment from '../fragments/PostEmploymentBIR2316Fragment'
 import PostEmploymentCEAFragment from '../fragments/PostEmploymentCEAFragment'
+import ComplianceVideosFragment from '../fragments/ComplianceVideosFragment'
 
 function PostEmploymentFragments(props) {
   const page = props.pageId
@@ -88,6 +89,10 @@ function PostEmploymentFragments(props) {
       getOnBoardingDocument = { (link) => setOnBoardingDocument(link)  }
       addAttachmentsFunc = { (data, count) => addAttachmentsFunc(data, count) }
       countFunc = { () => countFunc() }
+    />
+  } else if (page === 4) {
+    return <ComplianceVideosFragment
+      
     />
   }
 }

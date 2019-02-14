@@ -103,6 +103,8 @@ import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 /* Pension Funds */
 import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
 
+/* New Employee Hire */
+import NewEmployeeHireFragment from '../neo/NewEmployeeHireFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
@@ -527,6 +529,9 @@ class NavigationView extends BaseMVPView {
                   <PensionFundsFragment { ...props }
                     agreementBool = { agreementBool }
                     getProfileFunc = { () => this.presenter.getLibraries() }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/neo' render = { props =>
+                  <NewEmployeeHireFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
