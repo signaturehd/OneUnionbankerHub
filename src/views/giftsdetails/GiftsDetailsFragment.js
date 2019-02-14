@@ -94,6 +94,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 									showGiftCart = { () => this.setState({ showCheckoutFragment : true })}
 									tagline = { rewardDetails && rewardDetails.tagline }
 									name = { rewardDetails && rewardDetails.name }
+									logo = { rewardDetails && rewardDetails.logo }
 									category = { rewardDetails && rewardDetails.category }
 									locations = { rewardDetails && rewardDetails.locations }
 									longtitude = { rewardDetails && rewardDetails.locations[0].longtitude }

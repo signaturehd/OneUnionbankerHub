@@ -89,7 +89,6 @@
 
 #giftdetails-cover #giftdetails-info .giftdetails-tags {
   display: inline-block;
-  margin: 30px auto 45px;
   padding-top: 15px;
   border-top: 1px solid #a2a2a2;
   box-shadow: 0px -1px rgba(0, 0, 0, 0.05);
@@ -346,7 +345,7 @@
 
 #giftdetails-footer ul li a {
   color: #a2a2a2;
-  font-size: 0.875em;
+  font-size: 0.9em;
   text-decoration: none;
 }
 
@@ -362,7 +361,7 @@
   text-align: right;
   float: right;
   color: #a2a2a2;
-  font-size: 0.875em;
+  font-size: 0.9em;
 }
 
 .giftdetails-link {
@@ -376,9 +375,10 @@
 .giftdetails-copyright2 {
   border-left: 1px dashed #ccc;
   color: #a2a2a2;
-  text-align: right;
+  text-align: center;
   float: right;
   margin-top: 0px;
+  margin-left: 20px;
   font-size: 0.875em;
 }
 

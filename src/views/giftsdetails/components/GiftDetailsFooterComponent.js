@@ -17,58 +17,36 @@ class GiftDetailsFooterComponent extends Component {
             <div className={'giftdetails-copyright column'}>
               <h3>Site Links</h3>
               <ul>
-                <li><a href="/howitworks">How It Works</a></li>
-                <li><a href="/terms">Terms and Conditions</a></li>
-                <li><a href="/privacy">Privacy Policy</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="/">My Goals and Performance</a></li>
+                <li><a href="/terms">Rewards and Recognition</a></li>
+                <li><a href="/privacy">My Documents</a></li>
+                <li><a href="/contact">My Travel</a></li>
+                <li><a href="/contact">My Future</a></li>
               </ul>
             </div>
-            <div className="giftdetails-copyright column">
-              <h3>Follow Us</h3>
-              <ul style = {{
-                display : 'flex',
-                alignItems: 'center'
-              }}>
-                <li>
-                  <img
-                    className = { 'cursor-pointer' }
-                    height={ 27 }
-                    width={ 30 }
-                    src={ `${ staticFB }` }
-                    alt="..."
-                    onClick={ () => window.open('https://www.facebook.com/giftawayph', '_blank') } />
-                </li>
-                <li>
-                  <img
-                    height={ 35 }
-                    width={ 35 }
-                    src={ `${ staticTwitter }` }
-                    alt="..."
-                    onClick={ () => window.open('https://twitter.com/GiftawayPH', '_blank') }/>
-                </li>
-                <li>
-                  <img
-                    height={ 38 }
-                    width={ 35 }
-                    src={ `${ staticEmail }` }
-                    alt="..."
-                    onClick={ () => window.open('mailto:1uhub-test@giftaway.ph', '_blank') }/>
-                </li>
+            <div className={'giftdetails-copyright column'}>
+              <h3>Site Links</h3>
+              <ul>
+                <li><a href="/">My Benefits</a></li>
+                <li><a href="/terms">My Learning</a></li>
+                <li><a href="/privacy">My Pay</a></li>
+                <li><a href="/privacy">Feedback</a></li>
               </ul>
             </div>
             <div className="giftdetails-link column">
               <h3>Contact Us</h3>
               <p>
-                For inquiries, email <a href={ 'mailto:1uhub-test@giftaway.ph' }>1uhub-test@giftaway.ph</a>
+                For inquiries, email <a href={ 'mailto:1uhub-helpdesk@unionbank.com' }>1uhub-helpdesk@unionbank.com</a>
               </p>
             </div>
             <div className={ 'giftdetails-copyright2 column' }>
               <a href={ '/' } className={ 'logo' }>
                 <img
+                  height = { 100 }
+                  width = { 100 }
                   src={ `${staticBanner}` }
                   alt={ '1UHub for Unionbank' } />
               </a>
-              <p>© 2019 Giftaway Inc.<br/>All rights reserved.</p>
             </div>
           </div>
         </div>

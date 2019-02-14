@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import staticBanner  from '../../../images/GOALS/mygoal-banner.png'
 import staticBanner  from '../../../images/rewards/giftsBanner.jpg'
 import { GenericButton } from '../../../ub-components/'
 
@@ -12,7 +13,8 @@ class GiftDetailsBannerComponent extends Component {
       locations,
       latitude,
       longtitude,
-      showGiftCart
+      showGiftCart,
+      logo
     } = this.props
 
     const locationLength = locations && locations.length
@@ -36,10 +38,17 @@ class GiftDetailsBannerComponent extends Component {
                 onClick={ () => showGiftCart() }
               />
             </div>
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
+            <br/>
+            <div style = {{
+                backgroundImage : `url(${ logo })`,
+                backgroundSize: 'cover',
+                height: '100px',
+                width: '100px',
+                margin: 'auto',
+                backgroundPosition: 'center',
+                borderRadius: '100px',
+              }}/>
+            <br/>
             <h1>{ name && name ? name : '(No Title Provided)' }</h1>
             <p>{ tagline && tagline ? tagline : '(No Tagline Provided)' }</p>
             <div className = { 'giftdetails-tags' }>
