@@ -1,0 +1,109 @@
+.neo-details-grid-content {
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+  column-gap: .5%;
+}
+
+.neo-details-grid-video {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.neo-details-grid-videos {
+  display: grid;
+  grid-template-columns: auto;
+  column-gap: 2%;
+}
+
+.neo-content-grid {
+  display: grid;
+  grid-template-columns:  .03fr 1fr .03fr;
+}
+
+.neo-header-grid {
+  display: grid;
+  grid-template-columns:  1fr .15fr;
+  column-gap: .5%;
+}
+
+.neo-employee-name {
+  font-size: 20px;
+  letter-spacing: 2px;
+  padding: 2.5px 0px;
+  font-weight: 500;
+}
+
+.neo-description {
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 2.5px 0px;
+}
+
+.neo-deadline {
+  color : red;
+  letter-spacing: 1px;
+  font-size: 16px;
+  padding: 3px 0px 0px 0px;
+}
+
+.neo-list-videos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.neo-card-details {
+  background-color: rgb(149, 149, 149);
+  color: #fff;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin-bottom: 25px;
+}
+
+.neo-card-videos {
+  background-color: rgb(70, 70, 70);
+  color: #fff;
+}
+
+.neo-details-upnext-video {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  column-gap: 2%;
+}
+
+.neo-details-upnext-comment {
+  display: grid;
+  grid-template-columns: .2fr 1fr auto auto;
+  column-gap: 1%;
+}
+
+.neo-heart-active {
+  background-image : url('../../../images/onboarding/hearticon1.png');
+}
+
+.neo-heart-notactive {
+  background-image : url('../../../images/onboarding/hearticon.png');
+}
+
+.neo-heart-message {
+  background-image : url('../../../images/onboarding/message.png');
+}
+
+.neo-heart-details-comments {
+  background-size: cover;
+  height: 15px;
+  background-position: center;
+  margin: auto;
+  background-repeat: no-repeat;
+  width: 15px;
+}
+
+.neo-heart-details {
+  background-size: cover;
+  height: 40px;
+  background-position: center;
+  margin: auto;
+  background-repeat: no-repeat;
+  width: 40px;
+}
