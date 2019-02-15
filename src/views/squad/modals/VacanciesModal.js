@@ -24,7 +24,6 @@ class VacanciesModal extends Component {
       squadTitle,
       submitSquad,
     } = this.props
-    console.log(vacants);
 
     return (
       <Modal

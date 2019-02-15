@@ -20,8 +20,13 @@ class SquadsComponent extends Component {
       <div className = { 'squads-container' }>
         {
           squads && squads.map((squad, key) => (
-            <Card className = { 'squads-card' } onClick = { () => getVacancies(null, squad.id) }>
-              <div className = { 'squad-title' }><h3>{ squad.squad.name }</h3><small>{ squad.squad.mission }</small>
+            <Card
+              className = { 'squads-card cursor-pointer' }
+              onClick = { () => getVacancies(null, squad.id) }>
+              <div
+                className = { 'squad-title' }>
+                <h3>{ squad.squad.name }</h3>
+                <small>{ squad.squad.mission }</small>
               </div>
               <div className = { 'squad-description' }>
               </div>

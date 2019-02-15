@@ -10,7 +10,6 @@ class PersonalSquadsFragment extends BaseMVPView {
   }
 
   componentDidMount () {
-    console.log('rendered');
   }
 
 

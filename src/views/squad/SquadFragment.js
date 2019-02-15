@@ -53,7 +53,6 @@ class SquadFragment extends BaseMVPView {
             noticeResponse = { mesg }
           />
         }
-
         {
           showVacancies &&
           <VacanciesModal
@@ -62,6 +61,7 @@ class SquadFragment extends BaseMVPView {
             onClose = { () => this.setState({ showVacancies }) }
           />
         }
+        <br/>
         <SquadsComponent
           squads = { squads }
           getVacancies = { (positionId, squadId) => this.presenter.getVacancies(positionId, squadId) }
