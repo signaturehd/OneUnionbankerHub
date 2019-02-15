@@ -3,7 +3,7 @@ export default class GetSquadsInteractor {
     this.client = client
   }
 
-  execute (positionId, squadId, pageNumber) {
-    return this.client.getSquads(this.client.getToken(), positionId, squadId, pageNumber)
+  execute (squadId, page) {
+    return this.client.getSquads(this.client.getToken(), squadId, page)
   }
 }

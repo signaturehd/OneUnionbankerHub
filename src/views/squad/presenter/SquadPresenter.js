@@ -1,25 +1,40 @@
-import GetSquadsInteractor from '../../../squad/GetSquadsInteractor'
-import SubmitSquadsInteractor from '../../../squad/SubmitSquadsInteractor'
+import GetSquadsInteractor from '../../../domain/interactor/squad/GetSquadsInteractor'
+import SubmitSquadsInteractor from '../../../domain/interactor/squad/SubmitSquadsInteractor'
+import GetVacanciesInteractor from '../../../domain/interactor/squad/GetVacanciesInteractor'
 
-
-let storedPositionId, storedSquadId, storedPageNumber
+let storedVacanciesPositionId, storedVacanciesSquadId, storedVacanciesPageNumber, storedSquadId, storedSquadPage
 export default class SquadPresenter {
   constructor (container) {
     this.getSquadsInteractor = new GetSquadsInteractor(container.get('HRBenefitsClient'))
     this.submitSquadsInteractor = new SubmitSquadsInteractor(container.get('HRBenefitsClient'))
+    this.getVacanciesInteractor = new GetVacanciesInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
     this.view = view
   }
 
-  getSquads (positionId, squadId, pageNumber) {
-    stoerdSquadPositionId = positionId
-    storedSquadId = squadId
-    storedSquadPageNumber = pageNumber
+  getVacancies (positionId, squadId, pageNumber) {
+    storedVacanciesPositionId = positionId
+    storedVacanciesSquadId = squadId
+    storedVacanciesPageNumber = pageNumber
     this.view.showLoading()
-    this.getSquadsInteractor.execute()
+    this.getVacanciesInteractor.execute(storedVacanciesPositionId, storedVacanciesSquadId, storedVacanciesPageNumber)
       .subscribe(data => {
+        this.view.setVacancies(data)
+        this.view.hideLoading()
+      }, e => {
+        console.log(e);
+      })
+  }
+
+  getSquads (squadId, page) {
+    storedSquadId = squadId
+    storedSquadPage = page
+    this.view.showLoading()
+    this.getSquadsInteractor.execute(storedSquadId, storedSquadPage)
+      .subscribe(data => {
+        this.view.setSquads(data)
         this.view.hideLoading()
       }, e => {
         console.log(e);
@@ -30,9 +45,10 @@ export default class SquadPresenter {
     this.view.showLoading()
     this.submitSquadsInteractor.execute(positionId)
       .do(data => {
-        this.getSquads(storedPositionId, storedSquadId, storedPageNumber)
+        this.getSquads(storedVacanciesPositionId, storedVacanciesSquadId, storedVacanciesPageNumber)
       })
       .subscribe(data => {
+        this.view.submitSquadResp(data)
         this.view.hideLoading()
       }, e => {
         console.log(e);

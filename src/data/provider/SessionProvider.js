@@ -19,7 +19,7 @@ export default class SessionProvider {
   }
 
   getToken () {
-    return this.storage.getItem(TOKEN) || '89516b74ce3b5edc5cfc23fe96e57d8a254b9c1f3811b5b843a5d38b5541684c3e15b96c83f2951c8bcf33348f0c5f778e5fc30bd24bf6030d21a2bfb570582b'
+    return this.storage.getItem(TOKEN) || 'employee4004'
   }
 
   setInitialToken (token = '') {
