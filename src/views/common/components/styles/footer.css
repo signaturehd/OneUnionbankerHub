@@ -1,0 +1,126 @@
+
+
+/* Footer */
+
+.giftdetails-footer-container {
+    padding: 0px 30px;
+    margin: 0px auto;
+}
+
+#giftdetails-footer-cover {
+  padding-top: 50px;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
+}
+
+#giftdetails-footer {
+  clear: both;
+  background: #f1f1f1;
+  padding: 30px 0px;
+  float: left;
+  width: 100%;
+}
+
+#giftdetails-footer .column {
+  float: left;
+  width: 100%;
+  margin: 0 0 1.875em 0;
+}
+
+#giftdetails-footer h3 {
+  font-size: 1em;
+  color: #e74c3c;
+  margin: 0 0 1em 0;
+  text-align: center;
+}
+
+#giftdetails-footer ul li a {
+  color: #a2a2a2;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+#giftdetails-footer ul li {
+  list-style-type: none;
+  display: block;
+  margin: 0.5em 0;
+  font-size: 0.875em;
+}
+
+.giftdetails-copyright {
+  margin-top: 0px;
+  text-align: right;
+  float: right;
+  color: #a2a2a2;
+  font-size: 0.9em;
+}
+
+.giftdetails-link {
+  margin-top: 0px;
+  text-align: left;
+  float: left;
+  color: #a2a2a2;
+  font-size: 0.875em;
+}
+
+.giftdetails-copyright2 {
+  border-left: 1px dashed #ccc;
+  color: #a2a2a2;
+  text-align: center;
+  float: right;
+  margin-top: 0px;
+  margin-left: 20px;
+  font-size: 0.875em;
+}
+
+.giftdetails-link a {
+  color: #ee7421;
+  text-decoration: none;
+}
+
+
+@media (min-width: 550px) {
+  .column:first-child .columns:first-child {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 550px) {
+  .column .columns {
+      margin-left: 4%;
+  }
+
+  .column .columns {
+      width: 100%;
+      float: left;
+      box-sizing: border-box;
+  }
+}
+
+@media screen and (min-width: 40em) {
+  .giftdetails-about-container {
+    max-width: 1030px;
+  }
+  .giftdetails-about-write-up {
+    width: 60%;
+    padding-right: 75px;
+    margin-bottom: 0;
+  }
+  .giftdetails-other-info  {
+    width: 40%;
+  }
+  .giftdetails-footer-container {
+    max-width: 1030px;
+  }
+  #giftdetails-footer ul {
+    text-align: left;
+  }
+  #giftdetails-footer h3 {
+    text-align: left;
+  }
+  #giftdetails-footer .column {
+    width: 25%;
+    min-height: 7.5em;
+  }
+}

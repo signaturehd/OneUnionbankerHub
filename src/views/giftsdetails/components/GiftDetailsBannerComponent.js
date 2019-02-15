@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import staticBanner  from '../../../images/GOALS/mygoal-banner.png'
 import staticBanner  from '../../../images/rewards/giftsBanner.jpg'
 import { GenericButton } from '../../../ub-components/'
 
@@ -12,7 +13,9 @@ class GiftDetailsBannerComponent extends Component {
       locations,
       latitude,
       longtitude,
-      showGiftCart
+      showGiftCart,
+      logo,
+      totalPoints
     } = this.props
 
     const locationLength = locations && locations.length
@@ -27,19 +30,29 @@ class GiftDetailsBannerComponent extends Component {
             id = { 'giftdetails-info' }
             className = { 'gift-details-content' }>
             <div id = { 'gifts-overlay1' }>
-              <span
-                onClick={ () => showGiftCart() }
-                className = { 'gift-cart gift-details-cart' }/>
-              <GenericButton
-                text={ 'Checkout' }
-                className={ 'gift-button' }
-                onClick={ () => showGiftCart() }
-              />
+              <div
+                style = {{
+                  paddingRight: '50px'
+                }}
+                className = { 'text-align-right cursor-pointer' }>
+                <img
+                  height = { '50' }
+                  width = { '50' }
+                  onClick={ () => showGiftCart() }
+                  src = { require('../../../images/rewards/cart.png') }/>
+              </div>
             </div>
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
+            <br/>
+            <div style = {{
+                backgroundImage : `url(${ logo })`,
+                backgroundSize: 'cover',
+                height: '100px',
+                width: '100px',
+                margin: 'auto',
+                backgroundPosition: 'center',
+                borderRadius: '100px',
+              }}/>
+            <br/>
             <h1>{ name && name ? name : '(No Title Provided)' }</h1>
             <p>{ tagline && tagline ? tagline : '(No Tagline Provided)' }</p>
             <div className = { 'giftdetails-tags' }>

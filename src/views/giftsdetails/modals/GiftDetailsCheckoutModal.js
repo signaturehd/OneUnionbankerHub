@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Modal, GenericButton, Line } from '../../../ub-components/'
 
+import { format } from '../../../utils/numberUtils'
+
 import './styles/giftModal.css'
 
 class GiftDetailsCheckoutModal extends Component {
@@ -9,8 +11,24 @@ class GiftDetailsCheckoutModal extends Component {
     const {
       onClose,
       onSelectThis,
-      selectedRewardsArray
+      selectedRewardsArray,
+      totalPoints,
+      valueText,
+      valueTextFunc,
+      hasCustom,
+      valueAmountTextFunc,
+      valueAmountText,
+      valueAmountFunc
     } = this.props
+
+    let selectedGifts = {
+      id: selectedRewardsArray.id,
+      name: selectedRewardsArray.name,
+      logo: selectedRewardsArray.logo,
+      qty: valueText,
+      totalPoints : totalPoints,
+      value : selectedRewardsArray.value,
+    }
 
     return (
       <Modal
@@ -30,16 +48,35 @@ class GiftDetailsCheckoutModal extends Component {
           <div className = { 'giftdetails-modal-grid-quantiy' }>
             <div>
               <h4 className = { 'font-size-14px font-weight-600 unionbank-color-grey' }>
-                Steam Wallet 500
+                { selectedRewardsArray && selectedRewardsArray.name }
               </h4>
-              <span className={'giftdetails-price'}>250 Creds</span>
+              {
+                hasCustom &&
+                <label name={ 'denomination-qty' } className={ 'denominations-dialog' }>
+                  <span>Amount</span>
+                  <input id={ 'denomination-qty' }
+                    type={ 'text' }
+                    onChange = { (e) => valueAmountTextFunc(e.target.value, selectedRewardsArray.value) }
+                    value={ valueAmountText }/>
+                </label>
+              }
+              <h4 className = { 'font-weight-lighter font-size-10px unionbank-color-grey' }>1 peso = 20pts</h4>
             </div>
             <div className = { 'text-align-right' }>
+              <h4 className = { 'unionbank-color font-weight-lighter font-size-14px' }>Total Points { totalPoints }</h4>
               <label name={ 'denomination-qty' } className={ 'denominations-dialog' }>
                 <span>Qty</span>
                 <input id={ 'denomination-qty' }
                   type={ 'text' }
-                  value={ '1' }/>
+                  max = { '100' }
+                  onChange = { (e) => {
+                    if(hasCustom) {
+                      valueAmountFunc(e.target.value)
+                    } else {
+                      valueTextFunc(e.target.value, selectedRewardsArray.value)
+                    }
+                  } }
+                  value={ valueText }/>
               </label>
             </div>
           </div>
@@ -62,7 +99,7 @@ class GiftDetailsCheckoutModal extends Component {
             </div>
             <div className = { 'text-align-right margin-auto' }>
               <GenericButton
-                onClick = { () => onSelectThis(selectedRewardsArray) }
+                onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
                 text = { 'SELECT THIS' }
                 className = { 'giftdetails-select' }
               />

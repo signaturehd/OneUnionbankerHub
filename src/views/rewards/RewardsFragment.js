@@ -275,7 +275,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
 								          rewardGifts.length !== 0 ?
 													<div>
 													{
-														rewardGifts.map((resp, key) =>
+														rewardGifts.slice(0, 5).map((resp, key) =>
 															<RewardRedeemFragments
 																rewardGiftsId = { rewardGiftsId }
 																filterTitle = { filterTitle }
