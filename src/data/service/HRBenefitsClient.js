@@ -177,6 +177,16 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getPinCode()
   }
 
+  // Set New Hire Employee
+
+  getNEOStatus () {
+    return this.sessionProvider.getNEOStatus()
+  }
+
+  setNEOStatus (status) {
+    this.sessionProvider.setNEOStatus(status)
+  }
+
   setPreEmploymentStatus (preEmploymentStatus) {
     this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
   }
@@ -1719,6 +1729,11 @@ export default class HRBenefitsClient {
 
   getRewardGifts (token) {
     return this.service.getRewardGifts(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRewardGiftsDenominations (token, merchant, mode) {
+    return this.service.addRewardGiftsDenominations (token, merchant, mode)
     .pipe(ServiceErrorOperator())
   }
 

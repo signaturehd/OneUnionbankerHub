@@ -18,14 +18,7 @@ class GiftsBanner extends Component {
           className={ 'gifts-image gifts-banner' }
           text={ 'Gifts' } >
           <div id = { 'gifts-overlay' }>
-            <div>
-              <GenericButton
-                text={ 'Checkout' }
-                className={ 'gift-button' }
-                onClick={ (e)=> showGiftCart(true) }
-              />
-            </div>
-            <h1 className={ 'gifts-text' }>Send eGifts to Luzon</h1>
+            <h1 className={ 'gifts-text' }>eGifts to UNIONBANKER</h1>
           </div>
         </div>
       </div>

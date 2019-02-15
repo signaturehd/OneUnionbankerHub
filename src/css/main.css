@@ -4,14 +4,21 @@
   }
 }
 
+@font-face {
+  font-family: 'Gotham Light' ;
+  src: url('../fonts/GothamLight.ttf') ;
+  src: local('GothamLight'),
+  url('../fonts/GothamLight.ttf') format('truetype');
+}
+
 body {
   background: url('../images/ub_pattern_bg.png');
   background-size:cover;
-  font-family : 'Roboto', sans-serif !important;
   padding:0;
   margin:0;
-  font-weight:lighter;
+  font-family: 'Gotham Light', sans-serif !important;
 }
+
 i {
   cursor: pointer;
   border: solid #ff8a00;
@@ -332,7 +339,7 @@ p {
 }
 
 .unionbank-color-grey {
-  color: #4e4b48;
+  color: #3a3a3a;
 }
 
 .unionbank-white-color {

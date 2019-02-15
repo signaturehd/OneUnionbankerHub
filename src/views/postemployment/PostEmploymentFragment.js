@@ -86,7 +86,7 @@ class PostEmploymentFragment extends BaseMVPView {
   incrementFunc () {
     let count = this.state.pageId + 1
 
-    if(this.state.pageId === 3) {
+    if(this.state.pageId === 4) {
     } else {
       this.setState({ pageId : count })
     }
@@ -166,6 +166,9 @@ class PostEmploymentFragment extends BaseMVPView {
     }, {
       id: 3,
       name : 'Certificate of Employment',
+    }, {
+      id: 4,
+      name : 'Compliance Videos',
     }]
 
     return (
@@ -267,7 +270,7 @@ class PostEmploymentFragment extends BaseMVPView {
                 hideSubmitButton ?
                 <GenericButton
                   className = { 'preemp-next-button' }
-                  text = { pageId === 3 ? 'Finish' : 'Next' }
+                  text = { pageId === 4 ? 'Finish' : 'Next' }
                   onClick = { () => {
                     this.setState({
                       attachments : []

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+// import staticBanner  from '../../../images/GOALS/mygoal-banner.png'
 import staticBanner  from '../../../images/rewards/giftsBanner.jpg'
+import { GenericButton } from '../../../ub-components/'
 
 class GiftDetailsBannerComponent extends Component {
 
@@ -10,7 +12,10 @@ class GiftDetailsBannerComponent extends Component {
       category,
       locations,
       latitude,
-      longtitude
+      longtitude,
+      showGiftCart,
+      logo,
+      totalPoints
     } = this.props
 
     const locationLength = locations && locations.length
@@ -20,15 +25,34 @@ class GiftDetailsBannerComponent extends Component {
         style = {{
           backgroundImage: `url(${staticBanner})`,
         }}>
-
         <div className = { 'giftdetails-container' }>
           <div
             id = { 'giftdetails-info' }
             className = { 'gift-details-content' }>
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
-            <br/><br/>
+            <div id = { 'gifts-overlay1' }>
+              <div
+                style = {{
+                  paddingRight: '50px'
+                }}
+                className = { 'text-align-right cursor-pointer' }>
+                <img
+                  height = { '50' }
+                  width = { '50' }
+                  onClick={ () => showGiftCart() }
+                  src = { require('../../../images/rewards/cart.png') }/>
+              </div>
+            </div>
+            <br/>
+            <div style = {{
+                backgroundImage : `url(${ logo })`,
+                backgroundSize: 'cover',
+                height: '100px',
+                width: '100px',
+                margin: 'auto',
+                backgroundPosition: 'center',
+                borderRadius: '100px',
+              }}/>
+            <br/>
             <h1>{ name && name ? name : '(No Title Provided)' }</h1>
             <p>{ tagline && tagline ? tagline : '(No Tagline Provided)' }</p>
             <div className = { 'giftdetails-tags' }>

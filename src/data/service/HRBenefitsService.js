@@ -2610,6 +2610,12 @@ export default class HRBenefitsService {
     })
   }
 
+  addRewardGiftsDenominations (token, merchants, mode) {
+    return this.apiClient.post(`v1/rewards/redeem?mode=${mode}`, merchants, {
+      headers : { token }
+    })
+  }
+
   getRewardGifts (token) {
     return this.rootClient.get(`hr/giftaway/v1/merchants`, {
       headers : { token }
