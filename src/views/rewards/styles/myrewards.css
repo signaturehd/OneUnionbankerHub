@@ -12,9 +12,8 @@
 .myreward-grid-container {
   display: grid;
   grid-template-columns: .05fr 1fr.5fr;
-  grid-column-gap: 3em;
-  margin-left: 40px;
-  margin-right: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .myreward-textcolor-white{
@@ -97,7 +96,7 @@
 
 .myrewards-card-container {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   text-align: center;
   column-gap: 2%;
 }

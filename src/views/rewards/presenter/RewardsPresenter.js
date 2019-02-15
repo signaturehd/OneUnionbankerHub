@@ -407,7 +407,7 @@ export default class RewardsPresenter {
   setCategoryType (category) {
     category && category.map((data, key) => {
       let setCategory = [...categoryList]
-      if(!this.checkIdIfExist(data.category.toLowerCase())) {
+      if(!this.checkIdIfExistCategory(data.category.toLowerCase())) {
         setCategory.push(data.category)
         categoryList = setCategory
       }
@@ -427,7 +427,7 @@ export default class RewardsPresenter {
     })
   }
 
-  checkIdIfExist (id) {
+  checkIdIfExistCategory (id) {
     let isBool = false
     for (var i in categoryList) {
       if (categoryList[i].toLowerCase() === id) {

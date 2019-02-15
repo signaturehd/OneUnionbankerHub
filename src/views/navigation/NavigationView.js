@@ -103,12 +103,17 @@ import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 /* Pension Funds */
 import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
 
+/* New Employee Hire */
+import NewEmployeeHireFragment from '../neo/NewEmployeeHireFragment'
 
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
 import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
 
+// footer
+
+import BaseFooterComponent from '../common/components/BaseFooterComponent'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -528,8 +533,13 @@ class NavigationView extends BaseMVPView {
                     agreementBool = { agreementBool }
                     getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/neo' render = { props =>
+                  <NewEmployeeHireFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
+            <br/>
+            <BaseFooterComponent />
           </main>
           <aside
             className ="left-side"
