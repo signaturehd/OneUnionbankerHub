@@ -25,7 +25,7 @@ let platformChecker
 let platformUsed
 let url
 const userAgentTest = window.navigator.userAgent
-const origin = location.origin + '/#/1uhub/charts'
+const origin = location.origin + '/#/1uhub/charts/:array'
 
 if(userAgentTest.toLowerCase().indexOf('android') !== -1) {
   platformUsed = 'android'

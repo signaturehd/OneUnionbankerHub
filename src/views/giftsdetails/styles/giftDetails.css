@@ -1,0 +1,462 @@
+#gifts-overlay1 {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  display: table;
+}
+
+.gift-details-cart {
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  background-repeat: no-repeat;
+}
+
+.gift-cart {
+  background-image: url('../../../images/rewards/cart.png');
+}
+
+#giftdetails-cover {
+  padding-top: 50px;
+  height: 500px;
+  background: #333333 center center no-repeat;
+  background-size: cover;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
+}
+
+#giftdetails-cover .giftdetails-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  display: table;
+  background: -webkit-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: -o-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: -ms-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+}
+
+#giftdetails-cover .giftdetails-content {
+  padding: 0px 100px;
+  display: table-cell;
+  vertical-align: bottom;
+  text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+  padding: 0px 15px;
+}
+
+#giftdetails-cover #giftdetails-info h1 {
+  font-size: 2.5em;
+  line-height: 1.25em;
+  margin-bottom: 15px;
+}
+
+#giftdetails-content .giftdetails-container {
+  padding: 45px 30px 75px;
+  overflow: hidden;
+}
+
+#giftdetails-content h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0.5em;
+}
+#giftdetails-cover #giftdetails-info p {
+  font-size: 1em;
+  font-style: italic;
+  font-family: Georgia, Times New Roman, serif !important;
+  line-height: 1.25em;
+}
+
+#giftdetails-cover #giftdetails-info .giftdetails-tags span {
+  padding: 5px;
+  margin: 0px 10px;
+  display: inline;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 2em;
+  font-size: 0.875em;
+  color: #ffffff;
+}
+
+#giftdetails-cover #giftdetails-info .giftdetails-tags {
+  display: inline-block;
+  margin: 30px auto 45px;
+  padding-top: 15px;
+  border-top: 1px solid #a2a2a2;
+  box-shadow: 0px -1px rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.66);
+  color: rgba(255, 255, 255, 0.66);
+}
+
+@media screen and (min-width: 40em) {
+  #giftdetails-cover #giftdetails-info .giftdetails-tags {
+    max-width: 450px;
+  }
+}
+
+/* Gift Details Denominations  */
+
+#giftdetails-denominations {
+  background: #f5f5f5 url('../../../images/rewards/pw_pattern.png') repeat;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 100%;
+  width: 100%;
+  -webkit-box-shadow: inset 0px -1px 6px 0px rgba(183, 183, 183, 0.5);
+  -moz-box-shadow: inset 0px -1px 6px 0px rgba(183, 183, 183, 0.5);
+  box-shadow: inset 0px -1px 6px 0px rgba(183, 183, 183, 0.5);
+}
+
+#giftdetails-denominations, #about, #locations, #locations-filter, #terms-and-conditions {
+  float: left;
+  width: 100%;
+  padding: 75px 0px;
+}
+
+#giftdetails-denominations ul {
+  height: 100%;
+  width: 100%;
+  margin: 0px auto;
+  list-style-type: none;
+}
+
+#giftdetails-denominations h2 {
+  font-size: 1.25em;
+  line-height: 1.25em;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 0px;
+  margin-bottom: 1.5em;
+}
+
+.giftdetails-denominations {
+  width: 290px;
+  padding: 5px;
+  height: 310px;
+  position: relative;
+  overflow: hidden;
+  margin: 0px 10px 30px;
+  cursor: pointer;
+  background: #fff;
+  vertical-align: middle;
+  display: inline-block;
+  text-align: left;
+  *float: left;
+  box-shadow: 0 1px 2px -1px rgba(0,0,0,0.19);
+  border: 1px solid #d6d6d6;
+  border-radius: 3px;
+  opacity: .85;
+  -webkit-transition: .2s all ease .1s;
+  -moz-transition: .2s all ease .1s;
+  -o-transition: .2s all ease .1s;
+  -ms-transition: .2s all ease .1s;
+  transition: .2s all ease .1s;
+}
+
+.giftdetails-denominations .giftdetails-background {
+  width: 100% !important;
+  padding: 5px;
+}
+
+.giftdetails-details {
+  width: 290px;
+  height: 82px;
+  background-color: #fff;
+  padding: 20px;
+  top: 120px;
+  z-index: 1;
+  -webkit-transition: .2s all ease .1s;
+  -moz-transition: .2s all ease .1s;
+  -o-transition: .2s all ease .1s;
+  -ms-transition: .2s all ease .1s;
+  transition: .2s all ease .1s;
+  -webkit-transform: translate3d(0,0,0);
+}
+
+.giftdetails-price {
+  clear: both;
+  color: #ee7421;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 0.75em;
+  display: block;
+}
+
+.giftdetails-description {
+  margin-top: 1em;
+  padding-top: 0.5em;
+  border-top: 1px solid #d6d6d6;
+  font-style: italic;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.75em;
+  overflow: hidden;
+}
+
+.giftdetails-name {
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0.375em;
+  line-height: 1em;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* About  */
+
+#giftdetails-about {
+  -webkit-box-shadow: 0px 1px 6px 0px rgba(183, 183, 183, 0.5);
+  -moz-box-shadow: 0px 1px 6px 0px rgba(183, 183, 183, 0.5);
+  box-shadow: 0px 1px 6px 0px rgba(183, 183, 183, 0.5);
+  float: left;
+  width: 100%;
+  padding: 75px 0px;
+  content: "";
+  position: relative;
+}
+
+.giftdetails-about-container {
+  padding: 0px 30px;
+  overflow: hidden;
+  margin: 0px auto;
+}
+
+.giftdetails-about-title {
+  font-size: 1.25em;
+  line-height: 1.25em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 0px;
+  margin-bottom: 1.5em;
+}
+
+.giftdetails-about-write-up {
+  font-size: 0.74em;
+  float: left;
+  text-align: justify;
+  margin-bottom: 2em;
+  font-family: Lato, Segoe UI, sans-serif !important;
+  word-spacing: .2em;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.giftdetails-other-info {
+  float: left;
+  margin-right: 0;
+  padding-left: 30px;
+  border-left: 1px solid #aaa;
+}
+
+.giftdetails-other-info h3 {
+  font-size: 1em;
+  margin-top: 0.875em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  color: #ccc;
+  position: relative;
+  z-index: 20;
+}
+
+#giftdetails-about ul:last-child {
+  list-style-type: disc;
+  margin-bottom: 1.5em;
+  margin-left: 0em;
+}
+
+#giftdetails-about .giftdetails-other-info li {
+  display: list-item;
+  text-align: left;
+  line-height: 1.75em;
+  z-index: 20;
+  opacity: 1;
+  position: relative;
+  margin-left: 1.5em;
+  font-size: 0.875em;
+}
+
+#giftdetails-about .giftdetails-about-background {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+  opacity: .5;
+}
+
+#giftdetails-about-cover {
+  padding-top: 50px;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
+}
+
+/* Footer */
+
+.giftdetails-footer-container {
+    padding: 0px 30px;
+    margin: 0px auto;
+}
+
+#giftdetails-footer-cover {
+  padding-top: 50px;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
+}
+
+#giftdetails-footer {
+  clear: both;
+  background: #f1f1f1;
+  padding: 30px 0px;
+  float: left;
+  width: 100%;
+}
+
+#giftdetails-footer .column {
+  float: left;
+  width: 100%;
+  margin: 0 0 1.875em 0;
+}
+
+#giftdetails-footer h3 {
+  font-size: 1em;
+  color: #e74c3c;
+  margin: 0 0 1em 0;
+  text-align: center;
+}
+
+#giftdetails-footer ul li a {
+  color: #a2a2a2;
+  font-size: 0.875em;
+  text-decoration: none;
+}
+
+#giftdetails-footer ul li {
+  list-style-type: none;
+  display: block;
+  margin: 0.5em 0;
+  font-size: 0.875em;
+}
+
+.giftdetails-copyright {
+  margin-top: 0px;
+  text-align: right;
+  float: right;
+  color: #a2a2a2;
+  font-size: 0.875em;
+}
+
+.giftdetails-link {
+  margin-top: 0px;
+  text-align: left;
+  float: left;
+  color: #a2a2a2;
+  font-size: 0.875em;
+}
+
+.giftdetails-copyright2 {
+  border-left: 1px dashed #ccc;
+  color: #a2a2a2;
+  text-align: right;
+  float: right;
+  margin-top: 0px;
+  font-size: 0.875em;
+}
+
+.giftdetails-link a {
+  color: #ee7421;
+  text-decoration: none;
+}
+
+/* Location  */
+
+#giftdetails-location-cover {
+  padding-top: 50px;
+  margin-top: -50px;
+  margin-right: -50px;
+  margin-left: -50px;
+}
+
+.giftdetails-locations {
+  width: 100%;
+  float: left;
+  height: 100%;
+  margin: 0;
+  position: relative;
+  padding: 0;
+}
+
+#giftdetails-map {
+  width: 100%;
+  height: 400px;
+  background: #f9f9f9;
+}
+
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+}
+
+@media (min-width: 550px) {
+  .column:first-child .columns:first-child {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 550px) {
+  .column .columns {
+      margin-left: 4%;
+  }
+
+  .column .columns {
+      width: 100%;
+      float: left;
+      box-sizing: border-box;
+  }
+}
+
+@media screen and (min-width: 40em) {
+  .giftdetails-about-container {
+    max-width: 1030px;
+  }
+  .giftdetails-about-write-up {
+    width: 60%;
+    padding-right: 75px;
+    margin-bottom: 0;
+  }
+  .giftdetails-other-info  {
+    width: 40%;
+  }
+  .giftdetails-footer-container {
+    max-width: 1030px;
+  }
+  #giftdetails-footer ul {
+    text-align: left;
+  }
+  #giftdetails-footer h3 {
+    text-align: left;
+  }
+  #giftdetails-footer .column {
+    width: 25%;
+    min-height: 7.5em;
+  }
+}

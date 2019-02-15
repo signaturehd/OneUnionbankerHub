@@ -1,0 +1,90 @@
+.giftdetails-banner-modal {
+  height: 100px;
+  background-color: #333;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  border: 5px solid #fff;
+  border-bottom: 0;
+}
+
+.giftdetails-modal-grid-quantiy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 15px;
+}
+
+.giftdetails-modal-description {
+  font-size: .7em;
+  font-style: italic;
+  font-family: Georgia, Times New Roman, serif !important;
+  line-height: 1.25em;
+  padding: 0px 10px 10px 15px;
+}
+
+.giftdetails-cancel {
+  color: #888;
+  width: 120px;
+  height: 40px;
+  background-color: #e1e1e1;
+  box-shadow: 0px -2px 0px rgba(0,0,0,0.1) inset;
+  line-height: 40px;
+  display: block;
+  padding: 0;
+  margin-left: 1em;
+  margin-right: 0;
+  min-width: 9em;
+  font-size: 0.75em;
+}
+
+.giftdetails-select {
+  width: 120px;
+  height: 40px;
+  background-color: #ee7421;
+  color: #fff;
+  line-height: 40px;
+  display: block;
+  float: right;
+  padding: 0;
+  margin-right: 1em;
+  margin-left: 0;
+  min-width: 9em;
+  font-size: 0.75em;
+}
+
+.giftdetails-action {
+  border-top: 1px solid #f1f1f1;
+  background: #f9f9f9;
+  width: 100%;
+  height: 80px;
+  margin-top: 20px;
+}
+
+.denominations-dialog {
+  border: 1px solid #e1e1e1;
+  border-radius: 3px;
+  padding: 5px;
+  text-transform: capitalize;
+  font-size: 1em;
+}
+
+.denominations-dialog span {
+  line-height: 1em;
+  padding: 0px 10px;
+  margin-right: 1px;
+  vertical-align: middle;
+  color: #a2a2a2;
+  border-right: 1px solid #e1e1e1;
+  font-size: 0.75em;
+}
+
+.denominations-dialog input[type="text"] {
+  width: 3.5em;
+  border: 0;
+  outline: 0;
+  text-align: right;
+  font-weight: bold;
+  margin: 0;
+  font-family: Lato, 'Segoe UI', Verdana, sans-serif;
+}

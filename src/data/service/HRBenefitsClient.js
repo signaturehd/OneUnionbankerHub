@@ -177,6 +177,16 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getPinCode()
   }
 
+  // Set New Hire Employee
+
+  getNEOStatus () {
+    return this.sessionProvider.getNEOStatus()
+  }
+
+  setNEOStatus (status) {
+    this.sessionProvider.setNEOStatus(status)
+  }
+
   setPreEmploymentStatus (preEmploymentStatus) {
     this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
   }
@@ -1676,6 +1686,21 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addPensionFundsDocuments (token) {
+    return this.service.addPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addPensionContributional (token, amount, code) {
+    return this.service.addPensionContributional (token, amount, code)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsHistory (token) {
+    return this.service.getPensionFundsHistory (token)
+    .pipe(ServiceErrorOperator())
+  }
+
   getPensionValidate (token) {
     return this.service.getPensionValidate(token)
     .pipe(ServiceErrorOperator())
@@ -1695,6 +1720,16 @@ export default class HRBenefitsClient {
   getRewardPoints (token) {
     return this.service.getRewardPoints(token)
       .pipe(ServiceErrorOperator())
+  }
+
+  getRewardGiftsDetails (token, id) {
+    return this.service.getRewardGiftsDetails(token, id)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getRewardGifts (token) {
+    return this.service.getRewardGifts(token)
+    .pipe(ServiceErrorOperator())
   }
 
   submitAwards (token, objectParam) {

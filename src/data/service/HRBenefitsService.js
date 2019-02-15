@@ -2055,6 +2055,8 @@ export default class HRBenefitsService {
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      vendor: laptopLeaseParam.vendor,
+     brand: laptopLeaseParam.brand,
+     model: laptopLeaseParam.model,
      or: {
        number : laptopLeaseParam.orNumber,
        date: laptopLeaseParam.orDate
@@ -2529,13 +2531,38 @@ export default class HRBenefitsService {
   /* Pension Funds */
 
   getPensionFundsDocuments (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('appian/pension/v1/agreements', {
+      headers : { token }
+    })
+  }
+
+  addPensionFundsDocuments (token) {
+    const hasAgreedObject = {
+      hasAgreed : "1",
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
+  addPensionContributional (token, amount, code) {
+    const hasAgreedObject = {
+      amount : amount,
+      pinCode: code,
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
       headers : { token }
     })
   }
 
   getPensionFunds (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('/appian/pension/v1/investments', {
+      headers : { token }
+    })
+  }
+
+  getPensionFundsHistory (token) {
+    return this.rootClient.get(`appian/pension/v1`, {
       headers : { token }
     })
   }
@@ -2573,6 +2600,18 @@ export default class HRBenefitsService {
 
   getRewardPoints (token) {
     return this.apiClient.get('v1/rewards?', {
+      headers : { token }
+    })
+  }
+
+  getRewardGiftsDetails (token, id) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants/${ id }`, {
+      headers : { token }
+    })
+  }
+
+  getRewardGifts (token) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants`, {
       headers : { token }
     })
   }
