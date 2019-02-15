@@ -18,7 +18,7 @@ class PensionDocumentsComponent extends Component {
 
   render () {
     const {
-      name,
+      title,
       id,
       content,
       documents,
@@ -33,15 +33,27 @@ class PensionDocumentsComponent extends Component {
       <Card
         key = { id }
         className = { 'funds-documents-card' }>
+        <center>
+          <h4 className = { 'font-weight-500 font-size-25px' }>{ title }</h4>
+          <br/>
+          <br/>
+        </center>
         <div
-          dangerouslySetInnerHTML = {{ __html : content }}></div>
+          style = {{
+            fontWeight: 'lighter !important',
+            fontSize: '14px !important',
+          }}
+          dangerouslySetInnerHTML = {{ __html : content }} />
         <br/>
         <center>
-          <Checkbox
-            checked = { isChecked && isChecked }
-            onChange = { () => changeCheckedFunc(isChecked, id) }
-            label = { 'I Agree in terms and conditions' }
-          />
+          {
+            id === 3 &&
+            <Checkbox
+              checked = { isChecked }
+              onChange = { () => changeCheckedFunc(isChecked, id) }
+              label = { 'I HAVE COMPLETELY READ AND FULLY UNDERSTOOD THIS RISK DISCLOSURE STATEMENT AND PENSION RULES, AND GRANT AUTHORITY TO THE BANK TO DEDUCT MY MONTHLY CONTRIBUTION FROM MY PAYROLL BEFORE I AFFIXED MY DIGITAL SIGNATURE THROUGH MY PIN-CODE.   I HEREBY VOLUNTARILY AND WILLINGLY AGREE TO COMPLY WITH ANY AND ALL LAWS, REGULATIONS, THE PLAN RULES, TERMS AND CONDITIONS GOVERNING MY/OUR INVESTMENT IN THE UNIONABNK RETIREMENT PENSION FUND. ' }
+            />
+          }
           <br/>
           <br/>
           <div className = {'grid-global-columns-x3' }>
@@ -56,13 +68,9 @@ class PensionDocumentsComponent extends Component {
                 }
               </div>
               <div>
-                {
-                  isChecked === true ?
-                  <i
-                    className = { 'forward-arrow' }
-                    onClick = { () =>  statusCodeFunc (true,id) }></i>
-                  :<p> </p>
-                }
+                <i
+                  className = { 'forward-arrow' }
+                  onClick = { () =>  statusCodeFunc (true,id) }></i>
               </div>
             </div>
             <div></div>

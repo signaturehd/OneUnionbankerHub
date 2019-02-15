@@ -57,7 +57,7 @@ class PensionFundsDocumentsFragment extends Component {
                 <div>
                   {
                     pensionFundsDocumentsData &&
-                    pensionFundsDocumentsData.forms.map((resp) =>
+                    pensionFundsDocumentsData.map((resp) =>
                       resp.id === stepperStatus &&
                       <PensionDocumentsComponent
                         id = { resp.id }

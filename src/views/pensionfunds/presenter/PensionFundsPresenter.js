@@ -6,6 +6,7 @@ import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pension
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
 
+let documentsData = []
 let mockData = {
   'totalUnits': '15.34',
   'totalInvestment' : '20000',
@@ -63,7 +64,7 @@ let mockDataDocuments = {
   ]
 }
 
-let agreementData  = '', pensionData = '', pensionHistory = []
+let agreementData  = [], pensionData = '', pensionHistory = []
 
 export default class PensionFundsPresenter {
   constructor (container) {
@@ -80,7 +81,7 @@ export default class PensionFundsPresenter {
   }
 
   setAgreeementDataPresenter (data) {
-    agreementData = data
+    documentsData = data
     this.view.setPensionFundsDocumentsData(data)
   }
 
@@ -92,6 +93,7 @@ export default class PensionFundsPresenter {
   getPensionValidate () {
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
+      this.view.set
     }, error => {
 
     })
@@ -100,7 +102,7 @@ export default class PensionFundsPresenter {
   setDocumentsCheckerPresenter (check, id) {
     let newData
     let formsData = []
-    agreementData.forms.map((resp) => {
+    documentsData.map((resp) => {
 
       if(id === resp.id) {
         formsData.push({
@@ -118,10 +120,7 @@ export default class PensionFundsPresenter {
         })
       }
 
-      const objectParam = {
-        forms : formsData
-      }
-      this.setAgreeementDataPresenter(objectParam)
+      this.setAgreeementDataPresenter(formsData)
     })
   }
 
@@ -137,7 +136,6 @@ export default class PensionFundsPresenter {
   setPaymentCheckerPresenter(check , id , key) {
     let newData
     let formsData = []
-    console.log(check,id,key)
     pensionData.paymentHistory.map((resp) => {
       if(id === resp.id) {
         formsData.push({
@@ -251,22 +249,39 @@ export default class PensionFundsPresenter {
     this.getPensionFundsInteractor.execute()
     .subscribe(data => {
       this.view.setPensionFundsPresenter(data)
-      //this.view.showCircularLoader(false)
     }, error => {
-    //  alert('error')
-      // this.view.showCircularLoader(false)
     })
   }
 
   getPensionFundsDocuments () {
+    this.view.showCircularLoader(true)
     this.getPensionFundsDocumentsInteractor.execute()
-  //  this.view.showCircularLoader(true)
     .subscribe(data => {
-      this.view.setPensionFundsDocumentsData2(data)
-    //  this.view.showCircularLoader(false)
+      this.view.showCircularLoader(false)
+
+      let newData = [...documentsData]
+      newData.push({
+        id: 1,
+        name: 'Risk Disclosure',
+        isChecked: false,
+        content: data.risks,
+      })
+      newData.push({
+        id: 2,
+        name: 'Pension Rules',
+        isChecked : false,
+        content: data.rules,
+      })
+      newData.push({
+        id: 3,
+        name: 'Authority to Deduct from Payroll',
+        isChecked : false,
+        content: data.disclosures,
+      })
+      documentsData = newData
+      this.view.setPensionFundsDocumentsData(documentsData)
     }, error => {
-      alert('error document')
-    //  this.view.showCircularLoader(false)
+      this.view.showCircularLoader(false)
     })
   }
 

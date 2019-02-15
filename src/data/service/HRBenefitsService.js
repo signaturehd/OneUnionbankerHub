@@ -2580,7 +2580,7 @@ export default class HRBenefitsService {
   }
 
   getPensionValidate (token) {
-    return this.apiClient.get('v1/eligibility ', {
+    return this.rootClient.get('appian/pension/v1', {
       headers : { token }
     })
   }

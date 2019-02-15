@@ -42,8 +42,8 @@ class PensionFundsFragment extends BaseMVPView {
 
   componentDidMount () {
     this.presenter.getPensionFunds()
-    //this.presenter.getPensionValidate()
-    this.presenter.getMockData()
+    this.presenter.getPensionValidate()
+    // this.presenter.getMockData()
     this.presenter.setUnitSummary('year')
     this.presenter.getPensionFundsDocuments()
 
@@ -59,6 +59,10 @@ class PensionFundsFragment extends BaseMVPView {
 
   setPensionFundsData (pensionFundsData) {
     this.setState({ pensionFundsData })
+  }
+
+  setPensionFundsPresenter (pensionContributionData) {
+    this.setState({ pensionContributionData })
   }
 
   setPensionFundsDocumentsData (pensionFundsDocumentsData) {
@@ -95,7 +99,8 @@ class PensionFundsFragment extends BaseMVPView {
       isPincode,
       noticeResponse,
       amountText,
-      showNoticeResponseModal
+      showNoticeResponseModal,
+      pensionContributionData
     } = this.state
 
     return (
@@ -183,15 +188,13 @@ class PensionFundsFragment extends BaseMVPView {
                         try{
                           this.presenter.setPaymentCheckRefresh('false')
                           this.presenter.setPaymentCheckerPresenter(bool, id)
-
                         } catch(e){
                           console.log(e)
                         }
                       } }/> :
                     <PensionFundsDocumentsFragment
-
                       statusCodeFunc = { (stepperStatus,bool,id) =>
-                        id === 3 ?
+                        id === 3 && bool  ?
                         this.presenter.addPensionFundsDocuments()
                         :
                         this.setState({ stepperStatus })

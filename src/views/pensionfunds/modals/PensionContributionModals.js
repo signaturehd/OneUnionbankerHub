@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericInput, GenericButton, Modal } from '../../../ub-components/'
+import { GenericInput, GenericButton, Modal, SliderComponent } from '../../../ub-components/'
 
 import '../styles/fundsStyle.css'
 
@@ -21,13 +21,17 @@ class PensionContributionModals extends Component {
 
     return (
       <Modal>
-        <GenericInput
-          value = { amountText }
-          text = { 'Enter your Contribution Amount' }
-          type = { 'text' }
-          errorMessage = { '' }
-          onChange = { (e) => amountTextFunc(e.target.value) }
+        <div>
+          <div className = { 'font-size-10px unionbank-color-grey' }>
+            Slide Contribution Amount
+          </div>
+          <br/>
+          <SliderComponent
+            onChangeValue = { (amount) => amountTextFunc(amount) }
+            min = { 5000 }
+            max = { 50000 }
           />
+        </div>
         <br/>
         <center className = { 'grid-global' }>
           <GenericButton
