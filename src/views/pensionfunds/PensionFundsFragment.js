@@ -132,6 +132,7 @@ class PensionFundsFragment extends BaseMVPView {
         {
           showContributionModal &&
            <PensionContributionModals
+              amountText = { amountText }
               amountTextFunc = { (amountText) => this.setState({ amountText }) }
               continueCodeFunc = { () => {
                 this.setState({

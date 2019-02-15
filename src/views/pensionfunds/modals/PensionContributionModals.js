@@ -22,13 +22,12 @@ class PensionContributionModals extends Component {
     return (
       <Modal>
         <div>
-          <div className = { 'font-size-10px unionbank-color-grey' }>
-            Slide Contribution Amount
-          </div>
-          <br/>
+          <center className = { 'unionbank-color font-size-16px' }>{amountText}</center>
           <SliderComponent
-            onChangeValue = { (amount) => amountTextFunc(amount) }
+            onChangeValue = { (amount) => {
+              amountTextFunc(amount)} }
             min = { 5000 }
+            text = { 'Slide Contribution Amount' }
             max = { 50000 }
           />
         </div>
