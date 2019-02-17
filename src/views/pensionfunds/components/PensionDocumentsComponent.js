@@ -58,20 +58,37 @@ class PensionDocumentsComponent extends Component {
           <br/>
           <div className = {'grid-global-columns-x3' }>
             <div></div>
-            <div className = { `${ id > 1 ? 'grid-global' : 'text-align-center' }` }>
-              <div>
-                {
-                  id > 1 &&
-                  <i
-                    className = { 'back-arrow' }
-                    onClick = { () =>  statusCodeReturnFunc () }></i>
-                }
-              </div>
-              <div>
-                <i
-                  className = { 'forward-arrow' }
-                  onClick = { () =>  statusCodeFunc (true,id) }></i>
-              </div>
+            <div>
+              {
+                id === 3 &&
+                isChecked ?
+                <div className = { 'margin-auto text-align-center' }>
+                  <GenericButton
+                    text = { 'PROCEED' }
+                    className = { 'global-button profile-button-small cursor-pointer' }
+                    onClick = { () =>  statusCodeFunc (true,id) }
+                  />
+                </div>
+                :
+                <div className = { `${ id > 1 ? 'grid-global' : 'text-align-center' }` }>
+                  <div>
+                    {
+                      id > 1 &&
+                      <i
+                        className = { 'back-arrow' }
+                        onClick = { () =>  statusCodeReturnFunc () }></i>
+                    }
+                  </div>
+                  <div>
+                    {
+                      id !== 3 &&
+                      <i
+                        className = { 'forward-arrow' }
+                        onClick = { () =>  statusCodeFunc (true,id) }></i>
+                    }
+                  </div>
+                </div>
+              }
             </div>
             <div></div>
           </div>

@@ -135,7 +135,7 @@ class NavigationView extends BaseMVPView {
       employeeNumber : '',
       profileDisplay : 'none',
       profillePosition: '',
-      agreementBool: ''
+      agreementBool: null
     }
 
     this.setDisplay = this.setDisplay.bind(this)

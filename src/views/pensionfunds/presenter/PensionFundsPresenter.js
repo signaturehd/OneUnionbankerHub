@@ -9,7 +9,53 @@ import AddPensionContributionalInteractor from '../../../domain/interactor/pensi
 // PUT
 import UpdatePensionContributionalInteractor from '../../../domain/interactor/pensionfunds/UpdatePensionContributionalInteractor'
 
+import moment from 'moment'
+
 let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
+
+
+let dateMock = [
+  {
+    id: 0,
+    value : 4000,
+    date: '02/06/2019',
+  },
+  {
+    id: 1,
+    value : 300,
+    date: '03/12/2019',
+  },
+  {
+    id: 2,
+    value : 300,
+    date: '01/01/2018',
+  },
+  {
+    id: 3,
+    value : 241,
+    date: '01/12/2019',
+  },
+  {
+    id: 4,
+    value : 241,
+    date: '01/12/2017',
+  },
+  {
+    id: 5,
+    value : 1231,
+    date: '11/08/2018',
+  },
+  {
+    id: 5,
+    value : 123123,
+    date: '08/12/2016',
+  },
+  {
+    id: 5,
+    value : 12,
+    date: '08/12/2016',
+  },
+]
 
 export default class PensionFundsPresenter {
   constructor (container) {
@@ -39,9 +85,9 @@ export default class PensionFundsPresenter {
   getPensionValidate () {
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
-      this.view.set
+      console.log(data)
+      this.view.setPensionContributionData(data)
     }, error => {
-
     })
   }
 
@@ -124,69 +170,47 @@ export default class PensionFundsPresenter {
   setUnitSummary(variable){
     let unit = []
     let items = []
-
-    if(variable === 'week' || variable === 'WEEK'){
-
-      const x = [1,2,3,4,5].map(x => {
-
-        if (x === 1) {
-            return (  x+'st' +' Week')
-        } else if (x === 2 ){
-            return (  x+'nd' +' Week')
-        } else if (x % 3 === 0 ){
-            return (  x+' rd' +' Week' )
-        } else {
-            return (x+'th' + ' Week')
+    let totalValue
+    if(variable.toLowerCase() === 'month'){
+    dateMock.map((x, key) => {
+        if(moment(x.date).getMonth() === '01') {
+          console.log('January')
         }
-      })
+     })
+   } else if(variable.toLowerCase() === 'quarterly'){
 
-      items = x
+     const x = [1,2,3,4].map(x => {
+       if(x === 1){
+         return (  x+'st' +' Quarter')
+       }  else if(x % 3 === 0 ){
+         return (  x+' rd' +' Quarter' )
+       }  else{
+         return (x+'th' + ' Quarter')
+       }
+     })
+     items = x
 
-     } else if(variable === 'month' || variable === 'MONTH'){
+   } else if(variable.toLowerCase() === 'year'){
 
-       const x = [1,2,3,4,5].map(x => {
-         if(x === 1){
-           return (  x+'st' +' Month')
-         } else if(x % 3 === 0 ){
-           return (  x+' rd' +' Month' )
-         } else{
-           return (x+'th' + ' Month')
-         }
-       })
-
-       items = x
-
-     } else if(variable === 'quarterly' || variable === 'QUARTERLY'){
-
-       const x = [1,2,3,4,5].map(x => {
-         if(x === 1){
-           return (  x+'st' +' Quarter')
-         }  else if(x % 3 === 0 ){
-           return (  x+' rd' +' Quarter' )
-         }  else{
-           return (x+'th' + ' Quarter')
-         }
+     const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
+       return (
+         x + ' Year'
+         )
        })
        items = x
 
-     } else if(variable === 'year' || variable === 'YEAR'){
-
-       const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
-         return (
-           x + ' Year'
-           )
-         })
-         items = x
-
-     }
-     this.view.setChartPensionData(items)
+   }
+   this.view.setChartPensionData(items)
   }
 
   getPensionFunds () {
+    this.view.showCircularLoader(true)
     this.getPensionFundsInteractor.execute()
     .subscribe(data => {
       this.view.setPensionFundsPresenter(data)
+      this.view.showCircularLoader(false)
     }, error => {
+      this.view.showCircularLoader(false)
     })
   }
 
@@ -242,8 +266,11 @@ export default class PensionFundsPresenter {
     this.addPensionContributionalInteractor.execute(amount, code)
     .subscribe (data => {
       this.view.noticeResponse(data)
+      this.getPensionFunds()
+      this.getPensionValidate()
+      this.setUnitSummary('year')
+      this.getPensionFundsDocuments()
       this.view.showCircularLoader(false)
-      this.view.resetData()
     }, error => {
       this.view.showCircularLoader(false)
     })
@@ -254,8 +281,11 @@ export default class PensionFundsPresenter {
     this.updatePensionContributionalInteractor.execute(amount, code)
     .subscribe (data => {
       this.view.noticeResponse(data)
+      this.getPensionFunds()
+      this.getPensionValidate()
+      this.setUnitSummary('year')
+      this.getPensionFundsDocuments()
       this.view.showCircularLoader(false)
-      this.view.resetData()
     }, error => {
       this.view.showCircularLoader(false)
     })

@@ -22,7 +22,7 @@ class PensionCodeModals extends Component {
       <Modal>
         <GenericInput
           value = { codeText }
-          text = { 'Enter your Four digit activation code' }
+          text = { 'Enter your five digit activation code' }
           type = { 'text' }
           errorMessage = { '' }
           onChange = { (e) => codeTextFunc(e.target.value) }

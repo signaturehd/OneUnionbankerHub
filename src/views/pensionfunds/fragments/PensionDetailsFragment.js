@@ -29,7 +29,8 @@ class PensionDetailsFragment extends Component {
       pensionFundsData,
       changePaymentFunc,
       pensionChartData,
-      contributionModal
+      contributionModal,
+      pensionContributionData
     } = this.props
 
     return (

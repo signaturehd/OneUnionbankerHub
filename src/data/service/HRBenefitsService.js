@@ -2570,13 +2570,7 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
-
-  getPensionFundsHistory (token) {
-    return this.rootClient.get(`appian/pension/v1`, {
-      headers : { token }
-    })
-  }
-
+  
   submitPensionPin (token, pin) {
     return this.apiClient.get('v1/phension', {
       headers : { token }

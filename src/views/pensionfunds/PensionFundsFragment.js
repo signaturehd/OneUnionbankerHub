@@ -43,10 +43,8 @@ class PensionFundsFragment extends BaseMVPView {
   componentDidMount () {
     this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
-    // this.presenter.getMockData()
     this.presenter.setUnitSummary('year')
     this.presenter.getPensionFundsDocuments()
-
   }
 
   noticeResponse (noticeResponse) {
@@ -72,17 +70,23 @@ class PensionFundsFragment extends BaseMVPView {
   setChartPensionData(pensionChartData){
     this.setState({pensionChartData})
   }
-  navigate () {
-    this.props.history.push('/phenom')
+
+  setPensionContributionData (pensionContributionData) {
+    this.setState({
+      pensionContributionData,
+      amountText :
+        pensionContributionData &&
+        pensionContributionData.contribution &&
+        pensionContributionData.contribution.amount
+    })
   }
 
   resetData () {
     this.setState({ amountText: '', codeText: '' })
-    this.props.getProfileFunc()
   }
 
   render () {
-    const { agreementBool } = this.props
+    const { agreementBool, getProfileFunc } = this.props
     const {
       loader,
       pensionFundsData,
@@ -110,17 +114,25 @@ class PensionFundsFragment extends BaseMVPView {
           showNoticeResponseModal  &&
           <NoticeResponse
             noticeResponse = { noticeResponse }
-            onClose = { () =>
+            onClose = { () =>{
               this.setState({
                 showNoticeResponseModal : false,
-                showContributionModal : true
-            }) }
+                showContributionModal : false
+            })
+            getProfileFunc()
+          } }
           />
         }
         {
           showCodeModal &&
           <PensionCodeModals
-            submitCodeFunc = { () => this.presenter.addPensionContributional(amountText, codeText) }
+            submitCodeFunc = { () => {
+              if(agreementBool && agreementBool.pensionAgreement) {
+                this.presenter.updatePensionContributional(amountText, codeText)
+              } else {
+                this.presenter.addPensionContributional(amountText, codeText)
+              }
+            } }
             codeTextFunc = { (codeText) => this.setState({ codeText }) }
             codeText = { codeText }
             cancelCodeFunc = { () => {
@@ -133,6 +145,7 @@ class PensionFundsFragment extends BaseMVPView {
           showContributionModal &&
            <PensionContributionModals
               amountText = { amountText }
+              isBool = { agreementBool && agreementBool.pensionAgreement }
               amountTextFunc = { (amountText) => this.setState({ amountText }) }
               continueCodeFunc = { () => {
                 this.setState({
@@ -173,10 +186,11 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                 {
-                  stepperStatus === 4 || agreementBool === false || agreementBool === null ?
+                  agreementBool &&
+                  agreementBool.pensionAgreement === true ?
                   <PensionDetailsFragment
+                    pensionContributionData = { pensionContributionData }
                     contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
-                    //contributionModalFunc = { (showContributionModal) => setState({showContributionModal}) }
                     pensionChartData = { pensionChartData }
                       tabsId = { tabsId }
                       tabsIdFunc = { (tabsId) => {
