@@ -6,65 +6,10 @@ import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pension
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
 
-let documentsData = []
-let mockData = {
-  'totalUnits': '15.34',
-  'totalInvestment' : '20000',
-  'unitToday': '425.07',
-  'paymentHistory' : [
-    {
-      'id': 1,
-      'datePayment': '01/01/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }, {
-      'id': 2,
-      'datePayment': '01/02/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }, {
-      'id': 3,
-      'datePayment': '03/03/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }, {
-      'id': 4,
-      'datePayment': '04/04/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }
-  ]
-}
+// PUT
+import UpdatePensionContributionalInteractor from '../../../domain/interactor/pensionfunds/UpdatePensionContributionalInteractor'
 
-let mockDataDocuments = {
-  'completed' : 0,
-  'forms': [
-    {
-      'id' : 1,
-      'name': "Risk",
-      'content': `<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><body style="margin-left:5%; margin-right:5%; margin-top:5%; font-family: 'Roboto', sans-serif;"> <center><h4>Retirement Pension Fund Riks</h4></center> <p style="text-align: justify;"> I hereby agree on the following terms: <ul> <li style="padding: 5px 0 5px 0;">I will immediately advise HR soonest the selected appointment schedule date was not attended or completed;</li><li style="padding: 5px 0 5px 0;">Any non-  coverable dental expenses incurred, or any dental procedure not stated herein, pursuant to stated appointment schedule date shall be paid directly and shouldered solely by myself and/or my dependent to Healthway Medical Clinic;</li><li style="padding: 5px 0 5px 0;">Lastly, this transaction remains open and therefore eligibility and limits are locked, until Healthway Medical Clinic has reported the confirmed completed procedures in their Statement of Account and paid by the Bank.</li></ul> </p></body>`,
-      'isChecked' : false,
-    },
-    {
-      'id' : 2,
-      'name': "Rules",
-      'content': `<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><body style="margin-left:5%; margin-right:5%; margin-top:5%; font-family: 'Roboto', sans-serif;"> <center><h4>Retirement Pension Fund Rules</h4></center> <p style="text-align: justify;"> I hereby agree on the following terms: <ul> <li style="padding: 5px 0 5px 0;">I will immediately advise HR soonest the selected appointment schedule date was not attended or completed;</li><li style="padding: 5px 0 5px 0;">Any non-  coverable dental expenses incurred, or any dental procedure not stated herein, pursuant to stated appointment schedule date shall be paid directly and shouldered solely by myself and/or my dependent to Healthway Medical Clinic;</li><li style="padding: 5px 0 5px 0;">Lastly, this transaction remains open and therefore eligibility and limits are locked, until Healthway Medical Clinic has reported the confirmed completed procedures in their Statement of Account and paid by the Bank.</li></ul> </p></body>`,
-      'isChecked' : false,
-    },
-    {
-      'id' : 3,
-      'name': "Disclosure",
-      'content': `<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><body style="margin-left:5%; margin-right:5%; margin-top:5%; font-family: 'Roboto', sans-serif;"> <center><h4>Retirement Pension Fund Disclosure</h4></center> <p style="text-align: justify;"> I hereby agree on the following terms: <ul> <li style="padding: 5px 0 5px 0;">I will immediately advise HR soonest the selected appointment schedule date was not attended or completed;</li><li style="padding: 5px 0 5px 0;">Any non-  coverable dental expenses incurred, or any dental procedure not stated herein, pursuant to stated appointment schedule date shall be paid directly and shouldered solely by myself and/or my dependent to Healthway Medical Clinic;</li><li style="padding: 5px 0 5px 0;">Lastly, this transaction remains open and therefore eligibility and limits are locked, until Healthway Medical Clinic has reported the confirmed completed procedures in their Statement of Account and paid by the Bank.</li></ul> </p></body>`,
-      'isChecked' : false,
-    },
-  ]
-}
-
-let agreementData  = [], pensionData = '', pensionHistory = []
+let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
 
 export default class PensionFundsPresenter {
   constructor (container) {
@@ -74,6 +19,7 @@ export default class PensionFundsPresenter {
     this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
     this.addPensionFundsDocumentsInteractor = new AddPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
     this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
+    this.updatePensionContributionalInteractor = new UpdatePensionContributionalInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -122,15 +68,6 @@ export default class PensionFundsPresenter {
 
       this.setAgreeementDataPresenter(formsData)
     })
-  }
-
-  getMockData () {
-    try {
-      this.setPensionFundsPresenter(mockData)
-      this.setAgreeementDataPresenter(mockDataDocuments)
-    } catch(e) {
-      console.log(e)
-    }
   }
 
   setPaymentCheckerPresenter(check , id , key) {
@@ -303,6 +240,18 @@ export default class PensionFundsPresenter {
   addPensionContributional (amount, code) {
     this.view.showCircularLoader(true)
     this.addPensionContributionalInteractor.execute(amount, code)
+    .subscribe (data => {
+      this.view.noticeResponse(data)
+      this.view.showCircularLoader(false)
+      this.view.resetData()
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
+  updatePensionContributional (amount, code) {
+    this.view.showCircularLoader(true)
+    this.updatePensionContributionalInteractor.execute(amount, code)
     .subscribe (data => {
       this.view.noticeResponse(data)
       this.view.showCircularLoader(false)
