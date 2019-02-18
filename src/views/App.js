@@ -14,6 +14,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { EventActions } from '../actions'
 
+/* Mobile Charts */
+import PensionFundsChartComponent from './pensionfunds/components/PensionFundsChartComponent'
+
 const mapStateToProps = state => ({
   events: state.events,
 })
@@ -54,8 +57,13 @@ class App extends BaseMVPView {
       <div>
         <Switch>
           <Route
+            path = '/1uhub/charts/:array'
+            render = { props => <PensionFundsChartComponent
+              url = { true }
+              { ...props }/> }/>
+          <Route
             path = '/success/:token'
-            render = { props => <ResetPasswordView  { ...props }/> }/>
+            render = { props => <ResetPasswordView { ...props }/> }/>
           <Route path = '/' render={props => {
             if (this.state.isLogin) {
               return <NavigationView  { ...props } />

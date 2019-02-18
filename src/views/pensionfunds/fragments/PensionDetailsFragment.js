@@ -66,7 +66,7 @@ class PensionDetailsFragment extends Component {
             <div></div>
           </div>
           <PensionFundsChartComponent
-              pensionChartData = { pensionChartData }
+            pensionChartData = { pensionChartData }
           /><br/>
         </div>
         <div>
