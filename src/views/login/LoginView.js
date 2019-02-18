@@ -271,7 +271,7 @@ class LoginView extends BaseMVPView {
     /* Added new Team Goals */
 
     let version = 8
-    let majorVersion = 0
+    let majorVersion = 2
     let minorVersion = 1
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 

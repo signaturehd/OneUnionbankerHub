@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { GenericInput, GenericButton, Modal } from '../../../ub-components/'
+import { GenericInput, GenericButton, Modal, SliderComponent } from '../../../ub-components/'
 
 import '../styles/fundsStyle.css'
 
@@ -17,19 +17,23 @@ class PensionContributionModals extends Component {
       submitCodeFunc,
       cancelCodeFunc,
       continueCodeFunc,
+      isBool
     } = this.props
 
     return (
       <Modal>
-        <GenericInput
-          value = { amountText }
-          text = { 'Enter your Contribution Amount' }
-          type = { 'text' }
-          errorMessage = { '' }
-          onChange = { (e) => amountTextFunc(e.target.value) }
+        <div>
+          <center className = { 'unionbank-color font-size-16px' }>{amountText}</center>
+          <SliderComponent
+            onChangeValue = { (amount) => {
+              amountTextFunc(amount)} }
+            min = { 5000 }
+            text = { 'Slide Contribution Amount' }
+            max = { 50000 }
           />
+        </div>
         <br/>
-        <center>
+        <center className = { 'grid-global' }>
           <GenericButton
             className = { 'profile-button-small' }
             text = { 'Cancel' }
@@ -37,8 +41,10 @@ class PensionContributionModals extends Component {
             />
           <GenericButton
             className = { 'profile-button-small' }
-            text = { 'Continue' }
-            onClick = { () => continueCodeFunc() }
+            text = { `${ isBool ? 'Update' : 'Continue' }` }
+            onClick = { () => {
+              continueCodeFunc()
+            } }
             />
         </center>
       </Modal>

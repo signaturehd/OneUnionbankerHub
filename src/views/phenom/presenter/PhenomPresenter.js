@@ -25,11 +25,11 @@ export default class PhenomPresenter {
     this.view.showCircularLoader()
     this.getPhenomDiscountsInteractor.execute()
     .subscribe(resp => {
+      this.view.hideCircularLoader()
       phenomData.push(resp)
       if (phenomData.length !== 0) {
         this.view.showPhenomDiscountList(phenomData)
       }
-      this.view.hideCircularLoader()
     }, e => {
       this.view.hideCircularLoader()
     })
@@ -42,14 +42,17 @@ export default class PhenomPresenter {
   }
 
   getPhenomDiscountsNoLoading () {
+    this.view.showCircularLoader()
     phenomData = []
     this.getPhenomDiscountsInteractor.execute()
       .subscribe(resp => {
+        this.view.hideCircularLoader()
           phenomData.push(resp)
           if (phenomData.length !== 0) {
             this.view.showPhenomDiscountList(phenomData)
           }
         }, e => {
+          this.view.hideCircularLoader()
       })
     // .subscribe(data => {
     //   this.view.showCircularLoader(false)
@@ -63,18 +66,20 @@ export default class PhenomPresenter {
     this.view.showCircularLoader()
     this.getPhenomDetailsInteractor.execute(id)
     .subscribe(data => {
-      this.view.showPhenomDetails(data, true)
       this.view.hideCircularLoader()
+      this.view.showPhenomDetails(data, true)
     }, error => {
       this.view.hideCircularLoader()
     })
   }
 
   addPhenomIsHeart (id, isHeart) {
+    this.view.showCircularLoader()
     this.addCheckedStatusIsHeartInteractor.execute(id, isHeart === 0 ? 1 : 0)
     .subscribe(data => {
       this.getPhenomDiscountsNoLoading()
     }, error => {
+      this.view.hideCircularLoader()
     })
   }
 

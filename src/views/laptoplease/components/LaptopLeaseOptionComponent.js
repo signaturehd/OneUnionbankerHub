@@ -33,7 +33,6 @@ class LaptopLeaseOptionComponent extends Component {
 
     return (
       <div className = { 'laptoplease-option-grid' }>
-        <div></div>
         <div className = { 'grid-global' }>
           {
             laptopLeaseOption.map((resp, key) =>

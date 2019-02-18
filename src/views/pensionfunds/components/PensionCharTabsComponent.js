@@ -20,11 +20,13 @@ class PensionCharTabsComponent extends Component {
 
     return (
       <div className = { 'funds-tabs-component font-size-14px text-align-center' }>
-        <div
-          onClick = { () => tabsIdFunc('week') }
-          className = { ` cursor-pointer ${ tabsId ===  'week' ? 'funds-tab-selected' : 'funds-tab' }` }
-          id = { 'week' }
-          >Week</div>
+        {
+          // <div
+          //   onClick = { () => tabsIdFunc('week') }
+          //   className = { ` cursor-pointer ${ tabsId ===  'week' ? 'funds-tab-selected' : 'funds-tab' }` }
+          //   id = { 'week' }
+          //   >Week</div>
+        }
         <div
           onClick = { () => tabsIdFunc('month') }
           className = { ` cursor-pointer ${ tabsId ===  'month' ? 'funds-tab-selected' : 'funds-tab' }` }

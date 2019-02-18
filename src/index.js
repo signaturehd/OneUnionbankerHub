@@ -18,14 +18,9 @@ import AppModule from './di/AppModule'
 /* Mobile View */
 import MobileView from './views/mobileplatform/MobileView'
 
-/* Mobile Charts */
-import PensionFundsChartComponent from './views/pensionfunds/components/PensionFundsChartComponent'
-
 let platformChecker
 let platformUsed
-let url
 const userAgentTest = window.navigator.userAgent
-const origin = location.origin + '/#/1uhub/charts/:array'
 
 if(userAgentTest.toLowerCase().indexOf('android') !== -1) {
   platformUsed = 'android'
@@ -43,19 +38,10 @@ if(userAgentTest.toLowerCase().indexOf('android') !== -1) {
   platformChecker = false
 }
 
-if(origin === location.href) {
-  url = true
-} else {
-  url = false
-}
-
 ReactDOM.render(
   <Provider store={ store }>
     <HashRouter basename = { '/' }>
     {
-      url ?
-      <PensionFundsChartComponent/>
-      :
       platformChecker ?
       <MobileView platformUsed = { platformUsed }/>
       :

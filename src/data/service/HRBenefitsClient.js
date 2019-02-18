@@ -1696,6 +1696,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  updatePensionContributional (token, amount, code) {
+    return this.service.updatePensionContributional (token, amount, code)
+    .pipe(ServiceErrorOperator())
+  }
+
   getPensionFundsHistory (token) {
     return this.service.getPensionFundsHistory (token)
     .pipe(ServiceErrorOperator())

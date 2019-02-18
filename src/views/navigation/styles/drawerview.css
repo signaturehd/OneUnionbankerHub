@@ -16,7 +16,9 @@ div {
   top: 75px;
   bottom: 0; }
 .navigation-panels .navigation-panel {
-  overflow: auto; }
+  overflow: auto;
+  overflow-x: hidden;
+}
 .page-boundary {
   position: absolute;
   display: flex;
@@ -32,7 +34,7 @@ div {
 .navigation-content {
   order: 2;
   flex: 5;
-  padding: 2%;
+  padding: 2% 2% 0% 2%;
   width: -webkit-fill-available;
 }
 @media screen and (min-width: 1900px) and (min-height: 1600px) {

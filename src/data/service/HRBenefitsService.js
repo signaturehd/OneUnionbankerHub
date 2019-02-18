@@ -2555,18 +2555,22 @@ export default class HRBenefitsService {
     })
   }
 
+  updatePensionContributional (token, amount, code) {
+    const hasAgreedObject = {
+      amount : amount,
+      pinCode: code,
+    }
+    return this.rootClient.put('appian/pension/v1/agreements', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
   getPensionFunds (token) {
     return this.rootClient.get('/appian/pension/v1/investments', {
       headers : { token }
     })
   }
-
-  getPensionFundsHistory (token) {
-    return this.rootClient.get(`appian/pension/v1`, {
-      headers : { token }
-    })
-  }
-
+  
   submitPensionPin (token, pin) {
     return this.apiClient.get('v1/phension', {
       headers : { token }
@@ -2580,7 +2584,7 @@ export default class HRBenefitsService {
   }
 
   getPensionValidate (token) {
-    return this.apiClient.get('v1/eligibility ', {
+    return this.rootClient.get('appian/pension/v1', {
       headers : { token }
     })
   }
@@ -2649,6 +2653,4 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
-
-
 }

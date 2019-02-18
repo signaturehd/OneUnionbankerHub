@@ -6,64 +6,57 @@ import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pension
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
 
-let mockData = {
-  'totalUnits': '15.34',
-  'totalInvestment' : '20000',
-  'unitToday': '425.07',
-  'paymentHistory' : [
-    {
-      'id': 1,
-      'datePayment': '01/01/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }, {
-      'id': 2,
-      'datePayment': '01/02/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }, {
-      'id': 3,
-      'datePayment': '03/03/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }, {
-      'id': 4,
-      'datePayment': '04/04/2019',
-      'totalInvestment': '20000',
-      'totalReturn': '2000',
-      'isChecked' : false,
-    }
-  ]
-}
+// PUT
+import UpdatePensionContributionalInteractor from '../../../domain/interactor/pensionfunds/UpdatePensionContributionalInteractor'
 
-let mockDataDocuments = {
-  'completed' : 0,
-  'forms': [
-    {
-      'id' : 1,
-      'name': "Risk",
-      'content': `<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><body style="margin-left:5%; margin-right:5%; margin-top:5%; font-family: 'Roboto', sans-serif;"> <center><h4>Retirement Pension Fund Riks</h4></center> <p style="text-align: justify;"> I hereby agree on the following terms: <ul> <li style="padding: 5px 0 5px 0;">I will immediately advise HR soonest the selected appointment schedule date was not attended or completed;</li><li style="padding: 5px 0 5px 0;">Any non-  coverable dental expenses incurred, or any dental procedure not stated herein, pursuant to stated appointment schedule date shall be paid directly and shouldered solely by myself and/or my dependent to Healthway Medical Clinic;</li><li style="padding: 5px 0 5px 0;">Lastly, this transaction remains open and therefore eligibility and limits are locked, until Healthway Medical Clinic has reported the confirmed completed procedures in their Statement of Account and paid by the Bank.</li></ul> </p></body>`,
-      'isChecked' : false,
-    },
-    {
-      'id' : 2,
-      'name': "Rules",
-      'content': `<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><body style="margin-left:5%; margin-right:5%; margin-top:5%; font-family: 'Roboto', sans-serif;"> <center><h4>Retirement Pension Fund Rules</h4></center> <p style="text-align: justify;"> I hereby agree on the following terms: <ul> <li style="padding: 5px 0 5px 0;">I will immediately advise HR soonest the selected appointment schedule date was not attended or completed;</li><li style="padding: 5px 0 5px 0;">Any non-  coverable dental expenses incurred, or any dental procedure not stated herein, pursuant to stated appointment schedule date shall be paid directly and shouldered solely by myself and/or my dependent to Healthway Medical Clinic;</li><li style="padding: 5px 0 5px 0;">Lastly, this transaction remains open and therefore eligibility and limits are locked, until Healthway Medical Clinic has reported the confirmed completed procedures in their Statement of Account and paid by the Bank.</li></ul> </p></body>`,
-      'isChecked' : false,
-    },
-    {
-      'id' : 3,
-      'name': "Disclosure",
-      'content': `<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><body style="margin-left:5%; margin-right:5%; margin-top:5%; font-family: 'Roboto', sans-serif;"> <center><h4>Retirement Pension Fund Disclosure</h4></center> <p style="text-align: justify;"> I hereby agree on the following terms: <ul> <li style="padding: 5px 0 5px 0;">I will immediately advise HR soonest the selected appointment schedule date was not attended or completed;</li><li style="padding: 5px 0 5px 0;">Any non-  coverable dental expenses incurred, or any dental procedure not stated herein, pursuant to stated appointment schedule date shall be paid directly and shouldered solely by myself and/or my dependent to Healthway Medical Clinic;</li><li style="padding: 5px 0 5px 0;">Lastly, this transaction remains open and therefore eligibility and limits are locked, until Healthway Medical Clinic has reported the confirmed completed procedures in their Statement of Account and paid by the Bank.</li></ul> </p></body>`,
-      'isChecked' : false,
-    },
-  ]
-}
+import moment from 'moment'
 
-let agreementData  = '', pensionData = '', pensionHistory = []
+let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
+let amountArray = []
+let labelArray = []
+
+let dateMock = [
+  {
+    id: 0,
+    value : 4000,
+    date: '02/06/2019',
+  },
+  {
+    id: 1,
+    value : 300,
+    date: '03/12/2019',
+  },
+  {
+    id: 2,
+    value : 300,
+    date: '01/01/2018',
+  },
+  {
+    id: 3,
+    value : 241,
+    date: '01/12/2019',
+  },
+  {
+    id: 4,
+    value : 241,
+    date: '01/12/2017',
+  },
+  {
+    id: 5,
+    value : 1231,
+    date: '11/08/2018',
+  },
+  {
+    id: 6,
+    value : 123123,
+    date: '08/12/2016',
+  },
+  {
+    id: 7,
+    value : 12,
+    date: '08/12/2016',
+  },
+]
 
 export default class PensionFundsPresenter {
   constructor (container) {
@@ -73,6 +66,7 @@ export default class PensionFundsPresenter {
     this.getPensionFundsDocumentsInteractor = new GetPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
     this.addPensionFundsDocumentsInteractor = new AddPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
     this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
+    this.updatePensionContributionalInteractor = new UpdatePensionContributionalInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -80,7 +74,7 @@ export default class PensionFundsPresenter {
   }
 
   setAgreeementDataPresenter (data) {
-    agreementData = data
+    documentsData = data
     this.view.setPensionFundsDocumentsData(data)
   }
 
@@ -92,15 +86,15 @@ export default class PensionFundsPresenter {
   getPensionValidate () {
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
+      this.view.setPensionContributionData(data)
     }, error => {
-
     })
   }
 
   setDocumentsCheckerPresenter (check, id) {
     let newData
     let formsData = []
-    agreementData.forms.map((resp) => {
+    documentsData.map((resp) => {
 
       if(id === resp.id) {
         formsData.push({
@@ -118,26 +112,13 @@ export default class PensionFundsPresenter {
         })
       }
 
-      const objectParam = {
-        forms : formsData
-      }
-      this.setAgreeementDataPresenter(objectParam)
+      this.setAgreeementDataPresenter(formsData)
     })
-  }
-
-  getMockData () {
-    try {
-      this.setPensionFundsPresenter(mockData)
-      this.setAgreeementDataPresenter(mockDataDocuments)
-    } catch(e) {
-      console.log(e)
-    }
   }
 
   setPaymentCheckerPresenter(check , id , key) {
     let newData
     let formsData = []
-    console.log(check,id,key)
     pensionData.paymentHistory.map((resp) => {
       if(id === resp.id) {
         formsData.push({
@@ -185,92 +166,140 @@ export default class PensionFundsPresenter {
     })
   }
 
+  checkIdIfExistCategory (id) {
+    let isBool = false
+    for (var i in labelArray) {
+      if (labelArray[i].toLowerCase() === id) {
+        isBool = true
+        break
+      }
+    }
+    return isBool
+  }
+
+  sortChartDate (response, type, format) {
+    var temp = {};
+    var obj = null;
+    for(var i=0; i < response.length; i++) {
+      obj=response[i];
+      if(!temp[obj.date]) {
+       temp[obj.date] = obj;
+      } else {
+       temp[obj.date].value += obj.value;
+      }
+    }
+    var result = [];
+    for (var prop in temp)
+        result.push(temp[prop]);
+    let sortResult
+    if(type === 'increment') {
+      sortResult = result.sort((a, b) => { return  a.date - b.date })
+    } else {
+      sortResult = result.sort((a, b) => { return  b.date - a.date })
+    }
+    let newResult = sortResult.map((resp, key) => {
+      if(format === 'YYYY') {
+        const object = {
+          date: resp.date,
+          value : resp.value,
+        }
+        return object
+      } else if(format === 'MMMM') {
+        const object = {
+          date: moment(resp.dateFormat).format('MMMM'),
+          value : resp.value,
+        }
+        return object
+      }
+    })
+    return newResult
+  }
 
   setUnitSummary(variable){
-    let unit = []
-    let items = []
+    amountArray = []
+    labelArray = []
+    if(variable.toLowerCase() === 'month'){
+      let response = dateMock.map((x,i)=> {
+        const object = {'date': parseInt(moment(x.date).format('MM')), dateFormat: x.date, 'value': x.value}
+        return object
+      })
 
-    if(variable === 'week' || variable === 'WEEK'){
+      let newResult = this.sortChartDate(response, 'increment', 'MMMM');
 
-      const x = [1,2,3,4,5].map(x => {
+      newResult.map((resp, key) => {
+        labelArray.push(resp.date)
+        amountArray.push(resp.value)
+      })
 
-          if(x === 1){
-              return (  x+'st' +' Week')
-          }else if(x === 2 ){
-              return (  x+'nd' +' Week')
-          }
-          else if(x % 3 === 0 ){
-              return (  x+' rd' +' Week' )
-          }else{
-              return (x+'th' + ' Week')
-          }
-        })
+      this.view.setChartPensionData(labelArray, amountArray)
+   } else if(variable.toLowerCase() === 'quarterly'){
+     let response = dateMock.map((x,i)=> {
+       const object = { 'date': moment(x.date).quarter(), 'value': x.value}
+       return object
+     })
 
-        items = x
+     let newResult = this.sortChartDate(response, 'increment', 'YYYY');
+      newResult.map((resp, key) => {
+        labelArray.push('Q'+resp.date)
+        amountArray.push(resp.value)
+      })
+     this.view.setChartPensionData(labelArray, amountArray)
+   } else if(variable.toLowerCase() === 'year') {
+     let response = dateMock.map((x,i)=> {
+       const object = {'date': parseInt(moment(x.date).format('YYYY')), 'value': x.value}
+       return object
+     })
 
-     } else if(variable === 'month' || variable === 'MONTH'){
+     let newResult = this.sortChartDate(response, 'decrement', 'YYYY');
 
-       const x = [1,2,3,4,5].map(x => {
-
-             if(x === 1){
-             return (  x+'st' +' Month')
-             }else if(x % 3 === 0 ){
-             return (  x+' rd' +' Month' )
-             }else{
-               return (x+'th' + ' Month')
-             }
-         })
-
-         items = x
-
-     } else if(variable === 'quarterly' || variable === 'QUARTERLY'){
-
-       const x = [1,2,3,4,5].map(x => {
-
-             if(x === 1){
-             return (  x+'st' +' Quarter')
-             }else if(x % 3 === 0 ){
-             return (  x+' rd' +' Quarter' )
-             }else{
-               return (x+'th' + ' Quarter')
-             }
-         })
-
-         items = x
-
-     } else if(variable === 'year' || variable === 'YEAR'){
-
-       const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
-         return (
-           x + ' Year'
-           )
-         })
-         items = x
-
-     }
-     this.view.setChartPensionData(items)
+     newResult.map((resp, key) => {
+       labelArray.push(resp.date)
+       amountArray.push(resp.value)
+     })
+     this.view.setChartPensionData(labelArray, amountArray)
+    }
   }
 
   getPensionFunds () {
+    this.view.showCircularLoader(true)
     this.getPensionFundsInteractor.execute()
     .subscribe(data => {
       this.view.setPensionFundsPresenter(data)
-      //this.view.showCircularLoader(false)
+      this.view.showCircularLoader(false)
     }, error => {
-    //  alert('error')
-      // this.view.showCircularLoader(false)
+      this.view.showCircularLoader(false)
     })
   }
 
   getPensionFundsDocuments () {
+    this.view.showCircularLoader(true)
     this.getPensionFundsDocumentsInteractor.execute()
-  //  this.view.showCircularLoader(true)
     .subscribe(data => {
-      this.view.setPensionFundsDocumentsData2(data)
-    //  this.view.showCircularLoader(false)
+      this.view.showCircularLoader(false)
+
+      let newData = [...documentsData]
+      newData.push({
+        id: 1,
+        name: 'Risk Disclosure',
+        isChecked: false,
+        content: data.risks,
+      })
+      newData.push({
+        id: 2,
+        name: 'Pension Rules',
+        isChecked : false,
+        content: data.rules,
+      })
+      newData.push({
+        id: 3,
+        name: 'Authority to Deduct from Payroll',
+        isChecked : false,
+        content: data.disclosures,
+      })
+      documentsData = newData
+      this.view.setPensionFundsDocumentsData(documentsData)
     }, error => {
-      alert('error document')
-    //  this.view.showCircularLoader(false)
+      this.view.showCircularLoader(false)
     })
   }
 
@@ -294,8 +323,26 @@ export default class PensionFundsPresenter {
     this.addPensionContributionalInteractor.execute(amount, code)
     .subscribe (data => {
       this.view.noticeResponse(data)
+      this.getPensionFunds()
+      this.getPensionValidate()
+      this.setUnitSummary('year')
+      this.getPensionFundsDocuments()
       this.view.showCircularLoader(false)
-      this.view.resetData()
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
+  updatePensionContributional (amount, code) {
+    this.view.showCircularLoader(true)
+    this.updatePensionContributionalInteractor.execute(amount, code)
+    .subscribe (data => {
+      this.view.noticeResponse(data)
+      this.getPensionFunds()
+      this.getPensionValidate()
+      this.setUnitSummary('year')
+      this.getPensionFundsDocuments()
+      this.view.showCircularLoader(false)
     }, error => {
       this.view.showCircularLoader(false)
     })
