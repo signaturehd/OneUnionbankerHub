@@ -528,6 +528,7 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/rewardgifts/details/:id' render = { props =>
                   <GiftsDetailsFragment { ...props }
                     rewardsPoints = { rewardsPoints }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }
