@@ -3,6 +3,7 @@ import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRew
 import AddRewardGiftsDenominationsInteractor from '../../../domain/interactor/rewards/AddRewardGiftsDenominationsInteractor'
 import moment from 'moment'
 let selectedRewardsArrayList = []
+let totalPoints = 0
 
 export default class GiftsPresenter {
   constructor (container) {
@@ -24,6 +25,11 @@ export default class GiftsPresenter {
     }, error => {
       this.view.circularLoader(false)
     })
+  }
+
+  setRewardPoints (data) {
+    totalPoints = data
+    this.view.setRewardPoints(data)
   }
 
   getGiftsList (list) {
