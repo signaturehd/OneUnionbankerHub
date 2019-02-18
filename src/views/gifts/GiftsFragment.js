@@ -31,21 +31,49 @@ class GiftsFragment extends BaseMVPView {
 		this.setState({ rewardGifts })
 	}
 
-	chceckImage (image) {
+	chceckImage (image, filterTitle) {
 		if (image.toLowerCase() === 'everything') {
-			return require('../../images/rewards/everything-grey.png')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/everything-orange.png')
+			} else {
+				return require('../../images/rewards/everything-grey.png')
+			}
 		} else if (image.toLowerCase() === 'food') {
-			return require('../../images/rewards/food-grey.gif')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/food-orange.png')
+			} else {
+				return require('../../images/rewards/food-grey.png')
+			}
 		} else if (image.toLowerCase() === 'service') {
-			return require('../../images/rewards/service-grey.gif')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/service-orange.png')
+			} else {
+				return require('../../images/rewards/service-grey.png')
+			}
 		} else if (image.toLowerCase() === 'travel & leisure') {
-			return require('../../images/rewards/travel-&-leisure-grey.gif')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/travel-&-leisure-orange.png')
+			} else {
+				return require('../../images/rewards/travel-&-leisure-grey.png')
+			}
 		} else if (image.toLowerCase() === 'health & wellness') {
-			return require('../../images/rewards/health-&-wellness-grey.gif')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/health-&-wellness--orange.png')
+			} else {
+				return require('../../images/rewards/health-&-wellness-grey.png')
+			}
 		} else if (image.toLowerCase() === 'shop') {
-			return require('../../images/rewards/shop-grey.gif')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/shop-orange.png')
+			} else {
+				return require('../../images/rewards/shop-grey.png')
+			}
 		} else if (image.toLowerCase() === 'entertainment') {
-			return require('../../images/rewards/entertainment-grey.gif')
+			if(image.toLowerCase() === filterTitle.toLowerCase()) {
+				return require('../../images/rewards/entertainment-orange.png')
+			} else {
+				return require('../../images/rewards/entertainment-grey.png')
+			}
 		}
 	}
 
@@ -115,12 +143,14 @@ class GiftsFragment extends BaseMVPView {
 											{
 												rewardGiftsType &&
 												rewardGiftsType.map((resp, key) =>
-													<img
-														height = { 50 }
-														width = { 120 }
-														onClick = { () => this.setState({ filterTitle : resp }) }
-														src = { this.chceckImage(resp) }
-														className = { 'cursor-pointer' }/>
+													<center>
+														<img
+															height = { 50 }
+															width = { 'auto' }
+															onClick = { () => this.setState({ filterTitle : resp }) }
+															src = { this.chceckImage(resp, filterTitle) }
+															className = { 'cursor-pointer' }/>
+													</center>
 												)
 											}
 										</div> :
@@ -133,12 +163,14 @@ class GiftsFragment extends BaseMVPView {
 											{
 												rewardGiftsType &&
 												rewardGiftsType.map((resp, key) =>
-												<img
-													width = { 120 }
-													height = { 50 }
-													onClick = { () => this.setState({ filterTitle : resp }) }
-													src = { this.chceckImage(resp) }
-													className = { 'cursor-pointer' }/>
+												<center>
+													<img
+														width = { 'auto' }
+														height = { 50 }
+														onClick = { () => this.setState({ filterTitle : resp }) }
+														src = { this.chceckImage(resp, filterTitle) }
+														className = { 'cursor-pointer' }/>
+												</center>
 												)
 											}
 										</div>
