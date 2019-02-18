@@ -31,6 +31,24 @@ class GiftsFragment extends BaseMVPView {
 		this.setState({ rewardGifts })
 	}
 
+	chceckImage (image) {
+		if (image.toLowerCase() === 'everything') {
+			return require('../../images/rewards/everything-grey.png')
+		} else if (image.toLowerCase() === 'food') {
+			return require('../../images/rewards/food-grey.gif')
+		} else if (image.toLowerCase() === 'service') {
+			return require('../../images/rewards/service-grey.gif')
+		} else if (image.toLowerCase() === 'travel & leisure') {
+			return require('../../images/rewards/travel-&-leisure-grey.gif')
+		} else if (image.toLowerCase() === 'health & wellness') {
+			return require('../../images/rewards/health-&-wellness-grey.gif')
+		} else if (image.toLowerCase() === 'shop') {
+			return require('../../images/rewards/shop-grey.gif')
+		} else if (image.toLowerCase() === 'entertainment') {
+			return require('../../images/rewards/entertainment-grey.gif')
+		}
+	}
+
 	getGiftsId (gifts) {
 		try {
 			let listId = [...this.state.rewardGiftsId]
@@ -90,7 +108,6 @@ class GiftsFragment extends BaseMVPView {
 						<div className = { 'gifts-grid-columnt-3x' }>
 							<div></div>
 							<div>
-								<br/>
 								<div>
 									{
 										filterTitle.toLowerCase() === 'everything' ?
@@ -98,9 +115,12 @@ class GiftsFragment extends BaseMVPView {
 											{
 												rewardGiftsType &&
 												rewardGiftsType.map((resp, key) =>
-													<h4
+													<img
+														height = { 50 }
+														width = { 120 }
 														onClick = { () => this.setState({ filterTitle : resp }) }
-														className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
+														src = { this.chceckImage(resp) }
+														className = { 'cursor-pointer' }/>
 												)
 											}
 										</div> :
@@ -113,15 +133,17 @@ class GiftsFragment extends BaseMVPView {
 											{
 												rewardGiftsType &&
 												rewardGiftsType.map((resp, key) =>
-												<h4
+												<img
+													width = { 120 }
+													height = { 50 }
 													onClick = { () => this.setState({ filterTitle : resp }) }
-													className = { 'cursor-pointer gifts-header-style' }>{resp}</h4>
+													src = { this.chceckImage(resp) }
+													className = { 'cursor-pointer' }/>
 												)
 											}
 										</div>
 									}
 								</div>
-								<br/>
 								<Line />
 								<br/>
 								<br/>

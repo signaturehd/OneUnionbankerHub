@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import BannerImage from '../../../images/rewards/giftsBanner.jpg'
-import GiftDetailsFooterComponent from '../components/GiftDetailsFooterComponent'
 import { GenericButton, DatePicker, GenericInput, Line } from '../../../ub-components/'
 import '../../gifts/styles/GiftsStyle.css'
 
