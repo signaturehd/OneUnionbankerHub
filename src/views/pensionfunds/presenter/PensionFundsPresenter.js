@@ -86,7 +86,6 @@ export default class PensionFundsPresenter {
   getPensionValidate () {
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
-      console.log(data)
       this.view.setPensionContributionData(data)
     }, error => {
     })
