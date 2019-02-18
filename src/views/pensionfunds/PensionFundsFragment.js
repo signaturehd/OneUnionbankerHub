@@ -33,7 +33,7 @@ class PensionFundsFragment extends BaseMVPView {
       showDevelopmentModal: false,
       showContributionModal: false,
       isPincode: false,
-      tabsId : 'year',
+      tabsId : 'month',
       amountText: '',
       codeText: '',
       showNoticeResponseModal : false
@@ -43,7 +43,7 @@ class PensionFundsFragment extends BaseMVPView {
   componentDidMount () {
     this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
-    this.presenter.setUnitSummary('year')
+    this.presenter.setUnitSummary('month')
     this.presenter.getPensionFundsDocuments()
   }
 
@@ -67,8 +67,12 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ pensionFundsDocumentsData })
   }
 
-  setChartPensionData(pensionChartData){
-    this.setState({pensionChartData})
+  setChartPensionData(label, amount){
+    const object = {
+      label: label,
+      amount : amount,
+    }
+    this.setState({ pensionChartData : object })
   }
 
   setPensionContributionData (pensionContributionData) {
@@ -192,21 +196,21 @@ class PensionFundsFragment extends BaseMVPView {
                     pensionContributionData = { pensionContributionData }
                     contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
                     pensionChartData = { pensionChartData }
-                      tabsId = { tabsId }
-                      tabsIdFunc = { (tabsId) => {
-                        this.setState({ tabsId })
-                        this.presenter.setUnitSummary(tabsId)
-                        }
+                    tabsId = { tabsId }
+                    tabsIdFunc = { (tabsId) => {
+                      this.setState({ tabsId })
+                      this.presenter.setUnitSummary(tabsId)
                       }
-                      pensionFundsData = { pensionFundsData }
-                      changePaymentFunc = { (bool , id) => {
-                        try{
-                          this.presenter.setPaymentCheckRefresh('false')
-                          this.presenter.setPaymentCheckerPresenter(bool, id)
-                        } catch(e){
-                          console.log(e)
-                        }
-                      } }/> :
+                    }
+                    pensionFundsData = { pensionFundsData }
+                    changePaymentFunc = { (bool , id) => {
+                      try{
+                        this.presenter.setPaymentCheckRefresh('false')
+                        this.presenter.setPaymentCheckerPresenter(bool, id)
+                      } catch(e){
+                        console.log(e)
+                      }
+                    } }/> :
                     <PensionFundsDocumentsFragment
                       statusCodeFunc = { (stepperStatus,bool,id) =>
                         id === 3 && bool  ?

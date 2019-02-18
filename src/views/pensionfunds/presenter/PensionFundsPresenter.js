@@ -12,7 +12,8 @@ import UpdatePensionContributionalInteractor from '../../../domain/interactor/pe
 import moment from 'moment'
 
 let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
-
+let amountArray = []
+let labelArray = []
 
 let dateMock = [
   {
@@ -46,12 +47,12 @@ let dateMock = [
     date: '11/08/2018',
   },
   {
-    id: 5,
+    id: 6,
     value : 123123,
     date: '08/12/2016',
   },
   {
-    id: 5,
+    id: 7,
     value : 12,
     date: '08/12/2016',
   },
@@ -166,41 +167,98 @@ export default class PensionFundsPresenter {
     })
   }
 
+  checkIdIfExistCategory (id) {
+    let isBool = false
+    for (var i in labelArray) {
+      if (labelArray[i].toLowerCase() === id) {
+        isBool = true
+        break
+      }
+    }
+    return isBool
+  }
+
+  sortChartDate (response, type, format) {
+    var temp = {};
+    var obj = null;
+    for(var i=0; i < response.length; i++) {
+      obj=response[i];
+      if(!temp[obj.date]) {
+       temp[obj.date] = obj;
+      } else {
+       temp[obj.date].value += obj.value;
+      }
+    }
+    var result = [];
+    for (var prop in temp)
+        result.push(temp[prop]);
+    let sortResult
+    if(type === 'increment') {
+      sortResult = result.sort((a, b) => { return  a.date - b.date })
+    } else {
+      sortResult = result.sort((a, b) => { return  b.date - a.date })
+    }
+    let newResult = sortResult.map((resp, key) => {
+      if(format === 'YYYY') {
+        const object = {
+          date: resp.date,
+          value : resp.value,
+        }
+        return object
+      } else if(format === 'MMMM') {
+        const object = {
+          date: moment(resp.dateFormat).format('MMMM'),
+          value : resp.value,
+        }
+        return object
+      }
+    })
+    return newResult
+  }
 
   setUnitSummary(variable){
-    let unit = []
-    let items = []
-    let totalValue
+    amountArray = []
+    labelArray = []
     if(variable.toLowerCase() === 'month'){
-    dateMock.map((x, key) => {
-        if(moment(x.date).getMonth() === '01') {
-          console.log('January')
-        }
-     })
+      let response = dateMock.map((x,i)=> {
+        const object = {'date': parseInt(moment(x.date).format('MM')), dateFormat: x.date, 'value': x.value}
+        return object
+      })
+
+      let newResult = this.sortChartDate(response, 'increment', 'MMMM');
+
+      newResult.map((resp, key) => {
+        labelArray.push(resp.date)
+        amountArray.push(resp.value)
+      })
+
+      this.view.setChartPensionData(labelArray, amountArray)
    } else if(variable.toLowerCase() === 'quarterly'){
-
-     const x = [1,2,3,4].map(x => {
-       if(x === 1){
-         return (  x+'st' +' Quarter')
-       }  else if(x % 3 === 0 ){
-         return (  x+' rd' +' Quarter' )
-       }  else{
-         return (x+'th' + ' Quarter')
-       }
+     let response = dateMock.map((x,i)=> {
+       const object = { 'date': moment(x.date).quarter(), 'value': x.value}
+       return object
      })
-     items = x
 
-   } else if(variable.toLowerCase() === 'year'){
+     let newResult = this.sortChartDate(response, 'increment', 'YYYY');
+      newResult.map((resp, key) => {
+        labelArray.push('Q'+resp.date)
+        amountArray.push(resp.value)
+      })
+     this.view.setChartPensionData(labelArray, amountArray)
+   } else if(variable.toLowerCase() === 'year') {
+     let response = dateMock.map((x,i)=> {
+       const object = {'date': parseInt(moment(x.date).format('YYYY')), 'value': x.value}
+       return object
+     })
 
-     const x = [1,2,3,4,5,6,7,8,9,10,11,12].map(x => {
-       return (
-         x + ' Year'
-         )
-       })
-       items = x
+     let newResult = this.sortChartDate(response, 'decrement', 'YYYY');
 
-   }
-   this.view.setChartPensionData(items)
+     newResult.map((resp, key) => {
+       labelArray.push(resp.date)
+       amountArray.push(resp.value)
+     })
+     this.view.setChartPensionData(labelArray, amountArray)
+    }
   }
 
   getPensionFunds () {
