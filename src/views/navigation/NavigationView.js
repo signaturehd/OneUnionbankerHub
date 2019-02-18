@@ -114,6 +114,9 @@ import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
 import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
 
+// footer
+
+import BaseFooterComponent from '../common/components/BaseFooterComponent'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -541,6 +544,8 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
+            <br/>
+            <BaseFooterComponent />
           </main>
           <aside
             className ="left-side"

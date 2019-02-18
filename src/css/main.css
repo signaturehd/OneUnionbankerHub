@@ -5,10 +5,10 @@
 }
 
 @font-face {
-  font-family: 'Gotham Light' !important;
-  src: url('../fonts/GothamLight.ttf') !important;
+  font-family: 'Gotham Light' ;
+  src: url('../fonts/GothamLight.ttf') ;
   src: local('GothamLight'),
-  url('../fonts/GothamLight.ttf') format('truetype') !important;
+  url('../fonts/GothamLight.ttf') format('truetype');
 }
 
 body {
@@ -339,7 +339,7 @@ p {
 }
 
 .unionbank-color-grey {
-  color: #4e4b48;
+  color: #3a3a3a;
 }
 
 .unionbank-white-color {

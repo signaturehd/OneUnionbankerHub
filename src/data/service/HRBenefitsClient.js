@@ -1732,6 +1732,11 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  addRewardGiftsDenominations (token, merchant, mode) {
+    return this.service.addRewardGiftsDenominations (token, merchant, mode)
+    .pipe(ServiceErrorOperator())
+  }
+
   submitAwards (token, objectParam) {
     return this.service.submitAwards(token, objectParam)
     .pipe(ServiceErrorOperator())
