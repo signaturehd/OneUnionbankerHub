@@ -17,14 +17,21 @@ class PensionFundsChartComponent extends Component {
 
   render () {
     const {
-      pensionChartData
+      pensionChartData,
+      array,
+      url
     } = this.props
+    let objectData = this.props.match.params.array
+    var myobj = JSON.parse(objectData);
+    let labelData = url ? myobj.label : pensionChartData && pensionChartData.label
+    let amountData = url ? myobj.value : pensionChartData && pensionChartData.amount
+
     let data = {
-        labels: pensionChartData,
-        datasets: [
+      labels: labelData,
+      datasets: [
         {
           borderColor: 'white',
-          label: "Prime and Fibonacci",
+          label: "Contributional Chart",
           fillColor: "white",
           strokeColor: "white",
           pointColor: "white",
@@ -32,10 +39,11 @@ class PensionFundsChartComponent extends Component {
           pointHighlightFill: "white",
           backgroundColor: "rgb(255,102,0)",
           pointHighlightStroke: "white",
-          data: [2, 20, 10, 2, 25, 28, 17, 25, 10, 29,50,100]
+          data: amountData,
         },
       ]
     }
+
     return (
       <div className = { 'pension-chart-grid-3x' }>
         <div>

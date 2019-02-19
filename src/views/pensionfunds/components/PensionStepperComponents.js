@@ -42,9 +42,11 @@ class PensionStepperComponents extends Component {
            }}
           className = { ' funds-border-stepper' }>
           {
-            list && list.forms.map((resp) => (
+            list && list.map((resp) => (
               <div onClick = { () => {} }>
-                <h4 className = { 'font-size-11px' }>{ resp.name }</h4>
+                <h4 className = { 'font-size-11px' }>{ resp.name } </h4>
+                {resp.id === 1  && <br/>}
+                {resp.id === 2  && <br/>} 
                 <div className = { `funds-circle${ this.checkIfSelected(stepperStatus, resp.id) }` }></div>
               </div>
             ))

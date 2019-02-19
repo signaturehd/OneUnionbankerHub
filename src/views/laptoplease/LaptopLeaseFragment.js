@@ -340,9 +340,17 @@ class LaptopLeaseFragment extends BaseMVPView {
                   }>
                 </i>
               }
-              <h2 className={ 'header-margin-default' }>
+              <h2
+                style = {{
+                  textAlign : 'center !important',
+                  fontSize: '30px',
+                  fontWeight: 'bold',
+                  color: 'grey',
+                }}>
                 Laptop Lease
               </h2>
+              <br/>
+              <br/>
             </div>
               {
                 cardOptionComponent ?

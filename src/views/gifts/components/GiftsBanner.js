@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BannerImage from '../../../images/rewards/giftsBanner.jpg'
+import BannerImage from '../../../images/rewards/giftaway-banner.png'
 import { GenericButton } from '../../../ub-components/'
 
 class GiftsBanner extends Component {
@@ -18,7 +18,7 @@ class GiftsBanner extends Component {
           className={ 'gifts-image gifts-banner' }
           text={ 'Gifts' } >
           <div id = { 'gifts-overlay' }>
-            <h1 className={ 'gifts-text' }>eGifts to UNIONBANKER</h1>
+            <h1 className={ 'gifts-text' }>Get discounts from our retail partners</h1>
           </div>
         </div>
       </div>

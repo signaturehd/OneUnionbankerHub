@@ -38,7 +38,7 @@
 
 .funds-grid-content-x3 {
   display: grid;
-  grid-template-columns: .03fr 1fr .03fr;
+  grid-template-columns: auto 1fr auto;
 }
 
 .funds-grid-content-detail {
@@ -64,7 +64,7 @@
 
 .funds-documents-grid-x3 {
   display: grid;
-  grid-template-rows: .1fr 1fr .1fr;
+  grid-template-rows: auto 1fr auto;
 }
 
 .funds-grid-header-content {
