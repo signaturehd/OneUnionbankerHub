@@ -1777,4 +1777,21 @@ export default class HRBenefitsClient {
       })
     )
   }
+
+  //Squads and Workforce
+  getSquads (token, squadId, page) {
+    return this.service.getSquads(token, squadId, page)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getVacancies (token, positionId, squadId, pageNumber) {
+    return this.service.getVacancies(token, positionId, squadId, pageNumber)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitSquads (token, positionId) {
+    return this.service.submitSquads(token, positionId)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

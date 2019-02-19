@@ -44,17 +44,17 @@ export default class NavigationPresenter {
   }
 
   getLibraries () {
-    this.view.showLoading()
+    this.view.showCircularLoader()
     this.getLibrariesInteractor.execute()
       .subscribe(resp => {
+        this.view.hideCircularLoader()
         this.view.showAgreementStatus(resp)
         this.view.showProfile(resp)
         this.view.showPinIsValid(resp.hasPIN)
         this.view.isHasCOC(resp.hasCOC)
-        this.view.hideLoading()
       }, e => {
+        this.view.hideCircularLoader()
         this.view.showAgreementStatus(e.message.pensionAgreement)
-        this.view.hideLoading()
         this.view.showProfile(e.message)
         this.view.showPinIsValid(e.message.hasPIN)
         this.view.isHasCOC(e.message.hasCOC)
