@@ -2556,7 +2556,6 @@ export default class HRBenefitsService {
   }
 
   updatePensionContributional (token, amount, code, id) {
-    console.log(id)
     const hasAgreedObject = {
       amount : amount,
       pinCode: code,
