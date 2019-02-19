@@ -43,6 +43,10 @@ class SquadFragment extends BaseMVPView {
       mesg
     } = this.state
 
+    const {
+      showVacanciesDetailsFragmentFunc
+    } = this.props
+
     return (
       <div>
         { super.render() }
@@ -58,13 +62,15 @@ class SquadFragment extends BaseMVPView {
           <VacanciesModal
             submitSquad = { (positionId) => {this.presenter.submitSquads(positionId), this.setState({ showVacancies: false })} }
             vacants = { vacants }
-            onClose = { () => this.setState({ showVacancies }) }
+            onClose = { () =>{ this.setState({ showVacancies : false })} }
           />
         }
         <br/>
         <SquadsComponent
           squads = { squads }
-          getVacancies = { (positionId, squadId) => this.presenter.getVacancies(positionId, squadId) }
+          getVacancies = { (positionId, squadId, squad) => {
+            showVacanciesDetailsFragmentFunc(squad)
+            this.presenter.getVacancies(positionId, squadId)} }
         />
       </div>
     )

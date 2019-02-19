@@ -539,8 +539,9 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/neo' render = { props =>
                   <NewEmployeeHireFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/squads' render = { props =>
+                <Route path = '/squads/' render = { props =>
                   <SquadsTabsFragment { ...props }
+                    profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>

@@ -46,12 +46,11 @@ export default class SettingsPresenter {
 
    getProfile () {
     store.dispatch(NotifyActions.resetNotify())
-    this.view.showLoading()
-
+    this.view.showCircularLoader()
     this.getProfileInteractor.execute()
      .subscribe(profile => {
        try {
-         this.view.hideLoading()
+         this.view.hideCircularLoader()
          this.view.showProfileBackground(profile)
          this.view.showProfile(profile && profile.employee)
          this.view.showRank(profile && profile.rank)
@@ -62,7 +61,7 @@ export default class SettingsPresenter {
          console.log(e)
        }
      }, e => {
-       this.view.hideLoading()
+       this.view.hideCircularLoader()
        this.view.showProfileBackground(e && e.message)
        this.view.showProfile(e && e.message.employee)
        this.view.showRank(e && e.message.rank)

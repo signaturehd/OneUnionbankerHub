@@ -16,7 +16,10 @@ body {
   background-size:cover;
   padding:0;
   margin:0;
-  font-family: 'Gotham Light', sans-serif !important;
+}
+
+* {
+  font-family: 'Gotham Light', sans-serif;
 }
 
 i {
