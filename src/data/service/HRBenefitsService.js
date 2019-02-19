@@ -2570,7 +2570,7 @@ export default class HRBenefitsService {
       headers : { token }
     })
   }
-  
+
   submitPensionPin (token, pin) {
     return this.apiClient.get('v1/phension', {
       headers : { token }
@@ -2653,4 +2653,25 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
+  // Squad and Workforce
+  getSquads (token, squadId, page) {
+    return this.apiClient.get(`v1/goals/squad?${squadId && 'id=' + squadId} ${(squadId && page) && '&'} ${page && 'page=' + page}`, {
+      headers: { token }
+    })
+  }
+  getVacancies (token, positionId, squadId, pageNumber) {
+    return this.apiClient.get(`v1/goals/vacancies?goalType=squad${positionId !== false && '&positionId=' + positionId}${squadId !== false && '&squadId=' + squadId}${pageNumber !== false && '&pageNumber=' + pageNumber}`, {
+      headers: { token }
+    })
+  }
+
+  submitSquads (token, positionId) {
+    return this.apiClient.post('v1/goals/vacancies/submit', {
+      positionId
+    }, {
+      headers: { token }
+    })
+  }
+
 }
