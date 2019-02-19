@@ -18,13 +18,10 @@ class PensionFundsChartComponent extends Component {
   render () {
     const {
       pensionChartData,
-      array,
-      url
     } = this.props
-    let objectData = this.props.match.params.array
-    var myobj = JSON.parse(objectData);
-    let labelData = url ? myobj.label : pensionChartData && pensionChartData.label
-    let amountData = url ? myobj.value : pensionChartData && pensionChartData.amount
+
+    let labelData = pensionChartData && pensionChartData.label
+    let amountData = pensionChartData && pensionChartData.amount
 
     let data = {
       labels: labelData,

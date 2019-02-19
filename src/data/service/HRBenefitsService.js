@@ -2555,12 +2555,13 @@ export default class HRBenefitsService {
     })
   }
 
-  updatePensionContributional (token, amount, code) {
+  updatePensionContributional (token, amount, code, id) {
+    console.log(id)
     const hasAgreedObject = {
       amount : amount,
       pinCode: code,
     }
-    return this.rootClient.put('appian/pension/v1/agreements', hasAgreedObject, {
+    return this.rootClient.put(`appian/pension/v1/contribution/${id}`, hasAgreedObject, {
       headers : { token }
     })
   }
