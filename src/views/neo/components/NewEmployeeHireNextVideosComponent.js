@@ -28,14 +28,14 @@ class NewEmployeeHireNextVideosComponent extends Component {
       <Line />
       <br/>
         <div style = {{
-            height: '280px',
             overflow: 'auto',
+            height: 'auto'
           }}>
           {
             neoData.map((resp, key) =>
               <div
                 style = {{
-                  marginBottom: '20px'
+                  marginBottom: '20px',
                 }}
                 onClick = { () => selectedVideoFunc(resp) }
                 className = { 'neo-details-upnext-video cursor-pointer' }
@@ -65,7 +65,6 @@ class NewEmployeeHireNextVideosComponent extends Component {
             )
           }
         </div>
-        <br/>
         <Line />
       </div>
     )

@@ -46,15 +46,14 @@ class NewEmployeeHireCommentsComponents extends Component {
     } = this.props
 
     return (
-      <Card
+      <div
+        className = { 'unionbank-color-grey' }
         style = {{
           borderRadius: '0px'
         }}
         >
         <div style = {{
-            height: '360px',
-            overflow: 'auto',
-            padding: '10px 20px'
+            padding: '10px'
           }}>
           <h4
             className = { 'font-weight-lighter' }
@@ -107,7 +106,7 @@ class NewEmployeeHireCommentsComponents extends Component {
                     padding : '5px',
                     letterSpacing: '.5px',
                    }}>
-                   <h4 className = { 'font-size-14px font-weight-normal' }>{resp.name}</h4>
+                   <h4 className = { 'font-size-14px font-weight-bold' }>{resp.name}</h4>
                    <h4 className = { 'font-weight-lighter font-size-10px' }>{resp.comment}</h4>
                 </div>
                 <span className = { `neo-heart-details-comments neo-heart-active` }/>
@@ -116,7 +115,7 @@ class NewEmployeeHireCommentsComponents extends Component {
             )
           }
         </div>
-      </Card>
+      </div>
     )
   }
 }

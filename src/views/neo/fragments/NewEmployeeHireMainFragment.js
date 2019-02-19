@@ -6,7 +6,6 @@ import NoDataListedComponent from '../../common/components/NoDataListedComponent
 import NewEmployeeHireSelectedComponent from '../components/NewEmployeeHireSelectedComponent'
 import NewEmployeeHireHeaderComponent from '../components/NewEmployeeHireHeaderComponent'
 import NewEmployeeHireNextVideosComponent  from '../components/NewEmployeeHireNextVideosComponent'
-import NewEmployeeHireCommentsComponents  from '../components/NewEmployeeHireCommentsComponents'
 
 import {
   Modal,
@@ -40,8 +39,6 @@ class NewEmployeeHireMainFragment extends Component {
                 selectedVideo = { selectedVideo }
                 neoData = { neoData }
               />
-              <br/>
-              <NewEmployeeHireCommentsComponents />
             </div>
             :
             <NoDataListedComponent
