@@ -151,10 +151,9 @@ class NavigationView extends BaseMVPView {
     this.setState({ displayNavIcon : topBar })
   }
 
-
-
   showProfile (profile) {
     this.setState({
+      rewardsPoints: profile.badgesAndPoints.redeemablePoints,
       profile : profile.employee,
       isLineManager: profile.isLineManager,
       isPO: profile.isPO,
@@ -285,7 +284,8 @@ class NavigationView extends BaseMVPView {
       employeeNumber,
       profillePosition,
       storeWidth,
-      agreementBool
+      agreementBool,
+      rewardsPoints
     } = this.state
 
     const { history, login, profilePicture } = this.props
@@ -530,6 +530,8 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/rewardgifts/details/:id' render = { props =>
                   <GiftsDetailsFragment { ...props }
+                    rewardsPoints = { rewardsPoints }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }

@@ -12,8 +12,7 @@ import UpdatePensionContributionalInteractor from '../../../domain/interactor/pe
 import moment from 'moment'
 
 let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
-let amountArray = []
-let labelArray = []
+let amountArray = [], labelArray = [], pensionId = ''
 
 let dateMock = [
   {
@@ -86,6 +85,7 @@ export default class PensionFundsPresenter {
   getPensionValidate () {
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
+      pensionId = data && data.contribution && data.contribution.id
       this.view.setPensionContributionData(data)
     }, error => {
     })
@@ -272,6 +272,7 @@ export default class PensionFundsPresenter {
   }
 
   getPensionFundsDocuments () {
+    documentsData = []
     this.view.showCircularLoader(true)
     this.getPensionFundsDocumentsInteractor.execute()
     .subscribe(data => {
@@ -327,23 +328,27 @@ export default class PensionFundsPresenter {
       this.getPensionValidate()
       this.setUnitSummary('year')
       this.getPensionFundsDocuments()
+      this.view.resetData()
       this.view.showCircularLoader(false)
     }, error => {
+      this.view.resetData()
       this.view.showCircularLoader(false)
     })
   }
 
   updatePensionContributional (amount, code) {
     this.view.showCircularLoader(true)
-    this.updatePensionContributionalInteractor.execute(amount, code)
+    this.updatePensionContributionalInteractor.execute(amount, code, pensionId)
     .subscribe (data => {
       this.view.noticeResponse(data)
       this.getPensionFunds()
       this.getPensionValidate()
       this.setUnitSummary('year')
       this.getPensionFundsDocuments()
+      this.view.resetData()
       this.view.showCircularLoader(false)
     }, error => {
+      this.view.resetData()
       this.view.showCircularLoader(false)
     })
   }
