@@ -21,7 +21,7 @@ class PensionFundsChartComponent extends Component {
     } = this.props
 
     let labelData = pensionChartData && pensionChartData.label
-    let amountData = pensionChartData && pensionChartData.amount
+    let rateData = pensionChartData && pensionChartData.rate
 
     let data = {
       labels: labelData,
@@ -36,7 +36,7 @@ class PensionFundsChartComponent extends Component {
           pointHighlightFill: "white",
           backgroundColor: "rgb(255,102,0)",
           pointHighlightStroke: "white",
-          data: amountData,
+          data: rateData,
         },
       ]
     }

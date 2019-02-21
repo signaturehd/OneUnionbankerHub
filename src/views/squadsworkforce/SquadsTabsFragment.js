@@ -21,8 +21,8 @@ class SquadsTabsFragment extends Component {
     }
   }
 
-  componentsWillReceiveProps () {
-    if(location.hash == '#/squads/workforce') {
+  componentDidMount() {
+    if(location.hash === '#/squads/applications') {
       this.setState({ showVacanciesApplicationsComponent : false })
     }
   }

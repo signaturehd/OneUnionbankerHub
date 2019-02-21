@@ -1713,39 +1713,87 @@ export default class HRBenefitsClient {
 
   getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
     const objectParam = {
-      limit : 10,
-      totalRecords: 100,
+      limit : 1,
+      totalRecords: 1,
       page: 1,
       records : [
         {
           id: 0,
-          applicableNavDate: '2019-01-22',
+          applicableNavDate: '2019-01-28',
           description: '',
           bidRate: 10.0
         },
         {
           id: 1,
-          applicableNavDate: '2019-01-27',
+          applicableNavDate: '2019-01-24',
           description: '',
           bidRate: 5.0
         },
         {
           id: 2,
-          applicableNavDate: '2019-01-29',
+          applicableNavDate: '2019-01-24',
           description: '',
           bidRate: 11.0
         },
         {
           id: 3,
-          applicableNavDate: '2019-02-04',
+          applicableNavDate: '2019-01-25',
           description: '',
           bidRate: 20.0
         },
         {
           id: 4,
-          applicableNavDate: '2019-02-18',
+          applicableNavDate: '2019-02-25',
           description: '',
           bidRate: 14.0
+        },
+        {
+          id: 5,
+          applicableNavDate: '2019-02-17',
+          description: '',
+          bidRate: 121.0
+        },
+        {
+          id: 5,
+          applicableNavDate: '2019-02-17',
+          description: '',
+          bidRate: 121.0
+        },
+        {
+          id: 5,
+          applicableNavDate: '2019-02-17',
+          description: '',
+          bidRate: 121.0
+        },
+        {
+          id: 6,
+          applicableNavDate: '2019-02-16',
+          description: '',
+          bidRate: 131.0
+        },
+        {
+          id: 7,
+          applicableNavDate: '2019-02-21',
+          description: '',
+          bidRate: 131.0
+        },
+        {
+          id: 8,
+          applicableNavDate: '2019-02-21',
+          description: '',
+          bidRate: 323.0
+        },
+        {
+          id: 9,
+          applicableNavDate: '2019-02-21',
+          description: '',
+          bidRate: 232.0
+        },
+        {
+          id: 10,
+          applicableNavDate: '2019-02-20',
+          description: '',
+          bidRate: 232.0
         },
       ]
     }
@@ -1836,6 +1884,11 @@ export default class HRBenefitsClient {
 
   submitSquads (token, positionId) {
     return this.service.submitSquads(token, positionId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getStatusSquadApplication (token, isActive) {
+    return this.service.getStatusSquadApplication(token, isActive)
       .pipe(ServiceErrorOperator())
   }
 

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs'
-let limit = 10
+let limit = 100
 let list1 = [], list2 = []
 
 export default class GetPensionFundsDatePaginationInteractor {

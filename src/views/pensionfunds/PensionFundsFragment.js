@@ -70,10 +70,10 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ pensionFundsDocumentsData })
   }
 
-  setChartPensionData(label, amount){
+  setChartPensionData(label, rate){
     const object = {
       label: label,
-      amount : amount,
+      rate : rate,
     }
     this.setState({ pensionChartData : object })
   }
@@ -198,8 +198,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                 {
-                  agreementBool &&
-                  agreementBool ?
+                  !agreementBool  ?
                   <PensionDetailsFragment
                     pensionContributionData = { pensionContributionData }
                     contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
