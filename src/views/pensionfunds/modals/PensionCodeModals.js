@@ -24,6 +24,7 @@ class PensionCodeModals extends Component {
           value = { codeText }
           text = { 'Enter your five digit activation code' }
           type = { 'text' }
+          maxLength = { 5 }
           errorMessage = { '' }
           onChange = { (e) => codeTextFunc(e.target.value) }
           />

@@ -2589,6 +2589,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
+    return this.rootClient.get('', {
+      headers : { token }
+    })
+  }
+
   // Reward and Goals
   getRewardsDNAMoment (token, id) {
     return this.apiClient.get(`v1/rewards?awardId=${ id }`, {

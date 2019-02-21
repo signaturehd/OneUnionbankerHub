@@ -15,6 +15,8 @@ import PensionContributionModals from './modals/PensionContributionModals'
 
 import NoticeResponse from '../notice/NoticeResponseModal'
 
+import * as functions from './functions/PensionFundFunction'
+
 import {
   CircularLoader,
   Modal,
@@ -33,7 +35,7 @@ class PensionFundsFragment extends BaseMVPView {
       showDevelopmentModal: false,
       showContributionModal: false,
       isPincode: false,
-      tabsId : 'month',
+      tabsId : 'day',
       amountText: '',
       codeText: '',
       showNoticeResponseModal : false
@@ -43,8 +45,9 @@ class PensionFundsFragment extends BaseMVPView {
   componentDidMount () {
     this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
-    this.presenter.setUnitSummary('month')
+    this.presenter.setUnitSummary('day')
     this.presenter.getPensionFundsDocuments()
+    this.presenter.getPensionFundsDatePagination()
   }
 
   noticeResponse (noticeResponse) {
@@ -87,7 +90,11 @@ class PensionFundsFragment extends BaseMVPView {
 
   resetData () {
     this.setState({ codeText: '' })
-    this.props.getProfileFunc()
+  }
+
+  codeTextFunc (codeText) {
+    const value = functions.checkedValidateInputNumber(codeText)
+    this.setState({ codeText : value })
   }
 
   render () {
@@ -120,6 +127,7 @@ class PensionFundsFragment extends BaseMVPView {
           <NoticeResponse
             noticeResponse = { noticeResponse }
             onClose = { () =>{
+              this.props.getProfileFunc()
               this.setState({
                 showNoticeResponseModal : false,
                 showContributionModal : true
@@ -137,7 +145,7 @@ class PensionFundsFragment extends BaseMVPView {
                 this.presenter.addPensionContributional(amountText, codeText)
               }
             } }
-            codeTextFunc = { (codeText) => this.setState({ codeText }) }
+            codeTextFunc = { (codeText) => this.codeTextFunc(codeText) }
             codeText = { codeText }
             cancelCodeFunc = { () => {
               this.setState({ showCodeModal : false })
@@ -147,20 +155,20 @@ class PensionFundsFragment extends BaseMVPView {
         }
         {
           showContributionModal &&
-           <PensionContributionModals
-              amountText = { amountText }
-              isBool = { agreementBool && agreementBool }
-              amountTextFunc = { (amountText) => this.setState({ amountText }) }
-              continueCodeFunc = { () => {
-                this.setState({
-                  showCodeModal : true,
-                  showContributionModal : false,
-                })
-              }}
-              cancelCodeFunc = { () => {
-               this.setState({ showContributionModal : false })
-              }}
-           />
+          <PensionContributionModals
+            amountText = { amountText }
+            isBool = { agreementBool && agreementBool }
+            amountTextFunc = { (amountText) => this.setState({ amountText }) }
+            continueCodeFunc = { () => {
+              this.setState({
+                showCodeModal : true,
+                showContributionModal : false,
+              })
+            }}
+            cancelCodeFunc = { () => {
+             this.setState({ showContributionModal : false })
+            }}
+          />
         }
         {
           loader ?

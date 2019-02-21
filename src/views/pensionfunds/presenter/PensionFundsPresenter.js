@@ -2,6 +2,7 @@ import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/G
 import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDocumentsInteractor'
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
 import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
+import GetPensionFundsDatePaginationInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDatePaginationInteractor'
 // POST
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
@@ -12,50 +13,12 @@ import UpdatePensionContributionalInteractor from '../../../domain/interactor/pe
 import moment from 'moment'
 
 let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
-let amountArray = [], labelArray = [], pensionId = ''
-
-let dateMock = [
-  {
-    id: 0,
-    value : 4000,
-    date: '02/06/2019',
-  },
-  {
-    id: 1,
-    value : 300,
-    date: '03/12/2019',
-  },
-  {
-    id: 2,
-    value : 300,
-    date: '01/01/2018',
-  },
-  {
-    id: 3,
-    value : 241,
-    date: '01/12/2019',
-  },
-  {
-    id: 4,
-    value : 241,
-    date: '01/12/2017',
-  },
-  {
-    id: 5,
-    value : 1231,
-    date: '11/08/2018',
-  },
-  {
-    id: 6,
-    value : 123123,
-    date: '08/12/2016',
-  },
-  {
-    id: 7,
-    value : 12,
-    date: '08/12/2016',
-  },
-]
+let amountArray = [], labelArray = [], pensionId = '', dateStored = []
+let fromDate = '', toDate = moment().format('YYYY-MM-DD'), variableParam = ''
+let DAILY_STRANDS = 7
+let WEEKLY_STRANDS = 4
+let MONTHLY_STRANDS = 4
+let QUARTERLY_STRANDS = 4
 
 export default class PensionFundsPresenter {
   constructor (container) {
@@ -66,6 +29,7 @@ export default class PensionFundsPresenter {
     this.addPensionFundsDocumentsInteractor = new AddPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
     this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
     this.updatePensionContributionalInteractor = new UpdatePensionContributionalInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsDatePaginationInteractor = new GetPensionFundsDatePaginationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -177,86 +141,239 @@ export default class PensionFundsPresenter {
     return isBool
   }
 
-  sortChartDate (response, type, format) {
-    var temp = {};
-    var obj = null;
-    for(var i=0; i < response.length; i++) {
-      obj=response[i];
-      if(!temp[obj.date]) {
-       temp[obj.date] = obj;
-      } else {
-       temp[obj.date].value += obj.value;
-      }
-    }
-    var result = [];
-    for (var prop in temp)
-        result.push(temp[prop]);
-    let sortResult
-    if(type === 'increment') {
-      sortResult = result.sort((a, b) => { return  a.date - b.date })
-    } else {
-      sortResult = result.sort((a, b) => { return  b.date - a.date })
-    }
-    let newResult = sortResult.map((resp, key) => {
-      if(format === 'YYYY') {
-        const object = {
-          date: resp.date,
-          value : resp.value,
-        }
-        return object
-      } else if(format === 'MMMM') {
-        const object = {
-          date: moment(resp.dateFormat).format('MMMM'),
-          value : resp.value,
-        }
-        return object
-      }
-    })
-    return newResult
+
+  /* from date calendar computation of each periodic */
+
+  getDailyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract(DAILY_STRANDS, 'days') // deduct days base on number of chart strands
+
+    return dateToday
   }
 
-  setUnitSummary(variable){
-    amountArray = []
-    labelArray = []
-    if(variable.toLowerCase() === 'month'){
-      let response = dateMock.map((x,i)=> {
-        const object = {'date': parseInt(moment(x.date).format('MM')), dateFormat: x.date, 'value': x.value}
+  getWeeklyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract( WEEKLY_STRANDS, 'week') // multiply 7 (week is 7 days) on number of chart strands
+
+    return dateToday
+  }
+
+  getMonthlyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract(MONTHLY_STRANDS, 'months') // deduct months base on number of chart strands
+
+    return dateToday
+  }
+
+  getQuarterlyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'months') // multiply 3 (quarterly is every 3 months) on number of chart strands
+
+    return dateToday
+  }
+
+/**
+ * Calculate the average rates base on the given date ranges.
+ *
+ * example:
+ *
+ * @param dateRanges given Jan 01 - Jan 02, Jan 03 - Jan 04, etc...
+ *
+ * @param pensionCharts given January 01 with 0.00 rate, and January 02 with 100.00 rate
+ *
+ * @return January 01 with 50.00 rate as this is the average of the given date range (Jan 01 - Jan 02)
+ */
+
+  calculateAverageRates (dateRanges, pensionCharts) {
+    let formattedPensionCharts = []
+    for (var i = 0; i < dateRanges.length; i++) {
+      let totalRate = 0.0
+      let totalDates = 0.0 // total count of data that added
+      const pairDateArray = dateRanges[i]
+      for (var pairDate = 0; pairDate < pairDateArray.length; pairDate++) { // loop tru date ranges
+        for (var pensionChart = 0; pensionChart < pensionCharts.length; pensionChart++) {
+          let pensionDate
+          try {
+            pensionDate = moment(pensionCharts[pensionChart].date).format('YYYY-MM-DD HH:mm')
+            /* compare the date if is between the iterated date range, if between, add the rate to the total */
+            if (moment(dateRanges[0][pairDate]).format('YYYY-MM-DD') === moment(pensionDate).format('YYYY-MM-DD')) {
+                totalRate += pensionCharts[pensionChart].rate
+                totalDates++
+            }
+          } catch (e) {
+            // skip if parsing of date failed
+          }
+        }
+        formattedPensionCharts.push({
+          applicableNavDate: moment(dateRanges[0][pairDate]).format('YYYY-MM-DD'),
+          bidRate: totalDates > 1 ? totalRate / totalDates : 0.0,
+          description : ''
+        })
+      }
+    }
+    console.log(formattedPensionCharts)
+  }
+
+  sortChartDate (response, type, format) {
+    // var temp = {};
+    // var obj = null;
+    // for(var i=0; i < response.length; i++) {
+    //   obj=response[i];
+    //   if(!temp[obj.date]) {
+    //    temp[obj.date] = obj;
+    //   } else {
+    //    temp[obj.date].rate += obj.rate;
+    //   }
+    // }
+    // var result = [];
+    // for (var prop in temp)
+    //     result.push(temp[prop]);
+    // let sortResult = []
+
+    let toDateCalendarArray = []
+    let fromDateArray = []
+    let dateRanges = new Array(fromDateArray, toDateCalendarArray)
+
+    let fDate = this.getDailyStartDate()
+
+    for(let i = 0; i <= DAILY_STRANDS; i++) {
+      const dateToday = moment(fDate).format('YYYY-MM-DD HH:mm')
+
+      fDate = moment(fDate).add(1, 'days')
+      let toDateCalendar = moment(fDate).clone()
+      toDateCalendar = moment(toDateCalendar).subtract(1, 'days')
+      toDateCalendarArray.push(moment(toDateCalendar).format('YYYY-MM-DD HH:mm'))
+      fromDateArray.push(dateToday)
+    }
+
+    this.calculateAverageRates(dateRanges, response)
+
+    //
+    // if(type === 'increment') {
+    //   sortResult = result.sort((a, b) => { return  a.date - b.date })
+    // } else {
+    //   sortResult = result.sort((a, b) => { return  b.date - a.date })
+    // }
+    // let newResult = sortResult.map((resp, key) => {
+    //   if(format === 'YYYY') {
+    //     const object = {
+    //       date: resp.date,
+    //       rate : resp.rate,
+    //     }
+    //     return object
+    //   } else if(format === 'MMMM') {
+    //     const object = {
+    //       date: moment(resp.dateFormat).format('MMMM'),
+    //       rate : resp.rate,
+    //     }
+    //     return object
+    //   } else if (format === 'DD') {
+    //     const object = {
+    //       date: moment(resp.date).format('MMM DD'),
+    //       rate : resp.rate,
+    //     }
+    //     return object
+    //   }
+    // })
+    // return newResult
+  }
+
+  setChartFilter (dateData) {
+    if (variableParam.toLowerCase() === 'day') {
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        return object
+      })
+      let newResult = this.sortChartDate(response, 'increment', 'DD');
+
+      // newResult.map((resp, key) => {
+      //   labelArray.push(resp.applicableNavDate)
+      //   amountArray.push(resp.bidRate)
+      // })
+
+      this.view.setChartPensionData(labelArray, amountArray)
+    } else if (variableParam.toLowerCase() === 'week') {
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': parseInt(moment(x.applicableNavDate).format('MM')), dateFormat: x.applicableNavDate, 'value': x.rate}
         return object
       })
 
       let newResult = this.sortChartDate(response, 'increment', 'MMMM');
 
       newResult.map((resp, key) => {
-        labelArray.push(resp.date)
-        amountArray.push(resp.value)
+        labelArray.push(resp.applicableNavDate)
+        amountArray.push(resp.bidRate)
       })
 
       this.view.setChartPensionData(labelArray, amountArray)
-   } else if(variable.toLowerCase() === 'quarterly'){
-     let response = dateMock.map((x,i)=> {
-       const object = { 'date': moment(x.date).quarter(), 'value': x.value}
+    } else if(variableParam.toLowerCase() === 'month'){
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': parseInt(moment(x.applicableNavDate).format('MM')), dateFormat: x.applicableNavDate, 'value': x.bidRate}
+        return object
+      })
+
+      let newResult = this.sortChartDate(response, 'increment', 'MMMM');
+
+      newResult.map((resp, key) => {
+        labelArray.push(resp.applicableNavDate)
+        amountArray.push(resp.bidRate)
+      })
+
+      this.view.setChartPensionData(labelArray, amountArray)
+   } else if(variableParam.toLowerCase() === 'quarterly'){
+     let response = dateData && dateData.map((x,i)=> {
+       const object = { 'date': moment(x.applicableNavDate).quarter(), 'value': x.bidRate}
        return object
      })
 
      let newResult = this.sortChartDate(response, 'increment', 'YYYY');
       newResult.map((resp, key) => {
-        labelArray.push('Q'+resp.date)
-        amountArray.push(resp.value)
+        labelArray.push('Q'+resp.applicableNavDate)
+        amountArray.push(resp.bidRate)
       })
      this.view.setChartPensionData(labelArray, amountArray)
-   } else if(variable.toLowerCase() === 'year') {
+   } else if(variableParam.toLowerCase() === 'year') {
      let response = dateMock.map((x,i)=> {
-       const object = {'date': parseInt(moment(x.date).format('YYYY')), 'value': x.value}
+       const object = {'date': parseInt(moment(x.applicableNavDate).format('YYYY')), 'value': x.bidRate}
        return object
      })
 
      let newResult = this.sortChartDate(response, 'decrement', 'YYYY');
 
      newResult.map((resp, key) => {
-       labelArray.push(resp.date)
-       amountArray.push(resp.value)
+       labelArray.push(resp.applicableNavDate)
+       amountArray.push(resp.bidRate)
      })
      this.view.setChartPensionData(labelArray, amountArray)
+    }
+  }
+
+  setUnitSummary(variable){
+    amountArray = []
+    labelArray = []
+    variableParam = variable
+    if (variable.toLowerCase() === 'day') {
+      let test = this.getDailyStartDate()
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if (variable.toLowerCase() === 'week') {
+      let test = moment(toDate).subtract(WEEKLY_STRANDS, 'weeks').format('YYYY-MM-DD')
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if(variable.toLowerCase() === 'month') {
+      let test = moment(toDate).subtract(MONTHLY_STRANDS, 'months').format('YYYY-MM-DD')
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if(variable.toLowerCase() === 'quarterly'){
+      let test = moment(toDate).subtract(QUARTERLY_STRANDS, 'months').format('YYYY-MM-DD')
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if(variable.toLowerCase() === 'year') {
+
     }
   }
 
@@ -265,6 +382,17 @@ export default class PensionFundsPresenter {
     this.getPensionFundsInteractor.execute()
     .subscribe(data => {
       this.view.setPensionFundsPresenter(data)
+      this.view.showCircularLoader(false)
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
+  getPensionFundsDatePagination () {
+    this.view.showCircularLoader(true)
+    this.getPensionFundsDatePaginationInteractor.execute(fromDate, toDate)
+    .subscribe(data => {
+      this.setChartFilter(data)
       this.view.showCircularLoader(false)
     }, error => {
       this.view.showCircularLoader(false)
@@ -326,8 +454,7 @@ export default class PensionFundsPresenter {
       this.view.noticeResponse(data)
       this.getPensionFunds()
       this.getPensionValidate()
-      this.setUnitSummary('year')
-      this.getPensionFundsDocuments()
+      this.setUnitSummary('day')
       this.view.resetData()
       this.view.showCircularLoader(false)
     }, error => {
@@ -343,8 +470,7 @@ export default class PensionFundsPresenter {
       this.view.noticeResponse(data)
       this.getPensionFunds()
       this.getPensionValidate()
-      this.setUnitSummary('year')
-      this.getPensionFundsDocuments()
+      this.setUnitSummary('day')
       this.view.resetData()
       this.view.showCircularLoader(false)
     }, error => {
