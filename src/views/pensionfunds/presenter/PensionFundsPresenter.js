@@ -216,7 +216,6 @@ export default class PensionFundsPresenter {
         })
       }
     }
-    console.log(formattedPensionCharts)
     return formattedPensionCharts
   }
 
