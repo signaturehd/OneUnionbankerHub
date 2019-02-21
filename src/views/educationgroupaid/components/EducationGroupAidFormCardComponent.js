@@ -151,10 +151,11 @@ class EducationGroupAidFormCardComponent extends Component {
               <DatePicker
                 value = { effectivityDateText }
                 selected = { effectivityDate && moment(effectivityDate)}
-                text = { 'Coverage of Insurance' }
+                text = { 'Effectivity Date' }
                 disabled = { premiumDuration ? showEditSubmitButton : true }
                 errorMessage = { premiumDuration ? '':'Please select the dates covered by your premium payment.' }
                 onChange = { (e) => dateFunc(e, premiumMonths) }
+                maxDate = { moment() }
               />
               {
                 effectivityDate &&

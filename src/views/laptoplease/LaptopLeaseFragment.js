@@ -347,7 +347,9 @@ class LaptopLeaseFragment extends BaseMVPView {
                   fontWeight: 'bold',
                   color: 'grey',
                 }}>
+                <center>
                 Laptop Lease
+                </center>
               </h2>
               <br/>
               <br/>

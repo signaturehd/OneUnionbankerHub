@@ -188,14 +188,30 @@ export default class LaptopLeasePresenter {
              duration : 2000
            })
          )
-        } else if(  storedFile === '' ){
-          store.dispatch(NotifyActions.addNotify({
-             title: 'Laptop Lease',
-             message : 'Attachment required',
-             type : 'warning',
-             duration : 2000
-           })
-         )
+       } else if (storedModel === '') {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Laptop Lease',
+              message : 'Please insert car model',
+              type : 'warning',
+              duration : 2000
+            })
+          )
+       } else if (storedBrand === '') {
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Laptop Lease',
+              message : 'Please insert car brand',
+              type : 'warning',
+              duration : 2000
+            })
+          )
+       } else if(  storedFile === '' ){
+            store.dispatch(NotifyActions.addNotify({
+              title: 'Laptop Lease',
+              message : 'Attachment required',
+              type : 'warning',
+              duration : 2000
+            })
+          )
         } else if (validateAttachments) {
           storedFile && storedFile.map(
             (storedFile, key) => {
