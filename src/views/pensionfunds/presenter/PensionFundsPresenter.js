@@ -12,6 +12,9 @@ import UpdatePensionContributionalInteractor from '../../../domain/interactor/pe
 
 import moment from 'moment'
 
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
 let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
 let amountArray = [], labelArray = [], pensionId = '', dateStored = []
 let fromDate = '', toDate = moment().format('YYYY-MM-DD'), variableParam = ''
@@ -235,8 +238,7 @@ export default class PensionFundsPresenter {
         const dateToday = moment(fDate)
 
         fDate = moment(fDate).add(1, 'days')
-        let toDateCalendar = moment(fDate).clone()
-        toDateCalendar = moment(toDateCalendar).subtract(1, 'days')
+        let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
         toDateCalendarArray.push(toDateCalendar)
         fromDateArray.push(dateToday)
       }
@@ -265,8 +267,7 @@ export default class PensionFundsPresenter {
       for(let i = 0; i <= WEEKLY_STRANDS; i++) {
         const dateToday = moment(fDate)
         fDate = moment(fDate).add(7, 'days')
-        let toDateCalendar = moment(fDate).clone()
-        toDateCalendar = moment(toDateCalendar).subtract(1, 'days')
+        let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
         toDateCalendarArray.push(toDateCalendar)
         fromDateArray.push(dateToday)
       }
@@ -295,8 +296,7 @@ export default class PensionFundsPresenter {
         const dateToday = moment(fDate)
 
         fDate = moment(fDate).add(1, 'month')
-        let toDateCalendar = moment(fDate).clone()
-        toDateCalendar = moment(toDateCalendar).subtract(1, 'month')
+        let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
         toDateCalendarArray.push(toDateCalendar)
         fromDateArray.push(dateToday)
       }
@@ -324,8 +324,7 @@ export default class PensionFundsPresenter {
        const dateToday = moment(fDate)
 
        fDate = moment(fDate).add(3, 'month')
-       let toDateCalendar = moment(fDate).clone()
-       toDateCalendar = moment(toDateCalendar).subtract(1, 'month')
+       let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
        toDateCalendarArray.push(toDateCalendar)
        fromDateArray.push(dateToday)
      }
@@ -426,7 +425,12 @@ export default class PensionFundsPresenter {
       this.view.showCircularLoader(true)
       this.addPensionFundsDocumentsInteractor.execute()
       .subscribe(data => {
-        this.view.noticeResponse(data)
+        store.dispatch(NotifyActions.addNotify({
+          title : 'Retirement Pension Period',
+          message : data.message,
+          type: 'warning'
+        })
+      )
         this.view.showCircularLoader(false)
       }, error => {
         this.view.showCircularLoader(false)

@@ -18,7 +18,8 @@ class GiftDetailsCheckoutModal extends Component {
       hasCustom,
       valueAmountTextFunc,
       valueAmountText,
-      valueAmountFunc
+      valueAmountFunc,
+      disabled,
     } = this.props
 
     let selectedGifts = {
@@ -101,7 +102,8 @@ class GiftDetailsCheckoutModal extends Component {
               <GenericButton
                 onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
                 text = { 'SELECT THIS' }
-                className = { 'giftdetails-select' }
+                disabled = { disabled }
+                className = { `giftdetails-select${disabled ? true : false}` }
               />
             </div>
           </div>

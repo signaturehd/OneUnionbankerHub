@@ -2560,7 +2560,7 @@ export default class HRBenefitsService {
       amount : amount,
       pinCode: code,
     }
-    return this.rootClient.put(`appian/pension/v1/contribution/${id}`, hasAgreedObject, {
+    return this.rootClient.post(`appian/pension/v1/agreements`, hasAgreedObject, {
       headers : { token }
     })
   }

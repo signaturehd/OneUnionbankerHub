@@ -8,6 +8,8 @@ import './styles/giftDetails.css'
 
 import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 
+import * as validate from './functions/GiftDetailsFunctions'
+
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftDetailsBannerComponent from './components/GiftDetailsBannerComponent'
 import GiftDetailsEgiftComponent from './components/GiftDetailsEgiftComponent'
@@ -37,6 +39,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 			mode: 2,
 			showResponseModal: false,
 			noticeResponse: '',
+			disabled: false,
 		}
 	}
 
@@ -75,31 +78,36 @@ class GiftsDetailsFragment extends BaseMVPView {
 		const {
 			totalPoints
 		} = this.state
+		let value = validate.checkedValidateNumberInput(valueText)
 		let calculation
 		let currentPoints = totalPoints
-		let computePoints = parseInt(valuePoints) * parseInt(valueText) * 20
-		let totalPointsTemp = totalPoints - computePoints
-		if(totalPointsTemp <= totalPoints) {
-			this.setState({ totalPoints: totalPointsTemp, valueText })
+		let computePoints = parseInt(valuePoints) * parseInt(value) * 20
+		if(computePoints <= currentPoints) {
+			let totalPointsTemp = currentPoints - computePoints
+			if(currentPoints > 0) {
+				this.setState({ totalPoints: totalPointsTemp, valueText: value, disabled: false })
+			}
 		} else {
-			this.setState({ totalPoints: temTotalPoints, valueText })
+			this.setState({ totalPoints: temTotalPoints, valueText: value, disabled: true })
 		}
 	}
 
 	getAmountComputation (valueAmountText) {
 		const {
 			totalPoints,
-			valueText
 		} = this.state
 
+		let value = validate.checkedValidateNumberInput(valueAmountText)
 		let calculation
 		let currentPoints = totalPoints
-		let computePoints = parseInt(valueAmountText) * parseInt(valueText) * 20
-		let totalPointsTemp = totalPoints - computePoints
-		if(totalPointsTemp <= totalPoints) {
-			this.setState({ totalPoints: totalPointsTemp, valueAmountText, valueText })
+		let computePoints = parseInt(valueAmountText) * parseInt(valueAmountText) * 20
+		if(computePoints <= currentPoints) {
+			let totalPointsTemp = currentPoints - computePoints
+			if(currentPoints > 0) {
+				this.setState({ totalPoints: totalPointsTemp, valueAmountText: value, disabled: false })
+			}
 		} else {
-			this.setState({ totalPoints: temTotalPoints, valueAmountText, valueText })
+			this.setState({ totalPoints: temTotalPoints, valueAmountText: value, disabled: true })
 		}
 	}
 
@@ -122,7 +130,8 @@ class GiftsDetailsFragment extends BaseMVPView {
 			valueAmountText,
 			mode,
 			showResponseModal,
-			noticeResponse
+			noticeResponse,
+			disabled,
 		} = this.state
 
 		return (
@@ -132,6 +141,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 
 					<GiftDetailsCheckoutModal
 						totalPoints = { totalPoints }
+						disabled = { disabled }
 						valueText = { valueText }
 						valueTextFunc = { (valueText, value) => {
 							this.getComputation(valueText, value)
@@ -148,7 +158,8 @@ class GiftsDetailsFragment extends BaseMVPView {
 							this.setState({
 								showCheckoutModal : false,
 								valueText : '',
-								valueAmountText : ''
+								valueAmountText : '',
+								totalPoints: temTotalPoints,
 							})
 						}
 						onSelectThis = { (list, value) => {
