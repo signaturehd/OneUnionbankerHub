@@ -17,7 +17,7 @@ let amountArray = [], labelArray = [], pensionId = '', dateStored = []
 let fromDate = '', toDate = moment().format('YYYY-MM-DD'), variableParam = ''
 let DAILY_STRANDS = 7
 let WEEKLY_STRANDS = 4
-let MONTHLY_STRANDS = 4
+let MONTHLY_STRANDS = 12
 let QUARTERLY_STRANDS = 4
 
 export default class PensionFundsPresenter {
@@ -163,7 +163,7 @@ export default class PensionFundsPresenter {
   getMonthlyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(MONTHLY_STRANDS, 'months') // deduct months base on number of chart strands
+    dateToday = moment(dateToday).subtract(MONTHLY_STRANDS, 'month') // deduct months base on number of chart strands
 
     return dateToday
   }
@@ -171,7 +171,7 @@ export default class PensionFundsPresenter {
   getQuarterlyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'months') // multiply 3 (quarterly is every 3 months) on number of chart strands
+    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'month') // multiply 3 (quarterly is every 3 months) on number of chart strands
 
     return dateToday
   }
@@ -191,15 +191,15 @@ export default class PensionFundsPresenter {
   calculateAverageRates (dateRanges, pensionCharts) {
     let formattedPensionCharts = []
     for (let i = 1; i < dateRanges.length; i++) {
-      let pairDateArray = dateRanges[i]
-      for (let pairDate = 1; pairDate < pairDateArray.length; pairDate++) { // loop tru date ranges
+      for (let pairDate = 1; pairDate < dateRanges[i].length; pairDate++) { // loop tru date ranges
         let totalRate = 0.0
         let totalDates = 0 // total count of data that added
         for (let pensionChart in pensionCharts) {
-          let pensionDate = moment(pensionCharts[pensionChart].date).format('YYYY-MM-DD')
+          const pensionDate = moment(pensionCharts[pensionChart].date).format('YYYY-MM-DD')
           try {
             /* compare the date if is between the iterated date range, if between, add the rate to the total */
-            if ((moment(dateRanges[0][pairDate]).format('YYYY-MM-DD') === pensionDate) * (pensionDate === moment(dateRanges[1][pairDate]).format('YYYY-MM-DD')) > 0) {
+
+            if ((moment(dateRanges[i][pairDate]).format('YYYY-MM-DD') == pensionDate) * (pensionDate == moment(dateRanges[i][pairDate]).format('YYYY-MM-DD')) > 0) {
               totalRate += pensionCharts[pensionChart].rate
               totalDates ++
             }
@@ -208,7 +208,7 @@ export default class PensionFundsPresenter {
           }
         }
         formattedPensionCharts.push({
-          applicableNavDate: moment(dateRanges[0][pairDate]).format('YYYY-MM-DD'),
+          applicableNavDate: moment(dateRanges[1][pairDate]).format('YYYY-MM-DD'),
           bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
           totalRate: totalRate,
           totalDates: totalDates,
@@ -267,7 +267,6 @@ export default class PensionFundsPresenter {
         const dateToday = moment(fDate)
         fDate = moment(fDate).add(7, 'days')
         let toDateCalendar = moment(fDate).clone()
-        console.log(fDate)
         toDateCalendar = moment(toDateCalendar).subtract(1, 'days')
         toDateCalendarArray.push(toDateCalendar)
         fromDateArray.push(dateToday)
@@ -277,50 +276,69 @@ export default class PensionFundsPresenter {
       let bidRateArray = []
       let newResult = this.calculateAverageRates(dateRanges, response)
       newResult.map((resp, key) => {
-        labelArray.push('('+ moment(resp.applicableNavDate).format('MMM') + ') ' + `${'Week'+(key+1)}`)
+        labelArray.push('('+ moment(resp.applicableNavDate).format('MMM DD') + ') ' + `${'Week'+(key+1)}`)
         bidRateArray.push(resp.bidRate)
       })
       this.view.setChartPensionData(labelArray, bidRateArray)
 
     } else if(variableParam.toLowerCase() === 'month'){
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': parseInt(moment(x.applicableNavDate).format('MM')), dateFormat: x.applicableNavDate, 'value': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
         return object
       })
 
-      let newResult = this.sortChartDate(response, 'increment', 'MMMM');
+      let toDateCalendarArray = []
+      let fromDateArray = []
+      let dateRanges = new Array(fromDateArray, toDateCalendarArray)
+      let fDate = this.getMonthlyStartDate()
 
+      for(let i = 0; i <= MONTHLY_STRANDS; i++) {
+        const dateToday = moment(fDate)
+
+        fDate = moment(fDate).add(1, 'month')
+        let toDateCalendar = moment(fDate).clone()
+        toDateCalendar = moment(toDateCalendar).subtract(1, 'month')
+        toDateCalendarArray.push(toDateCalendar)
+        fromDateArray.push(dateToday)
+      }
+      let labelArray = []
+      let bidRateArray = []
+      let newResult = this.calculateAverageRates(dateRanges, response)
       newResult.map((resp, key) => {
-        labelArray.push(resp.applicableNavDate)
-        amountArray.push(resp.bidRate)
+        labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
+        bidRateArray.push(resp.bidRate)
       })
 
-      this.view.setChartPensionData(labelArray, amountArray)
-   } else if(variableParam.toLowerCase() === 'quarterly'){
+      this.view.setChartPensionData(labelArray, bidRateArray)
+   } else if(variableParam.toLowerCase() === 'quarterly') {
      let response = dateData && dateData.map((x,i)=> {
-       const object = { 'date': moment(x.applicableNavDate).quarter(), 'value': x.bidRate}
+       const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
        return object
      })
 
-     let newResult = this.sortChartDate(response, 'increment', 'YYYY');
-      newResult.map((resp, key) => {
-        labelArray.push('Q'+resp.applicableNavDate)
-        amountArray.push(resp.bidRate)
-      })
-     this.view.setChartPensionData(labelArray, amountArray)
-   } else if(variableParam.toLowerCase() === 'year') {
-     let response = dateMock.map((x,i)=> {
-       const object = {'date': parseInt(moment(x.applicableNavDate).format('YYYY')), 'value': x.bidRate}
-       return object
-     })
+     let toDateCalendarArray = []
+     let fromDateArray = []
+     let dateRanges = new Array(fromDateArray, toDateCalendarArray)
+     let fDate = this.getMonthlyStartDate()
 
-     let newResult = this.sortChartDate(response, 'decrement', 'YYYY');
+     for(let i = 0; i <= QUARTERLY_STRANDS; i++) {
+       const dateToday = moment(fDate)
 
+       fDate = moment(fDate).add(3, 'month')
+       let toDateCalendar = moment(fDate).clone()
+       toDateCalendar = moment(toDateCalendar).subtract(1, 'month')
+       toDateCalendarArray.push(toDateCalendar)
+       fromDateArray.push(dateToday)
+     }
+     let labelArray = []
+     let bidRateArray = []
+     let newResult = this.calculateAverageRates(dateRanges, response)
      newResult.map((resp, key) => {
-       labelArray.push(resp.applicableNavDate)
-       amountArray.push(resp.bidRate)
+       labelArray.push(moment(resp.applicableNavDate).format('MMM DD') + '(Q'+(key+1)+')')
+       bidRateArray.push(resp.bidRate)
      })
-     this.view.setChartPensionData(labelArray, amountArray)
+
+     this.view.setChartPensionData(labelArray, bidRateArray)
     }
   }
 
@@ -337,13 +355,13 @@ export default class PensionFundsPresenter {
       fromDate = test
       this.getPensionFundsDatePagination()
     } else if(variable.toLowerCase() === 'month') {
-      let test = moment(toDate).subtract(MONTHLY_STRANDS, 'months').format('YYYY-MM-DD')
+      let test = this.getMonthlyStartDate()
       fromDate = test
-      // this.getPensionFundsDatePagination()
+      this.getPensionFundsDatePagination()
     } else if(variable.toLowerCase() === 'quarterly'){
-      let test = moment(toDate).subtract(QUARTERLY_STRANDS, 'months').format('YYYY-MM-DD')
+      let test = this.getQuarterlyStartDate()
       fromDate = test
-      // this.getPensionFundsDatePagination()
+      this.getPensionFundsDatePagination()
     } else if(variable.toLowerCase() === 'year') {
 
     }

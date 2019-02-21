@@ -2644,6 +2644,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getGiftOrderDetails (token, refNo) {
+    return this.rootClient.get(`hr/giftaway/v1/orders?referenceNo=${refNo}`, {
+      headers : { token }
+    })
+  }
+
   // BIR 2316 My Documents
 
   getBir2316List (token) {

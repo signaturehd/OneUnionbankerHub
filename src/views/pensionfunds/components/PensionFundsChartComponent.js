@@ -28,7 +28,7 @@ class PensionFundsChartComponent extends Component {
       datasets: [
         {
           borderColor: 'white',
-          label: "Contributional Chart",
+          label: "Pension Chart",
           fillColor: "white",
           strokeColor: "white",
           pointColor: "white",
