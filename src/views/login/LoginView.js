@@ -272,7 +272,7 @@ class LoginView extends BaseMVPView {
 
     let version = 8
     let majorVersion = 2
-    let minorVersion = 3
+    let minorVersion = 4
     let versionNumber = version + '.' + majorVersion + '.' + minorVersion
 
     const objectValue = [{
