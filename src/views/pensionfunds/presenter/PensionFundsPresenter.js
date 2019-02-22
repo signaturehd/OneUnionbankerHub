@@ -150,7 +150,7 @@ export default class PensionFundsPresenter {
   getDailyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(DAILY_STRANDS, 'days') // deduct days base on number of chart strands
+    dateToday = moment(dateToday).subtract(DAILY_STRANDS, 'days').format('YYYY-MM-DD') // deduct days base on number of chart strands
 
     return dateToday
   }
@@ -158,7 +158,7 @@ export default class PensionFundsPresenter {
   getWeeklyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract((7 * WEEKLY_STRANDS), 'days') // multiply 7 (week is 7 days) on number of chart strands
+    dateToday = moment(dateToday).subtract((7 * WEEKLY_STRANDS), 'days').format('YYYY-MM-DD') // multiply 7 (week is 7 days) on number of chart strands
 
     return dateToday
   }
@@ -166,7 +166,7 @@ export default class PensionFundsPresenter {
   getMonthlyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(MONTHLY_STRANDS, 'month') // deduct months base on number of chart strands
+    dateToday = moment(dateToday).subtract(MONTHLY_STRANDS, 'month').format('YYYY-MM-DD') // deduct months base on number of chart strands
 
     return dateToday
   }
@@ -174,7 +174,7 @@ export default class PensionFundsPresenter {
   getQuarterlyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'month') // multiply 3 (quarterly is every 3 months) on number of chart strands
+    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'month').format('YYYY-MM-DD') // multiply 3 (quarterly is every 3 months) on number of chart strands
 
     return dateToday
   }
@@ -211,7 +211,7 @@ export default class PensionFundsPresenter {
           }
         }
         formattedPensionCharts.push({
-          applicableNavDate: moment(dateRanges[1][pairDate]).format('YYYY-MM-DD'),
+          applicableNavDate: moment(dateRanges[i][pairDate]).format('YYYY-MM-DD'),
           bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
           totalRate: totalRate,
           totalDates: totalDates,
@@ -425,12 +425,13 @@ export default class PensionFundsPresenter {
       this.view.showCircularLoader(true)
       this.addPensionFundsDocumentsInteractor.execute()
       .subscribe(data => {
-        store.dispatch(NotifyActions.addNotify({
-          title : 'Retirement Pension Period',
-          message : data.message,
-          type: 'warning'
-        })
-      )
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Retirement Pension Period',
+            message : data.message,
+            type: 'warning'
+          })
+        )
+        this.view.openContributionData()
         this.view.showCircularLoader(false)
       }, error => {
         this.view.showCircularLoader(false)

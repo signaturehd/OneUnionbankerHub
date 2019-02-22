@@ -97,6 +97,10 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ codeText : value })
   }
 
+  openContributionData () {
+    this.setState({ showContributionModal : true })
+  }
+
   render () {
     const { agreementBool, getProfileFunc } = this.props
     const {

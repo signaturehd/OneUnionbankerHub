@@ -179,6 +179,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 						onClose = { () => {
 							this.setState({ showResponseModal : false })
 							this.resetData()
+							history.push('/myrewards')
 							this.props.getProfileFunc()
 						}}
 					/>

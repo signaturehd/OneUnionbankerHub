@@ -2590,7 +2590,7 @@ export default class HRBenefitsService {
   }
 
   getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
-    return this.rootClient.get('', {
+    return this.rootClient.get(`finacle/v1/uitf/products/navpu?fromDate=${fromDate}&page=1&toDate=${toDate}&limit=${limit}`, {
       headers : { token }
     })
   }
