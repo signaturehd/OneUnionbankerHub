@@ -3,7 +3,7 @@ export default class UpdatePensionContributionalInteractor {
     this.client = client
   }
 
-  execute (amount, code) {
-    return this.client.updatePensionContributional(this.client.getToken(), amount, code)
+  execute (amount, code, id) {
+    return this.client.updatePensionContributional(this.client.getToken(), amount, code, id)
   }
 }

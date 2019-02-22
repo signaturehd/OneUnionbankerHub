@@ -57,11 +57,6 @@ class App extends BaseMVPView {
       <div>
         <Switch>
           <Route
-            path = '/1uhub/charts/:array'
-            render = { props => <PensionFundsChartComponent
-              url = { true }
-              { ...props }/> }/>
-          <Route
             path = '/success/:token'
             render = { props => <ResetPasswordView { ...props }/> }/>
           <Route path = '/' render={props => {

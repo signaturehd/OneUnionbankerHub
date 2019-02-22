@@ -86,7 +86,8 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   resetData () {
-    this.setState({ amountText: '', codeText: '' })
+    this.setState({ codeText: '' })
+    this.props.getProfileFunc()
   }
 
   render () {
@@ -121,9 +122,8 @@ class PensionFundsFragment extends BaseMVPView {
             onClose = { () =>{
               this.setState({
                 showNoticeResponseModal : false,
-                showContributionModal : false
+                showContributionModal : true
             })
-            getProfileFunc()
           } }
           />
         }
@@ -131,7 +131,7 @@ class PensionFundsFragment extends BaseMVPView {
           showCodeModal &&
           <PensionCodeModals
             submitCodeFunc = { () => {
-              if(agreementBool && agreementBool.pensionAgreement) {
+              if(agreementBool && agreementBool) {
                 this.presenter.updatePensionContributional(amountText, codeText)
               } else {
                 this.presenter.addPensionContributional(amountText, codeText)
@@ -149,7 +149,7 @@ class PensionFundsFragment extends BaseMVPView {
           showContributionModal &&
            <PensionContributionModals
               amountText = { amountText }
-              isBool = { agreementBool && agreementBool.pensionAgreement }
+              isBool = { agreementBool && agreementBool }
               amountTextFunc = { (amountText) => this.setState({ amountText }) }
               continueCodeFunc = { () => {
                 this.setState({
@@ -191,7 +191,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div>
                 {
                   agreementBool &&
-                  agreementBool.pensionAgreement === true ?
+                  agreementBool ?
                   <PensionDetailsFragment
                     pensionContributionData = { pensionContributionData }
                     contributionModal = { () => { this.setState({ showContributionModal : true }) }  }

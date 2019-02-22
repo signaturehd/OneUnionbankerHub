@@ -18,6 +18,8 @@ import GiftDetailsCheckoutModal from './modals/GiftDetailsCheckoutModal'
 
 // Fragment
 import GiftDetailsCheckoutFragment from './fragments/GiftDetailsCheckoutFragment'
+
+import NoticeResponseModal from '../notice/NoticeResponseModal'
 import moment from 'moment'
 
 let temTotalPoints
@@ -33,6 +35,8 @@ class GiftsDetailsFragment extends BaseMVPView {
 			valueText : '',
 			valueAmountText : '',
 			mode: 2,
+			showResponseModal: false,
+			noticeResponse: '',
 		}
 	}
 
@@ -57,6 +61,14 @@ class GiftsDetailsFragment extends BaseMVPView {
 	setRewardPoints (totalPoints) {
 		temTotalPoints = totalPoints
 		this.setState({ totalPoints })
+	}
+
+	noticeResponse (noticeResponse) {
+		this.setState({ noticeResponse, showResponseModal: true, showCheckoutFragment : false })
+	}
+
+	resetData () {
+		this.setState({ valueText : '', valueAmountText : '' })
 	}
 
 	getComputation (valueText, valuePoints) {
@@ -109,6 +121,8 @@ class GiftsDetailsFragment extends BaseMVPView {
 			valueText,
 			valueAmountText,
 			mode,
+			showResponseModal,
+			noticeResponse
 		} = this.state
 
 		return (
@@ -146,6 +160,17 @@ class GiftsDetailsFragment extends BaseMVPView {
 							})
 						}}
 						/>
+				}
+				{
+					showResponseModal &&
+					<NoticeResponseModal
+						noticeResponse = { noticeResponse }
+						onClose = { () => {
+							this.setState({ showResponseModal : false })
+							this.resetData()
+							this.props.getProfileFunc()
+						}}
+					/>
 				}
 				{
 					loader ?

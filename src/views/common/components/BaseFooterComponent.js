@@ -17,20 +17,20 @@ class BaseFooterComponent extends Component {
             <div className={'giftdetails-copyright column'}>
               <h3>Site Links</h3>
               <ul>
-                <li><a href="/">My Goals and Performance</a></li>
-                <li><a href="/terms">Rewards and Recognition</a></li>
-                <li><a href="/privacy">My Documents</a></li>
-                <li><a href="/contact">My Travel</a></li>
-                <li><a href="/contact">My Future</a></li>
+                <li><a onClick = { () => history.push('/mygoals') }>My Goals and Performance</a></li>
+                <li><a onClick = { () => history.push('/myrewards') }>Rewards and Recognition</a></li>
+                <li><a onClick = { () => history.push('/coe') }>My Documents</a></li>
+                <li><a onClick = { () => history.push('/mytravel') }>My Travel</a></li>
+                <li><a onClick = { () => history.push('/pensionfunds') }>My Future</a></li>
               </ul>
             </div>
             <div className={'giftdetails-copyright column'}>
               <h3>Site Links</h3>
               <ul>
-                <li><a href="/">My Benefits</a></li>
-                <li><a href="/terms">My Learning</a></li>
-                <li><a href="/privacy">My Pay</a></li>
-                <li><a href="/privacy">Feedback</a></li>
+                <li><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
+                <li><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
+                <li><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
+                <li><a onClick = { () => history.push('/feedback') }>Feedback</a></li>
               </ul>
             </div>
             <div className="giftdetails-link column">
