@@ -201,7 +201,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                 {
-                  agreementBool === null || agreementBool === false  ?
+                  agreementBool === true  ?
                   <PensionDetailsFragment
                     pensionContributionData = { pensionContributionData }
                     contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
