@@ -2672,15 +2672,16 @@ export default class HRBenefitsService {
       headers: { token }
     })
   }
+
   getVacancies (token, positionId, squadId, pageNumber) {
-    return this.apiClient.get(`v1/goals/vacancies?goalType=squad${positionId !== false && '&positionId=' + positionId}${squadId !== false && '&squadId=' + squadId}${pageNumber !== false && '&pageNumber=' + pageNumber}`, {
+    return this.apiClient.get(`v1/goals/vacancies?goalType=squad&squadId=${squadId}`, {
       headers: { token }
     })
   }
 
   submitSquads (token, positionId) {
     return this.apiClient.post('v1/goals/vacancies/submit', {
-      positionId
+      positionId : positionId.id
     }, {
       headers: { token }
     })

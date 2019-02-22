@@ -16,6 +16,7 @@ class SquadsComponent extends Component {
       squads,
       getVacancies
     } = this.props
+    
     return (
       <div>
       <h4 className = { 'unionbank-color-grey font-size-25px font-weight-bold padding-10px' }>Squad Vacancy</h4>

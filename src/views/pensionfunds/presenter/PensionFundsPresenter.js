@@ -242,8 +242,11 @@ export default class PensionFundsPresenter {
         toDateCalendarArray.push(toDateCalendar)
         fromDateArray.push(dateToday)
       }
+      console.log(dateRanges)
       let labelArray = []
       let bidRateArray = []
+
+      // Get Average Rate of each Date
       let newResult = this.calculateAverageRates(dateRanges, response)
       newResult.map((resp, key) => {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))

@@ -98,7 +98,7 @@ class CarLeaseOtherDetailsComponent extends Component {
              <span className = { ' transaction-card-icon-settings' }></span>
              <div>
                <h2 className = { 'font-weight-ligter' }>
-                 { detailsCarLease.CarDetails.Color.ChosenColor }
+                 { detailsCarLease.CarDetails.Color.SecondaryColor }
                </h2>
                <h2 className = { 'unionbank-color font-size-12px' }>
                  Secondary Color
@@ -111,7 +111,7 @@ class CarLeaseOtherDetailsComponent extends Component {
              <span className = { ' transaction-card-icon-settings' }></span>
              <div>
                <h2 className = { 'font-weight-ligter' }>
-                 { detailsCarLease.CarDetails.Color.SecondaryColor }
+                 { detailsCarLease.CarDetails.Color.ChosenColor }
                </h2>
                <h2 className = { 'unionbank-color font-size-12px' }>
                  Chosen Color

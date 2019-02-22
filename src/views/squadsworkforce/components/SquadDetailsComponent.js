@@ -11,26 +11,32 @@ class SquadDetailsComponent extends Component {
     super (props)
   }
 
-  checkDate (date) {
-    const newDate = date.replace('Z','')
-    return moment(newDate).format('MMMM DD, YYYY')
-  }
-
   render () {
     const {
       squadDetails,
-      hideFragment,
+      showPositionDetails,
+      vacantDetails
     } = this.props
 
     return (
-      <Card className = { 'squad-card-grid-component' }>
-        <div className = { 'text-align-left' }>
-          <h4></h4>
-        </div>
-        <div className = { 'text-align-right' }>
-          <h4></h4>
-        </div>
-      </Card>
+      <div className = { 'grid-global-columns-x3' }>
+        {
+          vacantDetails &&
+          vacantDetails.map((resp) =>
+            resp.position.map((data, key) =>
+            <Card
+              key = { key }
+              onClick = { () => showPositionDetails(resp, data) }
+              className = { 'squad-card-grid-component cursor-pointer' }>
+              <div className = { 'text-align-left' }>
+                <h4 className = { 'font-weight-bold' }>{ data.name }</h4>
+              </div>
+              <div className = { 'text-align-right' }>
+              </div>
+            </Card>
+          )
+        )}
+      </div>
     )
   }
 }

@@ -39,6 +39,7 @@
 
 .squad-card-grid-component {
   display: grid;
+  padding: 20px 10px;
   grid-template-columns: 1fr 1fr;
 }
 

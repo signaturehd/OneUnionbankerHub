@@ -18,12 +18,13 @@ export default class SquadPresenter {
     storedVacanciesPositionId = positionId
     storedVacanciesSquadId = squadId
     storedVacanciesPageNumber = pageNumber
-    this.view.showLoading()
+    this.view.showLoader(true)
     this.getVacanciesInteractor.execute(storedVacanciesPositionId, storedVacanciesSquadId, storedVacanciesPageNumber)
       .subscribe(data => {
         this.view.setVacancies(data)
-        this.view.hideLoading()
+        this.view.showLoader(false)
       }, e => {
+        this.view.showLoader(false)
         console.log(e);
       })
   }
@@ -31,25 +32,25 @@ export default class SquadPresenter {
   getSquads (squadId, page) {
     storedSquadId = squadId
     storedSquadPage = page
-    this.view.showLoading()
+    this.view.showLoader(true)
     this.getSquadsInteractor.execute(storedSquadId, storedSquadPage)
       .subscribe(data => {
         this.view.setSquads(data)
-        this.view.hideLoading()
+        this.view.showLoader(false)
       }, e => {
         console.log(e);
       })
   }
 
   submitSquads (positionId) {
-    this.view.showLoading()
+    this.view.showLoader(true)
     this.submitSquadsInteractor.execute(positionId)
       .do(data => {
         this.getSquads(storedVacanciesPositionId, storedVacanciesSquadId, storedVacanciesPageNumber)
       })
       .subscribe(data => {
         this.view.submitSquadResp(data)
-        this.view.hideLoading()
+        this.view.showLoader(false)
       }, e => {
         console.log(e);
       })

@@ -1712,49 +1712,49 @@ export default class HRBenefitsClient {
   }
 
   getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
-    const objectParam = {
-      limit : 100,
-      totalRecords: 1,
-      page: 1,
-      records : [
-        {
-          id: 0,
-          applicableNavDate: '2019-01-29',
-          description: '',
-          bidRate: 11.0
-        },
-        {
-          id: 1,
-          applicableNavDate: '2019-02-04',
-          description: '',
-          bidRate: 20.0
-        },
-        {
-          id: 2,
-          applicableNavDate: '2019-01-27',
-          description: '',
-          bidRate: 5.0
-        },
-        {
-          id: 3,
-          applicableNavDate: '2019-01-22',
-          description: '',
-          bidRate: 10.0
-        },
-        {
-          id: 4,
-          applicableNavDate: '2019-02-18',
-          description: '',
-          bidRate: 14.0
-        },
-      ]
-    }
-    return Observable.create(observer => {
-      observer.next(objectParam)
-      observer.complete()
-    })
-    // return this.service.getPensionFundsDatePagination(token, limit, start, fromDate, toDate)
-    // .pipe(ServiceErrorOperator())
+    // const objectParam = {
+    //   limit : 100,
+    //   totalRecords: 1,
+    //   page: 1,
+    //   records : [
+    //     {
+    //       id: 0,
+    //       applicableNavDate: '2019-01-29',
+    //       description: '',
+    //       bidRate: 11.0
+    //     },
+    //     {
+    //       id: 1,
+    //       applicableNavDate: '2019-02-04',
+    //       description: '',
+    //       bidRate: 20.0
+    //     },
+    //     {
+    //       id: 2,
+    //       applicableNavDate: '2019-01-27',
+    //       description: '',
+    //       bidRate: 5.0
+    //     },
+    //     {
+    //       id: 3,
+    //       applicableNavDate: '2019-01-22',
+    //       description: '',
+    //       bidRate: 10.0
+    //     },
+    //     {
+    //       id: 4,
+    //       applicableNavDate: '2019-02-18',
+    //       description: '',
+    //       bidRate: 14.0
+    //     },
+    //   ]
+    // }
+    // return Observable.create(observer => {
+    //   observer.next(objectParam)
+    //   observer.complete()
+    // })
+    return this.service.getPensionFundsDatePagination(token, limit, start, fromDate, toDate)
+    .pipe(ServiceErrorOperator())
   }
 
   // Reward Goals

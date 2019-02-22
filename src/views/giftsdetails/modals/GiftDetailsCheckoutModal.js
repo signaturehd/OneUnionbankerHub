@@ -102,7 +102,7 @@ class GiftDetailsCheckoutModal extends Component {
               <GenericButton
                 onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
                 text = { 'SELECT THIS' }
-                disabled = { disabled }
+                disabled = { valueAmountText === '' || valueAmountText === 0 ? true : disabled }
                 className = { `giftdetails-select${disabled ? true : false}` }
               />
             </div>

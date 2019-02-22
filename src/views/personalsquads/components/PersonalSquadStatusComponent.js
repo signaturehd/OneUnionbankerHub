@@ -14,6 +14,11 @@ class PersonalSquadStatusComponent extends Component {
     super (props)
   }
 
+  checkDate (date) {
+    const newDate = date.replace('Z','')
+    return moment(newDate).format('MMMM DD, YYYY')
+  }
+
   render () {
     const {
       activeData,
@@ -36,6 +41,8 @@ class PersonalSquadStatusComponent extends Component {
         </div>
         <div></div>
       </center>
+      <br/>
+      <br/>
         {
           status ?
           <div>
@@ -57,7 +64,7 @@ class PersonalSquadStatusComponent extends Component {
                        <h4>{ resp.position.name }</h4>
                      </div>
                      <div>
-                       <h4>{ resp.date }</h4>
+                       <h4>{ this.checkDate(resp.date) }</h4>
                      </div>
                    </Card>
                  )
@@ -80,10 +87,12 @@ class PersonalSquadStatusComponent extends Component {
                     key = { key }
                     className = { 'padding-10px' }>
                     <div>
+                      <h4 className = { 'font-weight-bold' }>{ resp.squad.name }</h4>
+                      <br/>
                       <h4>{ resp.position.name }</h4>
                     </div>
                     <div>
-                      <h4>{ resp.date }</h4>
+                      <h4>{ this.checkDate(resp.date) }</h4>
                     </div>
                   </Card>
                 )
