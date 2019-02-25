@@ -1719,19 +1719,19 @@ export default class HRBenefitsClient {
       records : [
         {
           id: 0,
-          applicableNavDate: '2019-01-21',
+          applicableNavDate: '2019-02-04',
           description: '',
           bidRate: 11.0
         },
         {
           id: 1,
-          applicableNavDate: '2019-01-21',
+          applicableNavDate: '2019-02-03',
           description: '',
           bidRate: 20.0
         },
         {
           id: 2,
-          applicableNavDate: '2019-01-24',
+          applicableNavDate: '2019-02-24',
           description: '',
           bidRate: 5.0
         },

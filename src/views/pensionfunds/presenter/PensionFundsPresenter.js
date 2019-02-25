@@ -144,7 +144,6 @@ export default class PensionFundsPresenter {
     return isBool
   }
 
-
   /* from date calendar computation of each periodic */
 
   getDailyStartDate() {
@@ -179,46 +178,15 @@ export default class PensionFundsPresenter {
     return dateToday
   }
 
-/**
- * Calculate the average rates base on the given date ranges.
- *
- * example:
- *
- * @param dateRanges given Jan 01 - Jan 02, Jan 03 - Jan 04, etc...
- *
- * @param pensionCharts given January 01 with 0.00 rate, and January 02 with 100.00 rate
- *
- * @return January 01 with 50.00 rate as this is the average of the given date range (Jan 01 - Jan 02)
- */
-
-  calculateAverageRates (dateRanges, pensionCharts) {
-    let formattedPensionCharts = []
-    let count = 0
-    for (let pairDate = 1; pairDate < dateRanges.length; pairDate++) { // loop tru date ranges
-      let totalRate = 0.0
-      let totalDates = 0 // total count of data that added
-      for (let pensionChart in pensionCharts) {
-        const pensionDate = moment(pensionCharts[pensionChart].date).format('YYYY-MM-DD')
-        try {
-          /* compare the date if is between the iterated date range, if between, add the rate to the total */
-
-          if ((moment(dateRanges[pairDate]).format('YYYY-MM-DD') == pensionDate) * (pensionDate == moment(dateRanges[pairDate]).format('YYYY-MM-DD')) > 0) {
-            totalRate += pensionCharts[pensionChart].rate
-            totalDates ++
-          }
-        } catch (e) {
-          // skip if parsing of date failed
-        }
+  checkDateIsBetween (dateList, dateTemp, toDateCalendar, index) {
+    for (let count = 0; count < 7; count++) {
+      let tempFromDate = moment(dateList['week'+index][0]).format('YYYY-MM-DD')
+      let tempToDate = moment(toDateCalendar).format('YYYY-MM-DD')
+      let tempDate = moment(dateTemp).format('YYYY-MM-DD')
+      if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+        return moment(dateTemp).isBetween(moment(dateList['week'+index][0]).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
       }
-      formattedPensionCharts.push({
-        applicableNavDate: moment(dateRanges[pairDate]).format('YYYY-MM-DD'),
-        bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
-        totalRate: totalRate,
-        totalDates: totalDates,
-        description : ''
-      })
     }
-    return formattedPensionCharts
   }
 
   setChartFilter (dateData) {
@@ -282,14 +250,13 @@ export default class PensionFundsPresenter {
       })
 
       let toDateCalendarArray = {
-        week0: [],
-        week1: [],
-        week2: [],
-        week3: [],
+        week0: [],  week1: [], week2: [],  week3: [],
       }
       let labelArray = []
       let bidRateArray = []
       let fDate = this.getWeeklyStartDate()
+      var test = moment()
+      var test1 = moment('2019-02-23')
 
       // Number of Strands in Chart
       for (let i = 0; i < WEEKLY_STRANDS; i++) {
@@ -300,28 +267,20 @@ export default class PensionFundsPresenter {
         }
       }
       let newDateResultArray = []
-      console.log('total: ',response)
 
       // Get Average Rate of each Date
       for (let i = 0; i < Object.keys(toDateCalendarArray).length; i++) {
-        let toDateCalendar = moment(toDateCalendarArray['week'+i][7-1]).format('YYYY-MM-DD')
+        const toDateCalendar = moment(toDateCalendarArray['week'+i][7-1]).format('YYYY-MM-DD')
         let totalDates = 0 // total count of data that added
         let totalRate = 0.0
-        for (let z = 0; z < 7; z++) {
-          console.log('count days: ',z)
-          for (const c in response) {
-            const dateTemp = moment(response[c].date).format('YYYY-MM-DD')
-            /* compare the date if is between the iterated date range, if between, add the rate to the total */
-            if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
-              const toDate = moment(toDateCalendarArray['week'+i][0]).format('YYYY-MM-DD')
-              console.log('todate:', toDate)
-              console.log('fromdate:',toDateCalendar)
-              if(moment(dateTemp).isBetween(toDate, toDateCalendar)) {
-                totalRate += response[c].rate
-                totalDates ++
-                console.log(true)
-              }
-            }
+        for (let c in response) {
+          const toDateCalendar = moment(toDateCalendarArray['week'+i][7-1]).format('YYYY-MM-DD')
+          const dateTemp = moment(response[c].date).format('YYYY-MM-DD')
+
+          /* compare the date if is between the iterated date range, if between, add the rate to the total */
+          if(this.checkDateIsBetween(toDateCalendarArray, dateTemp, toDateCalendar, i)) {
+            totalRate += response[c].rate
+            totalDates ++
           }
         }
         newDateResultArray.push({
@@ -332,7 +291,7 @@ export default class PensionFundsPresenter {
           description : ''
         })
       }
-      console.log(newDateResultArray)
+
       newDateResultArray.map((resp, key) => {
         labelArray.push('('+ moment(resp.applicableNavDate).format('MMM DD') + ') ' + `${'Week'+(key+1)}`)
         bidRateArray.push(resp.bidRate)
