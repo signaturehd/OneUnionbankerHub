@@ -122,7 +122,7 @@ class PensionFundsFragment extends BaseMVPView {
       showNoticeResponseModal,
       pensionContributionData,
     } = this.state
-    console.log(pensionContributionData)
+
     return (
 
       <div>

@@ -193,7 +193,6 @@ export default class PensionFundsPresenter {
 
   calculateAverageRates (dateRanges, pensionCharts) {
     let formattedPensionCharts = []
-    let count = 0
     for (let pairDate = 1; pairDate < dateRanges.length; pairDate++) { // loop tru date ranges
       let totalRate = 0.0
       let totalDates = 0 // total count of data that added
@@ -218,6 +217,7 @@ export default class PensionFundsPresenter {
         description : ''
       })
     }
+    console.log(formattedPensionCharts)
     return formattedPensionCharts
   }
 
@@ -229,46 +229,21 @@ export default class PensionFundsPresenter {
       })
 
       let toDateCalendarArray = []
-      let labelArray = []
-      let bidRateArray = []
       let fDate = this.getDailyStartDate()
 
-      // Number of Strands in Chart
       for(let i = 0; i <= DAILY_STRANDS; i++) {
+        const dateToday = moment(fDate)
+
         fDate = moment(fDate).add(1, 'days')
         let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
-        toDateCalendarArray.push(moment(toDateCalendar).format('YYYY-MM-DD'))
+        toDateCalendarArray.push(toDateCalendar)
       }
-
-      let newDateResultArray = []
+      let labelArray = []
+      let bidRateArray = []
 
       // Get Average Rate of each Date
-      for(var z = 0; z < toDateCalendarArray.length; z++) {
-        let toDateCalendar = moment(toDateCalendarArray[z]).format('YYYY-MM-DD')
-        let totalDates = 0 // total count of data that added
-        let totalRate = 0.0
-
-        for (const i in response) {
-          const dateTemp = moment(response[i].date).format('YYYY-MM-DD')
-            /* compare the date if is between the iterated date range, if between, add the rate to the total */
-          if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
-            if(dateTemp.toString() === toDateCalendar.toString()) {
-              totalRate += response[i].rate
-              totalDates ++
-            }
-          }
-        }
-
-      newDateResultArray.push({
-        applicableNavDate: moment(toDateCalendarArray[z]).format('YYYY-MM-DD'),
-        bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
-        totalRate: totalRate,
-        totalDates: totalDates,
-        description : ''
-        })
-      }
-
-      newDateResultArray.map((resp, key) => {
+      let newResult = this.calculateAverageRates(toDateCalendarArray, response)
+      newResult.map((resp, key) => {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
         bidRateArray.push(resp.bidRate)
       })
@@ -281,64 +256,29 @@ export default class PensionFundsPresenter {
         return object
       })
 
-      let toDateCalendarArray = {
-        week0: [],
-        week1: [],
-        week2: [],
-        week3: [],
-      }
-      let labelArray = []
-      let bidRateArray = []
+      let toDateCalendarArray = []
+      let fromDateArray = []
+      let dateRanges = new Array(fromDateArray, toDateCalendarArray)
+
       let fDate = this.getWeeklyStartDate()
 
-      // Number of Strands in Chart
-      for (let i = 0; i < WEEKLY_STRANDS; i++) {
-        for (let z = 0; z < 7; z++) {
-          fDate = moment(fDate).add(1, 'days')
-          let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
-          toDateCalendarArray['week'+i].push(moment(toDateCalendar).format('YYYY-MM-DD'))
-        }
+      for(let i = 0; i <= WEEKLY_STRANDS; i++) {
+        const dateToday = moment(fDate)
+        fDate = moment(fDate).add(7, 'days')
+        let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
+        toDateCalendarArray.push(toDateCalendar)
+        fromDateArray.push(dateToday)
       }
-      let newDateResultArray = []
-      console.log('total: ',response)
 
-      // Get Average Rate of each Date
-      for (let i = 0; i < Object.keys(toDateCalendarArray).length; i++) {
-        let toDateCalendar = moment(toDateCalendarArray['week'+i][7-1]).format('YYYY-MM-DD')
-        let totalDates = 0 // total count of data that added
-        let totalRate = 0.0
-        for (let z = 0; z < 7; z++) {
-          console.log('count days: ',z)
-          for (const c in response) {
-            const dateTemp = moment(response[c].date).format('YYYY-MM-DD')
-            /* compare the date if is between the iterated date range, if between, add the rate to the total */
-            if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
-              const toDate = moment(toDateCalendarArray['week'+i][0]).format('YYYY-MM-DD')
-              console.log('todate:', toDate)
-              console.log('fromdate:',toDateCalendar)
-              if(moment(dateTemp).isBetween(toDate, toDateCalendar)) {
-                totalRate += response[c].rate
-                totalDates ++
-                console.log(true)
-              }
-            }
-          }
-        }
-        newDateResultArray.push({
-          applicableNavDate: moment(toDateCalendar).format('YYYY-MM-DD'),
-          bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
-          totalRate: totalRate,
-          totalDates: totalDates,
-          description : ''
-        })
-      }
-      console.log(newDateResultArray)
-      newDateResultArray.map((resp, key) => {
+      let labelArray = []
+      let bidRateArray = []
+      let newResult = this.calculateAverageRates(dateRanges, response)
+      newResult.map((resp, key) => {
         labelArray.push('('+ moment(resp.applicableNavDate).format('MMM DD') + ') ' + `${'Week'+(key+1)}`)
         bidRateArray.push(resp.bidRate)
       })
-
       this.view.setChartPensionData(labelArray, bidRateArray)
+
     } else if(variableParam.toLowerCase() === 'month'){
       let response = dateData && dateData.map((x,i)=> {
         const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
@@ -367,34 +307,34 @@ export default class PensionFundsPresenter {
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
-    } else if(variableParam.toLowerCase() === 'quarterly') {
-      let response = dateData && dateData.map((x,i)=> {
+   } else if(variableParam.toLowerCase() === 'quarterly') {
+     let response = dateData && dateData.map((x,i)=> {
        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
        return object
-      })
+     })
 
-      let toDateCalendarArray = []
-      let fromDateArray = []
-      let dateRanges = new Array(fromDateArray, toDateCalendarArray)
-      let fDate = this.getMonthlyStartDate()
+     let toDateCalendarArray = []
+     let fromDateArray = []
+     let dateRanges = new Array(fromDateArray, toDateCalendarArray)
+     let fDate = this.getMonthlyStartDate()
 
-      for(let i = 0; i <= QUARTERLY_STRANDS; i++) {
+     for(let i = 0; i <= QUARTERLY_STRANDS; i++) {
        const dateToday = moment(fDate)
 
        fDate = moment(fDate).add(3, 'month')
        let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
        toDateCalendarArray.push(toDateCalendar)
        fromDateArray.push(dateToday)
-      }
-      let labelArray = []
-      let bidRateArray = []
-      let newResult = this.calculateAverageRates(dateRanges, response)
-      newResult.map((resp, key) => {
+     }
+     let labelArray = []
+     let bidRateArray = []
+     let newResult = this.calculateAverageRates(dateRanges, response)
+     newResult.map((resp, key) => {
        labelArray.push(moment(resp.applicableNavDate).format('MMM DD') + '(Q'+(key+1)+')')
        bidRateArray.push(resp.bidRate)
-      })
+     })
 
-      this.view.setChartPensionData(labelArray, bidRateArray)
+     this.view.setChartPensionData(labelArray, bidRateArray)
     }
   }
 
