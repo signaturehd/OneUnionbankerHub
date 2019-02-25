@@ -1719,7 +1719,7 @@ export default class HRBenefitsClient {
       records : [
         {
           id: 0,
-          applicableNavDate: '2019-02-04',
+          applicableNavDate: '2019-01-04',
           description: '',
           bidRate: 11.0
         },

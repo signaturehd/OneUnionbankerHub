@@ -178,13 +178,22 @@ export default class PensionFundsPresenter {
     return dateToday
   }
 
-  checkDateIsBetween (dateList, dateTemp, toDateCalendar, index) {
-    for (let count = 0; count < 7; count++) {
-      let tempFromDate = moment(dateList['week'+index][0]).format('YYYY-MM-DD')
+  checkWeeklyDateIsBetween (dateList, dateTemp, toDateCalendar, index) {
+    if(variableParam === 'week')  {
+      for (let count = 0; count < 7; count++) {
+        let tempToDate = moment(toDateCalendar).format('YYYY-MM-DD')
+        let tempDate = moment(dateTemp).format('YYYY-MM-DD')
+        if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+          return moment(dateTemp).isBetween(moment(dateList['week'+index][0]).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
+        }
+      }
+    } else if (variableParam === 'month') {
       let tempToDate = moment(toDateCalendar).format('YYYY-MM-DD')
       let tempDate = moment(dateTemp).format('YYYY-MM-DD')
+      console.log('result :', moment(dateTemp).isBetween(moment(toDateCalendar).subtract(1, 'days').format('YYYY-MM-DD'), moment(dateList).add(1, 'days').format('YYYY-MM-DD')))
+
       if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
-        return moment(dateTemp).isBetween(moment(dateList['week'+index][0]).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
+        return moment(dateTemp).isBetween(moment(toDateCalendar).subtract(1, 'days').format('YYYY-MM-DD'), moment(dateList).add(1, 'days').format('YYYY-MM-DD'))
       }
     }
   }
@@ -255,8 +264,6 @@ export default class PensionFundsPresenter {
       let labelArray = []
       let bidRateArray = []
       let fDate = this.getWeeklyStartDate()
-      var test = moment()
-      var test1 = moment('2019-02-23')
 
       // Number of Strands in Chart
       for (let i = 0; i < WEEKLY_STRANDS; i++) {
@@ -278,11 +285,12 @@ export default class PensionFundsPresenter {
           const dateTemp = moment(response[c].date).format('YYYY-MM-DD')
 
           /* compare the date if is between the iterated date range, if between, add the rate to the total */
-          if(this.checkDateIsBetween(toDateCalendarArray, dateTemp, toDateCalendar, i)) {
+          if(this.checkWeeklyDateIsBetween(toDateCalendarArray, dateTemp, toDateCalendar, i)) {
             totalRate += response[c].rate
             totalDates ++
           }
         }
+
         newDateResultArray.push({
           applicableNavDate: moment(toDateCalendar).format('YYYY-MM-DD'),
           bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
@@ -298,35 +306,55 @@ export default class PensionFundsPresenter {
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
-    } else if(variableParam.toLowerCase() === 'month'){
+
+    } else if(variableParam.toLowerCase() === 'month') {///Monthly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'months': moment(x.applicableNavDate).format('MM'),  'rate': x.bidRate}
         return object
       })
 
-      let toDateCalendarArray = []
-      let fromDateArray = []
-      let dateRanges = new Array(fromDateArray, toDateCalendarArray)
-      let fDate = this.getMonthlyStartDate()
-
-      for(let i = 0; i <= MONTHLY_STRANDS; i++) {
-        const dateToday = moment(fDate)
-
-        fDate = moment(fDate).add(1, 'month')
-        let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
-        toDateCalendarArray.push(toDateCalendar)
-        fromDateArray.push(dateToday)
-      }
       let labelArray = []
       let bidRateArray = []
-      let newResult = this.calculateAverageRates(dateRanges, response)
-      newResult.map((resp, key) => {
-        labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
+      let fDate = this.getMonthlyStartDate()
+      let newDateResultArray = []
+
+      for(let i = 0; i < MONTHLY_STRANDS; i++) {
+        let totalDates = 0 // total count of data that added
+        let totalRate = 0.0
+        let codeMonth =  moment(fDate).format('MM')
+        let dateToday = this.getMonthlyStartDate()
+        fDate = moment(fDate).add(1, 'month')
+        let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
+        console.log(i)
+        console.log(fDate)
+        console.log(toDateCalendar)
+        for (let count in response) {
+          const fromDate = moment(dateToday).format('YYYY-MM-DD')
+          const dateTemp = moment(response[count].date).format('YYYY-MM-DD')
+
+          if(this.checkWeeklyDateIsBetween(fDate, dateTemp, toDateCalendar, i)) {
+            totalRate += response[count].rate
+            totalDates ++
+          }
+        }
+
+        newDateResultArray.push({
+          applicableNavDate: moment(toDateCalendar).format('MMM'),
+          bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
+          totalRate: totalRate,
+          totalDates: totalDates,
+          description : ''
+        })
+      }
+      newDateResultArray.map((resp, key) => {
+        labelArray.push(resp.applicableNavDate)
         bidRateArray.push(resp.bidRate)
       })
+      console.log(newDateResultArray)
 
       this.view.setChartPensionData(labelArray, bidRateArray)
-    } else if(variableParam.toLowerCase() === 'quarterly') {
+
+    } else if(variableParam.toLowerCase() === 'quarterly') {///Quarterly Formatting
       let response = dateData && dateData.map((x,i)=> {
        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
        return object
