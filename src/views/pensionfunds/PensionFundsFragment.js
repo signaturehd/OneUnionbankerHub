@@ -45,9 +45,8 @@ class PensionFundsFragment extends BaseMVPView {
   componentDidMount () {
     this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
-    this.presenter.setUnitSummary('day')
     this.presenter.getPensionFundsDocuments()
-    this.presenter.getPensionFundsDatePagination()
+    this.presenter.setUnitSummary('day')
   }
 
   noticeResponse (noticeResponse) {
@@ -84,7 +83,8 @@ class PensionFundsFragment extends BaseMVPView {
       amountText :
         pensionContributionData &&
         pensionContributionData.contribution &&
-        pensionContributionData.contribution.amount
+        pensionContributionData.contribution.amount ?
+        pensionContributionData.contribution.amount : 0.0
     })
   }
 
@@ -120,9 +120,9 @@ class PensionFundsFragment extends BaseMVPView {
       noticeResponse,
       amountText,
       showNoticeResponseModal,
-      pensionContributionData
+      pensionContributionData,
     } = this.state
-
+    console.log(pensionContributionData)
     return (
 
       <div>
@@ -151,7 +151,7 @@ class PensionFundsFragment extends BaseMVPView {
             codeTextFunc = { (codeText) => this.codeTextFunc(codeText) }
             codeText = { codeText }
             cancelCodeFunc = { () => {
-              this.setState({ showCodeModal : false })
+              this.setState({ showCodeModal : false, codeText: '' })
               this.presenter.setDocumentsCheckerPresenter(true,id)
             }}
           />
@@ -169,6 +169,11 @@ class PensionFundsFragment extends BaseMVPView {
               })
             }}
             cancelCodeFunc = { () => {
+             this.setState({ amountText :
+               pensionContributionData &&
+               pensionContributionData.contribution &&
+               pensionContributionData.contribution.amount ?
+               pensionContributionData.contribution.amount : 0.0 })
              this.setState({ showContributionModal : false })
             }}
           />

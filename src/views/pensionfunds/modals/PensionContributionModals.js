@@ -25,7 +25,7 @@ class PensionContributionModals extends Component {
     return (
       <Modal>
         <div>
-          <center className = { 'unionbank-color font-size-16px' }>{format(amountText)}</center>
+          <center className = { 'unionbank-color font-size-16px' }>{format(amountText ? amountText : 0)}</center>
           <SliderComponent
             onChangeValue = { (amount) => {
               amountTextFunc(amount)} }
