@@ -31,7 +31,7 @@ class EducationGroupAidFormCardComponent extends Component {
     const {
       premiumDuration,
       premiumMonths,
-      isLineManager,
+      allowsManagerCheck,
       effectivityDate,
     } = this.props
 
@@ -40,7 +40,7 @@ class EducationGroupAidFormCardComponent extends Component {
     let checkOneTimePayment = `Notes: The full amount indicated above will be credited to your nominated account.`
     let managersCheckOneTimePayment = `Notes: The full subsidy indicated above will be released through Manager's Check.`
 
-    if(isLineManager) {
+    if(allowsManagerCheck) {
       //If Recurring
       if(premiumDuration.toLowerCase() === 'annually') {
         return managersCheckOneTimePayment
@@ -50,9 +50,9 @@ class EducationGroupAidFormCardComponent extends Component {
     } else {
       //If One Time Payment
       if(premiumDuration.toLowerCase() === 'annually') {
-        return checkOneTimePayment
-      } else {
         return checkRecurring
+      } else {
+        return checkOneTimePayment
       }
     }
   }

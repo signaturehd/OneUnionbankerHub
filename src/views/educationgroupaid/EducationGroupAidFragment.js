@@ -269,7 +269,7 @@ class EducationGroupAidFragment extends BaseMVPView {
     } = this.state
 
     const {
-      isLineManager
+      allowsManagerCheck
     } = this.props
 
     return (
@@ -370,7 +370,7 @@ class EducationGroupAidFragment extends BaseMVPView {
              <CircularLoader show = { enabledLoader }/>
            </center> :
           <FormComponent
-            isLineManager = { isLineManager }
+            allowsManagerCheck = { allowsManagerCheck }
             dependentName = { dependentName }
             dependentMonths = { dependentMonths }
             dependentErrorMessage = { dependentErrorMessage }

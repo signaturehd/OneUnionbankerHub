@@ -415,7 +415,7 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
                   <EducationGroupAidFragment { ...props }
-                    isLineManager = { isLineManager }
+                    allowsManagerCheck = { profile && profile.allowManagersCheck }
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                   <OpticalFragment { ...props }
