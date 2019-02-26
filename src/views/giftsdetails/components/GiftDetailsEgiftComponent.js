@@ -26,7 +26,7 @@ class GiftDetailsEgiftComponent extends Component {
                     style={{width: '300px'}}
                     alt={'P100'} />
                   <div className = { 'giftdetails-details' }>
-                    <h4 className = { 'giftdetails-name' }>P{ resp.price }</h4>
+                    <h4 className = { 'giftdetails-name' }>P{ resp.value }</h4>
                     <span className={'giftdetails-price'}>{ resp.points } Creds</span>
                     <p className={'giftdetails-description'}>{ resp.shortDescription ? resp.shortDescription : '(No description)'  }</p>
                   </div>

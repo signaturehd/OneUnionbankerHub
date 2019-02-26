@@ -28,7 +28,8 @@ class GiftDetailsCheckoutModal extends Component {
       logo: selectedRewardsArray.logo,
       qty: valueText,
       totalPoints : totalPoints,
-      value : selectedRewardsArray.value,
+      value: selectedRewardsArray.value,
+      price: selectedRewardsArray.price,
     }
 
     return (
@@ -49,7 +50,7 @@ class GiftDetailsCheckoutModal extends Component {
           <div className = { 'giftdetails-modal-grid-quantiy' }>
             <div>
               <h4 className = { 'font-size-14px font-weight-600 unionbank-color-grey' }>
-                { selectedRewardsArray && selectedRewardsArray.name }
+                { selectedRewardsArray && selectedRewardsArray.value }
               </h4>
               {
                 hasCustom &&
