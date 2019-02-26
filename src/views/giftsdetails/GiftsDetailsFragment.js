@@ -163,12 +163,16 @@ class GiftsDetailsFragment extends BaseMVPView {
 							})
 						}
 						onSelectThis = { (list, value) => {
-							this.presenter.getGiftsList(value)
-							this.setState({
-								showCheckoutModal : false,
-								valueText : '',
-								valueAmountText : ''
-							})
+							try {
+								this.presenter.getGiftsList(value)
+								this.setState({
+									showCheckoutModal : false,
+									valueText : '',
+									valueAmountText : ''
+								})
+							} catch (e) {
+								console.log(e)
+							}
 						}}
 						/>
 				}

@@ -30,7 +30,8 @@ class PensionDetailsFragment extends Component {
       changePaymentFunc,
       pensionChartData,
       contributionModal,
-      pensionContributionData
+      pensionContributionData,
+      pensionContributionHistoryData
     } = this.props
 
     return (
@@ -42,7 +43,7 @@ class PensionDetailsFragment extends Component {
           <br/>
           <div className = { 'funds-grid-content-detail' }>
             <PensionDetailsComponent
-              pensionFundsData= { pensionFundsData }/>
+              pensionContributionData= { pensionContributionData }/>
             <div>
             </div>
           </div>
@@ -71,9 +72,9 @@ class PensionDetailsFragment extends Component {
         </div>
         <div>
         {
-          pensionFundsData && pensionFundsData.length !== 0 ?
+          pensionContributionHistoryData && pensionContributionHistoryData ?
           <PensionFundsPaymentHistoryComponent
-            pensionFundsData = { pensionFundsData }
+            pensionContributionHistoryData = { pensionContributionHistoryData }
             changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
             :
           <NoDataListedComponent

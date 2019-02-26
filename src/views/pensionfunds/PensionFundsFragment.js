@@ -77,14 +77,14 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ pensionChartData : object })
   }
 
-  setPensionContributionData (pensionContributionData) {
+  setPensionContributionData (pensionContributionHistoryData) {
     this.setState({
-      pensionContributionData,
+      pensionContributionHistoryData,
       amountText :
-        pensionContributionData &&
-        pensionContributionData.contribution &&
-        pensionContributionData.contribution.amount ?
-        pensionContributionData.contribution.amount : 0.0
+        pensionContributionHistoryData &&
+        pensionContributionHistoryData.contribution &&
+        pensionContributionHistoryData.contribution.amount ?
+        pensionContributionHistoryData.contribution.amount : 0.0
     })
   }
 
@@ -121,6 +121,7 @@ class PensionFundsFragment extends BaseMVPView {
       amountText,
       showNoticeResponseModal,
       pensionContributionData,
+      pensionContributionHistoryData,
     } = this.state
 
     return (
@@ -170,10 +171,10 @@ class PensionFundsFragment extends BaseMVPView {
             }}
             cancelCodeFunc = { () => {
              this.setState({ amountText :
-               pensionContributionData &&
-               pensionContributionData.contribution &&
-               pensionContributionData.contribution.amount ?
-               pensionContributionData.contribution.amount : 0.0 })
+               pensionContributionHistoryData &&
+               pensionContributionHistoryData.contribution &&
+               pensionContributionHistoryData.contribution.amount ?
+               pensionContributionHistoryData.contribution.amount : 0.0 })
              this.setState({ showContributionModal : false })
             }}
           />
@@ -208,6 +209,7 @@ class PensionFundsFragment extends BaseMVPView {
                 {
                   agreementBool !== null || agreementBool !== false ?
                   <PensionDetailsFragment
+                    pensionContributionHistoryData = { pensionContributionHistoryData }
                     pensionContributionData = { pensionContributionData }
                     contributionModal = { () => { this.setState({ showContributionModal : true }) }  }
                     pensionChartData = { pensionChartData }
