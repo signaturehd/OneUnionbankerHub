@@ -117,8 +117,16 @@ class GiftsFragment extends BaseMVPView {
 				</div>
 				:
 				<center>
+					<div className = { 'text-align-left' }>
+						<GenericButton
+							className = { 'cursor-pointer global-button profile-button-small' }
+							text = { 'back' }
+							onClick = { () => history.push('/myrewards') }
+						/>
+					</div>
 					<div className={ 'gifts-main-item1' }>
 						<GiftsBanner
+							history = { history }
 							showGiftCart = { (e)=> {
 								this.setState({ showGiftsCart : e })
 							} }/>

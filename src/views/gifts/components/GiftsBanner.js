@@ -7,6 +7,7 @@ class GiftsBanner extends Component {
   render () {
     const {
       showGiftCart,
+      history
     } = this.props
 
     return (
