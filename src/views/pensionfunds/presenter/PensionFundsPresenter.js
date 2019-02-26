@@ -188,12 +188,12 @@ export default class PensionFundsPresenter {
         }
       }
     } else if (variableParam === 'month') {
-      let tempToDate = moment(toDateCalendar).format('YYYY-MM-DD')
-      let tempDate = moment(dateTemp).format('YYYY-MM-DD')
-      console.log('result :', moment(dateTemp).isBetween(moment(toDateCalendar).subtract(1, 'days').format('YYYY-MM-DD'), moment(dateList).add(1, 'days').format('YYYY-MM-DD')))
-
       if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
-        return moment(dateTemp).isBetween(moment(toDateCalendar).subtract(1, 'days').format('YYYY-MM-DD'), moment(dateList).add(1, 'days').format('YYYY-MM-DD'))
+        return moment(dateTemp).isBetween(moment(dateList).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
+      }
+    } else if (variableParam === 'quarterly') {
+      if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+        return moment(dateTemp).isBetween(moment(dateList).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
       }
     }
   }
@@ -307,77 +307,110 @@ export default class PensionFundsPresenter {
 
       this.view.setChartPensionData(labelArray, bidRateArray)
 
-    } else if(variableParam.toLowerCase() === 'month') {///Monthly Formatting
+    } else if(variableParam.toLowerCase() === 'month') { ///Monthly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'months': moment(x.applicableNavDate).format('MM'),  'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate,  'rate': x.bidRate}
         return object
       })
 
       let labelArray = []
       let bidRateArray = []
-      let fDate = this.getMonthlyStartDate()
+      let toDateCalendar = this.getMonthlyStartDate()
       let newDateResultArray = []
+      let dateRanges = []
 
       for(let i = 0; i < MONTHLY_STRANDS; i++) {
+        toDateCalendar = moment(toDateCalendar).add(1, 'month')
+        let fromDateCalendar = moment(toDateCalendar).clone().subtract(1, 'month')
+
+        dateRanges.push({
+          fromDate: moment(fromDateCalendar).format('YYYY-MM-DD'),
+          toDate: moment(toDateCalendar).format('YYYY-MM-DD'),
+        })
+      }
+
+      for (let i = 0; i < dateRanges.length; i ++) {
         let totalDates = 0 // total count of data that added
         let totalRate = 0.0
-        let codeMonth =  moment(fDate).format('MM')
-        let dateToday = this.getMonthlyStartDate()
-        fDate = moment(fDate).add(1, 'month')
-        let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
-        console.log(i)
-        console.log(fDate)
-        console.log(toDateCalendar)
-        for (let count in response) {
-          const fromDate = moment(dateToday).format('YYYY-MM-DD')
-          const dateTemp = moment(response[count].date).format('YYYY-MM-DD')
 
-          if(this.checkWeeklyDateIsBetween(fDate, dateTemp, toDateCalendar, i)) {
+        for (let count in response) {
+          const tempFromDate = moment(dateRanges[i].fromDate).format('YYYY-MM-DD')
+          const tempToDate = moment(dateRanges[i].toDate).format('YYYY-MM-DD')
+          const tempDate = moment(response[count].date).format('YYYY-MM-DD')
+          if(this.checkWeeklyDateIsBetween(tempFromDate, tempDate, tempToDate, i)) {
             totalRate += response[count].rate
             totalDates ++
           }
         }
 
         newDateResultArray.push({
-          applicableNavDate: moment(toDateCalendar).format('MMM'),
+          applicableNavDate: moment(dateRanges[i].toDate).format('MMM'),
           bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
           totalRate: totalRate,
           totalDates: totalDates,
           description : ''
         })
       }
+
       newDateResultArray.map((resp, key) => {
         labelArray.push(resp.applicableNavDate)
         bidRateArray.push(resp.bidRate)
       })
-      console.log(newDateResultArray)
 
       this.view.setChartPensionData(labelArray, bidRateArray)
 
     } else if(variableParam.toLowerCase() === 'quarterly') {///Quarterly Formatting
       let response = dateData && dateData.map((x,i)=> {
-       const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
-       return object
+        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        return object
       })
 
-      let toDateCalendarArray = []
-      let fromDateArray = []
-      let dateRanges = new Array(fromDateArray, toDateCalendarArray)
-      let fDate = this.getMonthlyStartDate()
-
-      for(let i = 0; i <= QUARTERLY_STRANDS; i++) {
-       const dateToday = moment(fDate)
-
-       fDate = moment(fDate).add(3, 'month')
-       let toDateCalendar = moment(fDate).clone().subtract(1, 'month')
-       toDateCalendarArray.push(toDateCalendar)
-       fromDateArray.push(dateToday)
-      }
       let labelArray = []
       let bidRateArray = []
-      let newResult = this.calculateAverageRates(dateRanges, response)
-      newResult.map((resp, key) => {
-       labelArray.push(moment(resp.applicableNavDate).format('MMM DD') + '(Q'+(key+1)+')')
+      let toDateCalendar = this.getQuarterlyStartDate()
+      let newDateResultArray = []
+      let quarterRanges = []
+
+      for(let i = 0; i < QUARTERLY_STRANDS; i++) {
+        toDateCalendar = moment(toDateCalendar).add(3, 'month')
+        let fromDateCalendar = moment(toDateCalendar).clone().subtract(3, 'month')
+
+        quarterRanges.push({
+          id: `Q${i+1}`,
+          fromDate: moment(fromDateCalendar).format('YYYY-MM-DD'),
+          toDate: moment(toDateCalendar).format('YYYY-MM-DD'),
+        })
+      }
+
+      for (let i = 0; i < Object.keys(quarterRanges).length; i ++) {
+        let totalDates = 0 // total count of data that added
+        let totalRate = 0.0
+
+        try {
+          for (let count in response) {
+            const tempFromDate = moment(quarterRanges[i].fromDate).format('YYYY-MM-DD')
+            const tempToDate = moment(quarterRanges[i].toDate).format('YYYY-MM-DD')
+            const tempDate = moment(response[count].date).format('YYYY-MM-DD')
+            if(this.checkWeeklyDateIsBetween(tempFromDate, tempDate, tempToDate, i)) {
+              totalRate += response[count].rate
+              totalDates ++
+            }
+          }
+        } catch (e) {
+          console.log(e)
+        }
+
+        newDateResultArray.push({
+          applicableNavDate: quarterRanges[i].id,
+          bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
+          totalRate: totalRate,
+          totalDates: totalDates,
+          description : ''
+        })
+      }
+
+      newDateResultArray.map((resp, key) => {
+       labelArray.push(resp.applicableNavDate)
        bidRateArray.push(resp.bidRate)
       })
 
@@ -473,7 +506,8 @@ export default class PensionFundsPresenter {
           store.dispatch(NotifyActions.addNotify({
             title : 'Retirement Pension Period',
             message : data.message,
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
         this.view.openContributionData()
