@@ -310,10 +310,10 @@ class MyGoalsFragment extends BaseMVPView {
                       defaultChecked = { true }
                       onClick = { () => {
                         this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
-                        this.props.history.push('/mygoals/request/')
+                        this.props.history.push('/mygoals/')
                       }
                     }/>
-                    <label className = { 'mygoal-icon-tab  font-size-14px' } htmlFor='mygoal-tab1'>Individual Goals</label>
+                    <label className = { 'mygoal-icon-tab  font-size-14px' } htmlFor={'mygoal-tab1'}>Individual Goals</label>
 
                     <input
                       className = { 'mygoal-input-tab' }
@@ -325,7 +325,7 @@ class MyGoalsFragment extends BaseMVPView {
                         this.props.history.push('/mygoals/team/')
                       }
                     }/>
-                    <label className = { 'mygoal-icon-tab  font-size-14px' } htmlFor='mygoal-tab2'>Team / Squad Goals</label>
+                    <label className = { 'mygoal-icon-tab  font-size-14px' } htmlFor={'mygoal-tab2'}>Team / Squad Goals</label>
 
                     <input
                       className = { 'mygoal-input-tab' }
@@ -337,8 +337,7 @@ class MyGoalsFragment extends BaseMVPView {
                         this.props.history.push('/mygoals/approved/')
                       }
                     }/>
-
-                    <label className = { 'mygoal-icon-tab font-size-14px' } htmlFor='mygoal-tab3'>Goals Confirmation</label>
+                    <label className = { 'mygoal-icon-tab font-size-14px' } htmlFor={'mygoal-tab3'}>Goals Confirmation</label>
 
                     <input
                       className = { 'mygoal-input-tab' }
@@ -349,14 +348,13 @@ class MyGoalsFragment extends BaseMVPView {
                         this.props.history.push('/mygoals/group/')
                       }
                     }/>
-
-                  <label className = { 'mygoal-icon-tab font-size-14px' } htmlFor='mygoal-tab4'>Group Goals</label>
+                    <label className = { 'mygoal-icon-tab font-size-14px' } htmlFor={'mygoal-tab4'}>Group Goals</label>
 
                   </div>
                 </div>
               </div>
               <Switch>
-                <Route exact path='/mygoals/request/'
+                <Route exact path='/mygoals/'
                   render={ props =>
                   <RequestedGoalsFragment
                     searchString = { searchString }

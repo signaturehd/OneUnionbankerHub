@@ -548,7 +548,7 @@ class NavigationView extends BaseMVPView {
                </Switch>
             </Drawer>
             <br/>
-            <BaseFooterComponent />
+            <BaseFooterComponent history = { history }/>
           </main>
           <aside
             className ="left-side"
