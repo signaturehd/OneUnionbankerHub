@@ -2680,7 +2680,7 @@ export default class HRBenefitsService {
 
   // Squad and Workforce
   getSquads (token, squadId, page) {
-    return this.apiClient.get(`v1/goals/squad?${squadId && 'id=' + squadId} ${(squadId && page) && '&'} ${page && 'page=' + page}`, {
+    return this.apiClient.get(`v1/goals/squad?page=${page}`, {
       headers: { token }
     })
   }
