@@ -58,7 +58,7 @@ class GiftDetailsCheckoutModal extends Component {
                   <span>Amount</span>
                   <input id={ 'denomination-qty' }
                     type={ 'text' }
-                    onChange = { (e) => valueAmountTextFunc(e.target.value, selectedRewardsArray.value) }
+                    onChange = { (e) => valueAmountTextFunc(e.target.value, selectedRewardsArray.price) }
                     value={ valueAmountText }/>
                 </label>
               }
@@ -75,7 +75,7 @@ class GiftDetailsCheckoutModal extends Component {
                     if(hasCustom) {
                       valueAmountFunc(e.target.value)
                     } else {
-                      valueTextFunc(e.target.value, selectedRewardsArray.value)
+                      valueTextFunc(e.target.value, selectedRewardsArray.price)
                     }
                   } }
                   value={ valueText }/>
@@ -100,11 +100,23 @@ class GiftDetailsCheckoutModal extends Component {
               />
             </div>
             <div className = { 'text-align-right margin-auto' }>
-              <GenericButton
-                onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
-                text = { 'SELECT THIS' }
-                className = { `giftdetails-select${disabled}` }
-              />
+              {
+                hasCustom ?
+
+                <GenericButton
+                  onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
+                  text = { 'SELECT THIS' }
+                  disabled = { valueAmountText ? false : true }
+                  className = { `giftdetails-select${valueAmountText ? false : true}` }
+                />
+                :
+                <GenericButton
+                  onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
+                  text = { 'SELECT THIS' }
+                  disabled = { valueText ? false : true }
+                  className = { `giftdetails-select${valueText ? false : true}` }
+                />
+              }
             </div>
           </div>
         </div>
