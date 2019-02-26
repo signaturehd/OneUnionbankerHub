@@ -1657,6 +1657,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getGoalGroupList (token) {
+    return this.service.getGoalGroupList(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getGroupDetailsById (token, id) {
+    return this.service.getGroupDetailsById(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {

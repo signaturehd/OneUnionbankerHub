@@ -2482,6 +2482,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getGoalGroupList (token) {
+    return this.apiClient.get('v1/goals/groups', {
+      headers : { token }
+    })
+  }
+
+  getGroupDetailsById (token, id) {
+    return this.apiClient.get(`v1/goals/groups/${ id }`, {
+      headers : { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {

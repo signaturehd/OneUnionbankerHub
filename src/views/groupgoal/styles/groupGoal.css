@@ -1,0 +1,18 @@
+.groupgoals-icon-forms {
+  background-size: auto;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 45px;
+  width: 50px;
+  background-repeat: no-repeat;
+}
+
+.groupgoals-grid-card {
+  display: grid;
+  grid-template-columns: 1fr .1fr;
+}
+
+.groupgoals-icon-proceed {
+  background-image: url('../../../images/icons/ic_next_page.png')
+}
