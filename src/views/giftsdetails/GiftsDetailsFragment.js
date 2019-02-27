@@ -98,12 +98,13 @@ class GiftsDetailsFragment extends BaseMVPView {
 	getAmountComputation (valueAmountText) {
 		const {
 			totalPoints,
+			valueText
 		} = this.state
 
 		let value = validate.checkedValidateNumberInput(valueAmountText)
 		let calculation
 		let currentPoints = totalPoints
-		let computePoints = parseInt(valueAmountText) * parseInt(valueAmountText) * 20
+		let computePoints = parseInt(valueAmountText) * parseInt(valueText) * 20
 		if(computePoints <= currentPoints) {
 			let totalPointsTemp = currentPoints - computePoints
 			if(currentPoints > 0) {
@@ -136,13 +137,15 @@ class GiftsDetailsFragment extends BaseMVPView {
 			noticeResponse,
 			disabled,
 		} = this.state
-		console.log(rewardDetails)
+
 		return (
 			<div>
 				{
 					showCheckoutModal &&
 
 					<GiftDetailsCheckoutModal
+						hasCustom = { rewardDetails && rewardDetails.hasCustom }
+						customValue = { rewardDetails && rewardDetails.customValue }
 						totalPoints = { totalPoints }
 						disabled = { disabled }
 						valueText = { valueText }

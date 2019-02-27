@@ -27,6 +27,27 @@ class EducationGroupAidFormCardComponent extends Component {
     return parts[parts.length - 1]
   }
 
+  checkDateValidation () {
+    const {
+      allowsManagerCheck,
+      premiumDuration
+    } = this.props
+
+    if(allowsManagerCheck) {
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+
   checkComputedMessage () {
     const {
       premiumDuration,
@@ -155,7 +176,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 disabled = { premiumDuration ? showEditSubmitButton : true }
                 errorMessage = { premiumDuration ? '':'Please select the dates covered by your premium payment.' }
                 onChange = { (e) => dateFunc(e, premiumMonths) }
-                maxDate = { moment() }
+                maxDate = { this.checkDateValidation() ? '' : moment() }
               />
               {
                 effectivityDate &&

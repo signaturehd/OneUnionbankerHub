@@ -214,13 +214,13 @@ class EducationGroupAidFragment extends BaseMVPView {
       effectiveDate,
       orDate,
       orNumber,
-      attachmentArray
+      attachmentArray,
+      effectivityDate
     } = this.state
-
     this.presenter.addGroupAid(
       dependentId,
       desiredAmount,
-      effectiveDate,
+      effectivityDate.format('MM/DD/YYYY'),
       company,
       premiumId,
       orDate,
