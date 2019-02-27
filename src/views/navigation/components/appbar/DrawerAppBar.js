@@ -109,7 +109,7 @@ class DrawerAppBar extends Component {
       action : () => history.push('/postemployment'),
     },{
       id: 19,
-      name: 'Talent Marketting',
+      name: 'Squad Vacancies',
       imageStyle : 'talentmarketing',
       action : () => history.push('/squads/workforce'),
     },{
