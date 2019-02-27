@@ -295,7 +295,7 @@ export function checkedCarAmount (details) {
 //return details && details.AccountNo ? details && details.AccountNo : '(Not Yet Provided)'
 
   export function checkedReleasingCenter (details) {
-    return details && details.ReleasingCenter ? details && details.ReleasingCenter  : '(Not Yet Provided)'
+    return details && details.ReleasingCenter ? details && details.ReleasingCenter  : ''
   }
   export function checkedDeliveryType (details) {
     return details && details.LaptopLeaseDetails ? details.LaptopLeaseDetails && details.LaptopLeaseDetails.DeliveryType : '(Not Yet Provided)'

@@ -30,7 +30,8 @@ class CarLeaseOtherDetailsComponent extends Component {
       setEquityFileCarlease,
       equityAttachments,
       loader,
-      onConfirmationReleaseFunc
+      onConfirmationReleaseFunc,
+      onUploadAttachmentsFunc
     } = this.props
 
     const {
@@ -202,24 +203,10 @@ class CarLeaseOtherDetailsComponent extends Component {
               {
                 details.status.id === 18 &&
                 <div>
-                  <div>
-                    {
-                      detailsCarLease.CarDetails.RequiredAttachment.length !== 0 &&
-
-                      <MultipleFileUploader
-                        fileArray = { detailsCarLease.CarDetails.RequiredAttachment }
-                        placeholder = { 'Required Attachments' }
-                        setFile = { (file) => {
-                          setFileCarlease(file)
-                        } }
-                        />
-                    }
-                    <br/>
-                    <GenericButton
-                      text = { 'I Confirm' }
-                      onClick = { () => onUploadAttachmentsFunc(transactionID, fileCarLease) }
-                      />
-                  </div>
+                  <GenericButton
+                    text = { 'I Confirm' }
+                    onClick = { () => onConfirmationReleaseFunc(transactionID) }
+                    />
                 </div>
               }
             </div>

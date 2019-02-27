@@ -31,7 +31,8 @@ class CarLeaseDetailsFragment extends Component {
     fileCarLease,
     attachments,
     equityAttachments,
-    loader
+    loader,
+    onConfirmationReleaseFunc
   } = this.props
 
   const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
@@ -76,6 +77,7 @@ class CarLeaseDetailsFragment extends Component {
               attachments = { attachments }
               loader = { loader }
               fileCarLease = { fileCarLease }
+              onConfirmationReleaseFunc = { (resp) => onConfirmationReleaseFunc(resp) }
               onConfirmationFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
               onUploadAttachments = { (id, file) => onUploadAttachmentsFunc(id, file) }
               transactionsPerson = { transactionsPerson }

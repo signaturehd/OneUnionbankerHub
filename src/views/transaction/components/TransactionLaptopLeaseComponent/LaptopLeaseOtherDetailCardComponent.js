@@ -13,15 +13,26 @@ class LaptopLeaseOtherDetailCardComponent extends Component {
     super(props)
   }
 
+  checkTerm (term) {
+    if(term === 1) {
+      return '12 months'
+    } else if (term === 2) {
+      return '24 months'
+    } else if (term === 3) {
+      return '36 months'
+    }
+  }
+
   render () {
-  const { detailsLaptopLease } = this.props
+    const { detailsLaptopLease } = this.props
+  console.log(detailsLaptopLease)
 
   return (
     <div  className = { 'transaction-component-otherdetails-form' }>
       <div>
         <div>
           <br/>
-          <h2 className = { 'font-weight-bolder' }>Laptop Lease Details </h2>
+        <h2 className = { 'font-weight-bolder' }>{ detailsLaptopLease.type === 1 ? 'Bank to Purchase' : 'Employee to Purchase' } Details </h2>
           <br/>
         </div>
         {
@@ -175,7 +186,7 @@ class LaptopLeaseOtherDetailCardComponent extends Component {
           <span></span>
           <div>
             <h2 className = { 'font-weight-ligter' }>
-             {detailsLaptopLease.LaptopLeaseDetails && detailsLaptopLease.LaptopLeaseDetails.Term ? detailsLaptopLease.LaptopLeaseDetails && detailsLaptopLease.LaptopLeaseDetails.Term : 'NOT PROVIDED'}
+              { this.checkTerm(detailsLaptopLease.LaptopLeaseDetails.Term)}
             </h2>
             <h2 className = { 'unionbank-color font-size-12px' }>
               Term

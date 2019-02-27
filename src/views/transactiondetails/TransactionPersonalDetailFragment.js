@@ -408,7 +408,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              onConfirmationCarleaseFunc = { (transactionID, status) =>
                this.presenter.addCarLeaseConfirmation(transactionID, status)
              }
-             onConfirmationReleaseFunc = { (resp) => this.presenter.addCarLeaseConfirmation(resp, equityAttachments) }
+             onConfirmationReleaseFunc = { (resp) => this.presenter.addCarLeaseReleasing(resp) }
              fileCarLease = { fileCarLease }
              setFileCarlease = { (file) => this.setFileCarlease(file) }
              showFileReceipt = { response }

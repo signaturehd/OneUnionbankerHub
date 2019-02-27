@@ -26,7 +26,8 @@ class CarLeaseDetailCardComponent extends Component {
       fileCarLease,
       attachments,
       onUploadAttachments,
-      loader
+      loader,
+      onConfirmationReleaseFunc
      } = this.props
 
    const transactionID = details.transactionId
