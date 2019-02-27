@@ -50,11 +50,14 @@ export default class PensionFundsPresenter {
   }
 
   getPensionValidate () {
+    this.view.showCircularLoader(true)
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
-      pensionId = data && data.contribution && data.contribution.id
+      this.view.showCircularLoader(false)
+      pensionId = data && data.id
       this.view.setPensionContributionData(data)
     }, error => {
+      this.view.showCircularLoader(false)
     })
   }
 

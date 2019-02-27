@@ -15,6 +15,7 @@ class PensionCodeModals extends Component {
       codeText,
       codeTextFunc,
       submitCodeFunc,
+      agreementBool,
       cancelCodeFunc,
     } = this.props
 
@@ -36,7 +37,7 @@ class PensionCodeModals extends Component {
             />
           <GenericButton
             className = { 'profile-button-small' }
-            text = { 'Submit' }
+            text = { agreementBool ? 'Submit' : 'Update' }
             onClick = { () => submitCodeFunc() }
             />
         </center>

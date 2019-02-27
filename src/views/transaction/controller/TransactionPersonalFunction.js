@@ -298,13 +298,13 @@ export function checkedCarAmount (details) {
     return details && details.ReleasingCenter ? details && details.ReleasingCenter  : ''
   }
   export function checkedDeliveryType (details) {
-    return details && details.LaptopLeaseDetails ? details.LaptopLeaseDetails && details.LaptopLeaseDetails.DeliveryType : '(Not Yet Provided)'
+    return details && details.LaptopLeaseDetails ? details.LaptopLeaseDetails && details.LaptopLeaseDetails.DeliveryType : ''
   }
   export function checkedBrand (details) {
     return details && details.LaptopLeaseDetails === '' ? details.LaptopLeaseDetails.Brand : '(Not Yet Provided)'
   }
   export function checkedColorFamily (details) {
-    return details && details.LaptopLeaseDetails ? details.LaptopLeaseDetails &&  details.LaptopLeaseDetails.ColorFamily : '(Not Yet Provided)'
+    return details && details.LaptopLeaseDetails ? details.LaptopLeaseDetails &&  details.LaptopLeaseDetails.ColorFamily : ''
   }
   export function checkedEstimatedCost (details) {
     return details && details.LaptopLeaseDetails ? details.LaptopLeaseDetails &&  details.LaptopLeaseDetails.EstimatedCost : '(Not Yet Provided)'
