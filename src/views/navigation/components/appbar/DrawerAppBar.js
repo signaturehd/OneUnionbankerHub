@@ -110,7 +110,7 @@ class DrawerAppBar extends Component {
     },{
       id: 19,
       name: 'Talent Marketting',
-      imageStyle : 'digitalneo',
+      imageStyle : 'talentmarketing',
       action : () => history.push('/squads/workforce'),
     },{
       id: 1,
