@@ -142,13 +142,16 @@ class SquadFragment extends BaseMVPView {
         />
       <br/>
       <div className = { 'grid-global' }>
-        <GenericButton
-          className = { 'profile-button-small cursor-pointer global-button' }
-          text = { 'Previous' }
-          onClick = { () => {
-            this.decrementPage()
-          } }
-        />
+        {
+          pageNumber > 1 &&
+          <GenericButton
+            className = { 'profile-button-small cursor-pointer global-button' }
+            text = { 'Previous' }
+            onClick = { () => {
+              this.decrementPage()
+            } }
+          />
+        }
         <GenericButton
           className = { 'profile-button-small cursor-pointer global-button' }
           text = { 'Next' }
