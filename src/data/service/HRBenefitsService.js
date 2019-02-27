@@ -674,12 +674,12 @@ export default class HRBenefitsService {
     const formData = new FormData()
     const leasesConfirmpaymentObject = {
       transactionId : leasesConfirmpaymentParam.transactionId,
-      uuid : Math.floor(Math.random()*90000) + 10000
     }
     leasesConfirmpaymentParam.file.map((resp, key) =>
-      formData.append(file.name.replace('/', '-'), file.file)
+      formData.append(resp.name.replace('/', '-'), resp.file)
     )
-    formData.append(body, JSON.stringify(leasesConfirmpaymentObject))
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    formData.append('body', JSON.stringify(leasesConfirmpaymentObject))
     return this.apiClient.post('v1/leases/car/payment', formData, {
       headers: { token }
     })

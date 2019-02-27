@@ -28,7 +28,10 @@ class CarLeaseDetailsFragment extends Component {
     onConfirmationCarleaseFunc,
     onUploadAttachmentsFunc,
     setFileCarlease,
-    fileCarLease
+    fileCarLease,
+    attachments,
+    equityAttachments,
+    loader
   } = this.props
 
   const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
@@ -69,6 +72,9 @@ class CarLeaseDetailsFragment extends Component {
           <br/>
           <div>
             <CarLeaseDetailCardComponent
+              equityAttachments = { equityAttachments }
+              attachments = { attachments }
+              loader = { loader }
               fileCarLease = { fileCarLease }
               onConfirmationFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
               onUploadAttachments = { (id, file) => onUploadAttachmentsFunc(id, file) }

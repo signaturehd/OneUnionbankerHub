@@ -52,6 +52,10 @@ function  TransactionDetails (props)  {
   const claimLaptopLease = props.claimLaptopLease
   const viewTransactions = props.viewTransactions
   const onSubmitEventsReceiptFunc = props.onSubmitEventsReceiptFunc
+  const attachments = props.attachments
+  const setEquityFileCarlease = props.setEquityFileCarlease
+  const equityAttachments = props.equityAttachments
+  const loader  = props.loader
 
   if (transactionId === 6) {
     return <DentalRDetailsFragment
@@ -74,6 +78,8 @@ function  TransactionDetails (props)  {
   } else if (transactionId === 15) {
     return <CarLeaseDetailsFragment
       fileCarLease = { fileCarLease }
+      loader = { loader }
+      attachments = { attachments }
       onConfirmationReleaseFunc = { (resp) => onConfirmationReleaseFunc(resp) }
       onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
       onUploadAttachmentsFunc = { (id, file) => onUploadAttachmentsFunc(id, file) }
@@ -81,6 +87,8 @@ function  TransactionDetails (props)  {
       agreementsMethod = { (resp) => agreementsMethod(resp) }
       setFileCarlease = { (resp) => setFileCarlease(resp) }
       details = { transactionDetails }
+      equityAttachments = { equityAttachments }
+      setEquityFileCarlease = { (file) => setEquityFileCarlease(file) }
       transactionsPerson = { transactionsPerson }/>
   } else if (transactionId === 13) {
     return <EducGrantAidDetailsFragment
@@ -195,13 +203,17 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
       attachment : null,
       response : true,
       enabledLoader: false,
+      loader: false,
       showAttachmentsModal: false,
       showAgreementsModal: false,
       showConfirmation : false,
       showAttachmentsMPLModal : false,
       showAgreementsMethodMPL : false,
       showConfirmationMessage : '',
-      fileCarLease : []
+      fileCarLease : [],
+      equityAttachments: [{
+        name : 'Equity Form'
+      }],
     }
   }
 
@@ -234,6 +246,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
 
   showAttachments (attachments) {
     this.setState({ attachments })
+  }
+
+  carleaseLoader (loader) {
+    this.setState({ loader })
   }
 
   showAttachmentsMethodMPL (showAttachmentsMPLModal) {
@@ -278,6 +294,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     attachments,
     response,
     enabledLoader,
+    loader,
     showAttachmentsModal,
     showAttachmentsMPLModal,
     showAgreementsModal,
@@ -286,9 +303,9 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     showConfirmationMessage,
     fileCarLease,
     recepients,
+    equityAttachments,
     showRecepients
   } = this.state
-
   return (
     <div  className={ 'container' }>
       {
@@ -363,6 +380,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
         enabledLoader ?
           <div className = { 'transaction-detail-container' }>
             <TransactionDetails
+             loader = { loader }
              details = { details }
              attachments = { attachments }
              transactions = { transactions }
@@ -382,13 +400,15 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
              agreementsMethod = { (resp) =>
                this.showAgreementsMethod(resp)
              }
+             equityAttachments = { equityAttachments }
+             setEquityFileCarlease = { (equityAttachments) => this.setState({ equityAttachments }) }
              agreementsMethodMPL = { (resp) =>
                this.showAgreementsMethodMPL(resp)
              }
              onConfirmationCarleaseFunc = { (transactionID, status) =>
                this.presenter.addCarLeaseConfirmation(transactionID, status)
              }
-             onConfirmationReleaseFunc = { (resp) => this.presenter.addCarLeaseConfirmation(resp) }
+             onConfirmationReleaseFunc = { (resp) => this.presenter.addCarLeaseConfirmation(resp, equityAttachments) }
              fileCarLease = { fileCarLease }
              setFileCarlease = { (file) => this.setFileCarlease(file) }
              showFileReceipt = { response }

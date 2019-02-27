@@ -24,6 +24,9 @@ import GiftDetailsCheckoutFragment from './fragments/GiftDetailsCheckoutFragment
 import NoticeResponseModal from '../notice/NoticeResponseModal'
 import moment from 'moment'
 
+import store from '../../store'
+import { NotifyActions } from '../../actions/'
+
 let temTotalPoints
 
 class GiftsDetailsFragment extends BaseMVPView {
@@ -170,11 +173,18 @@ class GiftsDetailsFragment extends BaseMVPView {
 									valueText : '',
 									valueAmountText : ''
 								})
+								store.dispatch(NotifyActions.addNotify({
+										title : 'Gifts',
+										message : 'Successfully added gifts to your checkout',
+										type : 'warning',
+										duration : 5000
+									})
+								)
 							} catch (e) {
 								console.log(e)
 							}
 						}}
-						/>
+					/>
 				}
 				{
 					showResponseModal &&

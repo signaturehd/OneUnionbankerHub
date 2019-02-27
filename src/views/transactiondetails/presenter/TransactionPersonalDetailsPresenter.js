@@ -52,6 +52,10 @@ export default class TransactionPersonalDetailsPresenter {
     transactionId,
     file
   ) {
+    console.log(  transactionId,
+      file)
+    try {
+      this.view.carleaseLoader(true)
       this.postNewPaymentInteractor.execute(leasesConfirmpaymentParam(
         transactionId,
         file
@@ -59,10 +63,15 @@ export default class TransactionPersonalDetailsPresenter {
     )
     .subscribe(
       data => {
+        this.view.carleaseLoader(false)
         this.view.showMessageSuccessConfirm(data && data.message)
       }, error => {
+        this.view.carleaseLoader(false)
       }
     )
+  } catch (e) {
+    console.log(e)
+  }
   }
 
   getTransactionDetails (id) {
