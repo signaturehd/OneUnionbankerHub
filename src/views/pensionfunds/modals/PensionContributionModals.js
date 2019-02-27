@@ -43,7 +43,7 @@ class PensionContributionModals extends Component {
             />
           <GenericButton
             className = { 'profile-button-small' }
-            text = { `${ isBool ? 'Continue' : 'Update' }` }
+            text = { `${ isBool === false || isBool === null ? 'Update' : 'Continue' }` }
             onClick = { () => {
               continueCodeFunc()
             } }

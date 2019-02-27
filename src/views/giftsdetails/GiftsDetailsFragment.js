@@ -136,7 +136,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 			noticeResponse,
 			disabled,
 		} = this.state
-
+		console.log(rewardDetails)
 		return (
 			<div>
 				{

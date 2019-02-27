@@ -37,7 +37,7 @@ class PensionCodeModals extends Component {
             />
           <GenericButton
             className = { 'profile-button-small' }
-            text = { agreementBool ? 'Submit' : 'Update' }
+            text = { agreementBool === false || agreementBool === null ? 'Update' : 'Submit' }
             onClick = { () => submitCodeFunc() }
             />
         </center>

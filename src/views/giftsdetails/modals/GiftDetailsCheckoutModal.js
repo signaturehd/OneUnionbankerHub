@@ -21,7 +21,7 @@ class GiftDetailsCheckoutModal extends Component {
       valueAmountFunc,
       disabled,
     } = this.props
-
+    console.log(hasCustom)
     let selectedGifts = {
       id: selectedRewardsArray.id,
       name: selectedRewardsArray.name,
