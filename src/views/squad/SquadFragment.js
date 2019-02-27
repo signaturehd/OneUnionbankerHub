@@ -9,6 +9,8 @@ import VacanciesModal from './modals/VacanciesModal'
 
 import NoticeResponseModal from '../notice/NoticeResponseModal'
 
+import { GenericButton  } from '../../ub-components/'
+
 let positionId  = ''
 
 class SquadFragment extends BaseMVPView {
@@ -17,11 +19,14 @@ class SquadFragment extends BaseMVPView {
     this.state = {
       loader : false,
       showModalPositionDetails : false,
+      pageNumber : 1,
+      squadData: null,
+      setSquadList : []
     }
   }
 
   componentDidMount () {
-    this.presenter.getSquads()
+    this.presenter.getSquads(this.state.pageNumber)
   }
 
   submitSquads (positionId) {
@@ -32,8 +37,8 @@ class SquadFragment extends BaseMVPView {
     this.setState({ loader })
   }
 
-  setSquads (squads) {
-    this.setState({ squads })
+  setSquads (setSquadList) {
+    this.setState({ setSquadList })
   }
 
   setVacancies (vacants) {
@@ -49,14 +54,52 @@ class SquadFragment extends BaseMVPView {
     this.setState({ mesg, showResponseModal: true })
   }
 
+  decrementPage () {
+    const {
+      pageNumber,
+    } = this.state
+    // try {
+    //   if(setSquadList.length() !== 0) {
+    //     for(let count = 0; count < setSquadList.length; count++) {
+    //       if(`page${pageNumber}` === setSquadList['page'+count]) {
+    //         console.log(setSquadList['page'+pageNumber])
+    //         this.setState({ squadData : setSquadList['page'+pageNumber][count] })
+    //       }
+    //     }
+    //   }
+    // } catch (e) {
+    //   console.log(e)
+    // }
+    //
+    const page = pageNumber - 1
+    if(page > 0) {
+      this.setState({ pageNumber : page })
+      this.presenter.getSquads(pageNumber)
+    } else {
+      this.setState({ pageNumber : pageNumber })
+    }
+  }
+
+  incrementPage () {
+    const {
+      pageNumber
+    } = this.state
+
+    this.setState({ pageNumber : pageNumber + 1 })
+    this.presenter.getSquads(pageNumber + 1)
+  }
+
   render () {
     const {
       squads,
+      squadData,
       vacants,
       showVacancies,
       showResponseModal,
       mesg,
       loader,
+      pageNumber,
+      setSquadList,
       showModalPositionDetails
     } = this.state
 
@@ -87,11 +130,33 @@ class SquadFragment extends BaseMVPView {
         <br/>
         <SquadsComponent
           vacantDetails = { vacants }
-          squads = { squads }
+          squads = { setSquadList &&  setSquadList }
           getVacancies = { (positionId, squadId, squad) => {
-            showDetailsFragmentFunc (squad)
-            this.presenter.getVacancies(positionId, squadId)} }
+            try {
+              showDetailsFragmentFunc (squad)
+              this.presenter.getVacancies(positionId, squadId)
+            } catch (e) {
+              console.log(e)
+            }
+          } }
         />
+      <br/>
+      <div className = { 'grid-global' }>
+        <GenericButton
+          className = { 'profile-button-small cursor-pointer global-button' }
+          text = { 'Previous' }
+          onClick = { () => {
+            this.decrementPage()
+          } }
+        />
+        <GenericButton
+          className = { 'profile-button-small cursor-pointer global-button' }
+          text = { 'Next' }
+          onClick = { () => {
+            this.incrementPage()
+          } }
+        />
+      </div>
       </div>
     )
   }

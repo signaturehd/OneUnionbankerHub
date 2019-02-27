@@ -215,6 +215,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 						:
 							<div>
 								<GiftDetailsBannerComponent
+									history = { history }
 									totalPoints = { totalPoints }
 									showGiftCart = { () => this.setState({ showCheckoutFragment : true })}
 									tagline = { rewardDetails && rewardDetails.tagline }

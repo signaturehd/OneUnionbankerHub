@@ -3,6 +3,9 @@ import SubmitSquadsInteractor from '../../../domain/interactor/squad/SubmitSquad
 import GetVacanciesInteractor from '../../../domain/interactor/squad/GetVacanciesInteractor'
 
 let storedVacanciesPositionId, storedVacanciesSquadId, storedVacanciesPageNumber, storedSquadId, storedSquadPage
+
+let setSquadList = []
+
 export default class SquadPresenter {
   constructor (container) {
     this.getSquadsInteractor = new GetSquadsInteractor(container.get('HRBenefitsClient'))
@@ -25,21 +28,29 @@ export default class SquadPresenter {
         this.view.showLoader(false)
       }, e => {
         this.view.showLoader(false)
-        console.log(e);
       })
   }
 
-  getSquads (squadId, page) {
-    storedSquadId = squadId
-    storedSquadPage = page
-    this.view.showLoader(true)
-    this.getSquadsInteractor.execute(storedSquadId, storedSquadPage)
-      .subscribe(data => {
-        this.view.setSquads(data)
-        this.view.showLoader(false)
-      }, e => {
-        console.log(e);
-      })
+  getSquads (pageNumber) {
+    try {
+      storedSquadPage = pageNumber
+      this.view.showLoader(true)
+      this.getSquadsInteractor.execute(storedSquadId, storedSquadPage)
+        .subscribe(data => {
+          // const updateResponse = [...setSquadList]
+          // let pageItem = `page${storedSquadPage}`
+          // let obj = {}
+          // obj[`page${storedSquadPage}`] = data
+          // updateResponse.push(obj)
+          // setSquadList = updateResponse
+          this.view.setSquads(data)
+          this.view.showLoader(false)
+        }, e => {
+          this.view.showLoader(false)
+        })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   submitSquads (positionId) {
@@ -52,7 +63,7 @@ export default class SquadPresenter {
         this.view.submitSquadResp(data)
         this.view.showLoader(false)
       }, e => {
-        console.log(e);
+        this.view.showLoader(false)
       })
   }
 }

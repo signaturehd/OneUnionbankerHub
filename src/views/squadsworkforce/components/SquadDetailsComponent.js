@@ -27,11 +27,18 @@ class SquadDetailsComponent extends Component {
             <Card
               key = { key }
               onClick = { () => showPositionDetails(resp, data) }
-              className = { 'squad-card-grid-component cursor-pointer' }>
+              className = { 'padding-10px cursor-pointer' }>
               <div className = { 'text-align-left' }>
+                <br/>
                 <h4 className = { 'font-weight-bold' }>{ data.name }</h4>
+                <br/>
+                <br/>
               </div>
-              <div className = { 'text-align-right' }>
+              <div></div>
+              <div className = { '' }>
+                <h4 className = { 'unionbank-color-grey font-size-13px text-align-left' }>{ data.description }</h4>
+                <br/>
+                <h4 className = { 'unionbank-color-grey font-size-12px text-align-right' }>{ data.date.start + '-' + data.date.end }</h4>
               </div>
             </Card>
           )

@@ -4,6 +4,6 @@ export default class GetVacanciesInteractor {
   }
 
   execute (positionId, squadId, pageNumber) {
-    return this.client.getVacancies(this.client.getToken(), positionId, squadId, page)
+    return this.client.getVacancies(this.client.getToken(), positionId, squadId, pageNumber)
   }
 }

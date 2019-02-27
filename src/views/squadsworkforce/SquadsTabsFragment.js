@@ -64,7 +64,8 @@ class SquadsTabsFragment extends BaseMVPView {
       vacantDetails,
       showModalPositionDetails,
       loader,
-      showNoticeResponse
+      showNoticeResponse,
+      noticeResponse
     } = this.state
 
     return (
