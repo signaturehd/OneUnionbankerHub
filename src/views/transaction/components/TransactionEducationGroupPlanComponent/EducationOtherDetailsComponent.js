@@ -95,7 +95,7 @@ class EducationOtherDetailsComponent extends Component {
               <span className = { ' transaction-card-icon-settings ' }></span>
               <div>
                 <h2 className = { 'font-weight-ligter' }>
-                   { detailsEducation && detailsEducation.OfficialReceiptDate }
+                   { moment(detailsEducation && detailsEducation.OfficialReceiptDate).format('MMM DD YYYY') }
                 </h2>
                 <h2 className = { 'unionbank-color font-size-12px' }>
                   Official Receipt Date
