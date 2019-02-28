@@ -114,6 +114,7 @@ class EducationGroupAidFormCardComponent extends Component {
       effectivityDate,
       effectivityDateText,
       showDependentFunc,
+      effectiveDate,
       companyFunc,
       desiredAmountFunc,
       orDate,
@@ -189,8 +190,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 </div>
               }
               <DatePicker
-                readOnly
-                maxDate = { moment() }
+                maxDate = { moment(effectiveDate) }
                 selected = { orDate && moment(orDate) }
                 text = { 'Date of Official Receipt' }
                 disabled = { showEditSubmitButton }
