@@ -25,8 +25,6 @@ class SquadPositionDetailsModal extends Component {
 
     return (
       <Modal
-        isDismisable = { true }
-        onClose = { () => onClose() }
         width = { 50 }
       >
         <center>

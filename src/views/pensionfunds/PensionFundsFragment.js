@@ -38,7 +38,8 @@ class PensionFundsFragment extends BaseMVPView {
       tabsId : 'day',
       amountText: '',
       codeText: '',
-      showNoticeResponseModal : false
+      showNoticeResponseModal : false,
+      agreementBool: true,
     }
   }
 
@@ -123,9 +124,7 @@ class PensionFundsFragment extends BaseMVPView {
       pensionContributionData,
       pensionContributionHistoryData,
     } = this.state
-
-    console.log(pensionAgreement)
-
+    console.log(agreementBool)
     return (
 
       <div>

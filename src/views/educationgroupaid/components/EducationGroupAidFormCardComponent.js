@@ -177,7 +177,6 @@ class EducationGroupAidFormCardComponent extends Component {
                 disabled = { premiumDuration ? showEditSubmitButton : true }
                 errorMessage = { premiumDuration ? '':'Please select the dates covered by your premium payment.' }
                 onChange = { (e) => dateFunc(e, premiumMonths) }
-                maxDate = { this.checkDateValidation() ? '' : moment() }
               />
               {
                 effectivityDate &&
