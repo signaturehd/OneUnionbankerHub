@@ -16,7 +16,8 @@ class SquadBannerComponents extends Component {
 
   render () {
     const {
-      profile
+      profile,
+      onViewPdf
     } = this.props
 
     const initial = profile && profile.fullname
@@ -24,7 +25,7 @@ class SquadBannerComponents extends Component {
     const newInitial = convertInitial(initial)
 
     return (
-      <Card className = { 'squad-workforce-banner' }>
+      <div className = { 'squad-workforce-banner' }>
         <div className = { 'squads-grid-row' }>
           <div className = { 'squad-workforce-banner-grid' }>
             <div className = { 'squads-picture squadsPircture' }>
@@ -39,22 +40,28 @@ class SquadBannerComponents extends Component {
           <div className = { 'squads-grid-resume' }>
             <div></div>
             <div className = { 'grid-global' }>
-              {
-                // <GenericButton
-                //   text = { 'View your resume' }
-                //   onClick =  { () => {} }
-                //   className = { 'cursor-pointer global-button profile-button-medium' }
-                //   />
-                // <GenericButton
-                //   text = { 'Update your resume' }
-                //   onClick =  { () => {} }
-                //   className = { 'cursor-pointer global-button profile-button-medium' }
-                //   />
-              }
+              <GenericButton
+                text = { 'View your resume' }
+                onClick =  { () => { try {
+                  onViewPdf(true)
+                } catch (e) {
+                  console.log(e)
+                } } }
+                className = { 'cursor-pointer global-button profile-button-medium' }
+              />
+              <GenericButton
+                text = { 'Update your resume' }
+                onClick =  { () => { try {
+                  onViewPdf(true)
+                } catch (e) {
+                  console.log(e)
+                } } }
+                className = { 'cursor-pointer global-button profile-button-medium' }
+              />
             </div>
           </div>
         </div>
-      </Card>
+      </div>
     )
   }
 }

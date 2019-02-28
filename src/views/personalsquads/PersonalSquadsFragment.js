@@ -6,6 +6,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import PersonalSquadsBannerComponents from './components/PersonalSquadsBannerComponents'
 import PersonalSquadStatusComponent from './components/PersonalSquadStatusComponent'
+import PersonalResumeViewerComponent from './components/PersonalResumeViewerComponent'
 
 import './styles/personalStyle.css'
 
@@ -13,7 +14,9 @@ class PersonalSquadsFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state = {
-      status: 1
+      status: 1,
+      pdfViewing: '',
+      showPdfViewing : false,
     }
   }
 
@@ -39,7 +42,9 @@ class PersonalSquadsFragment extends BaseMVPView {
     const {
       activeData,
       inactiveData,
-      status
+      status,
+      pdfViewing,
+      showPdfViewing
     } = this.state
 
     return (
@@ -47,16 +52,31 @@ class PersonalSquadsFragment extends BaseMVPView {
         { super.render() }
         <h4 className = { 'unionbank-color-grey font-weight-bold font-size-25px' }>My Applications</h4>
         <br/>
-        <PersonalSquadsBannerComponents
-          profile = { profile }
-          />
-          <br/>
-          <PersonalSquadStatusComponent
-            status = { status }
-            changeStatus = { () => this.setState({ status: status !== 1 ? 1: 0 }) }
-            activeData = { activeData }
-            inactiveData = { inactiveData }
-          />
+          {
+            showPdfViewing ?
+            <div>
+              <br/>
+              <PersonalResumeViewerComponent
+                pdfViewing = { pdfViewing }
+                onViewPdf = { (showPdfViewing) => this.setState({ showPdfViewing }) }
+              />
+            </div>
+            :
+
+            <div>
+              <PersonalSquadsBannerComponents
+                profile = { profile }
+                onViewPdf = { (showPdfViewing) => this.setState({ showPdfViewing }) }
+              />
+              <br/>
+              <PersonalSquadStatusComponent
+                status = { status }
+                changeStatus = { () => this.setState({ status: status !== 1 ? 1: 0 }) }
+                activeData = { activeData }
+                inactiveData = { inactiveData }
+              />
+            </div>
+          }
       </div>
     )
   }
