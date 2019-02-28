@@ -146,7 +146,7 @@ class PensionFundsFragment extends BaseMVPView {
           <PensionCodeModals
             agreementBool = { agreementBool }
             submitCodeFunc = { () => {
-              if(agreementBool === null || agreementBool === false) {
+              if(agreementBool && agreementBool === null || agreementBool && agreementBool === false) {
                 this.presenter.updatePensionContributional(amountText, codeText)
               } else {
                 this.presenter.addPensionContributional(amountText, codeText)
@@ -210,7 +210,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                 {
-                  agreementBool === null || agreementBool === false ?
+                  agreementBool && agreementBool === null || agreementBool && agreementBool === false ?
                   <PensionDetailsFragment
                     pensionContributionHistoryData = { pensionContributionHistoryData }
                     pensionContributionData = { pensionContributionData }
