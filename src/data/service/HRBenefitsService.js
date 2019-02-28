@@ -2700,7 +2700,6 @@ export default class HRBenefitsService {
   }
 
   getStatusSquadApplication (token, isActive) {
-    console.log(isActive)
     return this.apiClient.get(`v1/goals/squad/applications?status=${ isActive }`, {
       headers : { token }
     })

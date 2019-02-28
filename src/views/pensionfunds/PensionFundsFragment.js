@@ -124,7 +124,7 @@ class PensionFundsFragment extends BaseMVPView {
       pensionContributionData,
       pensionContributionHistoryData,
     } = this.state
-    console.log(agreementBool)
+
     return (
 
       <div>

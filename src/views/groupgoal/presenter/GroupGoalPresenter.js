@@ -15,7 +15,6 @@ export default class GroupGoalPresenter {
     this.view.circularLoader(true)
     this.getGoalGroupInteractor.execute()
     .subscribe(data => {
-      console.log(data)
       this.view.circularLoader(false)
       this.view.setGoalGroup(data)
     }, error => {
@@ -28,7 +27,6 @@ export default class GroupGoalPresenter {
     this.getGroupDetailsByIdInteractor.execute(id)
     .subscribe(data => {
       this.view.circularLoader(false)
-      console.log(data)
       this.view.setGoalGroupList(data)
     }, error => {
       this.view.circularLoader(false)
