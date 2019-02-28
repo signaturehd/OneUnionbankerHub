@@ -901,9 +901,9 @@ class TeamGoalsFragment extends BaseMVPView {
           />
         :
         <div>
+          <Line/>
           <div className = { 'grid-main' }>
             <div>
-            <Line/>
             <br/>
             <div className = { 'team-tabs-container' }>
               <input

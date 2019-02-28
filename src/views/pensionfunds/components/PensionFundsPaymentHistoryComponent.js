@@ -17,7 +17,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
 
   render () {
     const {
-      pensionFundsData,
+      pensionContributionHistoryData,
       changePaymentFunc
     } = this.props
 
@@ -28,8 +28,8 @@ class PensionFundsPaymentHistoryComponent extends Component {
         <br/>
       <div>
         {
-          pensionFundsData &&
-          pensionFundsData.contributionHistory.map((resp, key) =>
+          pensionContributionHistoryData &&
+          pensionContributionHistoryData.contributionHistory.map((resp, key) =>
             <div
               key = { key }
               className = { 'funds-component-history-grid funds-border-history' }>
@@ -52,7 +52,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
-                   &#8369; { format(resp.amount) }
+                   &#8369; { format(resp.amount.toFixed(2)) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
                     Total Investment
@@ -60,7 +60,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
-                    &#8369; { resp.unitBought }
+                    &#8369; { format(resp.unitBought.toFixed(2)) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
                     Total Return

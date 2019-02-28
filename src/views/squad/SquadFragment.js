@@ -9,42 +9,104 @@ import VacanciesModal from './modals/VacanciesModal'
 
 import NoticeResponseModal from '../notice/NoticeResponseModal'
 
+import { GenericButton  } from '../../ub-components/'
+
+let positionId  = ''
+
 class SquadFragment extends BaseMVPView {
   constructor (props) {
     super (props)
+    this.state = {
+      loader : false,
+      showModalPositionDetails : false,
+      pageNumber : 1,
+      squadData: null,
+      setSquadList : []
+    }
   }
 
   componentDidMount () {
-    this.presenter.getSquads()
+    this.presenter.getSquads(this.state.pageNumber)
   }
 
   submitSquads (positionId) {
     this.presenter.submitSquads(positionId)
   }
 
-  setSquads (squads) {
-    this.setState({ squads })
+  showLoader (loader) {
+    this.setState({ loader })
+  }
+
+  setSquads (setSquadList) {
+    this.setState({ setSquadList })
   }
 
   setVacancies (vacants) {
-    this.setState({ vacants, showVacancies: true })
+    try {
+      this.setState({ vacants })
+      this.props.showVacanciesDetailsFragmentFunc(vacants)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   submitSquadResp (mesg) {
     this.setState({ mesg, showResponseModal: true })
   }
 
+  decrementPage () {
+    const {
+      pageNumber,
+    } = this.state
+    // try {
+    //   if(setSquadList.length() !== 0) {
+    //     for(let count = 0; count < setSquadList.length; count++) {
+    //       if(`page${pageNumber}` === setSquadList['page'+count]) {
+    //         console.log(setSquadList['page'+pageNumber])
+    //         this.setState({ squadData : setSquadList['page'+pageNumber][count] })
+    //       }
+    //     }
+    //   }
+    // } catch (e) {
+    //   console.log(e)
+    // }
+    //
+    const page = pageNumber - 1
+    if(page > 0) {
+      this.setState({ pageNumber : page })
+      this.presenter.getSquads(pageNumber)
+    } else {
+      this.setState({ pageNumber : pageNumber })
+    }
+  }
+
+  incrementPage () {
+    const {
+      pageNumber
+    } = this.state
+
+    this.setState({ pageNumber : pageNumber + 1 })
+    this.presenter.getSquads(pageNumber + 1)
+  }
+
   render () {
     const {
       squads,
+      squadData,
       vacants,
       showVacancies,
       showResponseModal,
-      mesg
+      mesg,
+      loader,
+      pageNumber,
+      setSquadList,
+      showModalPositionDetails
     } = this.state
 
     const {
-      showVacanciesDetailsFragmentFunc
+      showVacanciesDetailsFragmentFunc,
+      showDetailsFragmentFunc,
+      addApplySquad
     } = this.props
 
     return (
@@ -58,20 +120,46 @@ class SquadFragment extends BaseMVPView {
           />
         }
         {
-          showVacancies &&
-          <VacanciesModal
-            submitSquad = { (positionId) => {this.presenter.submitSquads(positionId), this.setState({ showVacancies: false })} }
-            vacants = { vacants }
-            onClose = { () =>{ this.setState({ showVacancies : false })} }
-          />
+          // showVacancies &&
+          // <VacanciesModal
+          //   submitSquad = { (positionId) => {this.presenter.submitSquads(positionId), this.setState({ showVacancies: false })} }
+          //   vacants = { vacants }
+          //   onClose = { () =>{ this.setState({ showVacancies : false })} }
+          // />
         }
         <br/>
         <SquadsComponent
-          squads = { squads }
+          vacantDetails = { vacants }
+          squads = { setSquadList &&  setSquadList }
           getVacancies = { (positionId, squadId, squad) => {
-            showVacanciesDetailsFragmentFunc(squad)
-            this.presenter.getVacancies(positionId, squadId)} }
+            try {
+              showDetailsFragmentFunc (squad)
+              this.presenter.getVacancies(positionId, squadId)
+            } catch (e) {
+              console.log(e)
+            }
+          } }
         />
+      <br/>
+      <div className = { 'grid-global' }>
+        {
+          pageNumber > 1 &&
+          <GenericButton
+            className = { 'profile-button-small cursor-pointer global-button' }
+            text = { 'Previous' }
+            onClick = { () => {
+              this.decrementPage()
+            } }
+          />
+        }
+        <GenericButton
+          className = { 'profile-button-small cursor-pointer global-button' }
+          text = { 'Next' }
+          onClick = { () => {
+            this.incrementPage()
+          } }
+        />
+      </div>
       </div>
     )
   }

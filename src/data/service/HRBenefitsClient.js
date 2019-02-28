@@ -1657,6 +1657,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getGoalGroupList (token) {
+    return this.service.getGoalGroupList(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getGroupDetailsById (token, id) {
+    return this.service.getGroupDetailsById(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {
@@ -1711,6 +1721,52 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
+    // const objectParam = {
+    //   limit : 100,
+    //   totalRecords: 1,
+    //   page: 1,
+    //   records : [
+    //     {
+    //       id: 0,
+    //       applicableNavDate: '2019-01-04',
+    //       description: '',
+    //       bidRate: 11.0
+    //     },
+    //     {
+    //       id: 1,
+    //       applicableNavDate: '2019-02-03',
+    //       description: '',
+    //       bidRate: 20.0
+    //     },
+    //     {
+    //       id: 2,
+    //       applicableNavDate: '2019-02-24',
+    //       description: '',
+    //       bidRate: 5.0
+    //     },
+    //     {
+    //       id: 3,
+    //       applicableNavDate: '2019-02-22',
+    //       description: '',
+    //       bidRate: 10.0
+    //     },
+    //     {
+    //       id: 4,
+    //       applicableNavDate: '2019-02-18',
+    //       description: '',
+    //       bidRate: 14.0
+    //     },
+    //   ]
+    // }
+    // return Observable.create(observer => {
+    //   observer.next(objectParam)
+    //   observer.complete()
+    // })
+    return this.service.getPensionFundsDatePagination(token, limit, start, fromDate, toDate)
+    .pipe(ServiceErrorOperator())
+  }
+
   // Reward Goals
   getRewardsDNAMoment (token, id) {
     return this.service.getRewardsDNAMoment(token, id)
@@ -1749,6 +1805,11 @@ export default class HRBenefitsClient {
 
   getEligibleInRewards (token, type, string) {
     return this.service.getEligibleInRewards(token, type, string)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGiftOrderDetails (token, refNo) {
+    return this.service.getGiftOrderDetails(token, refNo)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1791,6 +1852,11 @@ export default class HRBenefitsClient {
 
   submitSquads (token, positionId) {
     return this.service.submitSquads(token, positionId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getStatusSquadApplication (token, isActive) {
+    return this.service.getStatusSquadApplication(token, isActive)
       .pipe(ServiceErrorOperator())
   }
 

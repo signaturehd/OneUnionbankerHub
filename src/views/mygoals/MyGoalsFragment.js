@@ -24,6 +24,7 @@ import RequestedGoalsFragment from '../requestedgoals/RequestedGoalsFragment'
 import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 import RequestCoachFragment from '../requestCoach/RequestCoachFragment'
 import TeamGoalsFragment from '../teamgoal/TeamGoalsFragment'
+import GroupGoalFragment from '../groupgoal/GroupGoalFragment'
 
 import ResponseModal from '../notice/NoticeResponseModal'
 
@@ -309,10 +310,10 @@ class MyGoalsFragment extends BaseMVPView {
                       defaultChecked = { true }
                       onClick = { () => {
                         this.setState({ showTeamGoal: false, forApproval : false, showApprovalForm : false })
-                        this.props.history.push('/mygoals/request')
+                        this.props.history.push('/mygoals/')
                       }
                     }/>
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab1'>Individual Goals</label>
+                    <label className = { 'mygoal-icon-tab  font-size-14px' } htmlFor={'mygoal-tab1'}>Individual Goals</label>
 
                     <input
                       className = { 'mygoal-input-tab' }
@@ -321,10 +322,10 @@ class MyGoalsFragment extends BaseMVPView {
                       name = { 'tabs' }
                       onClick = { () => {
                         this.setState({ showTeamGoal: true, forApproval : false, showApprovalForm : false })
-                        this.props.history.push('/mygoals/team')
+                        this.props.history.push('/mygoals/team/')
                       }
                     }/>
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab2'>Team / Squad Goals</label>
+                    <label className = { 'mygoal-icon-tab  font-size-14px' } htmlFor={'mygoal-tab2'}>Team / Squad Goals</label>
 
                     <input
                       className = { 'mygoal-input-tab' }
@@ -333,48 +334,56 @@ class MyGoalsFragment extends BaseMVPView {
                       name = { 'tabs' }
                       onClick = { () => {
                         this.setState({ forApproval : true })
-                        this.props.history.push('/mygoals/approved')
+                        this.props.history.push('/mygoals/approved/')
                       }
                     }/>
+                    <label className = { 'mygoal-icon-tab font-size-14px' } htmlFor={'mygoal-tab3'}>Goals Confirmation</label>
 
-                    <label className = { 'mygoal-icon-tab' } htmlFor='mygoal-tab3'>Goals Confirmation</label>
-                    {
-                      // <section>
-                      //   <Switch>
-                      //     <Route exact path='/mygoals/request/RequestedGoalsFragment'
-                      //     render={ props => <RequestedGoalsFragment { ...props } /> }/>
-                      //     <Route exact path='/mygoals/team/TeamGoalsFragment'
-                      //     render={ props => <TeamGoalsFragment { ...props } /> }/>
-                      //     <Route exact path='/mygoals/approved/ApprovedGoalsComponent'
-                      //     render={ props => <ApprovedGoalsComponent { ...props } /> }/>
-                      //   </Switch>
-                      // </section>
-                    }
+                    <input
+                      className = { 'mygoal-input-tab' }
+                      id = { 'mygoal-tab4' }
+                      type = { 'radio' }
+                      name = { 'tabs' }
+                      onClick = { () => {
+                        this.props.history.push('/mygoals/group/')
+                      }
+                    }/>
+                    <label className = { 'mygoal-icon-tab font-size-14px' } htmlFor={'mygoal-tab4'}>Group Goals</label>
+
                   </div>
                 </div>
               </div>
-              {
-                !forApproval ?
-                showTeamGoal ?
-                <TeamGoalsFragment
-                  employeeNumber = { employeeNumber }
-                  isLineManager = { isLineManager }
-                  isPO = { isPO }
-                />
-                :
-                <RequestedGoalsFragment
-                  searchString = { searchString }
-                  filterId = { filterId }
-                  employeeNumber = { employeeNumber }
-                  isLineManager = { isLineManager }
-                  showRequestCoachForm = { showRequestCoachForm }
-                  showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
-                :
-                <ApprovalGoalsFragment
-                  isPO = { isPO }
-                  isLineManager = { isLineManager }
+              <Switch>
+                <Route exact path='/mygoals/'
+                  render={ props =>
+                  <RequestedGoalsFragment
+                    searchString = { searchString }
+                    filterId = { filterId }
+                    employeeNumber = { employeeNumber }
+                    isLineManager = { isLineManager }
+                    showRequestCoachForm = { showRequestCoachForm }
+                    showRequestCoachFunc = { (resp) => this.setState({ showRequestCoachForm : resp }) }/>
+                }/>
+                <Route path='/mygoals/team/'
+                  render={ props =>
+                  <TeamGoalsFragment
+                    employeeNumber = { employeeNumber }
+                    isLineManager = { isLineManager }
+                    isPO = { isPO }
+                    /> }
                   />
-              }
+                <Route path='/mygoals/approved/'
+                  render={ props =>
+                  <ApprovalGoalsFragment
+                    isPO = { isPO }
+                    isLineManager = { isLineManager }
+                    />}
+                  />
+                <Route path='/mygoals/group/'
+                  render={ props =>
+                  <GroupGoalFragment/>}
+                  />
+              </Switch>
             </div>
           </div>
         }

@@ -7,6 +7,10 @@ import './styles/giftModal.css'
 
 class GiftDetailsCheckoutModal extends Component {
 
+  checkAmountIf  () {
+
+  }
+
   render () {
     const {
       onClose,
@@ -15,10 +19,12 @@ class GiftDetailsCheckoutModal extends Component {
       totalPoints,
       valueText,
       valueTextFunc,
+      customValue,
       hasCustom,
       valueAmountTextFunc,
       valueAmountText,
-      valueAmountFunc
+      valueAmountFunc,
+      disabled,
     } = this.props
 
     let selectedGifts = {
@@ -27,7 +33,8 @@ class GiftDetailsCheckoutModal extends Component {
       logo: selectedRewardsArray.logo,
       qty: valueText,
       totalPoints : totalPoints,
-      value : selectedRewardsArray.value,
+      value: selectedRewardsArray.value,
+      price: selectedRewardsArray.price,
     }
 
     return (
@@ -47,20 +54,31 @@ class GiftDetailsCheckoutModal extends Component {
           }}>
           <div className = { 'giftdetails-modal-grid-quantiy' }>
             <div>
-              <h4 className = { 'font-size-14px font-weight-600 unionbank-color-grey' }>
-                { selectedRewardsArray && selectedRewardsArray.name }
-              </h4>
               {
-                hasCustom &&
+                hasCustom && !hasCustom &&
+
+                <h4 className = { 'font-size-14px font-weight-600 unionbank-color-grey' }>
+                  { selectedRewardsArray && selectedRewardsArray.value }
+                </h4>
+              }
+              {
+                hasCustom && hasCustom &&
                 <label name={ 'denomination-qty' } className={ 'denominations-dialog' }>
                   <span>Amount</span>
                   <input id={ 'denomination-qty' }
                     type={ 'text' }
-                    onChange = { (e) => valueAmountTextFunc(e.target.value, selectedRewardsArray.value) }
+                    onChange = { (e) => valueAmountTextFunc(e.target.value, selectedRewardsArray.price) }
                     value={ valueAmountText }/>
                 </label>
               }
-              <h4 className = { 'font-weight-lighter font-size-10px unionbank-color-grey' }>1 peso = 20pts</h4>
+              {
+                hasCustom && hasCustom ?
+                <h4 className = { 'font-weight-lighter font-size-10px unionbank-color-grey' }>
+                  { customValue && customValue.maximum && customValue.maximum.value } - { customValue && customValue.maximum && customValue.maximum.points }
+                </h4>
+                :
+                <h4 className = { 'font-weight-lighter font-size-10px unionbank-color-grey' }>1 peso = 20pts</h4>
+              }
             </div>
             <div className = { 'text-align-right' }>
               <h4 className = { 'unionbank-color font-weight-lighter font-size-14px' }>Total Points { totalPoints }</h4>
@@ -68,12 +86,13 @@ class GiftDetailsCheckoutModal extends Component {
                 <span>Qty</span>
                 <input id={ 'denomination-qty' }
                   type={ 'text' }
-                  max = { '100' }
+                  max = { this.checkAmountIf(customValue) }
+                  min = { customValue && customValue.minimun && customValue.minimun.value }
                   onChange = { (e) => {
-                    if(hasCustom) {
+                    if(hasCustom && hasCustom) {
                       valueAmountFunc(e.target.value)
                     } else {
-                      valueTextFunc(e.target.value, selectedRewardsArray.value)
+                      valueTextFunc(e.target.value, selectedRewardsArray.price)
                     }
                   } }
                   value={ valueText }/>
@@ -98,11 +117,23 @@ class GiftDetailsCheckoutModal extends Component {
               />
             </div>
             <div className = { 'text-align-right margin-auto' }>
-              <GenericButton
-                onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
-                text = { 'SELECT THIS' }
-                className = { 'giftdetails-select' }
-              />
+              {
+                hasCustom && hasCustom ?
+
+                <GenericButton
+                  onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
+                  text = { 'SELECT THIS' }
+                  disabled = { valueAmountText ? false : true }
+                  className = { `giftdetails-select${valueAmountText ? false : true}` }
+                />
+                :
+                <GenericButton
+                  onClick = { () => onSelectThis(selectedRewardsArray, selectedGifts) }
+                  text = { 'SELECT THIS' }
+                  disabled = { valueText ? false : true }
+                  className = { `giftdetails-select${valueText ? false : true}` }
+                />
+              }
             </div>
           </div>
         </div>

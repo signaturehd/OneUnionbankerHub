@@ -27,11 +27,32 @@ class EducationGroupAidFormCardComponent extends Component {
     return parts[parts.length - 1]
   }
 
+  checkDateValidation () {
+    const {
+      allowsManagerCheck,
+      premiumDuration
+    } = this.props
+
+    if(allowsManagerCheck) {
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+
   checkComputedMessage () {
     const {
       premiumDuration,
       premiumMonths,
-      isLineManager,
+      allowsManagerCheck,
       effectivityDate,
     } = this.props
 
@@ -40,7 +61,7 @@ class EducationGroupAidFormCardComponent extends Component {
     let checkOneTimePayment = `Notes: The full amount indicated above will be credited to your nominated account.`
     let managersCheckOneTimePayment = `Notes: The full subsidy indicated above will be released through Manager's Check.`
 
-    if(isLineManager) {
+    if(allowsManagerCheck) {
       //If Recurring
       if(premiumDuration.toLowerCase() === 'annually') {
         return managersCheckOneTimePayment
@@ -50,9 +71,9 @@ class EducationGroupAidFormCardComponent extends Component {
     } else {
       //If One Time Payment
       if(premiumDuration.toLowerCase() === 'annually') {
-        return checkOneTimePayment
-      } else {
         return checkRecurring
+      } else {
+        return checkOneTimePayment
       }
     }
   }
@@ -93,6 +114,7 @@ class EducationGroupAidFormCardComponent extends Component {
       effectivityDate,
       effectivityDateText,
       showDependentFunc,
+      effectiveDate,
       companyFunc,
       desiredAmountFunc,
       orDate,
@@ -151,7 +173,7 @@ class EducationGroupAidFormCardComponent extends Component {
               <DatePicker
                 value = { effectivityDateText }
                 selected = { effectivityDate && moment(effectivityDate)}
-                text = { 'Coverage of Insurance' }
+                text = { 'Effectivity Date' }
                 disabled = { premiumDuration ? showEditSubmitButton : true }
                 errorMessage = { premiumDuration ? '':'Please select the dates covered by your premium payment.' }
                 onChange = { (e) => dateFunc(e, premiumMonths) }
@@ -167,8 +189,7 @@ class EducationGroupAidFormCardComponent extends Component {
                 </div>
               }
               <DatePicker
-                readOnly
-                maxDate = { moment() }
+                maxDate = { moment(effectiveDate) }
                 selected = { orDate && moment(orDate) }
                 text = { 'Date of Official Receipt' }
                 disabled = { showEditSubmitButton }

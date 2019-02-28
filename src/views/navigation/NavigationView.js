@@ -415,7 +415,7 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
                   <EducationGroupAidFragment { ...props }
-                    isLineManager = { isLineManager }
+                    allowsManagerCheck = { profile && profile.allowManagersCheck }
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                   <OpticalFragment { ...props }
@@ -505,7 +505,7 @@ class NavigationView extends BaseMVPView {
                   <MyLearningView { ...props }
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }/> } />
-                <Route path = '/mygoals' render = { props =>
+                <Route path = '/mygoals/' render = { props =>
                   <MyGoalsFragment { ...props }
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }
@@ -548,7 +548,7 @@ class NavigationView extends BaseMVPView {
                </Switch>
             </Drawer>
             <br/>
-            <BaseFooterComponent />
+            <BaseFooterComponent history = { history }/>
           </main>
           <aside
             className ="left-side"

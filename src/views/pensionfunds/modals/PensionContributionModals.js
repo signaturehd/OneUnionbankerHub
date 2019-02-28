@@ -19,13 +19,13 @@ class PensionContributionModals extends Component {
       submitCodeFunc,
       cancelCodeFunc,
       continueCodeFunc,
-      isBool
+      isBool,
     } = this.props
 
     return (
       <Modal>
         <div>
-          <center className = { 'unionbank-color font-size-16px' }>{format(amountText)}</center>
+          <center className = { 'unionbank-color font-size-16px' }>{format(amountText ? amountText : 0)}</center>
           <SliderComponent
             onChangeValue = { (amount) => {
               amountTextFunc(amount)} }
@@ -43,7 +43,7 @@ class PensionContributionModals extends Component {
             />
           <GenericButton
             className = { 'profile-button-small' }
-            text = { `${ isBool ? 'Update' : 'Continue' }` }
+            text = { `${ isBool === false || isBool === null ? 'Update' : 'Continue' }` }
             onClick = { () => {
               continueCodeFunc()
             } }

@@ -674,12 +674,12 @@ export default class HRBenefitsService {
     const formData = new FormData()
     const leasesConfirmpaymentObject = {
       transactionId : leasesConfirmpaymentParam.transactionId,
-      uuid : Math.floor(Math.random()*90000) + 10000
     }
     leasesConfirmpaymentParam.file.map((resp, key) =>
-      formData.append(file.name.replace('/', '-'), file.file)
+      formData.append(resp.name.replace('/', '-'), resp.file)
     )
-    formData.append(body, JSON.stringify(leasesConfirmpaymentObject))
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    formData.append('body', JSON.stringify(leasesConfirmpaymentObject))
     return this.apiClient.post('v1/leases/car/payment', formData, {
       headers: { token }
     })
@@ -2482,6 +2482,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getGoalGroupList (token) {
+    return this.apiClient.get('v1/goals/groups', {
+      headers : { token }
+    })
+  }
+
+  getGroupDetailsById (token, id) {
+    return this.apiClient.get(`v1/goals/groups/${ id }`, {
+      headers : { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {
@@ -2558,7 +2570,7 @@ export default class HRBenefitsService {
   updatePensionContributional (token, amount, code, id) {
     const hasAgreedObject = {
       amount : amount,
-      pinCode: code,
+      code: code,
     }
     return this.rootClient.put(`appian/pension/v1/contribution/${id}`, hasAgreedObject, {
       headers : { token }
@@ -2585,6 +2597,12 @@ export default class HRBenefitsService {
 
   getPensionValidate (token) {
     return this.rootClient.get('appian/pension/v1', {
+      headers : { token }
+    })
+  }
+
+  getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
+    return this.rootClient.get(`finacle/v1/uitf/products/navpu?fromDate=${fromDate}&page=1&toDate=${toDate}&limit=${limit}`, {
       headers : { token }
     })
   }
@@ -2638,6 +2656,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getGiftOrderDetails (token, refNo) {
+    return this.rootClient.get(`hr/giftaway/v1/orders?referenceNo=${refNo}`, {
+      headers : { token }
+    })
+  }
+
   // BIR 2316 My Documents
 
   getBir2316List (token) {
@@ -2656,22 +2680,28 @@ export default class HRBenefitsService {
 
   // Squad and Workforce
   getSquads (token, squadId, page) {
-    return this.apiClient.get(`v1/goals/squad?${squadId && 'id=' + squadId} ${(squadId && page) && '&'} ${page && 'page=' + page}`, {
+    return this.apiClient.get(`v1/goals/squad?page=${page}`, {
       headers: { token }
     })
   }
+
   getVacancies (token, positionId, squadId, pageNumber) {
-    return this.apiClient.get(`v1/goals/vacancies?goalType=squad${positionId !== false && '&positionId=' + positionId}${squadId !== false && '&squadId=' + squadId}${pageNumber !== false && '&pageNumber=' + pageNumber}`, {
+    return this.apiClient.get(`v1/goals/vacancies?goalType=squad&squadId=${squadId}`, {
       headers: { token }
     })
   }
 
   submitSquads (token, positionId) {
     return this.apiClient.post('v1/goals/vacancies/submit', {
-      positionId
+      positionId : positionId.id
     }, {
       headers: { token }
     })
   }
 
+  getStatusSquadApplication (token, isActive) {
+    return this.apiClient.get(`v1/goals/squad/applications?status=${ isActive }`, {
+      headers : { token }
+    })
+  }
 }

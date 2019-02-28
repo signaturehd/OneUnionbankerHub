@@ -39,16 +39,18 @@ class SquadBannerComponents extends Component {
           <div className = { 'squads-grid-resume' }>
             <div></div>
             <div className = { 'grid-global' }>
-              <GenericButton
-                text = { 'View your resume' }
-                onClick =  { () => {} }
-                className = { 'cursor-pointer global-button profile-button-medium' }
-                />
-              <GenericButton
-                text = { 'Update your resume' }
-                onClick =  { () => {} }
-                className = { 'cursor-pointer global-button profile-button-medium' }
-                />
+              {
+                // <GenericButton
+                //   text = { 'View your resume' }
+                //   onClick =  { () => {} }
+                //   className = { 'cursor-pointer global-button profile-button-medium' }
+                //   />
+                // <GenericButton
+                //   text = { 'Update your resume' }
+                //   onClick =  { () => {} }
+                //   className = { 'cursor-pointer global-button profile-button-medium' }
+                //   />
+              }
             </div>
           </div>
         </div>

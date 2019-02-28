@@ -178,7 +178,7 @@ class ApprovalGoalsFragment extends BaseMVPView {
         showNoticeResponseModal &&
         <ResponseModal
           onClose={ () => {
-            this.setState({ showNoticeResponseModal : false })
+            this.setState({ showNoticeResponseModal : false, rejectedRemarks : '' })
           }}
           noticeResponse={ noticeResponse }
         />
@@ -397,16 +397,19 @@ class ApprovalGoalsFragment extends BaseMVPView {
                       <div className = { 'grid-global' }>
                         <div>
                           <GenericButton
-                          text = { 'Close' }
-                          onClick = { () => this.setState({ showRejectRemarksModal: false }) }/>
+                            text = { 'Close' }
+                            onClick = { () => this.setState({
+                              rejectedRemarks : '',
+                              showRejectRemarksModal: false
+                            }) }/>
                         </div>
                         <div>
                           <GenericButton
-                          text = { 'Submit' }
-                          onClick = { () => {
-                            this.onApprovalSubmit(personal, goalId, 3, rejectedRemarks)
-                            this.setState({ showRejectRemarksModal: false })
-                          }
+                            text = { 'Submit' }
+                            onClick = { () => {
+                              this.onApprovalSubmit(personal, goalId, 3, rejectedRemarks)
+                              this.setState({ showRejectRemarksModal: false })
+                            }
                          }/>
                         </div>
                       </div>

@@ -26,7 +26,7 @@ export default function ServiceErrorOperator () {
                   title : 'One UnionBanker Hub',
                   message : error.message,
                   type : 'warning',
-                  duration : 2000
+                  duration : 5000
                 })
               )
             ))
@@ -40,7 +40,7 @@ export default function ServiceErrorOperator () {
               title : 'One UnionBanker Hub',
               message : 'It seems that we\'ve encountered a problem.',
               type : 'danger',
-              duration : 2000
+              duration : 5000
             })
           )
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))

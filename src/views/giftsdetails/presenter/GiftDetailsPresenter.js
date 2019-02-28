@@ -113,6 +113,8 @@ export default class GiftsPresenter {
       }
       this.addRewardGiftsDenominationsInteractor.execute(objectParam, mode)
       .subscribe(data => {
+        this.resetRewardList()
+        this.view.noticeResponse(data)
         this.view.circularLoader(false)
       }, error => {
         this.view.circularLoader(false)
@@ -136,6 +138,7 @@ export default class GiftsPresenter {
       this.addRewardGiftsDenominationsInteractor.execute(objectParam, mode)
       .subscribe(data => {
         this.view.noticeResponse(data)
+        this.resetRewardList()
         this.view.circularLoader(false)
       }, error => {
         this.view.circularLoader(false)
