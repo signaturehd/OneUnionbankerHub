@@ -210,7 +210,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                 {
-                  agreementBool && agreementBool === null || agreementBool && agreementBool === false ?
+                  agreementBool === null || agreementBool === false ?
                   <PensionDetailsFragment
                     pensionContributionHistoryData = { pensionContributionHistoryData }
                     pensionContributionData = { pensionContributionData }
