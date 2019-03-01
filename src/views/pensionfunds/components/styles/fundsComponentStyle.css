@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: #f6821d;
-  padding: 3.5px 0px 0px 0px;
-  border-radius: 30px;
+  padding: 10px 0px 10px 0px;
+  border-radius: 20px;
 }
 
 .funds-tabs-component {

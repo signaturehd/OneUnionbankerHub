@@ -428,7 +428,7 @@ export default class PensionFundsPresenter {
     if (variable.toLowerCase() === 'day') {
       let test = this.getDailyStartDate()
       fromDate = test
-      this.getPensionFundsDatePagination()
+      // this.getPensionFundsDatePagination()
     } else if (variable.toLowerCase() === 'week') {
       let test = this.getWeeklyStartDate()
       fromDate = test

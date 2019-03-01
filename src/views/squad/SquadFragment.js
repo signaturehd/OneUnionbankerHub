@@ -141,7 +141,7 @@ class SquadFragment extends BaseMVPView {
           } }
         />
       <br/>
-      <div className = { 'grid-global' }>
+      <div className = { `${pageNumber > 1 ? 'grid-global' : 'text-align-center'  }`}>
         {
           pageNumber > 1 &&
           <GenericButton

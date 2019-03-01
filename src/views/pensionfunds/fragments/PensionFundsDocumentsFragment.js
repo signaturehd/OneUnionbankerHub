@@ -44,10 +44,6 @@ class PensionFundsDocumentsFragment extends Component {
         <div></div>
         <div className = { 'funds-grid-header-content' }>
           <div>
-            <h4 className = { 'font-weight-bold font-size-30px letter-spacing-1' }>Retirement Pension Period</h4>
-            <br/>
-            <h4 className = { 'font-size-16px font-weight-ligther letter-spacing-1' }>Secure your future.</h4>
-            <br/>
           </div>
           <div className = { `funds-documents-background${ stepperStatus }` }>
             <div>

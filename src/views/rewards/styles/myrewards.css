@@ -38,14 +38,14 @@
 .myreward-orange-color{
   padding-right: 10px;
   padding-left: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: 40px;
   background-color: orange;
   border-radius: 15px;
   display: grid;
   align-items: center;
-  grid-template-columns: .03fr 1fr .10fr;
+  grid-template-columns: .05fr 1fr .10fr;
   text-align: left;
   clear: both;
   overflow: auto;
