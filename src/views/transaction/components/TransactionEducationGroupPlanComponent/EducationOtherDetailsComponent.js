@@ -75,6 +75,20 @@ class EducationOtherDetailsComponent extends Component {
                 </h2>
               </div>
             </div>
+            <div
+               className = { 'transaction-icons-details-grid' }>
+              <span className = { ' transaction-card-icon-settings' }></span>
+              <div>
+                <h2 className = { 'font-weight-ligter' }>
+                 &#8369; { amount }
+                </h2>
+               <h2 className = { 'unionbank-color font-size-12px' }>
+                  Amount
+                 <br/>
+                 <br/>
+               </h2>
+              </div>
+            </div>
             <div className = { 'transaction-icons-details-grid' }>
               <span className = { ' transaction-card-icon-settings ' }></span>
               <div>
