@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import BannerImage from '../../../images/rewards/giftsBanner.jpg'
-import GiftDetailsFooterComponent from '../components/GiftDetailsFooterComponent'
 import { GenericButton, DatePicker, GenericInput, Line } from '../../../ub-components/'
 import '../../gifts/styles/GiftsStyle.css'
 
@@ -20,7 +19,7 @@ class GiftDetailsCheckoutFragment extends Component {
     } = this.props
 
     const totalRewards = selectedRewardsArray && selectedRewardsArray.map(function(resp) {
-      return (resp.value * resp.qty) * 20
+      return (resp.price * resp.qty) * 20
     })
 
     const totalPoints = totalRewards && totalRewards.reduce((a, b) => a + b, 0)
@@ -104,9 +103,9 @@ class GiftDetailsCheckoutFragment extends Component {
                     <tr>
                       <td className={ 'giftpadd' }></td>
                       <td className={ 'giftpadd gift-align-right-td' }></td>
-                      <td className={ 'giftpadd gift-align-right-td' }>{resp.value}</td>
+                    <td className={ 'giftpadd gift-align-right-td' }>{format(resp.price)}</td>
                       <td className={ 'giftpadd gift-align-right-td' }>{ resp.qty }</td>
-                      <td className={ 'giftpadd gifts-border-style-double' }>{ format(resp.value * resp.qty * 20) } Creds</td>
+                      <td className={ 'giftpadd gifts-border-style-double' }>{ format(resp.price * resp.qty * 20) } Creds</td>
                     </tr>
                   </tbody>
                   )
@@ -141,7 +140,7 @@ class GiftDetailsCheckoutFragment extends Component {
               </div>
               <div className={ 'gift-checkout-details' }>
                 <div className={ 'gift-inline2' }>
-                  <span className={ 'gift-checkout-label-textbox3 gift-align-left' }>Your Credits</span>
+                  <span className={ 'gift-checkout-label-textbox3 gift-align-left' }>Remaining Points</span>
                   <span className={ 'gift-checkout-label-textbox3 gift-align-right' }>{ format(subTotalPoints) }</span>
                 </div>
                 <div className={ 'gift-inline' }>

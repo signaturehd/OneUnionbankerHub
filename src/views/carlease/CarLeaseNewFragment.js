@@ -153,7 +153,8 @@ class CarLeaseNewFragment extends BaseMVPView {
           store.dispatch(NotifyActions.addNotify({
               title : 'My Benefits',
               message : 'Car Brand fields are required',
-              type: 'warning'
+              type: 'warning',
+              duration: 5000,
           })
         )
       }
@@ -161,7 +162,8 @@ class CarLeaseNewFragment extends BaseMVPView {
           store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Car Model fields are required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       }
@@ -169,7 +171,8 @@ class CarLeaseNewFragment extends BaseMVPView {
           store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Year fields are required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       }
@@ -177,35 +180,40 @@ class CarLeaseNewFragment extends BaseMVPView {
         store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Primary Color fields are required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       } else if (!this.validator(secondaryColor)) {
         store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Secondary Color fields are required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       } else if (!this.validator(insurancePayment)) {
         store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Insurance Payment is required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       } else if (!this.validator(solRC)) {
         store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Sol RC  is required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       } else if (!this.validator(solIdChecked)) {
         store.dispatch(NotifyActions.addNotify({
             title : 'My Benefits',
             message : 'Sol ID  is required',
-            type: 'warning'
+            type: 'warning',
+            duration: 5000,
           })
         )
       } else if (validateAttachments) {
@@ -215,7 +223,8 @@ class CarLeaseNewFragment extends BaseMVPView {
               store.dispatch(NotifyActions.addNotify({
                   title : 'My Benefits',
                   message : `${ attachment.name } is required`,
-                  type: 'warning'
+                  type: 'warning',
+                  duration: 5000,
                 })
               )
             }

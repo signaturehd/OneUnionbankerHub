@@ -151,10 +151,9 @@ class NavigationView extends BaseMVPView {
     this.setState({ displayNavIcon : topBar })
   }
 
-
-
   showProfile (profile) {
     this.setState({
+      rewardsPoints: profile.badgesAndPoints.redeemablePoints,
       profile : profile.employee,
       isLineManager: profile.isLineManager,
       isPO: profile.isPO,
@@ -285,7 +284,8 @@ class NavigationView extends BaseMVPView {
       employeeNumber,
       profillePosition,
       storeWidth,
-      agreementBool
+      agreementBool,
+      rewardsPoints
     } = this.state
 
     const { history, login, profilePicture } = this.props
@@ -415,7 +415,7 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
                   <EducationGroupAidFragment { ...props }
-                    isLineManager = { isLineManager }
+                    allowsManagerCheck = { profile && profile.allowManagersCheck }
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                   <OpticalFragment { ...props }
@@ -505,7 +505,7 @@ class NavigationView extends BaseMVPView {
                   <MyLearningView { ...props }
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }/> } />
-                <Route path = '/mygoals' render = { props =>
+                <Route path = '/mygoals/' render = { props =>
                   <MyGoalsFragment { ...props }
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }
@@ -530,6 +530,8 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/rewardgifts/details/:id' render = { props =>
                   <GiftsDetailsFragment { ...props }
+                    rewardsPoints = { rewardsPoints }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }
@@ -546,7 +548,7 @@ class NavigationView extends BaseMVPView {
                </Switch>
             </Drawer>
             <br/>
-            <BaseFooterComponent />
+            <BaseFooterComponent history = { history }/>
           </main>
           <aside
             className ="left-side"

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import BannerImage from '../../../images/rewards/giftsBanner.jpg'
-import GiftDetailsFooterComponent from '../../giftsdetails/components/GiftDetailsFooterComponent.js'
 import { GenericButton, DatePicker, GenericInput, Line } from '../../../ub-components/'
 
 class GiftsCheckout extends Component {
@@ -166,7 +165,6 @@ class GiftsCheckout extends Component {
           </div>
         </div>
         <div>
-          <GiftDetailsFooterComponent/>
         </div>
       </div>
     )

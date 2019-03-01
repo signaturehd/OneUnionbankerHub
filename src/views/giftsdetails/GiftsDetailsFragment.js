@@ -8,6 +8,8 @@ import './styles/giftDetails.css'
 
 import { CircularLoader, Line, GenericButton } from '../../ub-components/'
 
+import * as validate from './functions/GiftDetailsFunctions'
+
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 import GiftDetailsBannerComponent from './components/GiftDetailsBannerComponent'
 import GiftDetailsEgiftComponent from './components/GiftDetailsEgiftComponent'
@@ -18,7 +20,12 @@ import GiftDetailsCheckoutModal from './modals/GiftDetailsCheckoutModal'
 
 // Fragment
 import GiftDetailsCheckoutFragment from './fragments/GiftDetailsCheckoutFragment'
+
+import NoticeResponseModal from '../notice/NoticeResponseModal'
 import moment from 'moment'
+
+import store from '../../store'
+import { NotifyActions } from '../../actions/'
 
 let temTotalPoints
 
@@ -33,6 +40,9 @@ class GiftsDetailsFragment extends BaseMVPView {
 			valueText : '',
 			valueAmountText : '',
 			mode: 2,
+			showResponseModal: false,
+			noticeResponse: '',
+			disabled: false,
 		}
 	}
 
@@ -59,18 +69,29 @@ class GiftsDetailsFragment extends BaseMVPView {
 		this.setState({ totalPoints })
 	}
 
+	noticeResponse (noticeResponse) {
+		this.setState({ noticeResponse, showResponseModal: true, showCheckoutFragment : false })
+	}
+
+	resetData () {
+		this.setState({ valueText : '', valueAmountText : '' })
+	}
+
 	getComputation (valueText, valuePoints) {
 		const {
 			totalPoints
 		} = this.state
+		let value = validate.checkedValidateNumberInput(valueText)
 		let calculation
 		let currentPoints = totalPoints
-		let computePoints = parseInt(valuePoints) * parseInt(valueText) * 20
-		let totalPointsTemp = totalPoints - computePoints
-		if(totalPointsTemp <= totalPoints) {
-			this.setState({ totalPoints: totalPointsTemp, valueText })
+		let computePoints = parseInt(valuePoints) * parseInt(value) * 20
+		if(computePoints <= currentPoints) {
+			let totalPointsTemp = currentPoints - computePoints
+			if(currentPoints > 0) {
+				this.setState({ totalPoints: totalPointsTemp, valueText: value, disabled: false })
+			}
 		} else {
-			this.setState({ totalPoints: temTotalPoints, valueText })
+			this.setState({ totalPoints: temTotalPoints, valueText: value, disabled: true })
 		}
 	}
 
@@ -80,14 +101,17 @@ class GiftsDetailsFragment extends BaseMVPView {
 			valueText
 		} = this.state
 
+		let value = validate.checkedValidateNumberInput(valueAmountText)
 		let calculation
 		let currentPoints = totalPoints
 		let computePoints = parseInt(valueAmountText) * parseInt(valueText) * 20
-		let totalPointsTemp = totalPoints - computePoints
-		if(totalPointsTemp <= totalPoints) {
-			this.setState({ totalPoints: totalPointsTemp, valueAmountText, valueText })
+		if(computePoints <= currentPoints) {
+			let totalPointsTemp = currentPoints - computePoints
+			if(currentPoints > 0) {
+				this.setState({ totalPoints: totalPointsTemp, valueAmountText: value, disabled: false })
+			}
 		} else {
-			this.setState({ totalPoints: temTotalPoints, valueAmountText, valueText })
+			this.setState({ totalPoints: temTotalPoints, valueAmountText: value, disabled: true })
 		}
 	}
 
@@ -109,6 +133,9 @@ class GiftsDetailsFragment extends BaseMVPView {
 			valueText,
 			valueAmountText,
 			mode,
+			showResponseModal,
+			noticeResponse,
+			disabled,
 		} = this.state
 
 		return (
@@ -117,7 +144,10 @@ class GiftsDetailsFragment extends BaseMVPView {
 					showCheckoutModal &&
 
 					<GiftDetailsCheckoutModal
+						hasCustom = { rewardDetails && rewardDetails.hasCustom }
+						customValue = { rewardDetails && rewardDetails.customValue }
 						totalPoints = { totalPoints }
+						disabled = { disabled }
 						valueText = { valueText }
 						valueTextFunc = { (valueText, value) => {
 							this.getComputation(valueText, value)
@@ -134,18 +164,42 @@ class GiftsDetailsFragment extends BaseMVPView {
 							this.setState({
 								showCheckoutModal : false,
 								valueText : '',
-								valueAmountText : ''
+								valueAmountText : '',
+								totalPoints: temTotalPoints,
 							})
 						}
 						onSelectThis = { (list, value) => {
-							this.presenter.getGiftsList(value)
-							this.setState({
-								showCheckoutModal : false,
-								valueText : '',
-								valueAmountText : ''
-							})
+							try {
+								this.presenter.getGiftsList(value)
+								this.setState({
+									showCheckoutModal : false,
+									valueText : '',
+									valueAmountText : ''
+								})
+								store.dispatch(NotifyActions.addNotify({
+										title : 'Gifts',
+										message : 'Successfully added gifts to your checkout',
+										type : 'warning',
+										duration : 5000
+									})
+								)
+							} catch (e) {
+								console.log(e)
+							}
 						}}
-						/>
+					/>
+				}
+				{
+					showResponseModal &&
+					<NoticeResponseModal
+						noticeResponse = { noticeResponse }
+						onClose = { () => {
+							this.setState({ showResponseModal : false })
+							this.resetData()
+							history.push('/myrewards')
+							this.props.getProfileFunc()
+						}}
+					/>
 				}
 				{
 					loader ?
@@ -174,6 +228,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 						:
 							<div>
 								<GiftDetailsBannerComponent
+									history = { history }
 									totalPoints = { totalPoints }
 									showGiftCart = { () => this.setState({ showCheckoutFragment : true })}
 									tagline = { rewardDetails && rewardDetails.tagline }

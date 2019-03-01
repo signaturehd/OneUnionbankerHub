@@ -76,7 +76,7 @@ class DrawerAppBar extends Component {
       id: 14,
       name: 'My Goals & Performance',
       imageStyle : 'goals',
-      action : () => history.push('/mygoals'),
+      action : () => history.push('/mygoals/'),
     },{
       id: 17,
       name: 'Rewards & Recognition',
@@ -108,14 +108,9 @@ class DrawerAppBar extends Component {
       imageStyle : 'postemployment',
       action : () => history.push('/postemployment'),
     },{
-      id: 18,
-      name: 'Digital NEO',
-      imageStyle : 'digitalneo',
-      action : () => history.push('/neo'),
-    },{
       id: 19,
-      name: 'Talent Marketting',
-      imageStyle : 'digitalneo',
+      name: 'Squad Vacancies',
+      imageStyle : 'talentmarketing',
       action : () => history.push('/squads/workforce'),
     },{
       id: 1,

@@ -26,6 +26,9 @@ class SquadDetailsFragment extends Component {
     const {
       squadDetails,
       hideFragment,
+      applySquadFunc,
+      vacantDetails,
+      showPositionDetails
     } = this.props
 
     const {
@@ -65,15 +68,21 @@ class SquadDetailsFragment extends Component {
         <Line/>
         <br/>
         <h4 className = { 'text-align-left unionbank-color-grey font-size-25px' }>Vacancies</h4>
+        <br/>
         <div>
           {
-            squadArrayVacancies.length === 0 ?
+            vacantDetails.length === 0 ?
             <NoDataListedComponent
              text={ 'No Vacancies Listed' }
             />
             :
-            <div className = { 'grid-global-columns-x3' }>
-              <SquadDetailsComponent />
+            <div>
+              <SquadDetailsComponent
+                vacantDetails = { vacantDetails }
+                showPositionDetails = { (resp, data) => {
+                  showPositionDetails(resp, data)
+                } }
+                />
             </div>
           }
         </div>

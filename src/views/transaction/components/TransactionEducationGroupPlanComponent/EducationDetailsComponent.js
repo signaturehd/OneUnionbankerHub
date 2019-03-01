@@ -21,11 +21,11 @@ class EducationDetailsComponent extends Component {
       onClickAgreements,
      } = this.props
 
-   const transactionID = details.transactionId
-   const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
-   const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
-   const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
-   const releasingCenter = TransactionPersonalFunction.checkReleasingCenter(details.details)
+     const transactionID = details.transactionId
+     const dateFilled = TransactionPersonalFunction.checkedDateFilled(details)
+     const acccountNumber = TransactionPersonalFunction.checkedAccountNumber(details.details)
+     const referenceNumber = TransactionPersonalFunction.checkedReferenceNumber(details.details)
+     const releasingCenter = TransactionPersonalFunction.checkReleasingCenter(details.details)
 
     return (
       <div className = { 'transaction-component-details-form' }>
@@ -73,6 +73,7 @@ class EducationDetailsComponent extends Component {
             </div>
           }
             <EducationOtherDetailsComponent
+              details = { details && details }
               detailsEducation = { details && details.details }
             />
         </div>

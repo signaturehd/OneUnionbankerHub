@@ -18,20 +18,17 @@ class PensionFundsChartComponent extends Component {
   render () {
     const {
       pensionChartData,
-      array,
-      url
     } = this.props
-    let objectData = this.props.match.params.array
-    var myobj = JSON.parse(objectData);
-    let labelData = url ? myobj.label : pensionChartData && pensionChartData.label
-    let amountData = url ? myobj.value : pensionChartData && pensionChartData.amount
+
+    let labelData = pensionChartData && pensionChartData.label
+    let rateData = pensionChartData && pensionChartData.rate
 
     let data = {
       labels: labelData,
       datasets: [
         {
           borderColor: 'white',
-          label: "Contributional Chart",
+          label: "Pension Chart",
           fillColor: "white",
           strokeColor: "white",
           pointColor: "white",
@@ -39,7 +36,7 @@ class PensionFundsChartComponent extends Component {
           pointHighlightFill: "white",
           backgroundColor: "rgb(255,102,0)",
           pointHighlightStroke: "white",
-          data: amountData,
+          data: rateData,
         },
       ]
     }

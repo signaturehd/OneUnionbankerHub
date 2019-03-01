@@ -2,6 +2,7 @@ import GetPensionFundsInteractor from '../../../domain/interactor/pensionfunds/G
 import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDocumentsInteractor'
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
 import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
+import GetPensionFundsDatePaginationInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDatePaginationInteractor'
 // POST
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
@@ -11,52 +12,16 @@ import UpdatePensionContributionalInteractor from '../../../domain/interactor/pe
 
 import moment from 'moment'
 
-let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
-let amountArray = []
-let labelArray = []
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
 
-let dateMock = [
-  {
-    id: 0,
-    value : 4000,
-    date: '02/06/2019',
-  },
-  {
-    id: 1,
-    value : 300,
-    date: '03/12/2019',
-  },
-  {
-    id: 2,
-    value : 300,
-    date: '01/01/2018',
-  },
-  {
-    id: 3,
-    value : 241,
-    date: '01/12/2019',
-  },
-  {
-    id: 4,
-    value : 241,
-    date: '01/12/2017',
-  },
-  {
-    id: 5,
-    value : 1231,
-    date: '11/08/2018',
-  },
-  {
-    id: 6,
-    value : 123123,
-    date: '08/12/2016',
-  },
-  {
-    id: 7,
-    value : 12,
-    date: '08/12/2016',
-  },
-]
+let agreementData  = [], pensionData = '', pensionHistory = [], documentsData = []
+let amountArray = [], labelArray = [], pensionId = '', dateStored = []
+let fromDate = '', toDate = moment().format('YYYY-MM-DD'), variableParam = ''
+let DAILY_STRANDS = 7
+let WEEKLY_STRANDS = 4
+let MONTHLY_STRANDS = 12
+let QUARTERLY_STRANDS = 4
 
 export default class PensionFundsPresenter {
   constructor (container) {
@@ -67,6 +32,7 @@ export default class PensionFundsPresenter {
     this.addPensionFundsDocumentsInteractor = new AddPensionFundsDocumentsInteractor(container.get('HRBenefitsClient'))
     this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
     this.updatePensionContributionalInteractor = new UpdatePensionContributionalInteractor(container.get('HRBenefitsClient'))
+    this.getPensionFundsDatePaginationInteractor = new GetPensionFundsDatePaginationInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -84,10 +50,14 @@ export default class PensionFundsPresenter {
   }
 
   getPensionValidate () {
+    this.view.showCircularLoader(true)
     this.getPensionValidateInteractor.execute()
     .subscribe(data => {
+      this.view.showCircularLoader(false)
+      pensionId = data && data.id
       this.view.setPensionContributionData(data)
     }, error => {
+      this.view.showCircularLoader(false)
     })
   }
 
@@ -177,86 +147,302 @@ export default class PensionFundsPresenter {
     return isBool
   }
 
-  sortChartDate (response, type, format) {
-    var temp = {};
-    var obj = null;
-    for(var i=0; i < response.length; i++) {
-      obj=response[i];
-      if(!temp[obj.date]) {
-       temp[obj.date] = obj;
-      } else {
-       temp[obj.date].value += obj.value;
+  /* from date calendar computation of each periodic */
+
+  getDailyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract(DAILY_STRANDS, 'days').format('YYYY-MM-DD') // deduct days base on number of chart strands
+
+    return dateToday
+  }
+
+  getWeeklyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract((7 * WEEKLY_STRANDS), 'days').format('YYYY-MM-DD') // multiply 7 (week is 7 days) on number of chart strands
+
+    return dateToday
+  }
+
+  getMonthlyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract(MONTHLY_STRANDS, 'month').format('YYYY-MM-DD') // deduct months base on number of chart strands
+
+    return dateToday
+  }
+
+  getQuarterlyStartDate() {
+    let dateToday = moment()
+
+    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'month').format('YYYY-MM-DD') // multiply 3 (quarterly is every 3 months) on number of chart strands
+
+    return dateToday
+  }
+
+  checkWeeklyDateIsBetween (dateList, dateTemp, toDateCalendar, index) {
+    if(variableParam === 'week')  {
+      for (let count = 0; count < 7; count++) {
+        let tempToDate = moment(toDateCalendar).format('YYYY-MM-DD')
+        let tempDate = moment(dateTemp).format('YYYY-MM-DD')
+        if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+          return moment(dateTemp).isBetween(moment(dateList['week'+index][0]).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
+        }
+      }
+    } else if (variableParam === 'month') {
+      if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+        return moment(dateTemp).isBetween(moment(dateList).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
+      }
+    } else if (variableParam === 'quarterly') {
+      if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+        return moment(dateTemp).isBetween(moment(dateList).subtract(1, 'days').format('YYYY-MM-DD'), moment(toDateCalendar).add(1, 'days').format('YYYY-MM-DD'))
       }
     }
-    var result = [];
-    for (var prop in temp)
-        result.push(temp[prop]);
-    let sortResult
-    if(type === 'increment') {
-      sortResult = result.sort((a, b) => { return  a.date - b.date })
-    } else {
-      sortResult = result.sort((a, b) => { return  b.date - a.date })
-    }
-    let newResult = sortResult.map((resp, key) => {
-      if(format === 'YYYY') {
-        const object = {
-          date: resp.date,
-          value : resp.value,
-        }
+  }
+
+  setChartFilter (dateData) {
+    if (variableParam.toLowerCase() === 'day') { ///Daily Formatting
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
         return object
-      } else if(format === 'MMMM') {
-        const object = {
-          date: moment(resp.dateFormat).format('MMMM'),
-          value : resp.value,
-        }
-        return object
+      })
+
+      let toDateCalendarArray = []
+      let labelArray = []
+      let bidRateArray = []
+      let fDate = this.getDailyStartDate()
+
+      // Number of Strands in Chart
+      for(let i = 0; i <= DAILY_STRANDS; i++) {
+        fDate = moment(fDate).add(1, 'days')
+        let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
+        toDateCalendarArray.push(moment(toDateCalendar).format('YYYY-MM-DD'))
       }
-    })
-    return newResult
+
+      let newDateResultArray = []
+
+      // Get Average Rate of each Date
+      for(var z = 0; z < toDateCalendarArray.length; z++) {
+        let toDateCalendar = moment(toDateCalendarArray[z]).format('YYYY-MM-DD')
+        let totalDates = 0 // total count of data that added
+        let totalRate = 0.0
+
+        for (const i in response) {
+          const dateTemp = moment(response[i].date).format('YYYY-MM-DD')
+            /* compare the date if is between the iterated date range, if between, add the rate to the total */
+          if(toDateCalendar !== null || toDateCalendar !== undefined || dateTemp !== null || dateTemp !== undefined) {
+            if(dateTemp.toString() === toDateCalendar.toString()) {
+              totalRate += response[i].rate
+              totalDates ++
+            }
+          }
+        }
+
+      newDateResultArray.push({
+        applicableNavDate: moment(toDateCalendarArray[z]).format('YYYY-MM-DD'),
+        bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
+        totalRate: totalRate,
+        totalDates: totalDates,
+        description : ''
+        })
+      }
+
+      newDateResultArray.map((resp, key) => {
+        labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
+        bidRateArray.push(resp.bidRate)
+      })
+
+      this.view.setChartPensionData(labelArray, bidRateArray)
+
+    } else if (variableParam.toLowerCase() === 'week') { ///Weekly Formatting
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        return object
+      })
+
+      let toDateCalendarArray = {
+        week0: [],  week1: [], week2: [],  week3: [],
+      }
+      let labelArray = []
+      let bidRateArray = []
+      let fDate = this.getWeeklyStartDate()
+
+      // Number of Strands in Chart
+      for (let i = 0; i < WEEKLY_STRANDS; i++) {
+        for (let z = 0; z < 7; z++) {
+          fDate = moment(fDate).add(1, 'days')
+          let toDateCalendar = moment(fDate).clone().subtract(1, 'days')
+          toDateCalendarArray['week'+i].push(moment(toDateCalendar).format('YYYY-MM-DD'))
+        }
+      }
+      let newDateResultArray = []
+
+      // Get Average Rate of each Date
+      for (let i = 0; i < Object.keys(toDateCalendarArray).length; i++) {
+        const toDateCalendar = moment(toDateCalendarArray['week'+i][7-1]).format('YYYY-MM-DD')
+        let totalDates = 0 // total count of data that added
+        let totalRate = 0.0
+        for (let c in response) {
+          const toDateCalendar = moment(toDateCalendarArray['week'+i][7-1]).format('YYYY-MM-DD')
+          const dateTemp = moment(response[c].date).format('YYYY-MM-DD')
+
+          /* compare the date if is between the iterated date range, if between, add the rate to the total */
+          if(this.checkWeeklyDateIsBetween(toDateCalendarArray, dateTemp, toDateCalendar, i)) {
+            totalRate += response[c].rate
+            totalDates ++
+          }
+        }
+
+        newDateResultArray.push({
+          applicableNavDate: moment(toDateCalendar).format('YYYY-MM-DD'),
+          bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
+          totalRate: totalRate,
+          totalDates: totalDates,
+          description : ''
+        })
+      }
+
+      newDateResultArray.map((resp, key) => {
+        labelArray.push('('+ moment(resp.applicableNavDate).format('MMM DD') + ') ' + `${'Week'+(key+1)}`)
+        bidRateArray.push(resp.bidRate)
+      })
+
+      this.view.setChartPensionData(labelArray, bidRateArray)
+
+    } else if(variableParam.toLowerCase() === 'month') { ///Monthly Formatting
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': x.applicableNavDate,  'rate': x.bidRate}
+        return object
+      })
+
+      let labelArray = []
+      let bidRateArray = []
+      let toDateCalendar = this.getMonthlyStartDate()
+      let newDateResultArray = []
+      let dateRanges = []
+
+      for(let i = 0; i < MONTHLY_STRANDS; i++) {
+        toDateCalendar = moment(toDateCalendar).add(1, 'month')
+        let fromDateCalendar = moment(toDateCalendar).clone().subtract(1, 'month')
+
+        dateRanges.push({
+          fromDate: moment(fromDateCalendar).format('YYYY-MM-DD'),
+          toDate: moment(toDateCalendar).format('YYYY-MM-DD'),
+        })
+      }
+
+      for (let i = 0; i < dateRanges.length; i ++) {
+        let totalDates = 0 // total count of data that added
+        let totalRate = 0.0
+
+        for (let count in response) {
+          const tempFromDate = moment(dateRanges[i].fromDate).format('YYYY-MM-DD')
+          const tempToDate = moment(dateRanges[i].toDate).format('YYYY-MM-DD')
+          const tempDate = moment(response[count].date).format('YYYY-MM-DD')
+          if(this.checkWeeklyDateIsBetween(tempFromDate, tempDate, tempToDate, i)) {
+            totalRate += response[count].rate
+            totalDates ++
+          }
+        }
+
+        newDateResultArray.push({
+          applicableNavDate: moment(dateRanges[i].toDate).format('MMM'),
+          bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
+          totalRate: totalRate,
+          totalDates: totalDates,
+          description : ''
+        })
+      }
+
+      newDateResultArray.map((resp, key) => {
+        labelArray.push(resp.applicableNavDate)
+        bidRateArray.push(resp.bidRate)
+      })
+
+      this.view.setChartPensionData(labelArray, bidRateArray)
+
+    } else if(variableParam.toLowerCase() === 'quarterly') {///Quarterly Formatting
+      let response = dateData && dateData.map((x,i)=> {
+        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        return object
+      })
+
+      let labelArray = []
+      let bidRateArray = []
+      let toDateCalendar = this.getQuarterlyStartDate()
+      let newDateResultArray = []
+      let quarterRanges = []
+
+      for(let i = 0; i < QUARTERLY_STRANDS; i++) {
+        toDateCalendar = moment(toDateCalendar).add(3, 'month')
+        let fromDateCalendar = moment(toDateCalendar).clone().subtract(3, 'month')
+
+        quarterRanges.push({
+          id: `Q${i+1}`,
+          fromDate: moment(fromDateCalendar).format('YYYY-MM-DD'),
+          toDate: moment(toDateCalendar).format('YYYY-MM-DD'),
+        })
+      }
+
+      for (let i = 0; i < Object.keys(quarterRanges).length; i ++) {
+        let totalDates = 0 // total count of data that added
+        let totalRate = 0.0
+
+        try {
+          for (let count in response) {
+            const tempFromDate = moment(quarterRanges[i].fromDate).format('YYYY-MM-DD')
+            const tempToDate = moment(quarterRanges[i].toDate).format('YYYY-MM-DD')
+            const tempDate = moment(response[count].date).format('YYYY-MM-DD')
+            if(this.checkWeeklyDateIsBetween(tempFromDate, tempDate, tempToDate, i)) {
+              totalRate += response[count].rate
+              totalDates ++
+            }
+          }
+        } catch (e) {
+          console.log(e)
+        }
+
+        newDateResultArray.push({
+          applicableNavDate: quarterRanges[i].id,
+          bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
+          totalRate: totalRate,
+          totalDates: totalDates,
+          description : ''
+        })
+      }
+
+      newDateResultArray.map((resp, key) => {
+       labelArray.push(resp.applicableNavDate)
+       bidRateArray.push(resp.bidRate)
+      })
+
+      this.view.setChartPensionData(labelArray, bidRateArray)
+    }
   }
 
   setUnitSummary(variable){
     amountArray = []
     labelArray = []
-    if(variable.toLowerCase() === 'month'){
-      let response = dateMock.map((x,i)=> {
-        const object = {'date': parseInt(moment(x.date).format('MM')), dateFormat: x.date, 'value': x.value}
-        return object
-      })
+    variableParam = variable
+    if (variable.toLowerCase() === 'day') {
+      let test = this.getDailyStartDate()
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if (variable.toLowerCase() === 'week') {
+      let test = this.getWeeklyStartDate()
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if(variable.toLowerCase() === 'month') {
+      let test = this.getMonthlyStartDate()
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if(variable.toLowerCase() === 'quarterly'){
+      let test = this.getQuarterlyStartDate()
+      fromDate = test
+      this.getPensionFundsDatePagination()
+    } else if(variable.toLowerCase() === 'year') {
 
-      let newResult = this.sortChartDate(response, 'increment', 'MMMM');
-
-      newResult.map((resp, key) => {
-        labelArray.push(resp.date)
-        amountArray.push(resp.value)
-      })
-
-      this.view.setChartPensionData(labelArray, amountArray)
-   } else if(variable.toLowerCase() === 'quarterly'){
-     let response = dateMock.map((x,i)=> {
-       const object = { 'date': moment(x.date).quarter(), 'value': x.value}
-       return object
-     })
-
-     let newResult = this.sortChartDate(response, 'increment', 'YYYY');
-      newResult.map((resp, key) => {
-        labelArray.push('Q'+resp.date)
-        amountArray.push(resp.value)
-      })
-     this.view.setChartPensionData(labelArray, amountArray)
-   } else if(variable.toLowerCase() === 'year') {
-     let response = dateMock.map((x,i)=> {
-       const object = {'date': parseInt(moment(x.date).format('YYYY')), 'value': x.value}
-       return object
-     })
-
-     let newResult = this.sortChartDate(response, 'decrement', 'YYYY');
-
-     newResult.map((resp, key) => {
-       labelArray.push(resp.date)
-       amountArray.push(resp.value)
-     })
-     this.view.setChartPensionData(labelArray, amountArray)
     }
   }
 
@@ -271,7 +457,19 @@ export default class PensionFundsPresenter {
     })
   }
 
+  getPensionFundsDatePagination () {
+    this.view.showCircularLoader(false)
+    this.getPensionFundsDatePaginationInteractor.execute(fromDate, toDate)
+    .subscribe(data => {
+      this.setChartFilter(data)
+      this.view.showCircularLoader(false)
+    }, error => {
+      this.view.showCircularLoader(false)
+    })
+  }
+
   getPensionFundsDocuments () {
+    documentsData = []
     this.view.showCircularLoader(true)
     this.getPensionFundsDocumentsInteractor.execute()
     .subscribe(data => {
@@ -308,7 +506,14 @@ export default class PensionFundsPresenter {
       this.view.showCircularLoader(true)
       this.addPensionFundsDocumentsInteractor.execute()
       .subscribe(data => {
-        this.view.noticeResponse(data)
+          store.dispatch(NotifyActions.addNotify({
+            title : 'Retirement Pension Period',
+            message : data.message,
+            type: 'warning',
+            duration: 5000,
+          })
+        )
+        this.view.openContributionData()
         this.view.showCircularLoader(false)
       }, error => {
         this.view.showCircularLoader(false)
@@ -325,25 +530,27 @@ export default class PensionFundsPresenter {
       this.view.noticeResponse(data)
       this.getPensionFunds()
       this.getPensionValidate()
-      this.setUnitSummary('year')
-      this.getPensionFundsDocuments()
+      this.setUnitSummary('day')
+      this.view.resetData()
       this.view.showCircularLoader(false)
     }, error => {
+      this.view.resetData()
       this.view.showCircularLoader(false)
     })
   }
 
   updatePensionContributional (amount, code) {
     this.view.showCircularLoader(true)
-    this.updatePensionContributionalInteractor.execute(amount, code)
+    this.updatePensionContributionalInteractor.execute(amount, code, pensionId)
     .subscribe (data => {
       this.view.noticeResponse(data)
       this.getPensionFunds()
       this.getPensionValidate()
-      this.setUnitSummary('year')
-      this.getPensionFundsDocuments()
+      this.setUnitSummary('day')
+      this.view.resetData()
       this.view.showCircularLoader(false)
     }, error => {
+      this.view.resetData()
       this.view.showCircularLoader(false)
     })
   }

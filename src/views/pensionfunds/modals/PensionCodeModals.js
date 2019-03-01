@@ -15,6 +15,7 @@ class PensionCodeModals extends Component {
       codeText,
       codeTextFunc,
       submitCodeFunc,
+      agreementBool,
       cancelCodeFunc,
     } = this.props
 
@@ -23,7 +24,8 @@ class PensionCodeModals extends Component {
         <GenericInput
           value = { codeText }
           text = { 'Enter your five digit activation code' }
-          type = { 'text' }
+          type = { 'password' }
+          maxLength = { 5 }
           errorMessage = { '' }
           onChange = { (e) => codeTextFunc(e.target.value) }
           />
@@ -35,7 +37,7 @@ class PensionCodeModals extends Component {
             />
           <GenericButton
             className = { 'profile-button-small' }
-            text = { 'Submit' }
+            text = { agreementBool === false || agreementBool === null ? 'Update' : 'Submit' }
             onClick = { () => submitCodeFunc() }
             />
         </center>

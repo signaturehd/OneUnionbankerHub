@@ -45,7 +45,7 @@
 
 .grid-filter {
   display: grid;
-  grid-template-columns: .40fr .02fr 1fr;
+  grid-template-columns: 1fr .02fr 1fr;
 }
 
 .grid-tabs {
@@ -96,6 +96,11 @@
   border-top: 1px solid #546E7A;
   border-left: 1px solid #546E7A;
   border-right: 1px solid #546E7A;
+}
+
+.mygoal-tabs {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
 }
 
 @media screen and (max-width : 768px) {

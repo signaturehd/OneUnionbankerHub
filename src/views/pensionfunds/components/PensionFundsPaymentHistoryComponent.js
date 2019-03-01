@@ -17,7 +17,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
 
   render () {
     const {
-      pensionFundsData,
+      pensionContributionHistoryData,
       changePaymentFunc
     } = this.props
 
@@ -28,8 +28,8 @@ class PensionFundsPaymentHistoryComponent extends Component {
         <br/>
       <div>
         {
-          pensionFundsData &&
-          pensionFundsData.paymentHistory.map((resp, key) =>
+          pensionContributionHistoryData &&
+          pensionContributionHistoryData.contributionHistory.map((resp, key) =>
             <div
               key = { key }
               className = { 'funds-component-history-grid funds-border-history' }>
@@ -38,13 +38,13 @@ class PensionFundsPaymentHistoryComponent extends Component {
                    margin: 'auto 5px'
                  }}
                 className = { 'unionbank-color ' }>
-                  <div className = { `funds-history-circle${ resp.isChecked ? 'active' : '' }` }></div>
+                  <div className = { `funds-history-circle${ key === 0 ? 'active' : '' }` }></div>
               </div>
               <Card className = { 'funds-component-card-details-grid' }
-              onClick = { () => changePaymentFunc(resp.isChecked , resp.id)  }>
+              onClick = { () => changePaymentFunc(false , resp.id)  }>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
-                    { moment(resp.datePayment).format('MMM DD, YYYY') }
+                    { resp.date }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
                     Type of plan/ package
@@ -52,7 +52,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
-                   &#8369; { format(resp.totalInvestment) }
+                   &#8369; { format(resp.amount.toFixed(2)) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
                     Total Investment
@@ -60,7 +60,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
-                    &#8369; { format(resp.totalInvestment) }
+                    &#8369; { format(resp.unitBought.toFixed(2)) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
                     Total Return

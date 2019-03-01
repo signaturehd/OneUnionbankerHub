@@ -15,7 +15,8 @@ class GiftDetailsBannerComponent extends Component {
       longtitude,
       showGiftCart,
       logo,
-      totalPoints
+      totalPoints,
+      history
     } = this.props
 
     const locationLength = locations && locations.length
@@ -25,6 +26,13 @@ class GiftDetailsBannerComponent extends Component {
         style = {{
           backgroundImage: `url(${staticBanner})`,
         }}>
+        <GenericButton
+          className = { 'global-button cursor-pointer profile-button-small' }
+          text = { 'back' }
+          onClick = { () => {
+            history.push('/gifts')
+          } }
+        />
         <div className = { 'giftdetails-container' }>
           <div
             id = { 'giftdetails-info' }

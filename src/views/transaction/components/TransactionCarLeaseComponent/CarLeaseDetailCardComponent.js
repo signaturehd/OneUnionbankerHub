@@ -21,7 +21,13 @@ class CarLeaseDetailCardComponent extends Component {
       onClickAgreements,
       onConfirmationFunc,
       setFileCarlease,
-      fileCarLease
+      setEquityFileCarlease,
+      equityAttachments,
+      fileCarLease,
+      attachments,
+      onUploadAttachments,
+      loader,
+      onConfirmationReleaseFunc
      } = this.props
 
    const transactionID = details.transactionId
@@ -76,9 +82,14 @@ class CarLeaseDetailCardComponent extends Component {
             </div>
           }
           <CarLeaseOtherDetailsComponent
+            attachments = { attachments }
             details = { details }
+            loader = { loader }
+            onUploadAttachments = { (id, file) => onUploadAttachments(id, file) }
             fileCarlease = { fileCarLease }
             transactionID = { transactionID }
+            setEquityFileCarlease = { (file) => setEquityFileCarlease(file) }
+            equityAttachments = { equityAttachments }
             onConfirmationReleaseFunc = { (resp) => onConfirmationReleaseFunc(resp)}
             setFileCarlease = { (resp) => setFileCarlease(resp) }
             onConfirmation = { (id, status) => onConfirmationFunc(id, status) }

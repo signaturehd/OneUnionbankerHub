@@ -42,6 +42,9 @@ export default class TransactionPersonalDetailsPresenter {
 
     this.uploadEventsBudgetReceiptInteractor =
       new UploadEventsBudgetReceiptInteractor(container.get('HRBenefitsClient'))
+
+    this.postNewReleasingInteractor =
+      new PostNewReleasingInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -52,6 +55,8 @@ export default class TransactionPersonalDetailsPresenter {
     transactionId,
     file
   ) {
+    try {
+      this.view.carleaseLoader(true)
       this.postNewPaymentInteractor.execute(leasesConfirmpaymentParam(
         transactionId,
         file
@@ -59,10 +64,15 @@ export default class TransactionPersonalDetailsPresenter {
     )
     .subscribe(
       data => {
+        this.view.carleaseLoader(false)
         this.view.showMessageSuccessConfirm(data && data.message)
       }, error => {
+        this.view.carleaseLoader(false)
       }
     )
+  } catch (e) {
+    console.log(e)
+  }
   }
 
   getTransactionDetails (id) {
@@ -130,26 +140,29 @@ export default class TransactionPersonalDetailsPresenter {
   }
 
   addCarLeaseConfirmation (transactionId, isConfirm) {
+    this.view.carleaseLoader(true)
     this.postNewCarConfirmationInteractor.execute(leasesCarConfirm(
       transactionId,
       isConfirm
     ))
     .subscribe(
       data => {
+        this.view.carleaseLoader(false)
         this.view.showMessageSuccessConfirm(data && data.message)
       }, error => {
+        this.view.carleaseLoader(false)
       }
     )
   }
 
   addCarLeaseReleasing (transactionId) {
-    this.view.showCircularLoader()
+    this.view.carleaseLoader(true)
     this.postNewReleasingInteractor.execute(leasesCarLeaseReleasingParam(transactionId))
     .subscribe(data => {
-      this.view.hideCircularLoader()
+      this.view.carleaseLoader(false)
       this.view.showMessageSuccessConfirm(data.message)
     }, error => {
-      this.view.hideCircularLoader()
+      this.view.carleaseLoader(false)
     })
   }
 
