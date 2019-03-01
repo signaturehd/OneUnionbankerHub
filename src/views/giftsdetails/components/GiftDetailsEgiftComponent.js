@@ -27,7 +27,7 @@ class GiftDetailsEgiftComponent extends Component {
               denominations && denominations.map((resp, key) =>
                 this.checkIdIfLast(resp.id, denominations[denominations.length - 1].id) ?
                 <li
-                  onClick = { () => onCheckOutModal(true, resp) }
+                  onClick = { () => onCheckOutModal(true, resp, true) }
                   key = { key }
                   className = { 'giftdetails-denominations' }>
                   <img
@@ -43,7 +43,7 @@ class GiftDetailsEgiftComponent extends Component {
                 </li>
                 :
                 <li
-                  onClick = { () => onCheckOutModal(true, resp) }
+                  onClick = { () => onCheckOutModal(true, resp, false) }
                   key = { key }
                   className = { 'giftdetails-denominations' }>
                   <img

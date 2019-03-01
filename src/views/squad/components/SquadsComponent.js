@@ -16,7 +16,7 @@ class SquadsComponent extends Component {
       squads,
       getVacancies
     } = this.props
-    
+
     return (
       <div>
       <h4 className = { 'unionbank-color-grey font-size-25px font-weight-bold padding-10px' }>Squad Vacancy</h4>
@@ -26,14 +26,17 @@ class SquadsComponent extends Component {
         {
           squads && squads.map((squad, key) => (
             <Card
-              className = { 'squads-card cursor-pointer' }
+              className = { 'cursor-pointer' }
               onClick = { () => getVacancies(null, squad.id, squad) }>
               <div
                 className = { 'squad-title' }>
-                <h4 className = { 'font-weight-900' }>{ squad.squad.name }</h4>
-                <h4 className = { 'unionbank-color-grey font-size-14px' }>{ squad.tribe.leader.fullName }</h4>
-                <br/>
-                <p className = { 'unionbank-color-grey font-size-14px font-weight-900' }>{ squad.squad.mission }</p>
+                <h4 className = { 'font-weight-900 squad-title-card' }>{ squad.squad.name }</h4>
+                <div
+                  className = { 'squads-card' }>
+                  <h4 className = { 'unionbank-color-grey font-size-14px' }>{ squad.tribe.leader.fullName }</h4>
+                  <br/>
+                  <p className = { 'unionbank-color-grey font-size-14px font-weight-900' }>{ squad.squad.mission }</p>
+                </div>
               </div>
               <div className = { 'squad-description' }>
               </div>

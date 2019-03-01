@@ -5,7 +5,7 @@
 
 .squads-workforce-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
   grid-gap: 20px;
 }
 
@@ -94,4 +94,70 @@
   display: grid;
   grid-template-columns: 1fr .5fr;
   column-gap: 2%;
+}
+
+.squads-squad-status-active {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  color: #ff8a00;
+  margin: auto;
+}
+
+.squads-squad-status-active0 {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  color: #ff8a00;
+  margin: auto;
+}
+
+.squads-squad-status-inactive {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin: auto;
+  color: #ff8a00;
+}
+
+.squads-squad-status-inactive0 {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin: auto;
+  color: #ff8a00;
+}
+
+.squads-squad-status-active1 {
+  background-color: #ff8a00;
+  padding: 5px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  margin: auto;
+  color: #fff;
+}
+
+.squads-squad-status-inactive1 {
+  background-color: #ff8a00;
+  padding: 5px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin: auto;
+  color: #fff;
+}
+
+.grid-status-squads {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-status-squads {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }

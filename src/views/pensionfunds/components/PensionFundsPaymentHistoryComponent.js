@@ -23,9 +23,6 @@ class PensionFundsPaymentHistoryComponent extends Component {
 
     return (
       <div>
-        <br/>
-        <h4 className = { 'letter-spacing-1 font-weight-lighter font-size-26px' }>Payment History</h4>
-        <br/>
       <div>
         {
           pensionContributionHistoryData &&

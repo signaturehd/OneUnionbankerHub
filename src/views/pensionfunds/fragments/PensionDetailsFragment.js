@@ -70,16 +70,21 @@ class PensionDetailsFragment extends Component {
             pensionChartData = { pensionChartData }
           /><br/>
         </div>
-        <div>
-        {
-          pensionContributionHistoryData && pensionContributionHistoryData ?
-          <PensionFundsPaymentHistoryComponent
-            pensionContributionHistoryData = { pensionContributionHistoryData }
-            changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
-            :
-          <NoDataListedComponent
-            text = { ' No Pension Data' }/>
-        }
+          <div>
+          <div>
+            <br/>
+            <h4 className = { 'letter-spacing-1 font-weight-lighter font-size-26px' }>Payment History</h4>
+            <br/>
+          </div>
+          {
+            pensionContributionHistoryData && pensionContributionHistoryData ?
+            <PensionFundsPaymentHistoryComponent
+              pensionContributionHistoryData = { pensionContributionHistoryData }
+              changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
+              :
+            <NoDataListedComponent
+              text = { ' No Pension Data' }/>
+          }
         </div>
       </div>
     )
