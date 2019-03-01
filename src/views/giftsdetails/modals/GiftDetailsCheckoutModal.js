@@ -55,10 +55,10 @@ class GiftDetailsCheckoutModal extends Component {
           <div className = { 'giftdetails-modal-grid-quantiy' }>
             <div>
               {
-                hasCustom && !hasCustom &&
+                !hasCustom &&
 
                 <h4 className = { 'font-size-14px font-weight-600 unionbank-color-grey' }>
-                  { selectedRewardsArray && selectedRewardsArray.value }
+                  P { selectedRewardsArray && selectedRewardsArray.value }
                 </h4>
               }
               {
