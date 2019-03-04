@@ -135,12 +135,6 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   reloadPage () {
-    this.setState({ loader : true })
-
-    let self = this
-    setTimout(() => {
-      self.setState({ loader : false })
-    }, 2000)
   }
 
   render () {
