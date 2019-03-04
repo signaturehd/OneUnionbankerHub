@@ -134,6 +134,15 @@ class PensionFundsFragment extends BaseMVPView {
     this.setState({ showContributionModal : true })
   }
 
+  reloadPage () {
+    this.setState({ loader : true })
+
+    let self = this
+    setTimout(() => {
+      self.setState({ loader : false })
+    }, 2000)
+  }
+
   render () {
     const { agreementBool, getProfileFunc } = this.props
     const {
@@ -170,6 +179,7 @@ class PensionFundsFragment extends BaseMVPView {
               this.setState({
                 showNoticeResponseModal : false,
               })
+              this.reloadPage()
             } }
           />
         }
