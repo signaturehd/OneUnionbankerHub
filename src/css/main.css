@@ -6,10 +6,11 @@
 
 @font-face {
   font-family: 'Gotham Light';
-  src: url('../fonts/Gotham-Light.eot');
-  src : url('../fonts/Gotham-Light.eot?#iefix') format('embedded-opentype'),
-  url('../fonts/Gotham-Light.woff') format('woff'),
-  url('../fonts/Gotham-Light.ttf') format('truetype');
+  src: local('GothamLight');
+  src :  url('../fonts/GothamLight.eot') format('embedded-opentype'),
+  url('../fonts/GothamLight.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/GothamLight.woff') format('woff'),
+  url('../fonts/GothamLight.ttf') format('truetype');
 }
 
 body {

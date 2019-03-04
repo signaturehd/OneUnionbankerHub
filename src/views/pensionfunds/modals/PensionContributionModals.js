@@ -85,9 +85,12 @@ class PensionContributionModals extends Component {
               <br/>
               <br/>
               <br/>
-              <h4
-                onClick = { () => this.setState({ viewMessage : true }) }
-                className = { 'font-weight-bold font-size-14px cursor-pointer unionbank-color-grey' }>DISCONTINUE CONTRIBUTION</h4>
+              {
+                isBool && isBool === true &&
+                <h4
+                  onClick = { () => this.setState({ viewMessage : true }) }
+                  className = { 'font-weight-bold font-size-14px cursor-pointer unionbank-color-grey' }>DISCONTINUE CONTRIBUTION</h4>
+              }
             </center>
           </div>
         }
