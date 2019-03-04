@@ -97,12 +97,15 @@ class PensionFundsFragment extends BaseMVPView {
         pensionContributionHistoryData &&
         pensionContributionHistoryData.contribution &&
         pensionContributionHistoryData.contribution.amount ?
-        pensionContributionHistoryData.contribution.amount : 0.0
+        pensionContributionHistoryData.contribution.amount : 100
     })
   }
 
   resetData () {
-    this.setState({ codeText: '' })
+    this.setState({
+      codeText: '',
+      cancelOption : false,
+    })
   }
 
   codeTextFunc (codeText) {
@@ -175,7 +178,11 @@ class PensionFundsFragment extends BaseMVPView {
             codeTextFunc = { (codeText) => this.codeTextFunc(codeText) }
             codeText = { codeText }
             cancelCodeFunc = { () => {
-              this.setState({ showCodeModal : false, showContributionModal: true, codeText: '' })
+              this.setState({
+                showCodeModal : false,
+                showContributionModal: true,
+                cancelOption: false,
+                codeText: '' })
               this.presenter.setDocumentsCheckerPresenter(true,id)
             }}
           />
@@ -198,7 +205,10 @@ class PensionFundsFragment extends BaseMVPView {
                pensionContributionHistoryData.contribution &&
                pensionContributionHistoryData.contribution.amount ?
                pensionContributionHistoryData.contribution.amount : 100 })
-             this.setState({ showContributionModal : false })
+             this.setState({
+               showContributionModal : false,
+               cancelOption: false,
+             })
             }}
           />
         }
