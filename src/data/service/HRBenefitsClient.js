@@ -1691,8 +1691,8 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
-  cancelContributionalAmount (token) {
-    return this.service.cancelContributionalAmount(token)
+  cancelContributionalAmount (token, code) {
+    return this.service.cancelContributionalAmount(token, code)
     .pipe(ServiceErrorOperator())
   }
 

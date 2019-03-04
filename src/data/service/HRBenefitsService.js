@@ -2548,8 +2548,11 @@ export default class HRBenefitsService {
     })
   }
 
-  cancelContributionalAmount (token) {
-    return this.rootClient.post('appian/pension/v1/cancel', null, {
+  cancelContributionalAmount (token, code) {
+    const objectParam = {
+      code : code
+    }
+    return this.rootClient.post('appian/pension/v1/cancel', objectParam, {
       headers : { token }
     })
   }

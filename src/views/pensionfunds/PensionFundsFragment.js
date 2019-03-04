@@ -29,6 +29,7 @@ class PensionFundsFragment extends BaseMVPView {
   constructor (props) {
     super (props)
     this.state = {
+      cancelOption : false,
       loader : false,
       stepperStatus: 1,
       showCodeModal: false,
@@ -134,6 +135,7 @@ class PensionFundsFragment extends BaseMVPView {
       showNoticeResponseModal,
       pensionContributionData,
       pensionContributionHistoryData,
+      cancelOption
     } = this.state
 
     return (
@@ -157,9 +159,17 @@ class PensionFundsFragment extends BaseMVPView {
             agreementBool = { agreementBool }
             submitCodeFunc = { () => {
               if(agreementBool && agreementBool === null || agreementBool && agreementBool === false) {
-                this.presenter.updatePensionContributional(amountText, codeText)
+                if(cancelOption) {
+                  this.presenter.cancelContributionalAmount(codeText)
+                } else {
+                  this.presenter.updatePensionContributional(amountText, codeText)
+                }
               } else {
-                this.presenter.addPensionContributional(amountText, codeText)
+                if(cancelOption) {
+                  this.presenter.cancelContributionalAmount(codeText)
+                } else {
+                  this.presenter.addPensionContributional(amountText, codeText)
+                }
               }
             } }
             codeTextFunc = { (codeText) => this.codeTextFunc(codeText) }
@@ -180,8 +190,7 @@ class PensionFundsFragment extends BaseMVPView {
               this.checkContributionAmount()
             }}
             onCancelOption = { () => {
-              this.presenter.cancelContributionalAmount()
-              this.setState({ showContributionModal: false })
+              this.setState({ showContributionModal: false, showCodeModal : true, cancelOption : true })
             } }
             cancelCodeFunc = { () => {
              this.setState({ amountText :

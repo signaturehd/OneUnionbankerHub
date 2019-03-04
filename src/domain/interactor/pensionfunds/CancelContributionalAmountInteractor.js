@@ -3,7 +3,7 @@ export default class CancelContributionalAmountInteractor {
     this.client = client
   }
 
-  execute () {
-    return this.client.cancelContributionalAmount(this.client.getToken())
+  execute (code) {
+    return this.client.cancelContributionalAmount(this.client.getToken(), code)
   }
 }

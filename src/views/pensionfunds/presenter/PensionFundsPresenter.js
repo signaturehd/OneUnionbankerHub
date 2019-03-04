@@ -459,14 +459,20 @@ export default class PensionFundsPresenter {
     })
   }
 
-  cancelContributionalAmount () {
-    this.view.showCircularLoader(true)
-    this.cancelContributionalAmountInteractor.execute()
-    .subscribe(data => {
-      this.view.showCircularLoader(false)
-    }, error => {
-      this.view.showCircularLoader(false)
-    })
+  cancelContributionalAmount (codeText) {
+    try {
+      this.view.showCircularLoader(true)
+      this.cancelContributionalAmountInteractor.execute(codeText)
+      .subscribe(data => {
+        this.view.resetData()
+        this.view.showCircularLoader(false)
+      }, error => {
+        this.view.resetData()
+        this.view.showCircularLoader(false)
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   getPensionFundsDatePagination () {
