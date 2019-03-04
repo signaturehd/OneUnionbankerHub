@@ -17,6 +17,9 @@ import NoticeResponse from '../notice/NoticeResponseModal'
 
 import * as functions from './functions/PensionFundFunction'
 
+import { NotifyActions } from '../../actions'
+import store from '../../store'
+
 import {
   CircularLoader,
   Modal,
@@ -51,15 +54,24 @@ class PensionFundsFragment extends BaseMVPView {
     this.presenter.setUnitSummary('day')
   }
 
-  onSlide = (event, value) => {
-   this.setState({ amountText: event })
-  }
-
-  checkContributionAmount () {
-    this.setState({
-      showCodeModal : true,
-      showContributionModal : false,
-    })
+  checkContributionAmount (e) {
+    if(`${this.state.amountText}` >= 100) {
+      this.setState({
+        showCodeModal : true,
+        showContributionModal : false,
+      })
+    } else {
+      try {
+        store.dispatch(NotifyActions.addNotify({
+          title: 'Contribution Amount',
+          message : 'Amount shoult not less than 100',
+          type: 'success',
+          duration: 5000
+        }))
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 
   noticeResponse (noticeResponse) {
@@ -192,7 +204,9 @@ class PensionFundsFragment extends BaseMVPView {
           <PensionContributionModals
             amountText = { amountText }
             isBool = { agreementBool }
-            amountTextFunc = { (e,value) => this.onSlide(e,value) }
+            amountTextFunc = { (e,value) => {
+              this.setState({ amountText: e })
+            } }
             continueCodeFunc = { () => {
               this.checkContributionAmount()
             }}
@@ -268,7 +282,6 @@ class PensionFundsFragment extends BaseMVPView {
                         this.presenter.addPensionFundsDocuments()
                         :
                         this.setState({ stepperStatus })
-
                       }
                       statusCodeReturnFunc = { (stepperStatus) => this.setState({ stepperStatus }) }
                       stepperStatus = { stepperStatus }

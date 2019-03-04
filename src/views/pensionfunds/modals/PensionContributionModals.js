@@ -61,12 +61,16 @@ class PensionContributionModals extends Component {
           :
           <div>
             <div>
-              <center className = { 'unionbank-color font-size-16px' }>{format(amountText )}</center>
+              <GenericInput
+                text = { 'Slide Contribution Amount' }
+                value = { amountText }
+                onChange = { (e) => amountTextFunc(e.target.value, null) }
+                />
               <SliderComponent
                 onChangeValue = { (amount, e) => {
                   amountTextFunc(amount, e)} }
                 min = { 100 }
-                text = { 'Slide Contribution Amount' }
+                text = { '' }
                 max = { 5000 }
               />
             </div>
