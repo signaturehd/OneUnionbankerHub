@@ -2569,7 +2569,7 @@ export default class HRBenefitsService {
   addPensionContributional (token, amount, code) {
     const hasAgreedObject = {
       amount : amount,
-      pinCode: code,
+      code: code,
     }
     return this.rootClient.post('appian/pension/v1/availments', hasAgreedObject, {
       headers : { token }
