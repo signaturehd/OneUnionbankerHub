@@ -7,8 +7,8 @@
 @font-face {
   font-family: 'Gotham Light';
   src: local('GothamLight');
-  src :  url('../fonts/GothamLight.eot') format('embedded-opentype'),
-  url('../fonts/GothamLight.eot?#iefix') format('embedded-opentype'),
+  src :  url('../fonts/GothamLight.eot');
+  src : url('../fonts/GothamLight.eot?#iefix') format('embedded-opentype'),
   url('../fonts/GothamLight.woff') format('woff'),
   url('../fonts/GothamLight.ttf') format('truetype');
 }
