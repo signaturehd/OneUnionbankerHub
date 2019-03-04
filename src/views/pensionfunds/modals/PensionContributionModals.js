@@ -32,6 +32,7 @@ class PensionContributionModals extends Component {
 
     return (
       <Modal
+        isDismisable = { true }
         onClose = { () => cancelCodeFunc() }
         >
         {
@@ -72,7 +73,7 @@ class PensionContributionModals extends Component {
             <center>
               <GenericButton
                 className = { 'profile-button-small global-button cursor-pointer' }
-                text = { `${ isBool && isBool !== true ? 'Update' : 'Continue' }` }
+                text = { `${ isBool && isBool === true ? 'Update' : 'Continue' }` }
                 onClick = { () => {
                   continueCodeFunc()
                 } }

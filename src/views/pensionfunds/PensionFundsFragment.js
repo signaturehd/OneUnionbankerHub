@@ -158,7 +158,7 @@ class PensionFundsFragment extends BaseMVPView {
           <PensionCodeModals
             agreementBool = { agreementBool }
             submitCodeFunc = { () => {
-              if(agreementBool && agreementBool === null || agreementBool && agreementBool === false) {
+              if(agreementBool && agreementBool === true) {
                 if(cancelOption) {
                   this.presenter.cancelContributionalAmount(codeText)
                 } else {

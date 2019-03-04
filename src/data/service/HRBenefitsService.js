@@ -2571,7 +2571,7 @@ export default class HRBenefitsService {
       amount : amount,
       pinCode: code,
     }
-    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+    return this.rootClient.post('appian/pension/v1/availments', hasAgreedObject, {
       headers : { token }
     })
   }
@@ -2581,7 +2581,7 @@ export default class HRBenefitsService {
       amount : amount,
       code: code,
     }
-    return this.rootClient.put(`appian/pension/v1/contribution/${id}`, hasAgreedObject, {
+    return this.rootClient.put(`appian/pension/v1/contribution/${id ? id : null}`, hasAgreedObject, {
       headers : { token }
     })
   }
