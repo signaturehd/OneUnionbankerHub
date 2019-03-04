@@ -26,6 +26,7 @@
     "react-date-picker": "^6.10.1",
     "react-datepicker": "^1.5.0",
     "react-dom": "^16.6.3",
+    "react-dropzone": "^9.0.0",
     "react-exif-orientation-img": "^0.1.5",
     "react-icons": "^2.2.7",
     "react-image-file": "^0.3.0",

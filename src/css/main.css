@@ -5,10 +5,12 @@
 }
 
 @font-face {
-  font-family: 'Gotham Light' ;
-  src: url('../fonts/GothamLight.ttf') ;
-  src: local('GothamLight'),
-  url('../fonts/GothamLight.ttf') format('truetype');
+  font-family: 'Gotham Light';
+  src: local('GothamLight');
+  src: url('../fonts/Gotham-Light.eot'),
+  url('../fonts/Gotham-Light.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/Gotham-Light.woff') format('woff'),
+  url('../fonts/Gotham-Light.ttf') format('truetype');
 }
 
 body {
