@@ -8,6 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "@akanass/rx-http-request": "^2.7.1",
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "axios": "^0.17.1",
     "chart.js": "^2.7.3",
     "clean-webpack-plugin": "^0.1.18",
@@ -15,6 +16,7 @@
     "material-ui": "^0.20.0",
     "material-ui-next": "^1.0.0-beta.32",
     "material-ui-responsive-drawer": "^1.19.4",
+    "material-ui-slider": "^3.0.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "path": "^0.12.7",

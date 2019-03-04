@@ -2548,6 +2548,12 @@ export default class HRBenefitsService {
     })
   }
 
+  cancelContributionalAmount (token) {
+    return this.rootClient.post('appian/pension/v1/cancel', null, {
+      headers : { token }
+    })
+  }
+
   addPensionFundsDocuments (token) {
     const hasAgreedObject = {
       hasAgreed : "1",

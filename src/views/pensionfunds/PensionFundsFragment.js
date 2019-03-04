@@ -36,7 +36,7 @@ class PensionFundsFragment extends BaseMVPView {
       showContributionModal: false,
       isPincode: false,
       tabsId : 'day',
-      amountText: '',
+      amountText: 100,
       codeText: '',
       showNoticeResponseModal : false,
       agreementBool: true,
@@ -48,6 +48,17 @@ class PensionFundsFragment extends BaseMVPView {
     this.presenter.getPensionValidate()
     this.presenter.getPensionFundsDocuments()
     this.presenter.setUnitSummary('day')
+  }
+
+  onSlide = (event, value) => {
+   this.setState({ amountText: event })
+  }
+
+  checkContributionAmount () {
+    this.setState({
+      showCodeModal : true,
+      showContributionModal : false,
+    })
   }
 
   noticeResponse (noticeResponse) {
@@ -154,7 +165,7 @@ class PensionFundsFragment extends BaseMVPView {
             codeTextFunc = { (codeText) => this.codeTextFunc(codeText) }
             codeText = { codeText }
             cancelCodeFunc = { () => {
-              this.setState({ showCodeModal : false, codeText: '' })
+              this.setState({ showCodeModal : false, showContributionModal: true, codeText: '' })
               this.presenter.setDocumentsCheckerPresenter(true,id)
             }}
           />
@@ -164,19 +175,20 @@ class PensionFundsFragment extends BaseMVPView {
           <PensionContributionModals
             amountText = { amountText }
             isBool = { agreementBool }
-            amountTextFunc = { (amountText) => this.setState({ amountText }) }
+            amountTextFunc = { (e,value) => this.onSlide(e,value) }
             continueCodeFunc = { () => {
-              this.setState({
-                showCodeModal : true,
-                showContributionModal : false,
-              })
+              this.checkContributionAmount()
             }}
+            onCancelOption = { () => {
+              this.presenter.cancelContributionalAmount()
+              this.setState({ showContributionModal: false })
+            } }
             cancelCodeFunc = { () => {
              this.setState({ amountText :
                pensionContributionHistoryData &&
                pensionContributionHistoryData.contribution &&
                pensionContributionHistoryData.contribution.amount ?
-               pensionContributionHistoryData.contribution.amount : 0.0 })
+               pensionContributionHistoryData.contribution.amount : 100 })
              this.setState({ showContributionModal : false })
             }}
           />
@@ -209,7 +221,8 @@ class PensionFundsFragment extends BaseMVPView {
                 <div></div>
                 <div>
                 {
-                  agreementBool === null || agreementBool === false ?
+                  agreementBool &&
+                  agreementBool === true ?
                   <PensionDetailsFragment
                     pensionContributionHistoryData = { pensionContributionHistoryData }
                     pensionContributionData = { pensionContributionData }
