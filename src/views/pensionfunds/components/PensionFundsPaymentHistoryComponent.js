@@ -51,7 +51,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                    &#8369; { format(resp.amount.toFixed(2)) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
-                    Total Return
+                    Total Contribution
                   </h4>
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
@@ -59,7 +59,7 @@ class PensionFundsPaymentHistoryComponent extends Component {
                     &#8369; { resp.unitBought.toFixed(6) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
-                    Total Investment
+                    Unit Purchased
                   </h4>
                 </div>
               </Card>
