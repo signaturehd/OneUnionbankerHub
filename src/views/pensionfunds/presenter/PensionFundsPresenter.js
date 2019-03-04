@@ -464,6 +464,7 @@ export default class PensionFundsPresenter {
       this.view.showCircularLoader(true)
       this.cancelContributionalAmountInteractor.execute(codeText)
       .subscribe(data => {
+        this.view.noticeResponse(data)
         this.view.resetData()
         this.view.showCircularLoader(false)
       }, error => {

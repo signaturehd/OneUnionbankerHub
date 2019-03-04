@@ -75,7 +75,13 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   noticeResponse (noticeResponse) {
-    this.setState({ noticeResponse, showNoticeResponseModal: true, showCodeModal: false })
+    this.setState({
+      noticeResponse,
+      showNoticeResponseModal: true,
+      showCodeModal: false,
+      showContributionModal: false,
+      codeText : '',
+      cancelOption: false })
   }
 
   showCircularLoader (loader) {
@@ -116,7 +122,6 @@ class PensionFundsFragment extends BaseMVPView {
   resetData () {
     this.setState({
       codeText: '',
-      cancelOption : false,
     })
   }
 
