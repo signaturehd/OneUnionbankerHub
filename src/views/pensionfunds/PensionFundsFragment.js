@@ -55,7 +55,7 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   checkContributionAmount (e) {
-    if(`${this.state.amountText}` >= 100) {
+    if(`${this.state.amountText}` >= 100 && `${this.state.amountText}` <= 5000) {
       this.setState({
         showCodeModal : true,
         showContributionModal : false,
@@ -63,8 +63,8 @@ class PensionFundsFragment extends BaseMVPView {
     } else {
       try {
         store.dispatch(NotifyActions.addNotify({
-          title: 'Contribution Amount',
-          message : 'Amount shoult not less than 100',
+          title: 'Amount Validation',
+          message : 'Contributional Amount should not less than 100 or exceeded to 5000',
           type: 'success',
           duration: 5000
         }))
