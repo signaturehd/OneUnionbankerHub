@@ -1,0 +1,11 @@
+*****UAT Version (Updated v 8.3.2)*************
+
+v 8.3.2 
+
+
+Fixed description in otp guide.
+Fixed font and background issue.
+
+=
+
+*****Production Version (v 8.0.6)******
