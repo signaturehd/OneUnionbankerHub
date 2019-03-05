@@ -2548,6 +2548,15 @@ export default class HRBenefitsService {
     })
   }
 
+  cancelContributionalAmount (token, code) {
+    const objectParam = {
+      code : code
+    }
+    return this.rootClient.post('appian/pension/v1/cancel', objectParam, {
+      headers : { token }
+    })
+  }
+
   addPensionFundsDocuments (token) {
     const hasAgreedObject = {
       hasAgreed : "1",
@@ -2560,9 +2569,9 @@ export default class HRBenefitsService {
   addPensionContributional (token, amount, code) {
     const hasAgreedObject = {
       amount : amount,
-      pinCode: code,
+      code: code,
     }
-    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+    return this.rootClient.post('appian/pension/v1/availments', hasAgreedObject, {
       headers : { token }
     })
   }
@@ -2572,7 +2581,7 @@ export default class HRBenefitsService {
       amount : amount,
       code: code,
     }
-    return this.rootClient.put(`appian/pension/v1/contribution/${id}`, hasAgreedObject, {
+    return this.rootClient.put(`appian/pension/v1/contribution/${id ? id : null}`, hasAgreedObject, {
       headers : { token }
     })
   }

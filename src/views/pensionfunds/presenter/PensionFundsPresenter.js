@@ -6,6 +6,7 @@ import GetPensionFundsDatePaginationInteractor from '../../../domain/interactor/
 // POST
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
+import CancelContributionalAmountInteractor from '../../../domain/interactor/pensionfunds/CancelContributionalAmountInteractor'
 
 // PUT
 import UpdatePensionContributionalInteractor from '../../../domain/interactor/pensionfunds/UpdatePensionContributionalInteractor'
@@ -33,6 +34,7 @@ export default class PensionFundsPresenter {
     this.addPensionContributionalInteractor = new AddPensionContributionalInteractor(container.get('HRBenefitsClient'))
     this.updatePensionContributionalInteractor = new UpdatePensionContributionalInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsDatePaginationInteractor = new GetPensionFundsDatePaginationInteractor(container.get('HRBenefitsClient'))
+    this.cancelContributionalAmountInteractor = new CancelContributionalAmountInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -457,6 +459,23 @@ export default class PensionFundsPresenter {
     })
   }
 
+  cancelContributionalAmount (codeText) {
+    try {
+      this.view.showCircularLoader(true)
+      this.cancelContributionalAmountInteractor.execute(codeText)
+      .subscribe(data => {
+        this.view.noticeResponse(data)
+        this.view.resetData()
+        this.view.showCircularLoader(false)
+      }, error => {
+        this.view.resetData()
+        this.view.showCircularLoader(false)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   getPensionFundsDatePagination () {
     this.view.showCircularLoader(false)
     this.getPensionFundsDatePaginationInteractor.execute(fromDate, toDate)
@@ -473,8 +492,8 @@ export default class PensionFundsPresenter {
     this.view.showCircularLoader(true)
     this.getPensionFundsDocumentsInteractor.execute()
     .subscribe(data => {
+      store.dispatch(NotifyActions.resetNotify())
       this.view.showCircularLoader(false)
-
       let newData = [...documentsData]
       newData.push({
         id: 1,
@@ -506,13 +525,7 @@ export default class PensionFundsPresenter {
       this.view.showCircularLoader(true)
       this.addPensionFundsDocumentsInteractor.execute()
       .subscribe(data => {
-          store.dispatch(NotifyActions.addNotify({
-            title : 'Retirement Pension Period',
-            message : data.message,
-            type: 'warning',
-            duration: 5000,
-          })
-        )
+        store.dispatch(NotifyActions.resetNotify())
         this.view.openContributionData()
         this.view.showCircularLoader(false)
       }, error => {

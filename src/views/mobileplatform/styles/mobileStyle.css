@@ -1,22 +1,32 @@
-@font-face {
-  font-family: 'Gotham Book';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Gotham Book'), url('GOTHAMBOOK.woff') format('woff') !important;
-}
 
+/*
 @font-face {
   font-family:'Gotham Bold';
   src: url('./GothamBold.ttf');
   src: local('Gotham-Bold'),
   url('./GothamBold.ttf') format('truetype');
+} */
+
+@font-face {
+  font-family: 'Gotham Book';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Gotham Book');
+  src: url('./Gotham-Book.eot');
+  src : url('./Gotham-Book.eot?#iefix') format('embedded-opentype'),
+  url('./Gotham-Book.ttf') format('truetype'),
+  url('./Gotham-Book.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Gotham Pro';
+  font-family: 'Gotham Bold';
   font-style: normal;
   font-weight: normal;
-  src: local('Gotham Pro'), url('GothamPro-Bold.woff') format('woff') !important;
+  src: local('Gotham Bold');
+  src: url('./Gotham-Bold.eot');
+  src : url('./Gotham-Bold.eot?#iefix') format('embedded-opentype'),
+  url('./Gotham-Bold.ttf') format('truetype'),
+  url('./Gotham-Bold.woff') format('woff');
 }
 
 .oneUhub-for-you-font {
