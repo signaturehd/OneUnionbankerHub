@@ -538,9 +538,11 @@ class NavigationView extends BaseMVPView {
                     agreementBool = { agreementBool }
                     getProfileFunc = { () => this.presenter.getLibraries() }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
-                <Route path = '/neo' render = { props =>
-                  <NewEmployeeHireFragment { ...props }
-                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  {
+                    // <Route path = '/neo' render = { props =>
+                    //   <NewEmployeeHireFragment { ...props }
+                    //     setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  }
                 <Route path = '/squads/' render = { props =>
                   <SquadsTabsFragment { ...props }
                     profile = { profile }
