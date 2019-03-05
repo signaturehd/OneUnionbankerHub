@@ -25,14 +25,21 @@ class NewEmployeeHireNextVideosComponent extends Component {
           backgroundColor: 'rgb(70,70,70)',
           borderRadius: '0px',
         }}>
-        <video
-          height = { 'unset' }
-          width= { '100%' }
-          controls>
-          <source src={ 'http://techslides.com/demos/sample-videos/small.mp4' } type="video/mp4" />
-          <source src={ 'http://techslides.com/demos/sample-videos/small.mp4' } type="video/ogg" />
-          No Selected Video
-        </video>
+        <div style = {{
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr auto',
+        }}>
+          <div></div>
+          <div>
+            <iframe
+              width={ '100%' }
+              height={ '500px' }
+              src={ 'https://www.youtube.com/embed/V2AqToWyv5s' }
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div></div>
+        </div>
         <br/>
         <br/>
         <div

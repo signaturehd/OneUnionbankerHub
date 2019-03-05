@@ -98,6 +98,11 @@ class DrawerAppBar extends Component {
       imageStyle : 'future',
       action : () => history.push('/pensionfunds'),
     },{
+      id: 20,
+      name: 'NEO',
+      imageStyle : 'neo',
+      action : () => history.push('/neo'),
+    },{
       id: 11,
       name: 'Pre-Employment',
       imageStyle : 'preemployment',
