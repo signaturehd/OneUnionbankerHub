@@ -1,6 +1,6 @@
 import LogoutInteractor from '../../../domain/interactor/user/LogoutInteractor'
 import GetLibrariesInteractor from '../../../domain/interactor/user/GetLibrariesInteractor'
-import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
+// import GetProfileInteractor from '../../../domain/interactor/user/GetProfileInteractor'
 // import GetWizardInteractor from '../../../domain/interactor/user/GetWizardInteractor'
 // import SetWizardInteractor from '../../../domain/interactor/user/SetWizardInteractor'
 import RelogInInteractor from '../../../domain/interactor/user/RelogInInteractor'
@@ -17,7 +17,7 @@ import store from '../../../store'
 export default class NavigationPresenter {
   constructor (container) {
     this.logoutInteractor = new LogoutInteractor(container.get('HRBenefitsClient'))
-    this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
+    //this.getProfileInteractor = new GetProfileInteractor(container.get('HRBenefitsClient'))
     this.getLibrariesInteractor = new GetLibrariesInteractor(container.get('HRBenefitsClient'))
     // this.getWizardInteractor = new GetWizardInteractor(container.get('HRBenefitsClient'))
     // this.setWizardInteractor = new SetWizardInteractor(container.get('HRBenefitsClient'))
@@ -44,15 +44,17 @@ export default class NavigationPresenter {
   }
 
   getLibraries () {
-    this.view.showLoading()
+    this.view.showCircularLoader()
     this.getLibrariesInteractor.execute()
       .subscribe(resp => {
-          this.view.showProfile(resp)
-          this.view.showPinIsValid(resp.hasPIN)
-          this.view.isHasCOC(resp.hasCOC)
-          this.view.hideLoading()
+        this.view.hideCircularLoader()
+        this.view.showAgreementStatus(resp)
+        this.view.showProfile(resp)
+        this.view.showPinIsValid(resp.hasPIN)
+        this.view.isHasCOC(resp.hasCOC)
       }, e => {
-        this.view.hideLoading()
+        this.view.hideCircularLoader()
+        this.view.showAgreementStatus(e.message.pensionAgreement)
         this.view.showProfile(e.message)
         this.view.showPinIsValid(e.message.hasPIN)
         this.view.isHasCOC(e.message.hasCOC)
@@ -100,4 +102,5 @@ export default class NavigationPresenter {
       this.getPreEmploymentStatusInteractor.execute()
     }
   }
+
 }

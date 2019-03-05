@@ -27,6 +27,78 @@ class EducationGroupAidFormCardComponent extends Component {
     return parts[parts.length - 1]
   }
 
+  checkDateValidation () {
+    const {
+      allowsManagerCheck,
+      premiumDuration
+    } = this.props
+
+    if(allowsManagerCheck) {
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+
+  checkComputedMessage () {
+    const {
+      premiumDuration,
+      premiumMonths,
+      allowsManagerCheck,
+      effectivityDate,
+    } = this.props
+
+    let managersCheckRecurring = `Notes: The subsidy will be released monthly through a Manager's Check. This will be recurring until ${moment(effectivityDate).add(premiumMonths, 'months').format('LL')}.`
+    let checkRecurring = `Notes: The subsidy will be credited to your nominated account every month until ${moment(effectivityDate).add(premiumMonths, 'months').format('LL')}`
+    let checkOneTimePayment = `Notes: The full amount indicated above will be credited to your nominated account.`
+    let managersCheckOneTimePayment = `Notes: The full subsidy indicated above will be released through Manager's Check.`
+
+    if(allowsManagerCheck) {
+      //If Recurring
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return managersCheckOneTimePayment
+      } else {
+        return managersCheckRecurring
+      }
+    } else {
+      //If One Time Payment
+      if(premiumDuration.toLowerCase() === 'annually') {
+        return checkRecurring
+      } else {
+        return checkOneTimePayment
+      }
+    }
+  }
+
+  computedAmount () {
+    const {
+      desiredAmount,
+      premiumDuration,
+    } = this.props
+    let amount
+
+    if(premiumDuration.toLowerCase() === 'monthly') {
+      return desiredAmount
+    } else if (premiumDuration.toLowerCase() === 'quarterly') {
+      amount = desiredAmount * 3
+      return amount
+    } else if (premiumDuration.toLowerCase() === 'semi annually') {
+      amount = desiredAmount * 6
+      return amount
+    } else if (premiumDuration.toLowerCase() === 'annually') {
+      amount = desiredAmount * 12
+      return amount
+    }
+  }
+
   render () {
     const {
       dependentName,
@@ -42,6 +114,7 @@ class EducationGroupAidFormCardComponent extends Component {
       effectivityDate,
       effectivityDateText,
       showDependentFunc,
+      effectiveDate,
       companyFunc,
       desiredAmountFunc,
       orDate,
@@ -59,7 +132,6 @@ class EducationGroupAidFormCardComponent extends Component {
       showEditSubmitButton,
       setAttachmentArrayFunc
     } = this.props
-
 
     return (
       <div className = {'educG-container'}>
@@ -99,22 +171,25 @@ class EducationGroupAidFormCardComponent extends Component {
                 errorMessage = { DOPErrorMessage }
                 type = { 'text' }/>
               <DatePicker
-                readOnly
-                selected = { effectivityDate && moment(effectivityDate)}
                 value = { effectivityDateText }
-                maxDate = { moment() }
-                text = { 'Effectivity Date/Coverage of Insurance' }
-                disabled = { showEditSubmitButton }
-                onChange = { (e) => dateFunc(e) }
+                selected = { effectivityDate && moment(effectivityDate)}
+                text = { 'Effectivity Date' }
+                disabled = { premiumDuration ? showEditSubmitButton : true }
+                errorMessage = { premiumDuration ? '':'Please select the dates covered by your premium payment.' }
+                onChange = { (e) => dateFunc(e, premiumMonths) }
               />
-              <GenericInput
-                value = { dependentMonths }
-                text = { 'Maturity Date' }
-                disabled = { showEditSubmitButton }
-                type = { 'text' }/>
+              {
+                effectivityDate &&
+                <div>
+                  <h4 className = { 'font-size-14px font-weight-lighter' }>
+                    { this.checkComputedMessage() }
+                  </h4>
+                  <br/>
+                  <br/>
+                </div>
+              }
               <DatePicker
-                readOnly
-                maxDate = { moment() }
+                maxDate = { moment(effectiveDate) }
                 selected = { orDate && moment(orDate) }
                 text = { 'Date of Official Receipt' }
                 disabled = { showEditSubmitButton }

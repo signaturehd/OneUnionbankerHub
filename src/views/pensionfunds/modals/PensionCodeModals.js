@@ -14,24 +14,30 @@ class PensionCodeModals extends Component {
     const {
       codeText,
       codeTextFunc,
-      submitCodeFunc
+      submitCodeFunc,
+      agreementBool,
+      cancelCodeFunc,
     } = this.props
 
     return (
       <Modal>
         <GenericInput
           value = { codeText }
-          text = { 'Enter your Four digit activation code' }
-          type = { 'text' }
+          text = { 'Enter your five digit activation code' }
+          type = { 'password' }
+          maxLength = { 5 }
           errorMessage = { '' }
           onChange = { (e) => codeTextFunc(e.target.value) }
           />
-        <h4 className={ 'font-weight-lighter text-align-center font-size-10px' }>We have sent an SMS including activation code to +63XXXXXXXX</h4>
-        <br/>
-        <center>
+        <center className = { 'grid-global' }>
           <GenericButton
             className = { 'profile-button-small' }
-            text = { 'Submit' }
+            text = { 'Cancel' }
+            onClick = { () => cancelCodeFunc() }
+            />
+          <GenericButton
+            className = { 'profile-button-small' }
+            text = { agreementBool && agreementBool === true ? 'Update' : 'Submit' }
             onClick = { () => submitCodeFunc() }
             />
         </center>

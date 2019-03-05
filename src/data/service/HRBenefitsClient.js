@@ -177,6 +177,16 @@ export default class HRBenefitsClient {
     return this.sessionProvider.getPinCode()
   }
 
+  // Set New Hire Employee
+
+  getNEOStatus () {
+    return this.sessionProvider.getNEOStatus()
+  }
+
+  setNEOStatus (status) {
+    this.sessionProvider.setNEOStatus(status)
+  }
+
   setPreEmploymentStatus (preEmploymentStatus) {
     this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
   }
@@ -1647,6 +1657,16 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getGoalGroupList (token) {
+    return this.service.getGoalGroupList(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getGroupDetailsById (token, id) {
+    return this.service.getGroupDetailsById(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {
@@ -1671,13 +1691,84 @@ export default class HRBenefitsClient {
     .pipe(ServiceErrorOperator())
   }
 
+  cancelContributionalAmount (token, code) {
+    return this.service.cancelContributionalAmount(token, code)
+    .pipe(ServiceErrorOperator())
+  }
+
   getPensionFundsDocuments (token) {
     return this.service.getPensionFundsDocuments (token)
     .pipe(ServiceErrorOperator())
   }
 
+  addPensionFundsDocuments (token) {
+    return this.service.addPensionFundsDocuments (token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addPensionContributional (token, amount, code) {
+    return this.service.addPensionContributional (token, amount, code)
+    .pipe(ServiceErrorOperator())
+  }
+
+  updatePensionContributional (token, amount, code, id) {
+    return this.service.updatePensionContributional (token, amount, code, id)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsHistory (token) {
+    return this.service.getPensionFundsHistory (token)
+    .pipe(ServiceErrorOperator())
+  }
+
   getPensionValidate (token) {
     return this.service.getPensionValidate(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
+    // const objectParam = {
+    //   limit : 100,
+    //   totalRecords: 1,
+    //   page: 1,
+    //   records : [
+    //     {
+    //       id: 0,
+    //       applicableNavDate: '2019-01-04',
+    //       description: '',
+    //       bidRate: 11.0
+    //     },
+    //     {
+    //       id: 1,
+    //       applicableNavDate: '2019-02-03',
+    //       description: '',
+    //       bidRate: 20.0
+    //     },
+    //     {
+    //       id: 2,
+    //       applicableNavDate: '2019-02-24',
+    //       description: '',
+    //       bidRate: 5.0
+    //     },
+    //     {
+    //       id: 3,
+    //       applicableNavDate: '2019-02-22',
+    //       description: '',
+    //       bidRate: 10.0
+    //     },
+    //     {
+    //       id: 4,
+    //       applicableNavDate: '2019-02-18',
+    //       description: '',
+    //       bidRate: 14.0
+    //     },
+    //   ]
+    // }
+    // return Observable.create(observer => {
+    //   observer.next(objectParam)
+    //   observer.complete()
+    // })
+    return this.service.getPensionFundsDatePagination(token, limit, start, fromDate, toDate)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1697,6 +1788,21 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getRewardGiftsDetails (token, id) {
+    return this.service.getRewardGiftsDetails(token, id)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getRewardGifts (token) {
+    return this.service.getRewardGifts(token)
+    .pipe(ServiceErrorOperator())
+  }
+
+  addRewardGiftsDenominations (token, merchant, mode) {
+    return this.service.addRewardGiftsDenominations (token, merchant, mode)
+    .pipe(ServiceErrorOperator())
+  }
+
   submitAwards (token, objectParam) {
     return this.service.submitAwards(token, objectParam)
     .pipe(ServiceErrorOperator())
@@ -1704,6 +1810,11 @@ export default class HRBenefitsClient {
 
   getEligibleInRewards (token, type, string) {
     return this.service.getEligibleInRewards(token, type, string)
+    .pipe(ServiceErrorOperator())
+  }
+
+  getGiftOrderDetails (token, refNo) {
+    return this.service.getGiftOrderDetails(token, refNo)
     .pipe(ServiceErrorOperator())
   }
 
@@ -1732,4 +1843,26 @@ export default class HRBenefitsClient {
       })
     )
   }
+
+  //Squads and Workforce
+  getSquads (token, squadId, page) {
+    return this.service.getSquads(token, squadId, page)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getVacancies (token, positionId, squadId, pageNumber) {
+    return this.service.getVacancies(token, positionId, squadId, pageNumber)
+      .pipe(ServiceErrorOperator())
+  }
+
+  submitSquads (token, positionId) {
+    return this.service.submitSquads(token, positionId)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getStatusSquadApplication (token, isActive) {
+    return this.service.getStatusSquadApplication(token, isActive)
+      .pipe(ServiceErrorOperator())
+  }
+
 }

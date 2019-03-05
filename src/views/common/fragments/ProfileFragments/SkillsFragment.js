@@ -15,13 +15,24 @@ class SkillsFragment extends Component {
 
   constructor (props) {
     super(props)
+    this.state = {
+      index : 3,
+      viewMoreText: 'view more, skills',
+    }
   }
 
   render () {
     const {
+      index,
+      viewMoreText
+    } = this.state
+
+    const {
       profileSkills,
       onClick,
     }=this.props
+
+    const isVisible = (profileSkills && profileSkills.length > 4) ? '' : 'hide'
 
     return (
       <Card className={ 'profile-common-card' }>
@@ -31,24 +42,43 @@ class SkillsFragment extends Component {
         <br/>
         {
           profileSkills ?
-            profileSkills.map((skills, key)=>
-              <div
-                key={ key }
-                className={ 'components-view' }>
-                <div>
-                  <img
-                    className={ 'components-image' }
-                    key={ key }
-                    src={ defaultImage }/>
+          <div>
+            {
+              profileSkills.slice(0, index).map((skills, key)=>
+                <div
+                  key={ key }
+                  className={ 'components-view' }>
+                  <div>
+                    <img
+                      className={ 'components-image' }
+                      key={ key }
+                      src={ defaultImage }/>
+                  </div>
+                  <div>
+                    <h2>{ `Name: ${ skills.name}` }</h2>
+                    <h2>{ `Level: ${skills.level}` }</h2>
+                  </div>
                 </div>
-                <div>
-                  <h2>{ `Name: ${ skills.name}` }</h2>
-                  <h2>{ `Level: ${skills.level}` }</h2>
-                </div>
-              </div>
-            )
-            :
-            <center><h3>No Information Available</h3></center>
+              )
+            }
+            <button
+              type = { 'button' }
+              className = { `viewmore tooltip ${isVisible}` }
+              onClick = {
+                () => {
+                  if(index === profileSkills.length)
+                    this.setState({ index : 3, viewMoreText : 'view less, skills' })
+                  else
+                    this.setState({ index : profileSkills.length, viewMoreText : 'view more, skills' })
+                }
+              }>
+              <img src={ require('../../../../images/icons/horizontal.png') } />
+              <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+            </button>
+          </div>
+
+          :
+          <center><h3>No Information Available</h3></center>
         }
       </Card>
     )

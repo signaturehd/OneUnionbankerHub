@@ -674,12 +674,12 @@ export default class HRBenefitsService {
     const formData = new FormData()
     const leasesConfirmpaymentObject = {
       transactionId : leasesConfirmpaymentParam.transactionId,
-      uuid : Math.floor(Math.random()*90000) + 10000
     }
     leasesConfirmpaymentParam.file.map((resp, key) =>
-      formData.append(file.name.replace('/', '-'), file.file)
+      formData.append(resp.name.replace('/', '-'), resp.file)
     )
-    formData.append(body, JSON.stringify(leasesConfirmpaymentObject))
+    formData.append('uuid', Math.floor(Math.random()*90000) + 10000)
+    formData.append('body', JSON.stringify(leasesConfirmpaymentObject))
     return this.apiClient.post('v1/leases/car/payment', formData, {
       headers: { token }
     })
@@ -2055,6 +2055,8 @@ export default class HRBenefitsService {
      term: laptopLeaseParam.terms,
      estimatedCost : laptopLeaseParam.estimatedAmount,
      vendor: laptopLeaseParam.vendor,
+     brand: laptopLeaseParam.brand,
+     model: laptopLeaseParam.model,
      or: {
        number : laptopLeaseParam.orNumber,
        date: laptopLeaseParam.orDate
@@ -2480,6 +2482,18 @@ export default class HRBenefitsService {
     })
   }
 
+  getGoalGroupList (token) {
+    return this.apiClient.get('v1/goals/groups', {
+      headers : { token }
+    })
+  }
+
+  getGroupDetailsById (token, id) {
+    return this.apiClient.get(`v1/goals/groups/${ id }`, {
+      headers : { token }
+    })
+  }
+
   // Pay For Skills
 
   getPaySkills (token) {
@@ -2529,13 +2543,51 @@ export default class HRBenefitsService {
   /* Pension Funds */
 
   getPensionFundsDocuments (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('appian/pension/v1/agreements', {
+      headers : { token }
+    })
+  }
+
+  cancelContributionalAmount (token, code) {
+    const objectParam = {
+      code : code
+    }
+    return this.rootClient.post('appian/pension/v1/cancel', objectParam, {
+      headers : { token }
+    })
+  }
+
+  addPensionFundsDocuments (token) {
+    const hasAgreedObject = {
+      hasAgreed : "1",
+    }
+    return this.rootClient.post('appian/pension/v1/agreements', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
+  addPensionContributional (token, amount, code) {
+    const hasAgreedObject = {
+      amount : amount,
+      code: code,
+    }
+    return this.rootClient.post('appian/pension/v1/availments', hasAgreedObject, {
+      headers : { token }
+    })
+  }
+
+  updatePensionContributional (token, amount, code, id) {
+    const hasAgreedObject = {
+      amount : amount,
+      code: code,
+    }
+    return this.rootClient.put(`appian/pension/v1/contribution/${id ? id : null}`, hasAgreedObject, {
       headers : { token }
     })
   }
 
   getPensionFunds (token) {
-    return this.apiClient.get('v1/phension', {
+    return this.rootClient.get('/appian/pension/v1/investments', {
       headers : { token }
     })
   }
@@ -2553,7 +2605,13 @@ export default class HRBenefitsService {
   }
 
   getPensionValidate (token) {
-    return this.apiClient.get('v1/eligibility ', {
+    return this.rootClient.get('appian/pension/v1', {
+      headers : { token }
+    })
+  }
+
+  getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
+    return this.rootClient.get(`finacle/v1/uitf/products/navpu?fromDate=${fromDate}&page=1&toDate=${toDate}&limit=${limit}`, {
       headers : { token }
     })
   }
@@ -2577,6 +2635,24 @@ export default class HRBenefitsService {
     })
   }
 
+  getRewardGiftsDetails (token, id) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants/${ id }`, {
+      headers : { token }
+    })
+  }
+
+  addRewardGiftsDenominations (token, merchants, mode) {
+    return this.apiClient.post(`v1/rewards/redeem?mode=${mode}`, merchants, {
+      headers : { token }
+    })
+  }
+
+  getRewardGifts (token) {
+    return this.rootClient.get(`hr/giftaway/v1/merchants`, {
+      headers : { token }
+    })
+  }
+
   submitAwards (token, objectParam) {
     return this.apiClient.post(`v1/rewards`, objectParam.body, {
       headers : { token }
@@ -2585,6 +2661,12 @@ export default class HRBenefitsService {
 
   getEligibleInRewards (token, type, string) {
     return this.apiClient.get(`v1/rewards/candidates?awardType=${type}&keyword=${ string }`, {
+      headers : { token }
+    })
+  }
+
+  getGiftOrderDetails (token, refNo) {
+    return this.rootClient.get(`hr/giftaway/v1/orders?referenceNo=${refNo}`, {
       headers : { token }
     })
   }
@@ -2605,5 +2687,30 @@ export default class HRBenefitsService {
     })
   }
 
+  // Squad and Workforce
+  getSquads (token, squadId, page) {
+    return this.apiClient.get(`v1/goals/squad?page=${page}`, {
+      headers: { token }
+    })
+  }
 
+  getVacancies (token, positionId, squadId, pageNumber) {
+    return this.apiClient.get(`v1/goals/vacancies?goalType=squad&squadId=${squadId}`, {
+      headers: { token }
+    })
+  }
+
+  submitSquads (token, positionId) {
+    return this.apiClient.post('v1/goals/vacancies/submit', {
+      positionId : positionId.id
+    }, {
+      headers: { token }
+    })
+  }
+
+  getStatusSquadApplication (token, isActive) {
+    return this.apiClient.get(`v1/goals/squad/applications?status=${ isActive }`, {
+      headers : { token }
+    })
+  }
 }

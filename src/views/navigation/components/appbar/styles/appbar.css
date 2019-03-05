@@ -263,6 +263,11 @@
   background-position: center;
 }
 
+.appbar-talentmarketing-icon {
+  background-image: url('../../../../../images/icons/icons8-physics-64.png');
+  background-position: center;
+}
+
 .appbar-background-menu {
   background-image: url('../../../../../images/mobileview/Orange Wallpaper Without Label.png');
   width: 100%;
@@ -330,7 +335,7 @@
   text-decoration: none;
   font-size: 14px;
   text-align: left;
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 .appbar-list a:hover{

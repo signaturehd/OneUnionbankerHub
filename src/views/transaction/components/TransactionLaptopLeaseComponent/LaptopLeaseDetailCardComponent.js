@@ -43,7 +43,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             </div>
           </div>
           {
-            acccountNumber &&
+            acccountNumber !== '' &&
             <div className = { 'transaction-icons-details-grid' }>
               <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
               <div>
@@ -55,7 +55,7 @@ class LaptopLeaseDetailCardComponent extends Component {
             </div>
           }
           {
-            releasingCenter &&
+            releasingCenter !== '' &&
             <div className = { 'transaction-icons-details-grid' }>
               <span className = { ' transaction-card-icon-settings global-icons-accountNumber' }></span>
               <div>
@@ -67,6 +67,19 @@ class LaptopLeaseDetailCardComponent extends Component {
             </div>
           }
           <br/>
+
+          {
+            referenceNumber &&
+            <div className = { 'transaction-icons-details-grid' }>
+              <h4 className = { 'unionbank-color-grey font-size-12px' }>Ref#: </h4>
+              <div>
+                <h2>
+                  { referenceNumber }
+                </h2>
+                <br/>
+              </div>
+            </div>
+          }
           <LaptopLeaseOtherDetailCardComponent
             detailsLaptopLease = { details.details }
           />

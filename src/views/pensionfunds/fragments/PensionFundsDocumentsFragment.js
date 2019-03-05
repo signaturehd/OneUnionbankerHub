@@ -36,7 +36,7 @@ class PensionFundsDocumentsFragment extends Component {
       stepperStatus,
       statusCodeFunc,
       statusCodeReturnFunc,
-      changeCheckedFunc
+      changeCheckedFunc,
     } = this.props
 
     return (
@@ -44,10 +44,6 @@ class PensionFundsDocumentsFragment extends Component {
         <div></div>
         <div className = { 'funds-grid-header-content' }>
           <div>
-            <h4 className = { 'font-weight-bold font-size-30px letter-spacing-1' }>Retirement Pension Period</h4>
-            <br/>
-            <h4 className = { 'font-size-16px font-weight-ligther letter-spacing-1' }>Secure your future.</h4>
-            <br/>
           </div>
           <div className = { `funds-documents-background${ stepperStatus }` }>
             <div>
@@ -57,7 +53,7 @@ class PensionFundsDocumentsFragment extends Component {
                 <div>
                   {
                     pensionFundsDocumentsData &&
-                    pensionFundsDocumentsData.forms.map((resp) =>
+                    pensionFundsDocumentsData.map((resp) =>
                       resp.id === stepperStatus &&
                       <PensionDocumentsComponent
                         id = { resp.id }
@@ -67,7 +63,7 @@ class PensionFundsDocumentsFragment extends Component {
                         stepperStatus = { stepperStatus }
                         isChecked = { resp.isChecked }
                         changeCheckedFunc = { (e, e1) => changeCheckedFunc(e, e1) }
-                        statusCodeFunc = { () => statusCodeFunc(this.checkIdActionCompleted(stepperStatus)) }
+                        statusCodeFunc = { (bool,id) => statusCodeFunc(this.checkIdActionCompleted(stepperStatus),bool,id) }
                         statusCodeReturnFunc = { () => statusCodeReturnFunc(this.checkIdActionCompletedReturn(stepperStatus)) }
                       />
                     )

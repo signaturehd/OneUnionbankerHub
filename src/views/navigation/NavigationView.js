@@ -16,8 +16,11 @@ import MyLearningView from '../mylearning/MyLearningView'
 import FeedbackFragment from '../Feedback/FeedbackFragment'
 import ComplianceFragment from '../compliance/ComplianceFragment'
 import PhenomFragment from '../phenom/PhenomFragment'
+
 /*Rewards and Recognition */
 import RewardsRecognitionFragment from '../rewards/RewardsFragment'
+import GiftsFragment from '../gifts/GiftsFragment'
+import GiftsDetailsFragment from '../giftsdetails/GiftsDetailsFragment'
 
 /* Navigation Drawer Component*/
 import DrawerAppBar from './components/appbar/DrawerAppBar'
@@ -100,11 +103,20 @@ import ApprovalGoalsFragment from '../approvalgoals/ApprovalGoalsFragment'
 /* Pension Funds */
 import PensionFundsFragment from '../pensionfunds/PensionFundsFragment'
 
+/* New Employee Hire */
+import NewEmployeeHireFragment from '../neo/NewEmployeeHireFragment'
+
+// Squads and Workforce
+import SquadsTabsFragment from '../squadsworkforce/SquadsTabsFragment'
+
 /* Modals */
 import NavigationViewModal from './modal/NavigationViewModal'
 import ReloginModal from './modal/ReloginModal'
 import CommonPinEnrollmentModal from './modal/CommonPinEnrollmentModal'
 
+// footer
+
+import BaseFooterComponent from '../common/components/BaseFooterComponent'
 
 class NavigationView extends BaseMVPView {
   constructor (props) {
@@ -126,6 +138,7 @@ class NavigationView extends BaseMVPView {
       employeeNumber : '',
       profileDisplay : 'none',
       profillePosition: '',
+      agreementBool: null
     }
 
     this.setDisplay = this.setDisplay.bind(this)
@@ -140,6 +153,7 @@ class NavigationView extends BaseMVPView {
 
   showProfile (profile) {
     this.setState({
+      rewardsPoints: profile.badgesAndPoints.redeemablePoints,
       profile : profile.employee,
       isLineManager: profile.isLineManager,
       isPO: profile.isPO,
@@ -158,6 +172,10 @@ class NavigationView extends BaseMVPView {
 
   hideEnrollPin (hasPIN) {
     this.setState({ hasPIN })
+  }
+
+  showAgreementStatus (agreementBool) {
+    this.setState({ agreementBool })
   }
 
   validateInputPIN (e) {
@@ -188,6 +206,7 @@ class NavigationView extends BaseMVPView {
 
     this.presenter.getPreEmploymentStatus()
     this.presenter.getLibraries()
+
     const mediaQuery = window.matchMedia('(min-width: 1300px)')
       if (mediaQuery.matches) {
         this.setDisplay('none', 'none')
@@ -264,7 +283,9 @@ class NavigationView extends BaseMVPView {
       isPO,
       employeeNumber,
       profillePosition,
-      storeWidth
+      storeWidth,
+      agreementBool,
+      rewardsPoints
     } = this.state
 
     const { history, login, profilePicture } = this.props
@@ -273,7 +294,6 @@ class NavigationView extends BaseMVPView {
         display : displayShow
       }
     }
-
     const locationPath = history.location.pathname
     const name = profile && profile.fullname
     let initials = []
@@ -395,6 +415,7 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/education/groupaid' render = { props =>
                   <EducationGroupAidFragment { ...props }
+                    allowsManagerCheck = { profile && profile.allowManagersCheck }
                     setSelectedNavigation = { this.setSelectedNavigation } />}/>
                 <Route path = '/mybenefits/benefits/medical/optical' render = { props =>
                   <OpticalFragment { ...props }
@@ -484,7 +505,7 @@ class NavigationView extends BaseMVPView {
                   <MyLearningView { ...props }
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }/> } />
-                <Route path = '/mygoals' render = { props =>
+                <Route path = '/mygoals/' render = { props =>
                   <MyGoalsFragment { ...props }
                     profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation }
@@ -504,11 +525,32 @@ class NavigationView extends BaseMVPView {
                 <Route path = '/myrewards' render = { props =>
                   <RewardsRecognitionFragment { ...props }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/gifts' render = { props =>
+                  <GiftsFragment { ...props }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                <Route path = '/rewardgifts/details/:id' render = { props =>
+                  <GiftsDetailsFragment { ...props }
+                    rewardsPoints = { rewardsPoints }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/pensionfunds' render = { props =>
                   <PensionFundsFragment { ...props }
+                    agreementBool = { agreementBool }
+                    getProfileFunc = { () => this.presenter.getLibraries() }
+                    setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  {
+                    // <Route path = '/neo' render = { props =>
+                    //   <NewEmployeeHireFragment { ...props }
+                    //     setSelectedNavigation = { this.setSelectedNavigation } /> } />
+                  }
+                <Route path = '/squads/' render = { props =>
+                  <SquadsTabsFragment { ...props }
+                    profile = { profile }
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                </Switch>
             </Drawer>
+            <br/>
+            <BaseFooterComponent history = { history }/>
           </main>
           <aside
             className ="left-side"

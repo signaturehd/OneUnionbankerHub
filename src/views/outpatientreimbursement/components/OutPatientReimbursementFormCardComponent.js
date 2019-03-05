@@ -25,7 +25,6 @@ class OutPatientReimbursementFormCardComponent extends Component {
   }
 
   render () {
-
   const {
     requestDepdentModalFunc,
     diagnosisValueFunc,
@@ -97,9 +96,9 @@ class OutPatientReimbursementFormCardComponent extends Component {
                 errorMessage = { diagnosisErrorMessage }/>
               <DatePicker
                 selected = { preferredDate }
-                //readOnly
                 disabled = { showEditSubmitButton }
                 onChange = { (e) => dateFunc(e) }
+                minDate = { moment(`10/01/${ moment().format('YYYY') - 1 }`) }
                 maxDate = { moment() }
                 text = { 'Official Receipt Date' }
                 errorMessage = { dateErrorMessage }

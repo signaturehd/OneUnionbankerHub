@@ -1,0 +1,163 @@
+.squads-workforce-container {
+  display: grid;
+  grid-gap: 20px;
+}
+
+.squads-workforce-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.squads-workforce-container-x3 {
+  display: grid;
+  grid-template-columns: .1fr 1fr .1fr;
+}
+
+.squad-workforce-banner {
+  background-image: linear-gradient(#fa4616, #ff8200, #FFA300);
+  width: 100%;
+  padding: 50px;
+  height: 180px;
+}
+
+.squad-vacancies-title-grid {
+  display: grid;
+  grid-template-columns: 1fr .3fr;
+  column-gap: 2%;
+}
+
+.squad-tribe-name {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  background-color: #ff8a00;
+  padding: 5px 20px;
+  color: #fff;
+  font-weight: bold;
+  width: max-content;
+}
+
+.squad-card-grid-component {
+  display: grid;
+  padding: 20px 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.squad-workforce-banner-grid {
+  display: grid;
+  grid-template-columns: .05fr 1fr;
+  align-items: center;
+  column-gap: 2%;
+  margin: auto;
+}
+
+.squad-workfirce-banner-grid-row {
+  display: grid;
+  grid-template-rows: .2fr 1fr;
+  align-items: center;
+  margin: auto;
+}
+
+.squadsPircture:hover .squadsPictureLabel {
+  bottom: 10px;
+}
+
+.squadsPictureLabel {
+  background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+  bottom: -20px;
+  color: #ff9f00;
+  text-align: center;
+  transition:0.1s all;
+  height: 20px;
+  font-size: 12px;
+}
+
+.squads-initial-text {
+  text-align: center;
+  align-items: center;
+  font-weight: lighter;
+  color: #ff8a00;
+  font-size: 30px;
+  margin-top: 30px;
+}
+
+.squads-picture {
+  background-color: #fff;
+  box-shadow: inset 0px 0px 0px 0px #ffffff;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 40px;
+}
+
+.squads-grid-resume {
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+  column-gap: 2%;
+}
+
+.squads-squad-status-active {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  color: #ff8a00;
+  margin: auto;
+}
+
+.squads-squad-status-active0 {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  color: #ff8a00;
+  margin: auto;
+}
+
+.squads-squad-status-inactive {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin: auto;
+  color: #ff8a00;
+}
+
+.squads-squad-status-inactive0 {
+  background-color: #fff;
+  padding: 5px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin: auto;
+  color: #ff8a00;
+}
+
+.squads-squad-status-active1 {
+  background-color: #ff8a00;
+  padding: 5px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  margin: auto;
+  color: #fff;
+}
+
+.squads-squad-status-inactive1 {
+  background-color: #ff8a00;
+  padding: 5px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin: auto;
+  color: #fff;
+}
+
+.grid-status-squads {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-status-squads {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

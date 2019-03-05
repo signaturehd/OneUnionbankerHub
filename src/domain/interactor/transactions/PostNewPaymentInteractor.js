@@ -4,7 +4,7 @@ export default class PostNewPaymentInteractor {
   }
 
   execute (addCarLeasePayment) {
-    return this.client.addCarLeaseConfirmation(
+    return this.client.addCarLeasePayment(
       this.client.getToken(),
       addCarLeasePayment)
   }

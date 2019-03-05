@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: #f6821d;
-  padding: 3.5px 0px 0px 0px;
-  border-radius: 30px;
+  padding: 10px 0px 10px 0px;
+  border-radius: 20px;
 }
 
 .funds-tabs-component {
@@ -40,7 +40,7 @@
 
 .funds-component-card-details-grid {
   display: grid;
-  grid-template-columns: .5fr .25fr .25fr;
+  grid-template-columns: auto auto auto;
   padding: 15px;
   margin-bottom: 5px;
   margin-top: 5px;
@@ -102,4 +102,12 @@
 
 .funds-border-stepper {
   border-bottom: 2px solid #9a91917d;
+}
+
+/* Contribution Button */
+
+.funds-contribution-button {
+  background-color: #F37201;
+  color: white;
+  float: right;
 }

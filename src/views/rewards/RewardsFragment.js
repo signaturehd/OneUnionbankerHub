@@ -5,9 +5,10 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectView from '../../utils/ConnectView'
 import { Card, GenericButton, CircularLoader } from '../../ub-components'
 import NoticeResponseModal from '../notice/NoticeResponseModal'
+import NoDataListedComponent from '../common/components/NoDataListedComponent'
 
 import './styles/myrewards.css'
-import RewardRedeemFragment from './fragments/RewardRedeemFragments'
+import RewardRedeemFragments from './fragments/RewardRedeemFragments'
 import AwardFragment from './fragments/AwardFragment'
 import RewardSearchComponent from './components/RewardSearchComponent'
 
@@ -25,7 +26,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
 			orNumberErrorMessage: '',
       employeeName: 'test',
       enabledCircularLoader : false,
-			selectAllIsChecked: false
+			selectAllIsChecked: false,
+			loader : false,
+			filterTitle : 'everything',
+			rewardGiftsId : [],
 		}
 	}
 
@@ -36,6 +40,7 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.presenter.getRewardList()
     this.presenter.getAwardData()
     this.presenter.getRedeemData()
+		this.presenter.getRewardGifts()
 	}
 
 	setRecognizedRewards (recognizedAwards) {
@@ -79,6 +84,10 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ enabledCircularLoader })
   }
 
+	circularLoader (loader) {
+		this.setState({ loader })
+	}
+
   setEmployeeList (membersData) {
     this.setState({ membersData })
   }
@@ -107,6 +116,27 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ membersData: [], employeeList : [], searchString : '', employeeMessage: '' })
   }
 
+	setRewardGifts (rewardGifts) {
+		this.getGiftsId(rewardGifts)
+		this.setState({ rewardGifts })
+	}
+
+	getGiftsId (gifts) {
+		try {
+			let listId = [...this.state.rewardGiftsId]
+			gifts && gifts.map((resp) => {
+				listId.push(resp.id)
+			})
+			this.setState({ rewardGiftsId : listId })
+		} catch (e) {
+			 console.log(e)
+		}
+	}
+
+	setCategoryTypeList (rewardGiftsType) {
+		this.setState({ rewardGiftsType })
+	}
+
 	render () {
 		const { history, profileHasCOC } = this.props
 		const {
@@ -128,7 +158,12 @@ class RewardsRecognitionFragment extends BaseMVPView {
       awardData,
       redeemData,
 			employeeList,
-			selectAllIsChecked
+			selectAllIsChecked,
+			rewardGifts,
+			rewardGiftsId,
+			loader,
+			rewardGiftsType,
+			filterTitle,
 		} = this.state
 
 		return (
@@ -198,11 +233,11 @@ class RewardsRecognitionFragment extends BaseMVPView {
                       </div>
                       <div className={'myreward-orange-color'}>
                         <img
-                          height = { '20' }
-                          width = { '20' }
+                          height = { '40' }
+                          width = { '40' }
                           src = { require('../../images/rewards/Rewards-Orange.png') }/>
-                        <h4 className={'myreward-orange-text align-left font-weight-lighter'}>My Reward </h4>
-                        <h4 className={'myreward-orange-text text-align-right'}>{ rewardPoints && format(rewardPoints) }</h4>
+                        <h4 className={'myreward-orange-text align-left font-size-20px font-weight-bold'}>My Reward </h4>
+                        <h4 className={'myreward-orange-text text-align-right font-weight-bold'}>{ rewardPoints && format(rewardPoints) }</h4>
                       </div>
                       <div>
                         <h2 className={'header-margin-default text-align-left'}> Recognize a Unionbanker </h2>
@@ -231,9 +266,37 @@ class RewardsRecognitionFragment extends BaseMVPView {
                         </div>
                       </div>
                     </div>
-                    {
-                      // <RewardRedeemFragment redeemData = {redeemData} />
-                    }
+											<center>
+												<h4 className = { 'header-margin-default' }>Redeem Rewards</h4>
+												<br/>
+												<div className = { 'ex1 gifts-grid-x5' }>
+												{
+													rewardGifts &&
+								          rewardGifts.length !== 0 ?
+													<div>
+													{
+														rewardGifts.slice(0, 5).map((resp, key) =>
+															<RewardRedeemFragments
+																rewardGiftsId = { rewardGiftsId }
+																filterTitle = { filterTitle }
+																resp = { resp }
+																knowMoreClick = { () => history.push(`/rewardgifts/details/${resp.id}`) }
+															/>
+														)
+													}
+													</div>
+											:
+											<NoDataListedComponent
+												text = { 'No Reward/s' }
+												/>
+										}
+										</div>
+											<GenericButton
+												className = { 'cursor-pointer global-button profile-button-small' }
+												onClick = { () => history.push('/gifts') }
+												text = { 'view all' }
+											/>
+											</center>
                     <div></div>
                   </div>
                 }
