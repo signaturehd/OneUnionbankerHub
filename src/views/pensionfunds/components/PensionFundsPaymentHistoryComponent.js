@@ -23,9 +23,6 @@ class PensionFundsPaymentHistoryComponent extends Component {
 
     return (
       <div>
-        <br/>
-        <h4 className = { 'letter-spacing-1 font-weight-lighter font-size-26px' }>Payment History</h4>
-        <br/>
       <div>
         {
           pensionContributionHistoryData &&
@@ -47,7 +44,6 @@ class PensionFundsPaymentHistoryComponent extends Component {
                     { resp.date }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
-                    Type of plan/ package
                   </h4>
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
@@ -55,15 +51,15 @@ class PensionFundsPaymentHistoryComponent extends Component {
                    &#8369; { format(resp.amount.toFixed(2)) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
-                    Total Investment
+                    Total Contribution
                   </h4>
                 </div>
                 <div className = { 'funds-history-content-grid-row' }>
                   <h4 className = { 'text-align-left' }>
-                    &#8369; { format(resp.unitBought.toFixed(2)) }
+                    &#8369; { resp.unitBought.toFixed(6) }
                   </h4>
                   <h4 className = { 'text-align-left font-size-10px font-weight-lighter' }>
-                    Total Return
+                    Unit Purchased
                   </h4>
                 </div>
               </Card>

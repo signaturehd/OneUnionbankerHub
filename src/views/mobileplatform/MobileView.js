@@ -41,7 +41,7 @@ class MobileView extends BaseMVPView {
       backgroundImage: `url(${require('../../images/mobileview/bg.png')})`,
       backgroundSize: 'cover',
       padding: '0',
-      height: `${iosUserGuide ? '-webkit-fill-available' : 'fit-content'}`,
+      height: `${iosUserGuide ? 'fit-content' : '-webkit-fill-available'}`,
       width: '-webkit-fill-available',
       margin: '0',
     }

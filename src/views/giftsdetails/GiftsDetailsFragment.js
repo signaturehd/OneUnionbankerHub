@@ -43,6 +43,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 			showResponseModal: false,
 			noticeResponse: '',
 			disabled: false,
+			hasCustomValue : false
 		}
 	}
 
@@ -136,6 +137,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 			showResponseModal,
 			noticeResponse,
 			disabled,
+			hasCustomValue
 		} = this.state
 
 		return (
@@ -144,7 +146,7 @@ class GiftsDetailsFragment extends BaseMVPView {
 					showCheckoutModal &&
 
 					<GiftDetailsCheckoutModal
-						hasCustom = { rewardDetails && rewardDetails.hasCustom }
+						hasCustom = { hasCustomValue }
 						customValue = { rewardDetails && rewardDetails.customValue }
 						totalPoints = { totalPoints }
 						disabled = { disabled }
@@ -241,9 +243,9 @@ class GiftsDetailsFragment extends BaseMVPView {
 								/>
 								<GiftDetailsEgiftComponent
 									totalPoints = { totalPoints }
-									onCheckOutModal = { (showCheckoutModal, selectedGifts) =>
+									onCheckOutModal = { (showCheckoutModal, selectedGifts, hasCustomValue) =>
 										{
-											this.setState({ showCheckoutModal, selectedGifts })
+											this.setState({ showCheckoutModal, selectedGifts, hasCustomValue })
 										}
 									}
 									denominations = { rewardDetails && rewardDetails.denominations }

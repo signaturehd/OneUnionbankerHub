@@ -32,6 +32,7 @@ class SquadsTabsFragment extends BaseMVPView {
       loader : false,
       showNoticeResponse : false,
       noticeResponse : '',
+      status: 1,
     }
   }
 
@@ -65,7 +66,8 @@ class SquadsTabsFragment extends BaseMVPView {
       showModalPositionDetails,
       loader,
       showNoticeResponse,
-      noticeResponse
+      noticeResponse,
+      status
     } = this.state
 
     return (
@@ -119,38 +121,28 @@ class SquadsTabsFragment extends BaseMVPView {
             </div>
             :
             <div className = { 'squads-workforce-container' }>
-              {
-                showVacanciesApplicationsComponent ?
-                <div className = { 'squads-workforce-actions' }>
-                  <div className = { 'text-align-right' }>
-                    <GenericButton
-                      className = { 'cursor-pointer global-button profile-button-medium' }
-                      onClick = { () => history.push('/squads/workforce')  }
-                      text = { 'Squad Workforce' }
-                    />
-                  </div>
-                  <div className = { 'text-align-left' }>
-                    <GenericButton
-                      onClick = { () => {
-                        history.push('/squads/applications')
-                        this.setState({ showVacanciesApplicationsComponent:  false })
-                      } }
-                      className = { 'cursor-pointer global-button profile-button-medium' }
-                      text = { 'My Application' }
-                    />
-                  </div>
+            <div className = { 'grid-status-squads' }>
+              <div></div>
+              <div className = { 'squads-workforce-actions' }>
+                <div className={ 'text-align-right' }>
+                  <h4
+                    onClick = { () =>{
+                      this.setState({ status: status !== 1 ? 1: 0 })
+                      history.push('/squads/workforce')}  }
+                    className = { `cursor-pointer squads-squad-status-active${status}` }>Squad Workforce</h4>
                 </div>
-                :
-                <div className = { 'text-align-left' }>
-                  <GenericButton
+                <div className={ 'text-align-left' }>
+                  <h4
                     onClick = { () => {
-                      this.setState({ showVacanciesApplicationsComponent: true })
-                      history.push('/squads/workforce')} }
-                    className = { 'cursor-pointer global-button profile-button-small' }
-                    text = { 'back' }
-                  />
+                      history.push('/squads/applications')
+                      this.setState({ status: status !== 1 ? 1: 0 })
+                      this.setState({ showVacanciesApplicationsComponent:  false })
+                    } }
+                    className = { `cursor-pointer squads-squad-status-inactive${status === 1 ? 0 : 1}`}>My Application</h4>
                 </div>
-              }
+              </div>
+              <div></div>
+            </div>
               <Switch>
                 <Route path = '/squads/workforce' render = { props =>
                   <SquadFragment

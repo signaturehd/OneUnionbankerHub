@@ -37,7 +37,7 @@ class PensionDetailsFragment extends Component {
     return (
       <div className = { 'funds-grid-content' }>
         <div>
-          <h4 className = { 'font-weight-bold font-size-30px letter-spacing-1' }>Retirement Pension Period</h4>
+          <h4 className = { 'font-weight-bold font-size-30px letter-spacing-1 unionbank-color-grey' }>Retirement Pension Period</h4>
           <br/>
           <h4 className = { 'font-size-16px font-weight-ligther letter-spacing-1' }>Secure your future.</h4>
           <br/>
@@ -70,16 +70,23 @@ class PensionDetailsFragment extends Component {
             pensionChartData = { pensionChartData }
           /><br/>
         </div>
-        <div>
-        {
-          pensionContributionHistoryData && pensionContributionHistoryData ?
-          <PensionFundsPaymentHistoryComponent
-            pensionContributionHistoryData = { pensionContributionHistoryData }
-            changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
-            :
-          <NoDataListedComponent
-            text = { ' No Pension Data' }/>
-        }
+          <div>
+          <div>
+            <br/>
+            <h4 className = { 'unionbank-color-grey letter-spacing-1 font-weight-lighter font-size-26px' }>Payment History</h4>
+            <br/>
+            <h4 className = { 'unionbank-color-grey font-size-16px font-weight-ligther letter-spacing-1' }>Payments are reflected after the first monthly pay-period.</h4>
+            <br/>
+        </div>
+          {
+            pensionContributionHistoryData && pensionContributionHistoryData ?
+            <PensionFundsPaymentHistoryComponent
+              pensionContributionHistoryData = { pensionContributionHistoryData }
+              changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
+              :
+            <NoDataListedComponent
+              text = { ' No Pension Data' }/>
+          }
         </div>
       </div>
     )
