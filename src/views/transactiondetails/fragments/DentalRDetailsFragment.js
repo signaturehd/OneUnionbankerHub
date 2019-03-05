@@ -1,56 +1,87 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-
+import moment from 'moment'
 import { Card } from '../../../ub-components'
-
-import './styles/details-fragment.css'
+import './styles/detailsFragment.css'
 /*
-Transaction DentalR Form Agreement, Form Agreement, & File Attacment
+Transaction DentalR
 */
-import DentalRDetailsComponent from '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
-import DentalRFileComponent from '../../transaction/components/TransactionDetailComponent/TransactionFileCardComponent'
-import DentalRAgreementComponent from '../../transaction/components/TransactionDetailComponent/TransactionFormAgreementCardComponent'
+import DentalRDetailsComponent from
+  '../../transaction/components/TransactionDetailComponent/TransactionDetailCardComponent'
+
+import * as TransactionDetailsFunction from '../controller/TransactionDetailsFunction'
 
 class DentalRDetailsFragment extends Component {
+
   constructor (props) {
     super(props)
   }
 
   render () {
-    const { details, transactionsPerson, attachments } = this.props
+    const {
+      details,
+      transactionsPerson,
+      attachmentsMethod,
+      agreementsMethod
+    } = this.props
+
+    const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
+    const benefitType = TransactionDetailsFunction.checkedBenefitType(details.benefitType)
+    const dateFiled = TransactionDetailsFunction.checkedDateFilled(details)
+    const benefitLabel = TransactionDetailsFunction.getBenefitLabelStatus(details.status)
+
     return (
-      <div className = {'details-container'}>
-        <center><h2 className = { 'transaction-detail details-bold' }>Transaction Information</h2></center>
-        <br/>
-        <DentalRDetailsComponent
-          transactionsPerson = { transactionsPerson }
-          details = { details } />
-        <br/>
-        <DentalRFileComponent details = { details } attachments = { attachments } />
-        <br/>
-          <Card className = { 'transaction-card-details' }>
-            <center><h2 className = { 'details-bold' }>Procedures</h2></center>
+      <div className={ 'transaction-details-global-x3' }>
+        <div></div>
+          <Card>
+            <div className={ 'transaction-details-container' }>
+              <div className = { 'transaction-banner transaction-dentalreimbursement' }>
+                <div className={ 'transaction-banner-card' }>
+                  <div className = { 'text-align-left' }>
+                    <h1 className = { 'transaction-details-name font-weight-normal'}>
+                      { benefitType }
+                    </h1>
+                    <div></div>
+                  </div>
+                  <div className={ 'transaction-details-grid-row' }>
+                    <div></div>
+                    <div className = { 'transaction-details-status-grid' }>
+                      <div className =
+                        { `font-weight-bolder grid-global-row-x3 transaction-default-status transaction-details-status-${ detailStatus }` }
+                      >
+                        <div></div>
+                          { benefitLabel }
+                        <div></div>
+                      </div>
+                      <div className = { 'font-size-14px' }></div>
+                    </div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <br/>
-            {
-              details && details.details.Procedures.map((procedure, key) =>
-                <center key>
-                  <h2>{ procedure.Name }</h2>
-                  <h2>{ procedure.Amount }</h2>
-                </center>
-              )
-            }
+            <div>
+              <DentalRDetailsComponent
+                transactionsPerson = { transactionsPerson }
+                details = { details }
+                onClickAttachments = { (resp) => attachmentsMethod(resp) }
+                onClickAgreements = { (resp) => agreementsMethod(resp) }
+              />
+            </div>
           </Card>
-          <br/>
-        <DentalRAgreementComponent details = { details } />
-      </div>
-    )
+          <div></div>
+        </div>
+      )
+    }
   }
-}
 
 DentalRDetailsFragment.propTypes = {
   details : PropTypes.object,
-  transactionsPerson : PropTypes.array
+  transactionsPerson : PropTypes.array,
+  attachmentsMethod : PropTypes.func,
+  agreementsMethod : PropTypes.func
 }
 
 export default DentalRDetailsFragment

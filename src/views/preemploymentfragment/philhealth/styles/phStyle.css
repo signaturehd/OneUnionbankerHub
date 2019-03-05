@@ -1,0 +1,37 @@
+.ph-card {
+  padding: 20px;
+}
+
+.ph-grid-card {
+  display: grid;
+  grid-template-rows: 1fr;
+  column-gap: 2%;
+}
+
+.ph-grid-x2 {
+  display: grid;
+  grid-template-columns: 1fr .005fr;
+}
+
+.ph-button {
+  border: none;
+  box-shadow: none;
+}
+
+.ph-download-button {
+  background-image: url('../../../../images/icons/ic_file_icon_name.png');
+}
+
+.ph-seemore-button {
+  background-image: url('../../../../images/icons/ic_see_icon_name.png');
+}
+
+.ph-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}

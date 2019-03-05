@@ -1,0 +1,104 @@
+
+.maternitySSS-container {
+  max-width: 100%;
+}
+
+.maternitySSS-form-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.maternitySSS-grid-address {
+  display: grid;
+  grid-template-columns: .3fr .3fr 1fr;
+  column-gap: 2%;
+}
+
+.maternitySSS-form-card-body {
+  border-color: #0a0a0a;
+  color: #090909;
+}
+
+.maternitySSS-submit {
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  background-size: 30px;
+  bottom: 0;
+  height: 35px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.maternitySSS-submit:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.maternitySSS-submit-form-button:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.maternity-grid-location {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.maternitySSS-edit-form:hover {
+  border: 1px solid #FF7200;
+  background-color: #ff8A00;
+  color: #fff;
+}
+
+.maternitySSS-grid-column-2 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width : 768px) {
+  .maternitySSS-grid-column-2 {
+    display: grid;
+    grid-template-columns: 1fr ;
+    column-gap: 2%;
+    grid-row-gap: 2%;
+  }
+}
+
+/*CARD TRANSITION*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.maternitySSS-form-preview {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-in-out 0s forwards;
+}
+
+.close-button {
+  float: right;
+}
+
+.react-datepicker__input-container {
+  margin-top: 0px!important;
+}

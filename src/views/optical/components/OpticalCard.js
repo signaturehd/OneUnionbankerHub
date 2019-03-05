@@ -1,171 +1,155 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './styles/optical-card-component.css'
-import Button from './OpticalButton'
+import './styles/opticalCardComponent.css'
 
 import ConnectView from '../../../utils/ConnectView'
 import Presenter from '../presenter/OpticalPresenter'
-import { GenericTextBox, FileUploader } from  '../../../ub-components/'
+import {
+  GenericButton,
+  GenericInput,
+  MultipleFileUploader,
+  DatePicker,
+  Line
+} from  '../../../ub-components/'
 
-import staticImage from '../../../images/uploadicon-grey.jpg'
+import store from '../../../store'
+import { NotifyActions } from '../../../actions'
+
+import moment from 'moment'
 
 class OpticalCard extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      file: '',
-      file2: '',
-      imagePreviewUrl: '',
-      imagePreviewUrl2: '',
-      warning: '',
-      amount : 0
-    }
-
-    this.handleImageChange = this.handleImageChange.bind(this)
-    this.handleImageChange2 = this.handleImageChange2.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleSubmit (e) {
-    e.preventDefault()
-    if (this.state.file === '' || this.state.file2 === '') {
-      this.setState({ warning : 'Please complete the attached forms' })
-    } else {
-      this.setState({ showConfirmation : true })
-      this.setState({ warning : '' })
-    }
-  }
-
-  handleImageChange (e) {
-    e.preventDefault()
-
-    const reader = new FileReader()
-    const [file] = e.target.files
-
-    reader.onloadend = () => {
-      this.setState({
-        file,
-        imagePreviewUrl: reader.result
-      })
-    }
-
-    reader.readAsDataURL(file)
-  }
-
-  handleImageChange2 (e1) {
-    e1.preventDefault()
-    const reader2 = new FileReader()
-    const [file2] = e1.target.files
-
-    reader2.onloadend = () => {
-      this.setState({
-        file2,
-        imagePreviewUrl2: reader2.result
-      })
-    }
-    reader2.readAsDataURL(file2)
   }
 
   render () {
     const {
-      proceedModal,
-      props,
-      fileReceived,
-      fileReceived2,
-      onClick
+      onClick,
+      attachmentsData,
+      amount,
+      preferredDate,
+      showEditSubmitButton,
+      setAttachmentArrayFunc,
+      onCheckedSubmissionFunc,
+      dateErrorMessage,
+      amountErrorMessage,
+      orNumberErrorMessage,
+      orNumberText,
+      onSubmitFunc,
+      dateFunc,
+      desiredAmount,
+      onEditSubmissionFunc,
+      oRNumberFunc
     } = this.props
 
-    const {
-      confirm,
-      cancel,
-      warning,
-      amount,
-      file2,
-      file,
-      imagePreviewUrl,
-      imagePreviewUrl2,
-      acceptNumber,
-    } = this.state
-
-    const styles = {
-      image1 : {
-        backgroundImage: `url('${imagePreviewUrl}')`,
-        width : '225px',
-        height : '240px',
-        backgroundSize : 'cover',
-        backgroundRepeat : 'no-repeat',
-      },
-      image2 : {
-        backgroundImage: `url('${imagePreviewUrl2}')`,
-        width : '225px',
-        height : '240px',
-        backgroundSize : 'cover',
-        backgroundRepeat : 'no-repeat',
-      }
-    }
-
-    let $imagePreview = null
-    let $imagePreview2 = null
-      $imagePreview = (<div style = {styles.image1}></div>)
-      $imagePreview2 = (<div style = {styles.image2}></div>)
     return (
-        <div className = { 'optical-card' } >
-          <form onSubmit={ this.handleSubmit }>
-            <div className = {'optical-header'} >
-              <h5 >Form Attachments</h5>
-              <div className = { 'optical-amount-field' }>
-                <GenericTextBox
-                  value = { amount }
-                  placeholder = { 'Enter Amount' }
-                  onChange = { e => this.setState({ amount: parseInt(e.target.value, 10) || 0 }) }
-                />
-              </div>
-              <div className = {'optical-body'}>
-                <br/>
-                <FileUploader
-                  onChange = { this.handleImageChange }
-                  placeholder = 'Optical Certificate'
-                  value = { this.state.file.name }
-                />
-                <FileUploader
-                  onChange = { this.handleImageChange2 }
-                  placeholder = 'Medical Certificate'
-                  value = { this.state.file2.name }
-                />
-              </div>
-              <div className = { 'optical-button-submit' }>
-                <Button onClick = { () => onClick(
-                  true, file, file2, amount, imagePreviewUrl, imagePreviewUrl2)}/>
-              </div>
+      <div className = { 'optical-card' } >
+        <div>
+          <div className = {'optical-header'} >
+            <div>
+              <GenericInput
+                text = { 'Amount' }
+                value = { amount }
+                disabled = { showEditSubmitButton }
+                errorMessage = { amountErrorMessage }
+                placeholder = { 'Enter Amount' }
+                onChange = { e => desiredAmount(e.target.value) }
+              />
             </div>
-            <div className = {'optical-footer-left'}>
-              <h2 className = { 'optical-warning-display' }>{warning}</h2>
-              <div className = { 'optical-grid' }>
-                <div className = { 'optical-image-view' }>
-                  {$imagePreview}
-                  <div className = { 'optical-image-layer' }></div>
-                </div>
-                <div className = { 'optical-image-view' }>
-                  {$imagePreview2}
-                  <div className = {  'optical-image-layer' }></div>
-                </div>
-              </div>
+            <div>
+              <DatePicker
+                selected = { preferredDate }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => dateFunc(e) }
+                maxDate = { moment() }
+                readOnly
+                text = { 'Date of Official Receipt' }
+                errorMessage = { dateErrorMessage }
+                />
             </div>
-          </form>
+            <div>
+              <GenericInput
+                maxLength = { 20 }
+                value = { orNumberText }
+                disabled = { showEditSubmitButton }
+                onChange = { (e) => oRNumberFunc(e.target.value) }
+                text = { 'Official Receipt Number' }
+                errorMessage = { orNumberErrorMessage }
+                type = { 'text' }/>
+            </div>
+            <div className = { 'optical-body' }>
+            <br/>
+            {
+              attachmentsData.length !== 0  ?
+                <MultipleFileUploader
+                  placeholder = { 'Form Attachments' }
+                  fileArray = { attachmentsData }
+                  setFile = { (resp) => setAttachmentArrayFunc(resp) }
+                  disabled = { showEditSubmitButton }
+                />
+              :
+              <div></div>
+            }
+            </div>
+            <br/>
+            <Line/>
+            {
+              showEditSubmitButton &&
+              <center>
+                <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
+              </center>
+            }
+            <br/>
+            <div>
+              {
+                !showEditSubmitButton ?
+
+                <GenericButton
+                  text = { 'Continue' }
+                  className = { 'optical-button' }
+                  onClick = { () => onCheckedSubmissionFunc(true) }
+                />
+                :
+                <div className = { 'optical-grid-button-container' }>
+                  <GenericButton
+                    text = { 'Edit' }
+                    className = { 'optical-button' }
+                    onClick = { () => onEditSubmissionFunc(true) }
+                    />
+                  <GenericButton
+                    text = { 'Submit' }
+                    className = { 'optical-button' }
+                    onClick = { () => onSubmitFunc() }
+                    />
+                </div>
+              }
+            </div>
+          </div>
         </div>
+      </div>
       )
     }
   }
 
   OpticalCard.propTypes = {
     onClose : PropTypes.func,
-    details : PropTypes.func,
-    confirm : PropTypes.string,
-    cancel : PropTypes.string,
+    dateErrorMessage : PropTypes.string,
+    orNumberErrorMessage : PropTypes.string,
+    amountErrorMessage : PropTypes.string,
+    orNumberText : PropTypes.string,
+    setAttachmentArrayFunc : PropTypes.func,
+    onCheckedSubmissionFunc : PropTypes.func,
+    oRNumberFunc : PropTypes.func,
+    onEditSubmissionFunc : PropTypes.func,
+    dateFunc : PropTypes.func,
+    preferredDate: PropTypes.string,
+    desiredAmount : PropTypes.func,
+    onSubmitFunc : PropTypes.func,
+    attachmentsData : PropTypes.array,
+    amount : PropTypes.string,
+    showEditSubmitButton : PropTypes.bool,
   }
 
   OpticalCard.defaultProps = {
-    confirm : 'Submit',
-    cancel : 'Cancel',
   }
 export default OpticalCard

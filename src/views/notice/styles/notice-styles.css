@@ -1,0 +1,49 @@
+.notice-button-modal{
+ margin-left: 5%;
+ margin-right: 5%;
+}
+
+.pin-label {
+  text-align: center;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.notice-agree {
+  background-color: #388E3C;
+  color: white;
+}
+
+.notice-disagree {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.pinlock-icon {
+  background-image: url('../../../images/icons/pinsecurityicon.png');
+}
+
+.lock-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+}
+
+.generic-pin {
+  height: 40px;
+  border-color: #C9CBD0;
+  border-width: 1px;
+  border-style: solid;
+  text-align: center;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}

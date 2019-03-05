@@ -1,0 +1,195 @@
+.device-grid {
+  display: grid;
+  grid-template-columns:  .1fr 1fr;
+  padding : 10px;
+  column-gap: 2%;
+}
+
+.device-green {
+  color : green;
+}
+
+.device-red {
+  color : red;
+}
+
+.devices-alignment {
+  margin-top: 10px;
+}
+
+.device-information-grid {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+}
+
+.contact-info-grid {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.contact-info-grid-row {
+  display: grid;
+  grid-template-rows: auto;
+}
+
+.contact-number-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+}
+
+.contact-card-background {
+  background-color: #fff;
+}
+
+.contact-title {
+  font-weight: initial;
+  color: #4f4c49;
+  font-size: 12px;
+}
+
+.contact-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: auto;
+  background-repeat: no-repeat;
+}
+
+
+.profile-address-grid-x2 {
+  display: grid;
+  grid-template-columns: .9fr .05fr;
+}
+
+.profile-update-address-grid{
+  display: grid;
+  grid-template-columns: 1fr .09fr;
+  column-gap: 2%;
+}
+
+.alignment-center {
+  align-self: center;
+}
+
+.employeeMobileNumber {
+  background-image: url('../../../../images/icons/MobileNumber.png');
+}
+
+.employeeEmail {
+  background-image: url('../../../../images/icons/emailorange.png');
+}
+
+.employeeId {
+  background-image: url('../../../../images/icons/IdCardOrange.png');
+}
+
+.badgeStringComponent {
+  background-image: url('../../../../images/icons/ic_prating.png');
+}
+
+.pointStringComponent {
+  background-image: url('../../../../images/rewards/Rewards-Orange.png');
+}
+
+.employeeContact {
+  background-image: url('../../../../images/My Profile.png');
+}
+
+.employeeFullName {
+  background-image: url('../../../../images/icons/FullNameOrange.png');
+}
+
+.employeeBdate {
+  background-image: url('../../../../images/icons/BirthdayOrange.png');
+}
+
+.employeeDesignation {
+  background-image: url('../../../../images/icons/DesignationOrange.png');
+}
+
+.employeeDependent {
+  background-image: url('../../../../images/icons/DependentsOrange.png');
+}
+
+.employeeGender {
+  background-image: url('../../../../images/icons/GenderOrange.png');
+}
+
+.employeeHomeAddress {
+  background-image: url('../../../../images/icons/HomeAddress.png');
+}
+
+.employeeLocation {
+  background-image: url('../../../../images/icons/LocationOrange.png');
+}
+
+.employeeLineManager {
+  background-image: url('../../../../images/icons/LineManagerOrange.png');
+}
+
+.employeeMilitaryRank {
+  background-image: url('../../../../images/icons/MilitaryRankOrange.png');
+}
+
+
+.employeeWorkClass {
+  background-image: url('../../../../images/icons/WorkClassOrange.png');
+}
+
+.employeeUnitAssignment {
+  background-image: url('../../../../images/icons/UnitAssignmentOrange.png');
+}
+
+.employeeTax {
+  background-image: url('../../../../images/icons/taxOrange.png');
+}
+
+.employeePagibig {
+  background-image: url('../../../../images/icons/PAGIBIG.png');
+}
+
+.employeePHIC {
+  background-image: url('../../../../images/icons/PHIC.png');
+}
+
+.employeeSSS {
+  background-image: url('../../../../images/icons/sssOrange.png');
+}
+
+.employeePremiumBadge {
+  background-image: url('../../../../images/icons/PremiumBadgeOrange.png');
+}
+
+.employeeRegularizationDate {
+  background-image: url('../../../../images/icons/RegularizationDateOrange.png');
+}
+
+.employeeRank {
+  background-image: url('../../../../images/icons/RankOrange.png');
+}
+
+.employeeCivilStatus {
+  background-image: url('../../../../images/icons/CivilStatusOrange.png');
+}
+
+.employeeDateHired {
+  background-image: url('../../../../images/icons/Datehiredorange.png');
+}
+
+.employeeEmail {
+  background-image: url('../../../../images/icons/emailorange.png');
+}
+
+.pinlock-icon-black {
+  background-image: url('../../../../images/icons/pinsecurityiconblack.png');
+}
+
+.devices {
+  background-image: url('../../../../images/icons/MobileNumber.png');
+}
+
+.line-manager {
+  background-image: url('../../../../images/icons/LineManagerOrange.png');
+}

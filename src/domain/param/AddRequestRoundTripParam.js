@@ -1,0 +1,29 @@
+export default (
+  purposeId,
+  departureOriginId,
+  departureDestinationId,
+  departureDate,
+  departureTime,
+  departureRemarks,
+  returnOriginId,
+  returnDestinationId,
+  returnDate,
+  returnTime,
+  returnRemarks,
+  trainingId,
+  pleaseSpecify
+) => ({
+  purposeId,
+  departureOriginId,
+  departureDestinationId,
+  departureDate,
+  departureTime,
+  departureRemarks,
+  returnOriginId,
+  returnDestinationId,
+  returnDate,
+  returnTime,
+  returnRemarks,
+  trainingId,
+  pleaseSpecify
+})

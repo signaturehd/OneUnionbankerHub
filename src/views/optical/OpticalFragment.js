@@ -6,23 +6,54 @@ import ConnectView from '../../utils/ConnectView'
 import Card from './components/OpticalCard'
 import ConfirmationModal from './modal/OpticalReviewModal'
 import NoticeModal from '../notice/Notice'
+import BenefitFeedbackModal from '../benefitsfeedback/BenefitFeedbackModal'
 import ResponseModal from '../notice/NoticeResponseModal'
 import './styles/optical.css'
 
-import { CircularLoader } from '../../ub-components'
+import store from '../../store'
+import { NotifyActions } from '../../actions'
+
+import { CircularLoader, Modal, GenericButton } from '../../ub-components'
+
+import { format } from '../../utils/numberUtils'
+
+import {
+  RequiredValidation,
+  Validator,
+  MoneyValidation
+} from '../../utils/validate'
+
+import * as func from './functions/OpticalFunctions'
+
+import moment from 'moment'
 
 class OpticalFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
       showNoticeModal : false,
-      showConfirmation : false,
       noticeResponse : null,
       showNoticeResponseModal : false,
-      isVisible : false
+      showBenefitFeedbackModal : false,
+      isVisible : false,
+      file1 : null,
+      file2 : null,
+      attachmentsData: [],
+      showEditSubmitButton : false,
+      amountErrorMessage : '',
+      dateErrorMessage : '',
+      orNumberErrorMessage: '',
+      amount: '',
+      orNumberText: '',
+      preferredDate: '',
+      limit: 0,
     }
+    this.confirmation = this.confirmation.bind(this)
+    this.validator = this.validator.bind(this)
+  }
 
-    // this.noticeOfUndertaking = this.noticeOfUndertaking.bind(this)
+  validator (input) {
+    return new RequiredValidation().isValid(input)
   }
 
   componentDidMount () {
@@ -30,58 +61,146 @@ class OpticalFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
   }
 
-  isEligible (resp) {
-    // check if eligible
-    if (resp) {
-      this.setState({ isVisible : true })
+  isEligible (isVisible, showErrorMessageValue) {
+    if(isVisible === true) {
+      this.setState({ isVisible })
+    } else {
+      this.setState({ showErrorMessageValue, showErrorMessageModal : true })
     }
   }
 
+  showCircularLoader () {
+    this.setState({ isVisible : false })
+  }
+
+  hideCircularLoader () {
+    this.setState({ isVisible : false })
+  }
+
+  showAttachmentsMap (attachmentsData, limit) {
+    this.setState({ attachmentsData, limit })
+  }
+
   noticeOfUndertaking (noticeResponse) {
-    // console.log(noticeResponse)
-    this.setState({ showNoticeModal : true, showConfirmation: false, noticeResponse })
+    this.setState({ showNoticeModal : true, noticeResponse })
+  }
+
+  noticeResponse (noticeResponse) {
+    this.setState({ noticeResponse })
   }
 
   navigate () {
     this.props.history.push('/mybenefits/benefits/medical')
   }
 
-  submitForm (amount, finalFile1, finalFile2) {
-     this.presenter.addOptical(amount, finalFile1, finalFile2)
+  validateDesiredAmount (e) {
+    const validate = func.checkedAmount(e)
+    this.setState({ amount : validate, amountErrorMessage : '' })
+  }
+
+  validateSymbol (e) {
+    const validate = func.checkedValidateSymbol(e)
+    this.setState({ orNumberText : validate, orNumberErrorMessage : '' })
+  }
+
+  validateDate (e) {
+    const validate = func.checkedMDYDate(e)
+    this.setState({ preferredDate : validate, dateErrorMessage : '' })
+  }
+
+  confirmation () {
+    const {
+      amount,
+      limit,
+      attachmentsData,
+      orNumberText,
+      preferredDate,
+    } = this.state
+
+    let validateAttachments = false
+    attachmentsData && attachmentsData.map(
+      (attachment, key) => {
+        if(!attachment.file) {
+          validateAttachments = true
+        }
+      }
+    )
+
+    if (parseInt(amount) === 0 || amount === '') {
+      this.setState({ amountErrorMessage : 'Please enter an amount not equal to 0' })
+    } else if (parseInt(amount) > parseInt(limit)) {
+      this.setState({ amountErrorMessage : `Please double check amount must not exceeded to ${ format(limit) }` })
+    } else if (!this.validator(preferredDate)) {
+      this.setState({ dateErrorMessage :  'Please select the required date' })
+    } else if (!this.validator(orNumberText)) {
+      this.setState({ orNumberErrorMessage :  'Please enter the official receipt number' })
+    }  else if (!attachmentsData.length) {
+       store.dispatch(NotifyActions.addNotify({
+          title : 'Warning' ,
+          message : 'Attachments is required',
+          type : 'warning',
+          duration : 2000
+        })
+      )
+    } else if (validateAttachments) {
+      attachmentsData && attachmentsData.map(
+        (attachment, key) => {
+          if(!attachment.file) {
+            store.dispatch(NotifyActions.addNotify({
+               title : 'Warning' ,
+               message : attachment.name + ' is required',
+               type : 'warning',
+               duration : 2000
+             })
+           )
+          }
+        }
+      )
+     } else {
+      this.setState({ showEditSubmitButton : true })
+    }
+  }
+
+  editMode (resp) {
+    this.setState({ showEditSubmitButton : false })
+  }
+
+  getAttachmentsArray (attachmentsData) {
+    this.setState({ attachmentsData })
+  }
+
+  submitFormFunc () {
+    const {
+      amount,
+      preferredDate,
+      orNumberText,
+      attachmentsData,
+    } = this.state
+
+      this.presenter.addOptical(amount, moment(preferredDate).format('MM/DD/YYYY'), orNumberText, attachmentsData)
   }
 
   render () {
     const {
-      showConfirmation,
       showNoticeModal,
+      showBenefitFeedbackModal,
       showNoticeResponseModal,
+      showEditSubmitButton,
       noticeResponse,
-      file1,
-      file2,
       amount,
       response,
-      imagePreviewUrl,
-      imagePreviewUrl2,
       isVisible,
+      attachmentsData,
+      amountErrorMessage,
+      dateErrorMessage,
+      orNumberErrorMessage,
+      orNumberText,
+      preferredDate,
+      limit,
     } = this.state
 
     return (
-      <div  className = { 'benefits-container' }>
-        { super.render() }
-        {
-          showConfirmation &&
-          <ConfirmationModal
-            fileReceived = { file1 }
-            fileReceived2 = { file2 }
-            imagePreviewUrl = { imagePreviewUrl }
-            imagePreviewUrl2 = { imagePreviewUrl2 }
-            amount = { amount }
-            submitForm = { (finalFile1, finalFile2, amount) =>
-              this.submitForm(amount, finalFile1, finalFile2) }
-            onClose = { () => this.setState({ showConfirmation : false }) }
-          />
-        }
-
+      <div>
         {
           showNoticeModal &&
           <NoticeModal
@@ -97,44 +216,62 @@ class OpticalFragment extends BaseMVPView {
           showNoticeResponseModal &&
           <ResponseModal
             onClose = { () => {
-              this.setState({ showNoticeResponseModal : false })
-              this.props.history.push('/benefits/medical')
+              this.setState({ showNoticeResponseModal : false, showBenefitFeedbackModal : true })
             }}
             noticeResponse = { response }
-            benefitId = { '8' }
-            onDismiss = { (showNoticeModal, response) =>
-              this.setState({ showNoticeModal, response })  }
           />
-
         }
 
-        <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = {
-              this.navigate.bind(this) }></i>
-          <h1>Optical Reimbursement</h1>
-        </div>
         {
-          isVisible ?
-          <div className = { 'optical-container' }>
-            <Card onClick = {
-                (showConfirmation,
-                  file1,
-                  file2,
-                  amount,
-                  imagePreviewUrl,
-                  imagePreviewUrl2) =>
-            this.setState({
-                  showConfirmation,
-                  file1,
-                  file2,
-                  amount,
-                  imagePreviewUrl,
-                  imagePreviewUrl2 })  }/>
-          </div>          :
-          <div className = { 'optical-loader' }>
-            <center><CircularLoader show = {true} /></center>
-          </div>
+          showBenefitFeedbackModal &&
+          <BenefitFeedbackModal
+            benefitId = { '8' }
+            onClose = { () => {
+              this.props.history.push('/mybenefits/benefits/medical'),
+              this.setState({ showBenefitFeedbackModal : false })
+            }}
+          />
         }
+        <div className = { 'optical-grid-x3' }>
+          <div>
+            <div>
+              <i className = { 'back-arrow' } onClick = {
+                  this.navigate.bind(this) }></i>
+            </div>
+          </div>
+          <div>
+            <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
+            {
+              isVisible ?
+              <div className = { 'optical-container' }>
+                <Card
+                  attachmentsData = { attachmentsData }
+                  amount = { amount }
+                  orNumberText = { orNumberText }
+                  showEditSubmitButton = { showEditSubmitButton }
+                  preferredDate = { preferredDate }
+                  dateFunc = { (resp) => this.validateDate(resp) }
+                  onEditSubmissionFunc = { (resp) =>  this.editMode(resp) }
+                  onCheckedSubmissionFunc = { () => this.confirmation() }
+                  oRNumberFunc = { (resp) => this.validateSymbol(resp) }
+                  desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
+                  onSubmitFunc = { () => this.submitFormFunc() }
+                  amountErrorMessage = { amountErrorMessage }
+                  dateErrorMessage = { dateErrorMessage }
+                  orNumberErrorMessage = { orNumberErrorMessage }
+                  setAttachmentArrayFunc = { (resp) =>
+                    this.getAttachmentsArray(resp) }
+                  />
+              </div>          :
+              <div className = { 'optical-loader' }>
+                <center>
+                  <CircularLoader show = {true} />
+                </center>
+              </div>
+            }
+          </div>
+          <div></div>
+        </div>
       </div>
     )
   }

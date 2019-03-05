@@ -1,12 +1,11 @@
-
 import React, { Component } from 'react'
-import ConnectPartial from '../../utils/ConnectPartial'
+import ConnectView from '../../utils/ConnectView'
 
 import BaseMVPView from '../common/base/BaseMVPView'
 import Presenter from './presenter/OtpPresenter'
 
 import {
-  GenericTextBox,
+  GenericInput,
   GenericButton,
   Modal,
   CircularLoader
@@ -22,78 +21,89 @@ class OtpModal extends BaseMVPView {
       otp: '',
       disableSubmit : false,
       disableResend : false,
-      text : null
+      text : null,
     }
 
     this.onResendSuccess = this.onResendSuccess.bind(this)
+    this.onOtpSuccess = this.onOtpSuccess.bind(this)
   }
 
-  onOtpSuccess () {
+  onOtpSuccess (terms) {
+    this.props.sendTerms(terms.accepted, terms.content)
     // TODO redirect to login
   }
 
   onOtpError () {
-    this.setState({disableSubmit: false})
+    this.setState({ disableSubmit: false })
   }
 
   onResendSuccess () {
-    this.setState({ disabledResend : false, text : '' })
+    this.setState({ disableResend : false, text : '' })
   }
 
   render () {
     const {
       transactionType,
       username,
-      onClose
+      onClose,
+      otpMessage
     } = this.props
 
     const {
       otp,
       text,
       disableSubmit,
-      disableResend
+      disableResend,
     } = this.state
 
     return (
 
       <Modal
-          onClose = {onClose}
+          onClose = { onClose }
+          isDismisable = { true }
         >
         {
           disableSubmit || disableResend ?
+            <CircularLoader
+              validateLoading = { true }
+              show={true}/>         :
           <center>
-            <h3>{ text }</h3>
+            <div className = { 'grid-global-row' }>
+              <div>
+                <span className = { 'security-icon security-icon-settings' }/>
+                  <br/>
+              </div>
+              <h2 className = { 'font-size-12px' }>{ otpMessage && otpMessage }</h2>
+            </div>
             <br/>
-            <br/>
-            <CircularLoader show={true}/>
-          </center>          :
-          <div>
-            <GenericTextBox
-              text= "OTP"
-              placeholder = "OTP"
-              type = ""
-              className = {'center-text'}
+            <GenericInput
+              hint = "OTP"
+              className = { 'center-text' }
               maxLength = {6}
               onChange={ e => this.setState({ otp: e.target.value }) }
+              errorMessage = { 'Please enter your 6-digit code' }
             />
             <br/>
-            <GenericButton text= "Submit"
-              onClick={ () => {
-                  this.presenter.verifyOtp(username, otp, transactionType),
-                  this.setState({ disableSubmit : true, text : 'Please wait while were verifying your OTP' })
+            <div className = {'grid-global'}>
+              <GenericButton text= "Submit"
+                onClick={ () => {
+                    this.presenter.verifyOtp(username, otp, transactionType),
+                    this.setState({ disableSubmit : true, text : `Please wait while we're verifying your OTP` })
+                  }
                 }
-              }
-              disabled = {this.state.disableSubmit}
-             />
-            <GenericButton text= "Resend OTP"
-              onClick={ () => {
-                  this.presenter.resendOtp(username, transactionType),
-                  this.setState({ disableResend: true, text : 'Please wait while were resending your OTP' })
-                }
-              }
-              disabled = {this.state.disableResend}
-            />
-          </div>
+                disabled = {this.state.disableSubmit}
+               />
+               <GenericButton text= "Resend OTP"
+                 onClick={ () => {
+                     this.presenter.resendOtp(username, transactionType),
+                     this.setState({ disableResend: true, text : `Please wait while we're resending your OTP` })
+                   }
+                 }
+                 disabled = {this.state.disableResend}
+              />
+            </div>
+          <br/>
+        </center>
         }
 
       </Modal>
@@ -102,4 +112,4 @@ class OtpModal extends BaseMVPView {
 }
 // TODO setup props that is required
 
-export default ConnectPartial(OtpModal, Presenter)
+export default ConnectView(OtpModal, Presenter)

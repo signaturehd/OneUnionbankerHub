@@ -1,0 +1,27 @@
+.transaction-details-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+.transaction-detail-container {
+  padding-top:10px;
+}
+
+.transacion-attachments-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 5%;
+  margin-bottom: 10px;
+}
+
+._img-ub-logo-transaction-details {
+  height: 50px;
+  margin: auto;
+  width: auto;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  margin-left: 40px;
+}

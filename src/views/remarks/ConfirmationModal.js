@@ -5,7 +5,7 @@ import { Modal, CircularLoader, GenericButton } from '../../ub-components/'
 import Presenter from './presenter/RemarksPresenter'
 import ConnectPartial from '../../utils/ConnectPartial'
 import BaseMVPView from '../common/base/BaseMVPView'
-
+import './styles/remarks.css'
 
 class ConfirmationModal extends BaseMVPView {
   constructor (props) {
@@ -13,7 +13,7 @@ class ConfirmationModal extends BaseMVPView {
     this.state = {
       showCircular : false,
       approve: true,
-      remarks: " ",
+      remarks: ' ',
       isDismisable : true,
     }
   }
@@ -52,17 +52,19 @@ class ConfirmationModal extends BaseMVPView {
           showCircular ?
           <center>
             <h3>Submitting Your Remarks</h3>
-            <CircularLoader show = {true}/>
-          </center>
-          :
+            <CircularLoader show = { true }/>
+          </center>          :
           <div>
+            <center>
             <h3>Are you sure you want to approve this request?</h3>
-            <GenericButton
+            <br/>
+            <GenericButton className = { 'remarks-button-modal' }
               onClick = { () => this.onApprove() }
               text = { 'Yes' } />
-            <GenericButton
+            <GenericButton className = { 'remarks-button-modal' }
               onClick = { onClose }
               text = { 'Cancel' } />
+            </center>
           </div>
         }
 

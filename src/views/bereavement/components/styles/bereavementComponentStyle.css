@@ -1,0 +1,162 @@
+
+.brv-form-div {
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  font-family: arial;
+}
+
+.brv-submit {
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  background-size: 30px;
+  bottom: 0;
+  height: 35px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.brv-grid-column-2 {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 2%;
+}
+
+@media (max-width : 768px) {
+  .brv-grid-column-2 {
+    display: grid;
+    grid-template-columns: 1fr ;
+    column-gap: 2%;
+    grid-row-gap: 2%;
+  }
+  .brv-form-card {
+    margin-top: 10px;
+  }
+}
+
+/*CARD TRANSITION*/
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.brv-form-preview{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  float: center;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-in-out 0s forwards;
+}
+
+.brv-attachment-form {
+  padding: 10px;
+  margin: 0 30px 0 30px;
+  background-color: #f6f6f6;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #DBDBE0;
+}
+
+.brv-form-title {
+  display: block;
+  text-align: left;
+  font-size:14px;
+  pointer-events:none;
+  color: #ff8a00 !important;
+}
+
+.close-button {
+  float: right;
+}
+
+.brv-file-name {
+  margin-left: 120px;
+  line-height: 60px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.hr-line {
+  width: 50%;
+}
+
+.brv-icon-text-grid {
+  display: grid;
+  grid-template-columns: .15fr 1fr;
+}
+.brv-icon-text-grid-date {
+  display: grid;
+  grid-template-columns: .5fr .5fr .5fr 1fr;
+}
+
+.brv-icon-settings {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 50px;
+  width: 40px;
+  margin-top: 30px;
+  margin-left: 40px;
+  background-repeat: no-repeat;
+}
+
+.brv-container {
+  padding-left: 0%;
+  padding-right: 0%;
+  padding-top: 0%;
+}
+
+.brv-dependents {
+  background-image: url('../../../../images/icons/ic_deceased_name.png');
+}
+
+.brv-relationship {
+  background-image: url('../../../../images/icons/ic_relationship.png');
+}
+
+.brv-calendar {
+  background-image: url('../../../../images/icons/ic_calendar.png');
+}
+
+.brv-school {
+  background-image: url('../../../../images/icons/ic_school.png');
+}
+
+.brv-address {
+  background-image: url('../../../../images/icons/ic_address.png');
+}
+
+.brv-region {
+  background-image: url('../../../../images/icons/ic_region.png');
+}
+
+.brv-province {
+  background-image: url('../../../../images/icons/ic_location.png');
+}
+
+.brv-city {
+  background-image: url('../../../../images/icons/ic_building.png');
+}
+
+.brv-memorial-park {
+  background-image: url('../../../../images/icons/ic_memorial_park.png');
+}
+
+.brv-file {
+  background-image: url('../../../../images/icons/ic_insert_drive_file_grey_500_18dp.png');
+}

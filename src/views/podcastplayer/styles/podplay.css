@@ -38,18 +38,32 @@
 	min-height: 640px;
 }
 /* / media control css*/
+.media-control--play-pause{
+	background: transparent;
+	color: #ff8a00;
+	border:transparent;
+	cursor: pointer;
+}
 .media-control--mute-unmute  {
 	background-color:  transparent;
+	color: #ff8a00;
+	border:transparent;
+	cursor: pointer;
 }
 .media-control--fullscreen {
 	background-color:  transparent;
 	outline: none;
+	color: #ff8a00;
+	border:transparent;
+	cursor: pointer;
 }
 .media-control--current-time {
 	font-size: 10px;
+	color: #ff8a00;
 }
 .media-control--duration {
 	font-size: 10px;
+	color: #ff8a00;
 }
 .podcast-review-button {
 	width: -webkit-fill-available;
@@ -239,6 +253,7 @@ height: 100%;
 .media-control--seekbar {
   position: relative;
   z-index: 1;
+	cursor: pointer;
 
   @include -range-track(webkit, moz, ms) {
     background-color: transparent !important;
@@ -247,6 +262,7 @@ height: 100%;
 
 .media-control--volume {
   max-width: 120px;
+	cursor: pointer;
 }
 
 .media-control--prev-track {

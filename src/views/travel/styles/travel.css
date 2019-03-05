@@ -1,0 +1,200 @@
+/* travel */
+.travel-card {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.travel-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+.btn-fab {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #db4437;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px #666;
+}
+
+.app {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+  line-height: normal;
+  text-align:center;
+  font-size:1rem;
+  font-weight: lighter;
+}
+
+.travel-input-tab:checked + label {
+  color: #ff8a00;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #ff8a00;
+  border-top: 1px solid #ff8a00;
+  border-left: 1px solid #ff8a00;
+  border-right: 1px solid #ff8a00;
+}
+
+.travel-input-tab + label {
+  color: #546E7A;
+  border-radius: 50px;
+  font-weight: lighter;
+  min-width: 200px;
+  margin-right: 20px;
+  border-bottom: 1px solid #546E7A;
+  border-top: 1px solid #546E7A;
+  border-left: 1px solid #546E7A;
+  border-right: 1px solid #546E7A;
+}
+
+label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 5px 25px;
+  font-weight: 150;
+  text-align: center;
+  border: 1px solid transparent;
+  color: #555;
+}
+
+label:before {
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+label[htmlFor*='1']:before { content: '\f1cb'; }
+label[htmlFor*='2']:before { content: '\f17d'; }
+label[htmlFor*='3']:before { content: '\f16b'; }
+
+label:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+#travel-tab1:checked ~ #content1,
+#travel-tab2:checked ~ #content1,
+#travel-tab3:checked ~ #content1 {
+  display: block;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.travel-option-cards-1 {
+  background-image: url('../../../images/icons/BookFlight.png') ;
+}
+
+.travel-option-cards-2 {
+  background-image: url('../../../images/icons/LIQUIDATE.png') ;
+}
+
+.travel-option-cards-3 {
+  background-image: url('../../../images/icons/REQUEST.png') ;
+}
+
+.travel-option-cards-4 {
+  background-image: url('../../../images/icons/CAR LEASE.png');
+}
+
+.travel-option-cards-5 {
+  background-image: url('../../../images/icons/Bereavement Assistance.png');
+}
+
+.travel-option-cards-6 {
+  background-image: url('../../../images/icons/Calamity Assistance.png');
+}
+
+.travel-option-cards-7 {
+  background-image: url('../../../images/icons/LAPTOP LEASE V2.png');
+}
+
+.travel-input-tab {
+  display: none !important;
+}
+
+.travel-option-default {
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 50px;
+  margin: 0px auto;
+  width: 50px;
+}
+
+.travel-column-grid {
+  display: grid;
+  grid-template-rows: .5fr .5fr .5fr;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media screen and (max-width : 768px) {
+  .travel-tabs-container {
+    margin: auto;
+    text-align: center;
+  }
+
+  label {
+    font-size: 9px !important;
+  }
+
+  .travel-input-tab + label {
+    color: #546E7A;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border-bottom: 1px solid #546E7A;
+    border-top: 1px solid #546E7A;
+    border-left: 1px solid #546E7A;
+    border-right: 1px solid #546E7A;
+  }
+
+  .travel-input-tab:checked + label {
+    color: #ff8a00;
+    border-radius: 50px;
+    font-weight: lighter;
+    min-width: 90px;
+    margin-right: 10px;
+    border-bottom: 1px solid #ff8a00;
+    border-top: 1px solid #ff8a00;
+    border-left: 1px solid #ff8a00;
+    border-right: 1px solid #ff8a00;
+  }
+
+  .travel-tabs-container {
+    text-align: center;
+  }
+}
+
+.travel-card-container {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  text-align: center;
+  column-gap: 2%;
+}
+
+.travel-option-cards {
+  color: #1f1d1d;
+  margin: 0px;
+}
+
+.travel-container-text {
+  padding: 0%;
+}
+
+.travel-container-group{
+  margin-top: 15px;
+}

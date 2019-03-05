@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ConnectView from '../../utils/ConnectView'
 import NewsInteractor from '../../domain/interactor/news/NewsInteractor'
@@ -8,36 +8,39 @@ import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
 
 import NewsCardComponent from './components/NewsCardComponent/NewsCardComponent'
+import NewsHeadlinesCardComponent from './components/NewsCardComponent/NewsHeadlinesCardComponent'
 import NewsModalComponent from './modals/NewsModalComponent'
 
-import { CircularLoader } from '../../ub-components'
+import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
 
-
-import './styles/news-styles.css'
+import './styles/newsStyles.css'
 
 class NewsFragment extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-        news: [],
-        show : false,
-        searchString : '',
-        showLoader: true
+      news: [],
+      show : false,
+      searchString : '',
+      showLoader: false,
     }
     this.updateSearch = this.updateSearch.bind(this)
   }
 
   componentDidMount () {
-      this.presenter.getNews()
-      this.props.setSelectedNavigation(0)
-      setTimeout(() => this.setState({ showLoader : false }), 3000)
+    this.presenter.getNews()
   }
 
-  updateSearch () {
-    this.setState({ searchString: this.refs.search.value.substr(0 , 20) })
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
-  news (news) {
+
+  showNews (news) {
     this.setState({ news })
+  }
+
+  showLoader (showLoader) {
+    this.setState({ showLoader })
   }
 
   render () {
@@ -45,13 +48,12 @@ class NewsFragment extends BaseMVPView {
       news,
       show,
       details,
-      showLoader
+      showLoader,
+      searchString,
     } = this.state
-    let newsList = this.state.news
-    const search = this.state.searchString.trim().toLowerCase()
 
-    let filteredNews = news
-
+    let newsList = news
+    const search = searchString.trim().toLowerCase()
     if (search.length > 0) {
       newsList = news.filter(news => news.title.toLowerCase().match(search))
     }
@@ -65,33 +67,74 @@ class NewsFragment extends BaseMVPView {
             details = { details }
            />
         }
-        <h1 className = { 'title-view' }>News Feed</h1>
-        <input type = 'text'
-          className = 'newsSearchBar'
-          ref='search'
-          placeholder = {'Search News'}
-          value = { this.state.searchString }
-          onChange = { this.updateSearch } />
-        {
-          showLoader ?
+        <div className = { 'news-grid-header' }>
+          <div>
+            <h2 className={ 'header-margin-default text-align-left news-header' }>News Feed</h2>
+            <h2>Be in the loop. Check out what&#39;s new below.</h2>
+            <br/>
+          </div>
+          <div></div>
+          <GenericInput
+            type = { 'text' }
+            className = { 'newsSearchBar' }
+            refCallback = { 'search' }
+            type = { 'text' }
+            hint = { 'Search News' }
+            value = { searchString }
+            onChange = { this.updateSearch } />
+        </div>
+        <br/>
+        <div>
+          {
+            showLoader ?
             <div className = {'news-loader'} >
               <center>
-                <CircularLoader show = {true} />
+                <CircularLoader show = {showLoader} />
               </center>
-            </div>
-
-          :
-            <div className = 'news-card-container'>
+            </div>:
+            <div>
             {
               newsList &&
               newsList.map((news, i) =>
-                <NewsCardComponent
-                  key={ i }
-                  news = { news }
-                  onClick = { details => this.setState({ details, show: true }) } />)
-            }
+              news.status === 1 &&
+                <div>
+                  <NewsHeadlinesCardComponent
+                    key = { i }
+                    news = { news }
+                    onClick = { details =>
+                      this.setState({ details, show: true })
+                    }
+                    />
+                  </div>
+                )
+              }
+              <Card className = { 'news-feature-stories' }>
+                <h2 className = { 'unionbank-color font-size-25px font-weight-bold' }>Featured Stories</h2>
+                <br/>
+                <br/>
+                {
+                  newsList &&
+                  newsList.map((news, i) =>
+                  news.status !== 1 &&
+                  <div>
+                    <NewsCardComponent
+                      key={ i }
+                      news = { news }
+                      onClick = { details =>
+                        this.setState({ details, show: true })
+                      }
+                      onChangeHeart = { (id, isHeart) => this.presenter.addNewsIsHeart(id, isHeart) }
+                    />
+                    <br/>
+                    <Line/>
+                    <br/>
+                  </div>
+                    )
+                  }
+              </Card>
             </div>
-        }
+          }
+        </div>
       </div>
     )
   }

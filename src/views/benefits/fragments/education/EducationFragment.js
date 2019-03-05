@@ -1,51 +1,67 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import '../../styles/benefits.css'
-import Countdown from '../../../common/components/Countdown/Countdown'
-import staticImage from '../../../../images/UBBldg.jpg'
-
-import { CircularLoader } from '../../../../ub-components'
+import { Card, GenericButton } from '../../../../ub-components'
+import './styles/education.css'
 
 class EducationFragment extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      showLoader : true
-    }
   }
 
-  componentDidMount () {
-    setTimeout(() => this.setState({ showLoader : false }), 3000)
+  navigate () {
+      this.props.history.push('/mybenefits/benefits')
   }
 
   render () {
     const { history } = this.props
 
-    const { showLoader } = this.state
+    const benefitsOptions = [{
+      id: 1,
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Aid',
+      path: '/mybenefits/benefits/education/aid',
+    }, {
+      id: 3,
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Grant - Aid',
+      path: '/mybenefits/benefits/education/grantaid',
+    }, {
+      id: 4,
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Grant - Plan',
+      path: '/mybenefits/benefits/education/grantplan',
+    }, {
+      id: 2,
+      styleName: 'education-cards-1 education-option-default',
+      title: 'Education Group - Plan',
+      path: '/mybenefits/benefits/education/groupaid',
+    }]
 
     const EducationHome = () => (
-      <div className={'background'}>
-        <div className = { 'container-option1' }>
-          <i className = { 'left' } onClick = { () => history.push('/mybenefits/benefits') }></i>
-          <h1>Education</h1>
-            <div className = { 'app' }>
-              {
-                showLoader ?
-                <center>
-                  <CircularLoader show = {true} />
-                </center>                :
-                <center>
-                  <h1> This module will launch on July 9, 2018</h1>
-                  <br/>
-                  <div className={'app-countdown'}>
-                    <br/>
-                    <Countdown dateTo={{ year: 2018, month: 7, date: 9 }}  />
-                    </div>
-                </center>
-              }
-            <div className = { 'card-container' }>
-            </div>
+        <div>
+            <i
+              className = { 'back-arrow' }
+              onClick = { () => this.navigate() }></i>
+            <h1>Education</h1>
+          <div className = { 'adjustment' }>
+          <div className = { 'education-card-container' }>
+            {
+            benefitsOptions.map((value, idx) => (
+              <Card
+                className = { 'education-card' }
+                key = { idx }
+                onClick = { () => history.push(value.path) } >
+                <div className = { 'education-column-grid' }>
+                  <div
+                    className = { value.styleName}/>
+                  <p className = { 'education-option-cards font-weight-bold font-size-15px' }>
+                    { value.title }
+                  </p>
+                </div>
+              </Card>
+            ))
+          }
           </div>
         </div>
       </div>
@@ -54,11 +70,15 @@ class EducationFragment extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path = '/mybenefits/benefits/education' render = { EducationHome } />
+          <Route exact path = '/mybenefits/benefits/education'  render = { EducationHome } />
         </Switch>
       </div>
     )
   }
+}
+
+EducationFragment.propTypes = {
+  history : PropTypes.object
 }
 
 export default EducationFragment

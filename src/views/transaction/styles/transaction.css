@@ -1,30 +1,55 @@
-.transaction-container {
+.transaction-details-container {
+  display: grid;
+  margin: auto;
+  position: relative;
+  text-align: center;
+}
+
+.transaction-details-container-grid {
   display: grid;
   grid-column-gap: 1%;
   padding: 1%;
   margin: auto;
   position: relative;
-  margin:0 auto;
+  margin:5px;
   text-align: center;
-  grid-template-rows: auto auto;
-  grid-template-areas: "cards cards cards";
+  grid-template-columns: 1fr 1fr 1fr;
 }
+
 .transaction-modal {
   text-align: justify;
 }
-
 .transactions-loader {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20%;
   vertical-align: middle;
 }
-
-
-@media only screen and (max-width: 479px){
-  ._transaction-container { width: 90%; }
+/* added style */
+@media (max-width: 768px){
+  .transaction-details-container{
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr;
+  }
+}
+.transaction-search-bar{
+  width: -webkit-fill-available;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  background: transparent;
+  height: 30px;
+  display: inline-block;
+  transition: all 0.05s ease-in-out;
+  -webkit-appearance: searchfield;
+  float: right;
+  opacity: 0.7;
+  outline: none;
+  border-bottom-color: #ff8a00;
 }
 
+/*end of edit */
 ._option-1 {
   grid-area: cards;
 }
@@ -34,4 +59,43 @@
 .transaction-cards {
   padding: 1% 0 1% 0;
   cursor: pointer;
+}
+
+.transaction-details-personal-grid-row {
+  display: grid;
+  grid-template-rows: .005fr 1fr;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
 }

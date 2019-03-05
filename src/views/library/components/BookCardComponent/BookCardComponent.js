@@ -6,8 +6,9 @@ import { MdStarOutline, MdStar } from 'react-icons/lib/md'
 import { Card, GenericButton } from '../../../../ub-components'
 
 import Rating from 'react-rating'
+import staticBookImage from '../../../../images/icons/book_placeholder.png'
 
-import './styles/book-card-component.css'
+import './styles/bookCardComponent.css'
 
 class BookCardComponent extends Component {
   constructor (props) {
@@ -19,12 +20,12 @@ class BookCardComponent extends Component {
   }
 
   render () {
-    const { detail, onClick, rateBook  } = this.props
+    const { detail, onClick, rateBook, getComments } = this.props
     const { rating } = this.state
 
     const  styles = {
       cardHeader : {
-        backgroundImage : `url(${(detail.imageUrl)})`,
+        backgroundImage : `url(${(detail.imageUrl ? detail.imageUrl : staticBookImage)})`,
         backgroundSize : 'cover',
         backgroundRepeat : 'no-repeat'
       },
@@ -34,12 +35,12 @@ class BookCardComponent extends Component {
     }
 
     return (
-      <Card className = {'book-card'}>
-        <div style = {styles.cardHeader} >
+      <Card className = { 'book-card' }>
+        <div style = { styles.cardHeader } >
         </div>
         <div className = {'card-body'}>
           <span>{ detail.title }</span>
-          <h2 style = { styles.authorStyle }>-{ detail.author }</h2>
+          <h2 style = { detail.authorStyle }>-{ detail.author }</h2>
         </div>
         <div className = {'card-footer'}>
           <center>
@@ -54,7 +55,14 @@ class BookCardComponent extends Component {
               initialRating = { rating ? rating : detail.rating }
               readonly
             />
-            <GenericButton onClick = { () => onClick(detail, true) } text = { 'Read More' } />
+            <GenericButton onClick =
+              { () =>
+                {
+                  getComments(detail.id)
+                  onClick(detail, true)
+                }
+              }
+              text = { 'Read More' } />
           </center>
         </div>
       </Card>
@@ -65,6 +73,7 @@ class BookCardComponent extends Component {
 BookCardComponent.propTypes = {
   detail : PropTypes.object,
   onClick : PropTypes.func,
+  getComments : PropTypes.func,
   rateBook : PropTypes.func,
 }
 

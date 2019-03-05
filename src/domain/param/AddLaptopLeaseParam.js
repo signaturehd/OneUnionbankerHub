@@ -1,0 +1,21 @@
+export default (
+  id,
+  estimatedAmount,
+  terms,
+  deliveryOption,
+  qoutation,
+  orNumber,
+  vendor,
+  orDate,
+  laptopId,
+) => ({
+  id,
+  estimatedAmount,
+  terms,
+  deliveryOption,
+  attachments: qoutation,
+  orNumber,
+  vendor,
+  orDate,
+  laptopId,
+})

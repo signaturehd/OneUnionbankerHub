@@ -1,0 +1,18 @@
+
+.faqs-body {
+}
+
+.faqs-container-content {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+
+.faqs-container-column-grid {
+  display: grid;
+  grid-template-rows: .5fr .5fr .5fr;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}

@@ -1,9 +1,15 @@
-export default class getRecommendationInteractor {
+export default class GetRecommendationInteractor {
   constructor (client) {
     this.client = client
   }
 
-  execute () {
-    return this.client.getRecommendations(this.client.getToken())
+  execute (pageNumber, find, isEditorsPick) {
+    return this.client.getBooksRecommended(this.client.getToken(), pageNumber, find, isEditorsPick)
+    .map(resp => {
+      const respWithToken = { ...resp }
+      respWithToken.token = this.client.getToken()
+
+      return respWithToken
+    })
   }
 }

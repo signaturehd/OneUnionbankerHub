@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import FaqCardComponent from '../components/FaqCardComponent'
-import './styles/faqs-fragment.css'
+import './styles/faqsFragment.css'
+
+import { GenericInput } from '../../../ub-components'
 
 class FaqListFragment extends Component {
   constructor (props) {
@@ -11,10 +13,15 @@ class FaqListFragment extends Component {
     this.state = {
       searchString: '',
     }
+    this.updateSearch = this.updateSearch.bind(this)
   }
 
   search (searchString) {
     this.setState({ searchString })
+  }
+
+  updateSearch (e) {
+    this.setState({ searchString: e.target.value.substr(0 , 20) })
   }
 
   render () {
@@ -25,22 +32,38 @@ class FaqListFragment extends Component {
       history,
       imageResponse
     } = this.props
-    const setSelectedFaqsCategory  = selectedFaqCategory && selectedFaqCategory.question
-    let searchQuestions = setSelectedFaqsCategory
+    const setSelectedFaqsCategory  =
+      selectedFaqCategory && selectedFaqCategory.question
     const search = this.state.searchString.trim().toLowerCase()
+
+    let searchQuestions = setSelectedFaqsCategory
+
     if (search.length > 0) {
-        searchQuestions = setSelectedFaqsCategory.filter(setSelectedFaqsCategory => setSelectedFaqsCategory.title.toLowerCase().match(search))
+        searchQuestions = setSelectedFaqsCategory.filter(
+          setSelectedFaqsCategory =>
+            setSelectedFaqsCategory.title.toLowerCase().match(search))
     }
     return (
       <div className = {'container'}>
-        <i className = { 'left' } onClick = { () => history.push('/faqs') }></i>
-        <h1 className = { 'title-view' }>{selectedFaqCategory && selectedFaqCategory.category }</h1>
-        <input type = 'text'
-          className = 'faqsSearchBar'
-          placeholder = 'Search FAQs'
-          value = { this.state.searchString }
-          onChange = { e => this.search(e.target.value) } />
-        <div className = {'card-container'}>
+        <div className = { 'faqlist-grid-header' }>
+          <div className = { 'text-align-left' } >
+            <i className = { 'back-arrow' } onClick = { () =>
+                history.push('/faqs') }>
+            </i>
+            <h1 className = { 'title-view' }>
+              { selectedFaqCategory && selectedFaqCategory.category }
+            </h1>
+          </div>
+          <div></div>
+          <GenericInput
+            className = { 'faqsSearchBar' }
+            refCallback = { 'search' }
+            type = { 'text' }
+            hint = { 'Search FAQs' }
+            value = { searchString }
+            onChange = { this.updateSearch } />
+        </div>
+        <div className = {'faqs-container'}>
         {
           searchQuestions ?
             searchQuestions.map((qtn, i) =>
@@ -48,12 +71,13 @@ class FaqListFragment extends Component {
                 key = { i }
                 imageResponse = { imageResponse }
                 title = { qtn && qtn.title }
+                subtitle = { qtn && qtn.subtitle }
+                icon = { qtn && qtn.icon }
                 onClick = { () => setSelectedFaqQuestion(qtn) } />
-            )
-          :
-            <div className = { 'faqs-loader' }>
-              <center><h1>No Category Found</h1></center>
-            </div>
+            )          :
+          <div className = { 'faqs-loader' }>
+            <center><h1>No image found</h1></center>
+          </div>
         }
         </div>
       </div>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Card } from '../../../../ub-components/'
 
-import './faq-card-component.css'
+import './styles/faqCardComponent.css'
 
 
 class FaqCardComponent extends Component {
@@ -12,27 +12,32 @@ class FaqCardComponent extends Component {
   }
 
   render () {
-  const { onClick, title, icon, imageResponse } = this.props
+  const { onClick, title, icon, subtitle } = this.props
   const style = {
     iconFaqs : {
-      background : `url('${imageResponse}') rgb(0,0,0,0.7)`,
-      backgroundSize : '125px',
+      background : `url('${icon}')`,
+      backgroundSize : 'cover',
       backgroundRepeat : 'no-repeat',
-      height: '100% auto',
-      color: 'white',
-      backgroundBlendMode : 'color',
       fontWeight : 'bold',
+      textAlign: 'center',
+      height: '50px',
+      margin: '0px auto',
+      width: '50px',
     }
   }
 
   return (
-      <Card
-        className = { 'faqs-container' }
-        onClick = { onClick }>
-        <div style = { style.iconFaqs } className = { 'faqs-body' }>
-        <h2>{ title }</h2>
-        </div>
-      </Card>
+    <Card
+      className = { 'faqs-container-content' }
+      onClick = { onClick }>
+      <div className = { 'faqs-container-column-grid' }>
+        <div style = { style.iconFaqs } />
+        <p className = { 'loans-option-cards font-weight-bold font-size-14px' }>
+          { title }
+        </p>
+        <h2 className = { 'font-size-12px' }>{ subtitle }</h2>
+      </div>
+    </Card>
     )
   }
 }
@@ -41,6 +46,7 @@ FaqCardComponent.propTypes = {
   onClick : PropTypes.func,
   icon: PropTypes.string,
   title: PropTypes.string,
+  subtitle: PropTypes.string,
 }
 
 export default FaqCardComponent

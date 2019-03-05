@@ -1,0 +1,135 @@
+.mytrainings-grid-container-row {
+  display: grid;
+  grid-template-rows: .03fr auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.mytrainings-grid-container-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.mytrainings-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 2%;
+}
+
+.mytrainings-list-card {
+  display: grid;
+  grid-template-rows: 0fr 1fr 0fr;
+}
+
+.mytraining-list-grid-row-container {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
+
+@media (max-width: 1024px) {
+  .mytrainings-list {
+    display: grid;
+    column-gap: 2%;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mytrainings-grid-container-column {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .mytrainings-list {
+    display: grid;
+    column-gap: 2%;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 40px;
+  }
+
+  .button-position {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .mytrainings-grid-container-column {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .mytrainings-list {
+    display: grid;
+    column-gap: 2%;
+    grid-template-columns: 1fr;
+    margin-bottom: 40px;
+  }
+
+  .button-position {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.mytrainings-group-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 2%;
+}
+
+.mytrainings-group-grid h3 {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.group-line {
+  margin-top: 10px;
+}
+
+.subtitle {
+  font-size: 14px;
+}
+
+.button-position {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hide {
+  display: none!important;
+}
+
+.viewmore {
+  padding: 2px 0 2px 0;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
+}

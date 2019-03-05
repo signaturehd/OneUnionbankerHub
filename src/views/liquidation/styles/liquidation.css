@@ -1,0 +1,15 @@
+.liquidation-container {
+  max-width: 100%;
+}
+
+.liquidation-grid-option {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+.liquidation-form-card {
+  max-width: 100%;
+  padding: 20px 5px 20px 5px;
+  margin: auto;
+}

@@ -1,0 +1,107 @@
+.training-modal-container {
+  display:grid;
+  grid-template-rows: 1fr 1fr;
+  min-height:500px;
+}
+
+.training-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  margin : 20px 0px 20px 0px;
+  padding : 10px;
+}
+
+.button-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2%;
+}
+
+
+@media (max-width: 768px) {
+  .training-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .button-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.training-components h4 {
+  font-size: 18px!important;
+  color: #333!important;
+  font-weight: bold!important;
+}
+
+.training-components p {
+  font-size: 16px!important;
+  margin : 0!important;
+}
+
+.training-status {
+  background-color: #ffa800;
+  position: relative;
+  top: 10px;
+  left: 0px;
+  width: 100px;
+
+}
+
+.training-status p {
+  color: white;
+  padding: 5px;
+  text-align: center;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.status-button {
+  border: 1px solid #ff8a00;
+  width: 100%;
+  margin: 20px 5px 20px 5px;
+  padding: 10px;
+  border-radius: 0px!important;
+}
+
+.status-button:hover {
+  color: white;
+  background-color: #ffa800;
+}
+
+.approve-button {
+  border: 1px solid #ff8a00;
+  width: 100%;
+  padding: 10px;
+  background-color:  #ff8a00;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.approve-button:hover {
+  background-color: #F98700;
+}
+
+.approve-button:active {
+  box-shadow: 0px 0px 3px #ff8a00;
+}
+
+.reject-button {
+  border: 1px solid #ff8a00;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.reject-button:hover {
+  background-color: #F9F9F9;
+}
+
+.reject-button:active {
+  box-shadow: 0px 0px 3px #555;
+}

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 /* Routers */
-import { BrowserRouter, Route, browserHistory } from 'react-router-dom'
+import { HashRouter, Switch, Route, browserHistory } from 'react-router-dom'
 
 /* Routes */
 import App from './views/App'
@@ -15,12 +15,52 @@ import store from './store'
 import Container from './di/Container'
 import AppModule from './di/AppModule'
 
+/* Mobile View */
+import MobileView from './views/mobileplatform/MobileView'
 
+/* Mobile Charts */
+import PensionFundsChartComponent from './views/pensionfunds/components/PensionFundsChartComponent'
 
+let platformChecker
+let platformUsed
+let url
+const userAgentTest = window.navigator.userAgent
+const origin = location.origin + '/#/1uhub/charts'
+
+if(userAgentTest.toLowerCase().indexOf('android') !== -1) {
+  platformUsed = 'android'
+  platformChecker = true
+} else if (userAgentTest.toLowerCase().indexOf('iphone') !== -1) {
+  platformUsed = 'ios'
+  platformChecker = true
+} else if (userAgentTest.toLowerCase().indexOf('ipad') !== -1) {
+  platformUsed = 'ios'
+  platformChecker = true
+} else if (userAgentTest.toLowerCase().indexOf('playbook') !== -1) {
+  platformUsed = 'ios'
+  platformChecker = true
+} else {
+  platformChecker = false
+}
+
+if(origin === location.href) {
+  url = true
+} else {
+  url = false
+}
 
 ReactDOM.render(
   <Provider store={ store }>
-    <BrowserRouter history={ browserHistory }>
+    <HashRouter basename = { '/' }>
+    {
+      url ?
+      <PensionFundsChartComponent/>
+      :
+      platformChecker ?
+      <MobileView platformUsed = { platformUsed }/>
+      :
       <App />
-    </BrowserRouter>
-  </Provider>, document.getElementById('root'))
+    }
+    </HashRouter>
+  </Provider>, document.getElementById('root')
+)

@@ -39,7 +39,7 @@ module.exports = {
         }),
       },
       {
-        test: /\.(png|jp(e*)g|svg|gif)$/,
+        test: /\.(PNG|png|jp(e*)g|svg|gif)$/,
         use : [{
           loader: 'url-loader',
           options: {
@@ -47,6 +47,16 @@ module.exports = {
             name: 'images/[hash]-[name].[ext]',
           },
         }],
+      },
+      {
+          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [{
+              loader: 'file-loader',
+              options: {
+                  name: '[name].[ext]',
+                  outputPath: 'fonts/'
+              }
+          }]
       },
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },

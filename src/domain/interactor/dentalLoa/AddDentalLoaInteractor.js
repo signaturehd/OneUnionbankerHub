@@ -4,6 +4,11 @@ export default class AddDentalLoaInteractor {
   }
 
   execute (dentalLoaParam) {
-    return this.client.addDentalLoa(this.client.getToken(), dentalLoaParam)
+    return this.client.addDentalLoa(
+      this.client.getToken(),
+      this.client.getAccountToken(),
+      this.client.getAccountNumber(),
+      this.client.getReleasingCenter(),
+      dentalLoaParam)
   }
 }

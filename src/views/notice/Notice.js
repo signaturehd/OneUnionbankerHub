@@ -9,35 +9,80 @@ import {
   Modal,
   GenericTextBox,
   GenericButton,
-  CircularLoader
+  CircularLoader,
+  Card,
 } from '../../ub-components/'
+import NoticePinModal from './NoticePinModal'
+import './styles/notice-styles.css'
 
 class Notice extends BaseMVPView {
   constructor (props) {
     super(props)
     this.state = {
-      disableSubmit : false
+      disableSubmit : false,
+      showValidatedCofirmation: false,
+      showCancelCofirmation: false,
+      showPinCodeModal : false,
+      showDisagreeModal : false,
+      tranId : '',
+      isAgree: '',
+      benId : '',
+      enabledLoader : false,
     }
-    this.onFailed = this.onFailed.bind(this)
+  }
+
+  componentDidMount () {
+    try {
+      this.presenter.getPinCode()
+
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   isAgree (tranId, isAgree, benId) {
-    this.presenter.updateNotice(tranId, isAgree, benId)
+    this.setState({ tranId, isAgree, benId })
+  }
+
+  isAgreementConfirm (tranId, isAgree, benId, code) {
+    this.presenter.updateNotice(tranId, isAgree, benId, code)
   }
 
   onSuccess (response) {
     this.props.onDismiss(false, response)
   }
 
-  onFailed (response) {
-    this.props.onDismiss(false)
+  onFailed () {
+    this.setState({ disableSubmit : false, showPinCodeModal : false })
+  }
+
+  circularLoader (enabledLoader) {
+    this.setState({ enabledLoader })
+  }
+
+  setPinCodeStatus (showPinCode) {
+    this.setState({ showPinCode })
   }
 
   render () {
     const { noticeResponse, onClose, back, benefitId, onDismiss } = this.props
-    const { isDismissable, disableSubmit } = this.state
+    const {
+      isDismissable,
+      disableSubmit,
+      showValidatedCofirmation,
+      showCancelCofirmation,
+      showPinCodeModal,
+      tranId,
+      isAgree,
+      benId,
+      showDisagreeModal,
+      enabledLoader,
+      showPinCode
+    } = this.state
+
     return (
-      <Modal
+    <Modal
+        width={ 45 }
         isDismissable = { isDismissable }
         onClose = { onClose }
       >
@@ -47,34 +92,84 @@ class Notice extends BaseMVPView {
           noticeResponse.forms.map((form, key) =>
             <div key = { key }>
               <div dangerouslySetInnerHTML = {{ __html : form.form }}></div>
+              <br/>
+              {
+              form.aggregateMessage ?
+                <Card>
+                  <div dangerouslySetInnerHTML = {{ __html : form.aggregateMessage }}></div>
+                </Card> :
+                <div></div>
+              }
             </div>
           )
         }
         {
-          disableSubmit || isDismissable ?
-          <center>
-            <CircularLoader show={true}/>
-          </center>          :
-          <div>
-            <GenericButton text = {'Agree'}
-              onClick = { () => {
-                  this.isAgree(noticeResponse.transactionId, 1, benefitId),
-                  this.setState({ isDimissable : true, disableSubmit: true })
-                }
-              }
-            />
-            <GenericButton text = {'Disagree'}
-              onClick = { () => {
-                  this.isAgree(noticeResponse.transactionId, 0, benefitId),
-                  this.setState({ isDimissable : true, disableSubmit: true })
-                }
-              }
-            />
-          </div>
+          enabledLoader &&
+          <CircularLoader
+            show = { enabledLoader }/>
         }
-
-
-      </Modal>
+        {
+          showDisagreeModal &&
+          <Modal>
+            <center>
+              <h2>By disagreeing, your application will not proceed. Are you sure you want to cancel?</h2>
+              <br/>
+              <div className = { 'grid-global' }>
+                <GenericButton
+                  text = { 'Cancel' }
+                  onClick = { () => this.setState({ showDisagreeModal : false }) }
+                />
+                <GenericButton
+                  text = { 'Yes' }
+                  onClick = { () => {
+                    this.setState({ isDimissable : true, disableSubmit: true, showDisagreeModal: false })
+                    this.presenter.updateNotice(noticeResponse.transactionId.toString(), 0, benefitId, '')
+                  } }
+                />
+              </div>
+            </center>
+          </Modal>
+        }
+        {
+          showPinCodeModal &&
+          <NoticePinModal
+            onSubmitAgreement = { (code) => this.isAgreementConfirm(tranId, isAgree, benId, code) }
+            enabledLoader = { enabledLoader }
+          />
+        }
+        {
+          disableSubmit ?
+          <center>
+          </center>   :
+          <div>
+          <center>
+            <br/>
+            <br/>
+            <GenericButton text = {'Disagree'} className = { 'notice-button-modal notice-disagree' }
+              onClick = { () =>
+                this.setState({ showDisagreeModal : true })
+              }
+            />
+            <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
+              onClick = { () => {
+                  try {
+                    if(showPinCode) {
+                      this.setState({ disableSubmit: true })
+                      this.presenter.updateNotice(noticeResponse.transactionId.toString(), 1, benefitId, '')
+                    } else {
+                      this.setState({ disableSubmit: true, showPinCodeModal : true })
+                      this.isAgree(noticeResponse.transactionId.toString(), 1, benefitId)
+                    }
+                  } catch (e) {
+                    console.log(e)
+                  }
+                }
+              }
+            />
+          </center>
+        </div>
+      }
+    </Modal>
     )
   }
 }

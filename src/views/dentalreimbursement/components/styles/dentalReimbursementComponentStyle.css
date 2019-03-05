@@ -1,0 +1,74 @@
+
+.dentalreimbursement-warning-display {
+  font-size: 8px;
+  color: red;
+  position: absolute;
+  margin: auto;
+}
+.dentalreimbursement-selected-procedure{
+  position: relative !important;
+  width: 100% !important;
+}
+
+.dentalreimbursement-grid-procedure {
+  display: grid;
+  align-items: center;
+  text-align: center;
+  margin: 0px auto;
+  grid-template-columns: 1fr .1fr;
+}
+
+.dentailreimbursement-grid-x3 {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.dentalr-continue-button {
+  min-width: 100%;
+}
+
+.dentalreimbursement-image-layer {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-radius: 5px;
+}
+.dentalreimbursement-card {
+  box-shadow: none;
+  padding: 20px 5px 20px 5px;
+  margin: 50px 0 auto 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+.dentalreimbursement-secondary {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 55%;
+  height: 350px;
+  left: 0;
+  padding: 0 5px 0 25px;
+  margin: 50px 0 auto 0;
+  text-align: center;
+  float: right;
+}
+
+.dentalreimbursement-upload-header {
+  margin-top: 20px;
+}
+
+.dentalreimbursement-header-chooseDependents {
+  font-size: 16px;
+}
+
+.input-grid {
+  display:grid;
+  grid-template-columns: 90% 10%;
+  justify-content: center;
+}
+
+.dentalreimbursement-button-close {
+  border: none;
+  cursor: pointer;
+  align-self: end;
+}

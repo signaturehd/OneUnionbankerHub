@@ -1,0 +1,75 @@
+
+.existing-loans-loader {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+  vertical-align: middle;
+}
+
+.existing-loan-card-balance {
+  padding: 50px;
+}
+
+.existingloan-card-background {
+  background-image: url('../../../images/mobileview/Orange Wallpaper.png');
+  color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.existing-loans-grid-card {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+}
+
+.existing-card-image-icon {
+  background-image : url('../../../images/ubp-bg-HD.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.existing-salary-image-icon {
+  background-image : url('../../../images/outstandingloans/Salary Loan.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.existing-loans-grid-container {
+  display: grid;
+  grid-template-rows: .1fr 1fr;
+  column-gap: 2%;
+}
+
+.existing-loan-summary-grid-x2 {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+  align-items: center;
+  font-weight: bold;
+}
+
+.existing-loan-summary-grid {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  align-items: center;
+  font-weight: bold;
+}
+
+.existing-loans-grid-x6 {
+  padding: 20px 10px 10px 10px;
+  display: grid;
+  grid-template-columns: .25fr .5fr .4fr .4fr .4fr .5fr .5fr .5fr;
+}
+
+.existing-loans-grid-label {
+  display: grid;
+  grid-template-rows: .35fr 1fr;
+}
+
+.existing-loan-title-header {
+  font-size: 50px;
+}
+
+.existing-loans-grid-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

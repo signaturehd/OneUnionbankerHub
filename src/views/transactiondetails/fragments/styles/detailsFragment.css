@@ -1,0 +1,239 @@
+.transaction-details-container {
+  display: grid;
+}
+
+.transaction-details-global-x3 {
+  display: grid;
+  grid-template-columns: .05fr 1fr .05fr;
+}
+
+.transaction-card-details {
+  padding : 20px 40px;
+}
+
+.transaction-card-details-form {
+  grid-template-columns: .1fr 1fr;
+  display: grid;
+}
+
+.bereavement-padding-attachments{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.transaction-detail {
+  margin-bottom: 10px;
+}
+
+.transaction-attachments-container {
+  display: grid;
+  height: 250px;
+  text-align: center;
+  grid-gap: 2%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.transaction-header-contains {
+  display: grid;
+  height: 250px;
+  grid-template-rows: 1fr 1fr;
+  position: bottom;
+}
+
+.transaction-attachments {
+  margin: auto;
+  background-size: contain;
+  object-fit: contain;
+  height: 150px;
+  width: auto;
+}
+
+.details-bold {
+  font-weight: bold;
+}
+
+.transaction-banner {
+  background-size: cover;
+  display: block;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 450px;
+}
+
+.transaction-optical {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/optical_reimbursement.jpg');
+}
+
+.transaction-dentalreimbursement {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/dental_reimbursement.jpg');
+}
+
+.transaction-dentalloa {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/dental_bg.jpg');
+}
+
+.transaction-mpl {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/mpl_bg.jpg');
+}
+
+.transaction-calamity {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/calamity_transaction.jpg');
+}
+
+.transaction-bereavement {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/bereavement_bg.jpg');
+}
+
+.transaction-medical-scheduling {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/medical_scheduling.jpg');
+}
+
+.transaction-maternity-assistance {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/maternity_bg.jpeg');
+}
+
+.transaction-carlease {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/car_bg.jpg');
+}
+
+.transaction-events_budget_banner {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/events_budget_banner.jpg');
+}
+
+.transaction-laptop {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/laptop_lease_1.jpeg');
+}
+
+.transaction-vaccine {
+  background-image:linear-gradient(rgba(255, 255, 255, 0.13),rgba(255, 255, 255, 1)), url('../../../../images/vaccine_bg.jpg');
+}
+
+.transaction-details-grid-row {
+  display: grid;
+  grid-template-columns: .3fr auto .3fr;
+}
+
+.transaction-details-status-grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.transaction-banner-card {
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+  position: absolute;
+  margin-left: 25px;
+  margin-top: 400px;
+  padding-left: 35px;
+}
+
+@media screen and (max-width: 768px) {
+    .transaction-banner-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      position: absolute;
+      margin-top: 100px;
+      margin-left: 0px;
+      font-size: 12px;
+    }
+    .transaction-details-grid-row {
+      margin-top: 10px;
+    }
+}
+
+.transaction-details-name{
+  color: #000000;
+}
+
+.transaction-details-name1{
+  color: #000000;
+}
+
+.transaction-header-container{
+  display: grid;
+  column-gap: 2%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.transaction-title-margin {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.transaction-details-status {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-credited {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #00c853;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-cancel {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #d50000;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-reconciliation {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #ff8a00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-confirmation {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #2d9ee0;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-crediting {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #09af00;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-process {
+  border-radius: 50px;
+  color: #fff;
+  border: 0px;
+  background: #00a1ff;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-status-clear {
+  border-radius: 50px;
+  color: #ff8a00;
+  border: 0px;
+  background: #fff;
+  cursor: initial;
+  height: 35px;
+}
+
+.transaction-details-grid-row-x2 {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}

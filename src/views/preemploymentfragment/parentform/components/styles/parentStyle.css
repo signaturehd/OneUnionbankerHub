@@ -1,0 +1,14 @@
+.status-margin {
+}
+
+.gender-margin {
+	margin-top: 20px;
+}
+
+.parent-card-grid-option {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr .1fr;
+  margin: 0px auto;
+  align-items: center;
+}

@@ -7,7 +7,7 @@ import BaseMVPView from '../common/base/BaseMVPView'
 
 import { CircularLoader, GenericButton } from '../../ub-components'
 
-import './styles/transaction-details.css'
+import './styles/transactionDetails.css'
 
 import DentalLoaDetailsFragment from './fragments/DentalLoaDetailsFragment'
 import DentalRDetailsFragment from './fragments/DentalRDetailsFragment'
@@ -17,58 +17,73 @@ import EducGrantPlanDetailsFragment from './fragments/EducGrantPlanDetailsFragme
 import EducGroupPlanDetailsFragment from './fragments/EducGroupPlanDetailsFragment'
 import LoansDetailsFragment from './fragments/LoansDetailsFragment'
 import OpticalDetailsFragment from './fragments/OpticalDetailsFragment'
+import CalamityAssistanceDetailsFragment from './fragments/CalamityAssistanceDetailsFragment'
 
 import ConfirmationModal from '../remarks/ConfirmationModal'
 import DisapproveModal from '../remarks/DisapproveModal'
 
-function  TransactionDetails ( props )  {
+function  TransactionDetails (props)  {
   const transactionId = props.details.benefitType.id
   const transactionDetails = props.details
   const transactionsPerson = props.transactions
   const attachments = props.attachments
-  if (transactionId == 6) {
-    return <DentalRDetailsFragment
-      attachments = { attachments }
-      details = { transactionDetails }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 7) {
-    return <DentalLoaDetailsFragment
-      attachments = { attachments }
-      details = { transactionDetails }
-      transactionsPerson = { transactionsPerson } />
-  } else if (transactionId == 8) {
-    return <OpticalDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 11) {
-    return <EducGrantAidDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 12) {
-    return <DentalRDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson } />
-  } else if (transactionId == 13) {
-    return <DentalRDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 32) {
-    return <DentalRDetailsFragment
-      details = { transactionDetails }
-      attachments = { attachments }
-      transactionsPerson = { transactionsPerson }/>
-  } else if (transactionId == 1) {
-    return <LoansDetailsFragment
-      transactionsPerson = { transactionsPerson }
-      attachments = { attachments }
-      details = { transactionDetails } />
-  } else {
+
+    if (transactionId === 6) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 7) {
+      return <DentalLoaDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson } />
+    } else if (transactionId === 8) {
+      return <OpticalDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 13) {
+      return <EducGrantAidDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 12) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson } />
+    } else if (transactionId === 11) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 32) {
+      return <DentalRDetailsFragment
+        details = { transactionDetails }
+        attachments = { attachments }
+        transactionsPerson = { transactionsPerson }/>
+    } else if (transactionId === 1) {
+      return <LoansDetailsFragment
+        transactionsPerson = { transactionsPerson }
+        attachments = { attachments }
+        details = { transactionDetails } />
+    } else if (transactionId === 21) {
+      // Bereavement Transaction Details
+      return <LoansDetailsFragment
+        transactionsPerson = { transactionsPerson }
+        attachments = { attachments }
+        details = { transactionDetails } />
+    } else if (transactionId === 22) {
+      // Calamity Assistance
+      return <CalamityAssistanceDetailsFragment
+        transactionsPerson = { transactionsPerson }
+        attachments = { attachments }
+        details = { transactionDetails } />
+    } else if (transactionId === 16) {
+     return <h1>Transaction for LaptopLease</h1>  
+    }
     return <h1>No Transaction Occured please reload</h1> // No  Transaction
-  }
 }
 
 class TransactionApprovalDetailsFragment extends BaseMVPView {
@@ -112,14 +127,14 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
   }
 
   showAttachments (attachments) {
-    this.setState({attachments})
+    this.setState({ attachments })
   }
 
   getTransactionDetails (details) {
     this.setState({ details })
   }
 
-  transactions( transactions ) {
+  transactions (transactions) {
     this.setState({ transactions })
   }
 
@@ -135,10 +150,12 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
     } = this.state
     return (
       <div  className = {'container'}>
-        <div className={ 'breadcrumbs-container' }>
-          <i className = { 'left' } onClick = {
+        <div>
+          <i className = { 'back-arrow' } onClick = {
               this.navigate.bind(this) }></i>
-          <h1>{ details ? details.benefitType.name : 'Transaction' }</h1>
+            <h2 className = { 'header-margin-default' }>
+              { details ? details.benefitType.name : 'Transaction' }
+            </h2>
         </div>
         {
           showConfirmationModal &&
@@ -177,8 +194,7 @@ class TransactionApprovalDetailsFragment extends BaseMVPView {
                   text = { 'Disaprove' }
                   onClick = { () => this.showModal2() }/>
               </center>
-            </div>
-            :
+            </div>            :
             <div className = {'transaction-details-loader'}>
               <center>
                 <CircularLoader show = {true}/>

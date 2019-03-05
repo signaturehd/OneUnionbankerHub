@@ -6,49 +6,45 @@ import { GenericButton, GenericTextBox, CircularLoader } from '../../../ub-compo
 
 import Modal from '../../../ub-components/Modal/Modal'
 
-import './modal-style.css'
+import './styles/modalStyle.css'
 
 class ReleasingCenterModal extends Component {
   constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     const {
       onClose,
+      onSubmit,
       type,
       placeholder,
-      onSubmit,
-      isDismisable,
+      onClick,
       releasingCenters,
-      onClick
     } = this.props
 
     return (
       <Modal
-        onClose = {onClose}
-        isDismisable = {isDismisable}>
+        onClose = { onClose }
+        isDismisable = {true}>
         <div>
-
-        { releasingCenters ?
+        {
+          releasingCenters ?
           releasingCenters.map((releasingCenter, key) => ((
               <GenericButton
                 className = { 'dentalloa-modal-option-button' }
                 key = { key }
-                onClick = { () => {onClick(releasingCenter.unit), onClose()} }
+                onClick = { () => {
+                    onClick(releasingCenter.unit), onClose()
+                  }
+                }
                 text = { releasingCenter.unit }
               />
             ))
-          )
-          :
-          <center>
-            <h3>Releasing Center is Loading Please wait</h3>
-            <br/>
-            <br/>
-            <CircularLoader show={true}/>
-            <br/>
-            <br/>
-          </center>
+          )          :
+          <CircularLoader
+            validateLoading = { true }
+            show={true}/>
         }
         </div>
       </Modal>
@@ -58,12 +54,12 @@ class ReleasingCenterModal extends Component {
 
 ReleasingCenterModal.propTypes = {
   onClose : PropTypes.func,
-  onChange : PropTypes.func,
   onSubmit : PropTypes.func,
   isDimissable : PropTypes.func,
   type : PropTypes.string,
-  maxLength : PropTypes.number,
   placeholder : PropTypes.string,
+  onClick : PropTypes.func,
+  releasingCenters :  PropTypes.array
 }
 
 export default ReleasingCenterModal

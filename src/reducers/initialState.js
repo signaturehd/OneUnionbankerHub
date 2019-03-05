@@ -1,5 +1,7 @@
 export default {
   sampleState: 'Hello',
   token: '',
-  notify: []
+  notify: [],
+  profilePicture: null,
+  showReloginModal: false,
 }

@@ -1,24 +1,35 @@
-
 .login-logo {
   display: block;
-  width: 80px;
+  width: 100px;
   margin: 30px auto;
-  box-shadow: 0 5px 10px -7px #333333;
+  box-shadow: 0px 5px 20px -7px #333333;
   border-radius: 50%;
 }
+
 .text {
   width: 100%;
 }
+
+.login-loader {
+  padding-top: 39.5px;
+  padding-bottom: 39.5px;
+}
+
 .login-form {
   background-color: #ffffff;
   width: 380px;
-  padding: 30px 20px 30px 20px;
-  margin: 100px auto auto auto;
-  height: auto;
+  position: absolute;
+  padding: 5px 20px 5px 20px;
+  margin: auto;
+  height: 590px;
   border-radius: 8px;
+  left: 0;
   overflow: hidden;
   box-shadow: 0 2px 10px -3px #333;
   text-align: center;
+  bottom: 0;
+  right: 0;
+  top: 0;
 }
 
 .login-input {
@@ -30,6 +41,37 @@
   display: block;
   font-size: 14px;
   margin: 20px auto 20px auto;
+}
+
+.download-container {
+  display: grid;
+  column-gap: 5%;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.link-googleplay {
+  cursor: pointer;
+  background: url('../../../images/Googleplay.png') no-repeat center;
+  background-size: cover;
+  vertical-align: middle;
+  border-radius: 10px;
+  height: 45px;
+  width: auto;
+  outline: none;
+  border: none;
+}
+
+.link-appstore {
+  user-select: none;
+  cursor: pointer;
+  background: url('../../../images/APPLE.png') no-repeat center;
+  background-size: cover;
+  vertical-align: middle;
+  border-radius: 10px;
+  height: 45px;
+  width: auto;
+  outline: none;
+  border: none;
 }
 
 .login-button {
@@ -47,7 +89,7 @@
     height: auto;
     width: auto;
     padding: 0 20px 20px 20px;
-    margin: 100px 20px 50px 20px;
+    margin: 50px 20px 0px 20px;
   }
   .login-input {
     font-size: 8px;
@@ -60,7 +102,6 @@
 @media screen and (max-height: 550px) {
   .login-form {
     height: auto;
-    margin-bottom: 100px;
   }
 }
 
@@ -71,6 +112,8 @@
 
   .login-form {
     box-shadow: none !important;
+    overflow-y: scroll;
+    background: transparent;
   }
 
   .login-logo {
@@ -94,17 +137,67 @@
   width: 30px;
   margin-top: 50px;
   margin:2%;
-  background: #fff;
+  background: transparent;
   margin-bottom: 10px;
   border: 0px #e2d3d300;
 }
 
-.notify-container {
-  position: fixed;
-  width: 20%;
-  right: 10px;
-  bottom: 10px;
+.password_show {
+  background-image: url('../../../images/icons/eye2.png');
+}
+
+.password_icon {
+  float: right;
+  margin-top: -48px;
+  margin-right: 6px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  color: transparent;
+  text-decoration: none;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
+
+.password_hide{
+  background-image: url('../../../images/icons/eye1.png');
+}
+
+.login-version {
+  font-weight: lighter;
+  font-size: 12px;
+  color: gray;
+  text-align: right;
+  position: relative;
+}
+
+.login-help-grid {
   display: grid;
-  z-index: 99;
-  grid-row-gap: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  grid-template-columns: 1fr .05fr;
+}
+
+.login-seemore-button {
+  background-image: url('../../../images/icons/ic_next.png');
+}
+
+.login-icon {
+  background-size: contain;
+  cursor: pointer;
+  background-color: transparent;
+  display: block;
+  height: 25px;
+  width: 25px;
+  background-repeat: no-repeat;
+}
+
+.login-back-icon-grid {
+  display: grid;
+  text-align: right;
+  grid-template-columns: 0.05fr 1fr;
 }
