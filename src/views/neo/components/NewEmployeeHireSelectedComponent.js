@@ -35,19 +35,20 @@ class NewEmployeeHireNextVideosComponent extends Component {
               width={ '100%' }
               height={ '500px' }
               src={ 'https://www.youtube.com/embed/V2AqToWyv5s' }
-              allowfullscreen>
+              frameborder="0"
+              allow={ 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' }
+              allowfullscreen = { '1' }>
             </iframe>
           </div>
           <div></div>
         </div>
-        <br/>
         <br/>
         <div
           style = {{
             paddingRight: '20px',
             paddingLeft: '20px',
             display: 'grid',
-            gridTemplateColumns: '1fr 0.1fr 0.1fr',
+            gridTemplateColumns: '1fr 0.05fr 0.05fr',
             lineHeight: 'normal',
           }}>
           <h4 className = { 'font-weight-lighter font-size-25px' }>Learn to own your future by knowing more about unionbank</h4>

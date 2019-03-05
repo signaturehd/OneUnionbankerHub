@@ -48,7 +48,12 @@ export default class NewEmployeeHirePresenter {
   }
 
   setNEOStatus () {
+    this.view.circularLoader(true)
     this.genericPostNEOStatusInteractor.execute(false)
+    setInterval(() => {
+      this.view.circularLoader(false)
+      this.getNEOStatus()
+    }, 500)
   }
 
   getNEOData () {

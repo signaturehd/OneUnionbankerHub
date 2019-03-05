@@ -78,6 +78,7 @@ class NewEmployeeHireCommentsComponents extends Component {
             <GenericInput
               onChange = { () => {} }
               value = { '' }
+              type = { 'textarea' }
               text = { 'Enter your comments' }
               />
           </div>

@@ -18,13 +18,18 @@ class NewEmployeeHireFragment extends BaseMVPView {
     this.state = {
       neoData: [],
       neoCurrentUrl : '',
-      selectedVideo : true
+      selectedVideo : true,
+      loader: false,
     }
   }
 
   componentDidMount () {
     this.presenter.getNEOStatus()
     this.presenter.getNEOData()
+  }
+
+  circularLoader (loader) {
+    this.setState({ loader })
   }
 
   getNEOStatus (showNEOModal) {
@@ -40,42 +45,67 @@ class NewEmployeeHireFragment extends BaseMVPView {
       neoData,
       showNEOModal,
       neoCurrentUrl,
+      loader,
       selectedVideo,
     } = this.state
 
+    document.onkeydown = function(e) {
+      if(event.keyCode == 123) {
+        return false;
+      }
+      if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+        return false;
+      }
+      if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+        return false;
+      }
+      if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+        return false;
+      }
+    }
+
     return (
-      <div className = { 'neo-content-grid' }>
-        <div></div>
-        <div>
-          {
-           !showNEOModal &&
-            <NewEmployeeHireWelcomeModal
-              onStartOnboard = { () => {
-                try {
+      <div oncontextmenu={ 'return false;' }>
+        {
+          loader ?
+          <CircularLoader
+            show = { loader }
+            validateLoading = { true }
+          />
+        :
+        <div className = { 'neo-content-grid' }>
+          <div></div>
+          <div>
+            {
+             !showNEOModal ?
+              <NewEmployeeHireWelcomeModal
+                onStartOnboard = { () => {
                   this.presenter.setNEOStatus()
                   this.setState({ showNEOModal: false })
-                } catch (e) {
-                  console.log(e)
-                }
-              } }
-            />
-          }
-          {
-            selectedVideo ?
-
-            <NewEmployeeHireListFragment
-              selectedVideoFunc = { (value) => this.setState({ selectedVideo : false }) }
-              neoData = { neoData }
-              selectedVideo = { selectedVideo }
-              /> :
-
-            <NewEmployeeHireMainFragment
-              selectedVideo = { selectedVideo }
-              neoData = { neoData }
+                } }
               />
-          }
+            :
+            <div>
+            {
+              selectedVideo ?
+
+              <NewEmployeeHireListFragment
+                selectedVideoFunc = { (value) => this.setState({ selectedVideo : false }) }
+                neoData = { neoData }
+                selectedVideo = { selectedVideo }
+                />
+              :
+              <NewEmployeeHireMainFragment
+                selectedVideo = { selectedVideo }
+                neoData = { neoData }
+                />
+            }
+            </div>
+            }
+          </div>
+          <div></div>
         </div>
-        <div></div>
+        }
       </div>
     )
   }
