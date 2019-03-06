@@ -36,13 +36,14 @@ class BaseFooterComponent extends Component {
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
-                <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/feedback') }>Feedback</a></li>
               </ul>
             </div>
             <div className="giftdetails-link column">
-              <h3>Contact Us</h3>
+              <h3
+                className = { 'cursor-pointer' }
+                onClick = { () =>history.push('/feedback') }>Feedback</h3>
               <p>
-                For inquiries, email <a href={ 'mailto:1uhub-helpdesk@unionbank.com' }>1uhub-helpdesk@unionbank.com</a>
+                For inquiries, let us know.
               </p>
             </div>
             <div className={ 'giftdetails-copyright2 column' }>
