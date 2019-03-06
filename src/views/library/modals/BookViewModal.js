@@ -37,7 +37,7 @@ class BookViewModal extends Component {
       backgroundSize : '200px 200px',
       width: '-webkit-fill-available',
     }
-
+    console.log(booksCommentList)
     return (
       <Modal
         isDismisable = { true }
@@ -57,6 +57,7 @@ class BookViewModal extends Component {
         <center>
           <GenericButton
             text = { 'Submit' }
+            className = { 'profile-button-medium cursor-pointer global-button' }
             onClick = { (e) => {
               rateBook(details.id, rating, comment)
               }
@@ -96,6 +97,7 @@ class BookViewModal extends Component {
             <div>
               <h2 className = { 'font-weight-bold' }></h2>
                 {
+                  booksCommentList &&
                   booksCommentList.map((resp, key) =>
                     <div>
                       <h2>Name: { resp.name }</h2>
@@ -113,7 +115,11 @@ class BookViewModal extends Component {
           </div>
           <div className = { 'library-momdal-footer' } >
             <div className = {'library-modal-footer-container'} >
-              <GenericButton onClick = { () => reserveBook(details.id, 1) } text = { 'Borrow' } />
+              <center>
+                <GenericButton
+                  className = { 'profile-button-medium cursor-pointer global-button' }
+                  onClick = { () => reserveBook(details.id, 1) } text = { 'Borrow' } />
+              </center>
             </div>
           </div>
         </div>

@@ -66,6 +66,7 @@ export default class MyTrainingPresenter {
       this.view.hideCircularLoader(false)
       this.view.showTrainingList(data)
     }, error => {
+      this.view.circularLoader(false)
       this.view.navigate()
     })
   }
@@ -77,6 +78,7 @@ export default class MyTrainingPresenter {
       this.view.circularLoader(false)
       this.view.showApprovalList(data)
     }, error => {
+      this.view.circularLoader(false)
       this.view.navigate()
     })
   }
@@ -88,6 +90,7 @@ export default class MyTrainingPresenter {
       this.view.circularLoader(false)
       this.view.showApprovedList(data)
     }, error => {
+      this.view.circularLoader(false)
       this.view.navigate()
     })
   }
@@ -99,6 +102,7 @@ export default class MyTrainingPresenter {
       this.view.circularLoader(false)
       this.view.setEnrolledTrainingList(data)
     }, error => {
+      this.view.circularLoader(false)
       this.view.navigate()
     })
   }

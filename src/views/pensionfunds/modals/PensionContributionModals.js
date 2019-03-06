@@ -11,7 +11,8 @@ class PensionContributionModals extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      viewMessage: false
+      viewMessage: false,
+      confirmAmount: false,
     }
   }
 
@@ -27,7 +28,8 @@ class PensionContributionModals extends Component {
     } = this.props
 
     const {
-      viewMessage
+      viewMessage,
+      confirmAmount,
     } = this.state
 
     return (
@@ -35,67 +37,94 @@ class PensionContributionModals extends Component {
         isDismisable = { true }
         onClose = { () => cancelCodeFunc() }
         >
-        {
-          viewMessage ?
-          <center>
-          <h4 className = { 'unionbank-color font-size-16px' }>Opt out?</h4>
-          <br/>
-          <h4 className = { 'unionbank-color-grey font-size-16px' }>Are you sure you do not want to contribute to your pension fund anymore?</h4>
-          <br/>
-          <div className = { 'grid-global' }>
-            <GenericButton
-              text = { 'no' }
-              className = { 'cusror-pointer global-button profile-button-small' }
-              onClick = { () => this.setState({ viewMessage : false }) }
-              />
-            <GenericButton
-              text = { 'yes' }
-              className = { 'cusror-pointer global-button profile-button-small' }
-              onClick = { () => {
-                onCancelOption()
-                this.setState({ viewMessage : true })
-              } }
-              />
-            </div>
-          </center>
-          :
-          <div>
-            <div>
-              <GenericInput
-                text = { 'Slide Contribution Amount' }
-                value = { amountText }
-                onChange = { (e) => amountTextFunc(e.target.value, null) }
-                />
-              <SliderComponent
-                defaultValue = { amountText }
-                onChangeValue = { (amount, e) => {
-                  amountTextFunc(amount, e)} }
-                min = { 100 }
-                text = { '' }
-                max = { 5000 }
-              />
-            </div>
+        <div>
+          {
+            confirmAmount ?
             <center>
+            <h4 className = { 'unionbank-color font-size-16px' }>Pension Fund Contribution</h4>
+            <br/>
+            <h4 className = { 'unionbank-color-grey font-size-16px' }>Are you sure want you want to contribute this amount? This will be deducted from your monthly salary unless change or discontinued.</h4>
+            <br/>
+            <div className = { 'grid-global' }>
               <GenericButton
-                className = { 'profile-button-small global-button cursor-pointer' }
-                text = { `${ isBool && isBool === true ? 'Update' : 'Continue' }` }
+                text = { 'no' }
+                className = { 'cusror-pointer global-button profile-button-small' }
+                onClick = { () => this.setState({ confirmAmount : false }) }
+                />
+              <GenericButton
+                text = { 'yes' }
+                className = { 'cusror-pointer global-button profile-button-small' }
                 onClick = { () => {
                   continueCodeFunc()
                 } }
                 />
-              <br/>
-              <br/>
-              <br/>
-              {
-                isBool && isBool === true &&
-                <h4
-                  onClick = { () => this.setState({ viewMessage : true }) }
-                  className = { 'font-weight-bold font-size-14px cursor-pointer unionbank-color-grey' }>DISCONTINUE CONTRIBUTION</h4>
-              }
+              </div>
             </center>
-          </div>
-        }
-
+            :
+            <div>
+              {
+                viewMessage ?
+                <center>
+                <h4 className = { 'unionbank-color font-size-16px' }>Opt out?</h4>
+                <br/>
+                <h4 className = { 'unionbank-color-grey font-size-16px' }>Are you sure you do not want to contribute to your pension fund anymore?</h4>
+                <br/>
+                <div className = { 'grid-global' }>
+                  <GenericButton
+                    text = { 'no' }
+                    className = { 'cusror-pointer global-button profile-button-small' }
+                    onClick = { () => this.setState({ viewMessage : false }) }
+                    />
+                  <GenericButton
+                    text = { 'yes' }
+                    className = { 'cusror-pointer global-button profile-button-small' }
+                    onClick = { () => {
+                      onCancelOption()
+                      this.setState({ viewMessage : true })
+                    } }
+                    />
+                  </div>
+                </center>
+                :
+                <div>
+                  <div>
+                    <GenericInput
+                      text = { 'Slide Contribution Amount' }
+                      value = { amountText }
+                      onChange = { (e) => amountTextFunc(e.target.value, null) }
+                      />
+                    <SliderComponent
+                      defaultValue = { amountText }
+                      onChangeValue = { (amount, e) => {
+                        amountTextFunc(amount, e)} }
+                      min = { 100 }
+                      text = { '' }
+                      max = { 5000 }
+                    />
+                  </div>
+                  <center>
+                    <GenericButton
+                      className = { 'profile-button-small global-button cursor-pointer' }
+                      text = { `${ isBool && isBool === true ? 'Update' : 'Continue' }` }
+                      onClick = { () => {
+                        this.setState({ confirmAmount : true })
+                      } }
+                      />
+                    <br/>
+                    <br/>
+                    <br/>
+                    {
+                      isBool && isBool === true &&
+                      <h4
+                        onClick = { () => this.setState({ viewMessage : true }) }
+                        className = { 'font-weight-bold font-size-14px cursor-pointer unionbank-color-grey' }>DISCONTINUE CONTRIBUTION</h4>
+                    }
+                  </center>
+                </div>
+              }
+            </div>
+          }
+        </div>
       </Modal>
     )
   }
