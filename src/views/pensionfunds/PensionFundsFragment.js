@@ -43,14 +43,13 @@ class PensionFundsFragment extends BaseMVPView {
       amountText: 100,
       codeText: '',
       showNoticeResponseModal : false,
-      agreementBool: true,
     }
   }
 
   componentDidMount () {
+    this.presenter.getPensionFundsDocuments()
     this.presenter.getPensionFunds()
     this.presenter.getPensionValidate()
-    this.presenter.getPensionFundsDocuments()
     this.presenter.setUnitSummary('day')
   }
 
@@ -180,9 +179,9 @@ class PensionFundsFragment extends BaseMVPView {
         {
           showCodeModal &&
           <PensionCodeModals
-            agreementBool = { agreementBool }
+            agreementBool = { agreementBool && agreementBool.pensionAgreement }
             submitCodeFunc = { () => {
-              if(agreementBool && agreementBool === true) {
+              if(agreementBool && agreementBool.pensionAgreement === true) {
                 if(cancelOption) {
                   this.presenter.cancelContributionalAmount(codeText)
                 } else {
@@ -212,7 +211,7 @@ class PensionFundsFragment extends BaseMVPView {
           showContributionModal &&
           <PensionContributionModals
             amountText = { amountText }
-            isBool = { agreementBool }
+            isBool = { agreementBool && agreementBool.pensionAgreement }
             amountTextFunc = { (e,value) => {
               this.setState({ amountText: e })
             } }
@@ -264,7 +263,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div>
                 {
                   agreementBool &&
-                  agreementBool === true ?
+                  agreementBool.pensionAgreement === true ?
                   <PensionDetailsFragment
                     pensionContributionHistoryData = { pensionContributionHistoryData }
                     pensionContributionData = { pensionContributionData }
@@ -318,6 +317,6 @@ class PensionFundsFragment extends BaseMVPView {
 }
 
 PensionFundsFragment.PropTypes = {
-   agreementBool : PropTypes.Boolean,
+   agreementBool : PropTypes.object,
 }
 export default ConnectView (PensionFundsFragment, Presenter)

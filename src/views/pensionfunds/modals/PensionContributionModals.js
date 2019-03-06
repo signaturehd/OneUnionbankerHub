@@ -67,6 +67,7 @@ class PensionContributionModals extends Component {
                 onChange = { (e) => amountTextFunc(e.target.value, null) }
                 />
               <SliderComponent
+                defaultValue = { amountText }
                 onChangeValue = { (amount, e) => {
                   amountTextFunc(amount, e)} }
                 min = { 100 }

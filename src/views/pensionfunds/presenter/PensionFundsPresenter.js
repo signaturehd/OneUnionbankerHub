@@ -477,13 +477,10 @@ export default class PensionFundsPresenter {
   }
 
   getPensionFundsDatePagination () {
-    this.view.showCircularLoader(false)
     this.getPensionFundsDatePaginationInteractor.execute(fromDate, toDate)
     .subscribe(data => {
       this.setChartFilter(data)
-      this.view.showCircularLoader(false)
     }, error => {
-      this.view.showCircularLoader(false)
     })
   }
 

@@ -266,7 +266,7 @@ class LoginView extends BaseMVPView {
 
     /* Prod Version 8.0.6 */
 
-    /* UAT 8.3.1*/
+    /* UAT 8.3.2*/
 
     /* Added new Team Goals */
 
