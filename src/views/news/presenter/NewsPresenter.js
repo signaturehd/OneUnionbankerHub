@@ -35,7 +35,7 @@ export default class NewsPresenter {
       this.view.showLoader(false)
       newsData.push(objectParam)
         if (newsData.length !== 0) {
-          console.log(newsData)
+          this.view.showNews(newsData)
         }
       }, e => {
         this.view.showLoader(false)
@@ -43,10 +43,25 @@ export default class NewsPresenter {
   }
 
   getNewsNoLoading () {
+    newsData = []
     this.getNewsInteractor.execute()
     .subscribe(data => {
-      this.view.showNews(data)
+      const objectParam = {
+        id: resp.id,
+        date : resp.date.replace('Z',''),
+        details : resp.details,
+        imageUrl : resp.imageUrl,
+        linkUrl : resp.articleUrl,
+        subtitle: resp.subtitle,
+        title: resp.title,
+        isHeart: resp.isHeart,
+        total: resp.totalLikes,
+      }
       this.view.showLoader(false)
+      newsData.push(objectParam)
+        if (newsData.length !== 0) {
+          this.view.showNews(newsData)
+        }
     }, error => {
       this.view.showLoader(false)
     })

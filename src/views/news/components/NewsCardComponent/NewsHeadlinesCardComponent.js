@@ -39,6 +39,7 @@ class NewsHeadlinesCardComponent extends Component {
         borderRadius: '25px',
       }
     }
+    const detailsFiltered = news && news.details.substr(0, 200)
 
     return (
       <Card className = { 'news-card-headlines' }>
@@ -48,12 +49,13 @@ class NewsHeadlinesCardComponent extends Component {
           onClick = { () =>
             this.openLink() } >
           <div className = { 'news-grid-headlines' }>
-            <div className = { 'text-align-right' }>
+            <div className = { 'text-align-left' }>
+              <h2 className = { 'font-size-30px unionbank-color font-weight-bold' }>{ news.title }</h2>
             </div>
             <div></div>
-            <div></div>
             <div>
-              <h2 className = { 'font-size-30px' }>{ news.title }</h2>
+              <br/>
+              <h2 className = { 'font-size-px unionbank-color' }>{ detailsFiltered }...</h2>
               <br/>
               <div className = { 'news-grid-date' }>
                 <span className = { 'news-icon-size news-icon-headlines' }/>

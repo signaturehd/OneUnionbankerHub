@@ -65,7 +65,7 @@ class NewsCardComponent extends Component {
             <GenericButton
               onClick = { () =>
                 this.openLink() }
-              className = { 'news-view-details-button' }
+              className = { 'profile-button-medium cursor-pointer global-button' }
               text = { 'Read More' }
               />
           </div>

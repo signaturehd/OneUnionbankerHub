@@ -7,29 +7,33 @@ export default class NewsInteractor {
   }
 
   execute () {
-    return Observable.create(emitter => {
-       this.client.getNews(this.client.getToken())
-        .catch((e) =>
-          Observable.of([])
+    try {
+      return Observable.create(emitter => {
+         this.client.getNews(this.client.getToken())
+          .flatMap(news => Observable.from(news))
+          .flatMap(news => {
+            if (news.imageUrl.charAt(0).toString() === '/') {
+              return this.client.getNewsImage(this.client.getToken(), news.imageUrl)
+                .map(blob => {
+                  let updatedNews = news
+                  updatedNews.imageUrl = blob
+                  return updatedNews
+                })
+            } else {
+              return Observable.of(news)
+            }
+          })
+          .subscribe(news => emitter.next(news),
+           e => {
+             emitter.complete(e)
+           },
+           e => {
+            emitter.error()
+          }
         )
-        .flatMap(news => Observable.from(news))
-        .flatMap(news =>
-          Observable.zip(
-           this.client.getNewsImage(this.client.getToken(), news.imageUrl),
-           (newsBlob) => {
-             const updatedNews = news
-             updatedNews.imageUrl = newsBlob
-             return updatedNews
-           })
-        )
-        .subscribe(news => emitter.next(news),
-         e => {
-           emitter.complete(e)
-         },
-         e => {
-          emitter.error()
-        }
-      )
-    })
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
