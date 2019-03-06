@@ -43,9 +43,11 @@ class BookConfirmationModal extends Component {
             <h3>Are you sure you want to {title} this book?</h3>
             <div className = { 'grid-global' }>
               <GenericButton
+                className = { 'profile-button-medium cursor-pointer global-button' }
                 onClick = { () => this.onYes()  }
                 text = { 'Yes' } />
               <GenericButton
+                className = { 'profile-button-medium cursor-pointer global-button' }
                 onClick = { onClose }
                 text = { 'Cancel' } />
             </div>

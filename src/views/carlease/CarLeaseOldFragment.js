@@ -137,7 +137,9 @@ class CarLeaseOldFragment extends BaseMVPView {
           {
             enabledLoader ?
              <center className={ 'circular-loader-center' }>
-               <CircularLoader show={ this.state.enabledLoader }/>
+               <CircularLoader
+                 validateLoading = { true }
+                 show={ this.state.enabledLoader }/>
              </center> :
             <FormComponent
               onClick={

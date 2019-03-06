@@ -23,6 +23,7 @@ export default class DentalLoaPresenter {
       this.view.hideCircularLoader()
       this.view.getDentalLoa(response)
     }, error => {
+      this.view.hideCircularLoader()
       this.view.showErrorMessage(error, true)
     })
  }

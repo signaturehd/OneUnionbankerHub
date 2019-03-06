@@ -2,6 +2,8 @@ import NewsInteractor from '../../../domain/interactor/news/NewsInteractor'
 import moment from 'moment'
 import AddCheckedStatusIsHeartInteractor from '../../../domain/interactor/news/AddCheckedStatusIsHeartInteractor'
 
+let newsData = [], newsLength = 0
+
 export default class NewsPresenter {
   constructor (container) {
     this.getNewsInteractor = new NewsInteractor(container.get('HRBenefitsClient'))
@@ -15,90 +17,51 @@ export default class NewsPresenter {
   }
 
   getNews () {
+    newsData = []
     this.view.showLoader(true)
     this.getNewsInteractor.execute()
-    .map(resp1 => {
-      try {
-        let dateArray = []
-        let dateArrayList = []
-        resp1.map((data) => {
-          dateArrayList.push(data.date.replace('Z',''))
-        })
-        function max_date(all_dates) {
-          let max_dt = all_dates[0]
-          const max_dtObj = new Date(all_dates[0])
-          all_dates.forEach(function (date, index)
-          {
-            if (new Date(date) > max_dtObj)
-            {
-              max_dt = dts
-              const max_dtObj = new Date(date)
-            }
-          })
-          return max_dt
+    .subscribe(resp => {
+      const objectParam = {
+        id: resp.id,
+        date : resp.date.replace('Z',''),
+        details : resp.details,
+        imageUrl : resp.imageUrl,
+        linkUrl : resp.articleUrl,
+        subtitle: resp.subtitle,
+        title: resp.title,
+        isHeart: resp.isHeart,
+        total: resp.totalLikes,
+      }
+      this.view.showLoader(false)
+      newsData.push(objectParam)
+        if (newsData.length !== 0) {
+          this.view.showNews(newsData)
         }
-
-        resp1.map((resp) => {
-          if(max_date(dateArrayList) === resp.date.replace('Z', '')) {
-            dateArray.push({
-              id: resp.id,
-              date : resp.date,
-              details : resp.details,
-              imageUrl : resp.imageUrl,
-              linkUrl : resp.articleUrl,
-              subtitle: resp.subtitle,
-              title: resp.title,
-              isHeart: resp.isHeart,
-              total: resp.totalLikes,
-              status: 1,
-            })
-          } else {
-            dateArray.push({
-              id: resp.id,
-              date : resp.date,
-              details : resp.details,
-              imageUrl : resp.imageUrl,
-              linkUrl : resp.articleUrl,
-              subtitle: resp.subtitle,
-              title: resp.title,
-              isHeart: resp.isHeart,
-              total: resp.totalLikes,
-              status: 0,
-            })
-          }
-        })
-        // resp1.map((resp) => {
-        // dateArray.push({
-        //   id: resp.id,
-        //   date : resp.date,
-        //   details : resp.details,
-        //   imageUrl : resp.imageUrl,
-        //   linkUrl : resp.articleUrl,
-        //   subtitle: resp.subtitle,
-        //   title: resp.title,
-        //   isHeart: resp.isHeart,
-        //   total: resp.totalLikes,
-        //   status: 0,
-        // })
-        // }
-      // )
-      this.view.showNews(dateArray)
-      this.view.showLoader(false)
-    } catch (e) {
-    }
-    })
-    .subscribe(data => {
-      this.view.showLoader(false)
-    }, error => {
-      this.view.showLoader(false)
+      }, e => {
+        this.view.showLoader(false)
     })
   }
 
   getNewsNoLoading () {
+    newsData = []
     this.getNewsInteractor.execute()
     .subscribe(data => {
-      this.view.showNews(data)
+      const objectParam = {
+        id: resp.id,
+        date : resp.date.replace('Z',''),
+        details : resp.details,
+        imageUrl : resp.imageUrl,
+        linkUrl : resp.articleUrl,
+        subtitle: resp.subtitle,
+        title: resp.title,
+        isHeart: resp.isHeart,
+        total: resp.totalLikes,
+      }
       this.view.showLoader(false)
+      newsData.push(objectParam)
+        if (newsData.length !== 0) {
+          this.view.showNews(newsData)
+        }
     }, error => {
       this.view.showLoader(false)
     })
