@@ -37,7 +37,7 @@ class BookViewModal extends Component {
       backgroundSize : '200px 200px',
       width: '-webkit-fill-available',
     }
-    console.log(booksCommentList)
+
     return (
       <Modal
         isDismisable = { true }
