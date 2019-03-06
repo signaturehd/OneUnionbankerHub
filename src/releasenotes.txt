@@ -1,4 +1,4 @@
-*****UAT Version (Updated v 8.3.2)*************
+*****UAT Version*************
 
 v 8.3.2
 
@@ -15,7 +15,7 @@ Fixed news feed retrieving of images and added details.
 Fixed issue in image of profile alignment.
 =
 
-*****Production Version (v 8.0.6)******
+*****Production Version******
 
 Fixed description in otp guide.
 Fixed font and background issue.
