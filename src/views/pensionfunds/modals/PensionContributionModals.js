@@ -98,7 +98,7 @@ class PensionContributionModals extends Component {
                       defaultValue = { parseInt(amountText) }
                       onChangeValue = { (amount, e) => {
                         amountTextFunc(amount, e)} }
-                      min = { amountText ? amountText : 100 }
+                      min = { 100 }
                       text = { '' }
                       max = { 5000 }
                     />
