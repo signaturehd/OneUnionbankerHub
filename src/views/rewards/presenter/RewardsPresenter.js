@@ -8,6 +8,7 @@ import GetRewardPointsInteractor from '../../../domain/interactor/rewards/GetRew
 import SubmitAwardsParam from '../../../domain/param/SubmitAwardsParam'
 import GetRewardGiftsDetailsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsDetailsInteractor'
 import GetRewardGiftsInteractor from '../../../domain/interactor/gifts/GetRewardGiftsInteractor'
+import GetRewardsAccountValidateInteractor from '../../../domain/interactor/rewards/GetRewardsAccountValidateInteractor'
 
 import * as AwardsFunction from '../function/AwardsFunction'
 
@@ -21,6 +22,7 @@ export default class RewardsPresenter {
     this.submitAwardsInteractor = new SubmitAwardsInteractor(container.get('HRBenefitsClient'))
     this.getRewardGiftsDetailsInteractor = new GetRewardGiftsDetailsInteractor(container.get('HRBenefitsClient'))
     this.getRewardGiftsInteractor = new GetRewardGiftsInteractor(container.get('HRBenefitsClient'))
+    this.getRewardsAccountValidateInteractor = new GetRewardsAccountValidateInteractor(container.get('HRBenefitsClient'))
   }
 
   setView (view) {
@@ -41,7 +43,7 @@ export default class RewardsPresenter {
     const awardData  = [{
       id:2 ,
       title: 'Celebrating a DNA Moment',
-      details: 'This award is given to individuals or teams who demonstrate behaviors aligned to the following:',
+      details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
       styleName : 'myawards-image myawards-image-1',
       value : 'Values:',
       valuesDetails : 'Integrity, Magis, Ubuntu',
@@ -61,7 +63,7 @@ export default class RewardsPresenter {
     {
       id: 3,
       title: 'Star Award',
-      details: 'Short Star Award details',
+      details: 'Given to individuals or teams who demonstrated any component of the UnionBank DNA in their day-to-day task.',
       styleName : 'myawards-image myawards-image-3 ',
       value : null,
       valuesDetails : null,
@@ -118,6 +120,17 @@ export default class RewardsPresenter {
       details: 'Recognized a UnionBanker'
     }]
     this.view.setRewardList(rewardList)
+  }
+
+  getRewardsAccountValidate (id) {
+    this.view.showLoading(true)
+    this.getRewardsAccountValidateInteractor.execute(id)
+    .subscribe(data => {
+      this.view.showLoading(false)
+      this.view.setRewadsDataFragment()
+    }, error => {
+      this.view.showLoading(false)
+    })
   }
 
   setDeleteEmployeeToList (key, id, selectedId) {

@@ -50,16 +50,12 @@ class Award extends Component {
                 <h4 className = { 'font-size-30px' }>{value.title}</h4>
                 <br/>
                 <h4 className = {'text-align-justify celebrate-margin-bottom font-weight-lighter font-size-16px'}>{value.details}</h4>
-                <h4 className = {'text-align-justify font-weight-bold font-size-13px'}>{value.principles}</h4>
-                <h4 className = {'text-align-justify font-weight-lighter font-size-12px'}>{value.principlesDetails}</h4>
-                <br/>
-                <h4 className = {'text-align-justify font-weight-bold font-size-13px'}>{value.value}</h4>
-                <h4 className = {'text-align-justify font-weight-lighter font-size-12px'}>{value.valuesDetails}</h4>
               </div>
             )
           )
         }
         <div>
+        <h4 className={'celebrate-container-space font-size-14px'}>Who will I award this to?</h4>
         <br/>
         {
           // membersData &&
@@ -88,8 +84,6 @@ class Award extends Component {
 					listData = { membersData }/>
         </div>
         <div>
-          <h4 className={'celebrate-container-space font-size-14px'}>Who will I award this to?</h4>
-          <br/>
         <div className = { 'grid-global-columns-x3' }>
           {
             employeeList &&

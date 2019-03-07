@@ -149,7 +149,6 @@ class PensionFundsFragment extends BaseMVPView {
       showDevelopmentModal,
       pensionChartData,
       data,
-      pensionAgreement,
       showContributionModal,
       isPincode,
       noticeResponse,
@@ -179,9 +178,9 @@ class PensionFundsFragment extends BaseMVPView {
         {
           showCodeModal &&
           <PensionCodeModals
-            agreementBool = { agreementBool && agreementBool.pensionAgreement }
+            agreementBool = { agreementBool && agreementBool }
             submitCodeFunc = { () => {
-              if(agreementBool && agreementBool.pensionAgreement === true) {
+              if(agreementBool && agreementBool === true) {
                 if(cancelOption) {
                   this.presenter.cancelContributionalAmount(codeText)
                 } else {
@@ -211,7 +210,7 @@ class PensionFundsFragment extends BaseMVPView {
           showContributionModal &&
           <PensionContributionModals
             amountText = { amountText }
-            isBool = { agreementBool && agreementBool.pensionAgreement }
+            isBool = { agreementBool && agreementBool }
             amountTextFunc = { (e,value) => {
               this.setState({ amountText: e })
             } }
@@ -263,7 +262,7 @@ class PensionFundsFragment extends BaseMVPView {
                 <div>
                 {
                   agreementBool &&
-                  agreementBool.pensionAgreement === true ?
+                  agreementBool === true ?
                   <PensionDetailsFragment
                     pensionContributionHistoryData = { pensionContributionHistoryData }
                     pensionContributionData = { pensionContributionData }

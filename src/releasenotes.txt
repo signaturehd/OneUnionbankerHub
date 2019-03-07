@@ -17,10 +17,22 @@ Fixed issue in pension funds wrong confirmation message attach upon giving amoun
 
 =
 
+v 8.3.4
+
+
+Fixed issue in pension funds wrong confirmation message attach upon giving amount to contribute.
+Fixed rewards subtitle issue and validate upon selecting recognized awards
+
+=
+
 *****Production Version******
+
+
+v 8.0.6
 
 Fixed description in otp guide.
 Fixed font and background issue (Mobile View and Global font).
 Fixed news feed retrieving of images and added details.
 Fixed issue in image of profile alignment.
 Fixed issue in pension funds wrong confirmation message attach upon giving amount to contribute.
+Fixed rewards subtitle issue and validate upon selecting recognized awards
