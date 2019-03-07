@@ -1789,6 +1789,11 @@ export default class HRBenefitsClient {
       .pipe(ServiceErrorOperator())
   }
 
+  getRewardsAccountValidate (token, id) {
+    return this.service.getRewardsAccountValidate(token, id)
+      .pipe(ServiceErrorOperator())
+  }
+
   getRewardGiftsDetails (token, id) {
     return this.service.getRewardGiftsDetails(token, id)
     .pipe(ServiceErrorOperator())

@@ -2634,6 +2634,12 @@ export default class HRBenefitsService {
     })
   }
 
+  getRewardsAccountValidate (token, id) {
+    return this.apiClient.get(`v1/rewards/validate?awardType=${id}`, {
+      headers : { token }
+    })
+  }
+
   getRewardGiftsDetails (token, id) {
     return this.rootClient.get(`hr/giftaway/v1/merchants/${ id }`, {
       headers : { token }
