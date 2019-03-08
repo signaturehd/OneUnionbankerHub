@@ -25,6 +25,15 @@ Fixed rewards subtitle issue and validate upon selecting recognized awards
 
 =
 
+v 8.3.5
+
+
+Fixed issue in news feed alignment of details.
+Fixed Pension funds chart not rendering the navPu Rate
+Feedback footer label
+
+=
+
 *****Production Version******
 
 
@@ -36,3 +45,10 @@ Fixed news feed retrieving of images and added details.
 Fixed issue in image of profile alignment.
 Fixed issue in pension funds wrong confirmation message attach upon giving amount to contribute.
 Fixed rewards subtitle issue and validate upon selecting recognized awards
+
+
+v 8.0.7
+
+Fixed issue in news feed alignment of details.
+Fixed Pension funds chart not rendering the navPu Rate
+Feedback footer label replaced
