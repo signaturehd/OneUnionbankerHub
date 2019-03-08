@@ -152,6 +152,11 @@ class PensionFundsFragment extends BaseMVPView {
     window.location.reload()
   }
 
+  amountFuncText (amount) {
+    const value = functions.checkedValidateInputNumber(amount)
+    this.setState({ amountText : value })
+  }
+
   render () {
     const { getProfileFunc } = this.props
     const {
@@ -229,7 +234,7 @@ class PensionFundsFragment extends BaseMVPView {
             amountText = { amountText }
             isBool = { agreementBool && agreementBool }
             amountTextFunc = { (e,value) => {
-              this.setState({ amountText: e })
+              this.amountFuncText (e)
             } }
             continueCodeFunc = { () => {
               this.checkContributionAmount()

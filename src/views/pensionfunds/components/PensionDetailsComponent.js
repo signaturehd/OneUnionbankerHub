@@ -44,23 +44,6 @@ class PensionDetailsComponent extends Component {
           </div>
         </div>
         <div
-          className = { 'funds-grid-row-details  line-spacing-2' }>
-          <h4 className = { 'font-weight-normal font-size-20px' }>
-            { format(pensionContributionData && pensionContributionData.unitToday) }
-          </h4>
-          <div>
-            <p style = {{
-              margin: '10px 0px 0px',
-              display: 'flex',
-              flexDirection: 'column',
-              lineHeight: '1.5'
-              }}>
-            <span className = { 'font-size-14px font-weight-bold' }>Unit Today</span>
-            <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
-            </p>
-          </div>
-        </div>
-        <div
           style = {{
             borderRightColor: '#fff',
             borderRight: '.5px solid',
@@ -77,6 +60,23 @@ class PensionDetailsComponent extends Component {
               lineHeight: '1.5'
               }}>
             <span className = { 'font-size-14px font-weight-bold' }>Total Investment</span>
+            <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
+            </p>
+          </div>
+        </div>
+        <div
+          className = { 'funds-grid-row-details  line-spacing-2' }>
+          <h4 className = { 'font-weight-normal font-size-20px' }>
+            { format(pensionContributionData && pensionContributionData.unitToday) }
+          </h4>
+          <div>
+            <p style = {{
+              margin: '10px 0px 0px',
+              display: 'flex',
+              flexDirection: 'column',
+              lineHeight: '1.5'
+              }}>
+            <span className = { 'font-size-14px font-weight-bold' }>Unit Today</span>
             <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
             </p>
           </div>
