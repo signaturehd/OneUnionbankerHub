@@ -29,8 +29,8 @@ v 8.3.5
 
 
 Fixed issue in news feed alignment of details.
-Fixed Pension funds chart not rendering the navPu Rate
-Feedback footer label
+Fixed Pension funds chart not rendering the navPu Rate, added validation in contribution amount
+Feedback footer label replaced
 
 =
 
@@ -50,5 +50,5 @@ Fixed rewards subtitle issue and validate upon selecting recognized awards
 v 8.0.7
 
 Fixed issue in news feed alignment of details.
-Fixed Pension funds chart not rendering the navPu Rate
+Fixed Pension funds chart not rendering the navPu Rate, added validation in contribution amount
 Feedback footer label replaced
