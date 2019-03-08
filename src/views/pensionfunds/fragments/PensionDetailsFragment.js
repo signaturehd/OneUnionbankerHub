@@ -53,7 +53,7 @@ class PensionDetailsFragment extends Component {
             <h4 className = { ' margin-auto letter-spacing-2 font-weight-lighter font-size-25px' }>Unit Summary</h4>
             <GenericButton
               className = { 'cursor-pointer profile-button-medium' }
-              text = { 'Change Contribution Amount' }
+              text = { 'Nominate Contribution Amount' }
               className = { 'funds-contribution-button' }
               onClick = { () => contributionModal() }
             />
