@@ -79,7 +79,7 @@ class PensionDetailsFragment extends Component {
             <br/>
         </div>
           {
-            pensionContributionHistoryData && pensionContributionHistoryData.length !== 0 ?
+            pensionContributionHistoryData && pensionContributionHistoryData.contributionHistory.length !== 0 ?
             <PensionFundsPaymentHistoryComponent
               pensionContributionHistoryData = { pensionContributionHistoryData }
               changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
