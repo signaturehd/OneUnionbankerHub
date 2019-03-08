@@ -46,7 +46,7 @@ export default class NewsPresenter {
     newsData = []
     this.view.showLoader(false)
     this.getNewsInteractor.execute()
-    .subscribe(data => {
+    .subscribe(resp => {
       const objectParam = {
         id: resp.id,
         date : resp.date.replace('Z',''),

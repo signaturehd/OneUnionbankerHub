@@ -28,7 +28,7 @@ class NewsHeadlinesCardComponent extends Component {
     const { isHeartActive } = this.state
     const styleHead = {
       newsBackground: {
-        backgroundImage : `url(https://www.oneunionbankerhub.com/imagerepo/news/agriGoesTechUp.jpg)`,
+        backgroundImage : `url(${news.imageUrl})`,
         backgroundRepeat : 'no-repeat',
         backgroundSize: 'cover',
         color : 'black',
