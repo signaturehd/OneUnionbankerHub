@@ -58,7 +58,6 @@ class PensionFundsFragment extends BaseMVPView {
   setPensionAgreementValidate (agreementBool) {
     this.setState({ agreementBool })
     const tempBool = agreementBool
-    console.log(tempBool)
     setTimeout(() => {
       if(tempBool === true) {
         this.presenter.setUnitSummary('day')
@@ -69,7 +68,7 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   checkContributionAmount (e) {
-    if(`${this.state.amountText}` >= 100 && `${this.state.amountText}` <= 5000) {
+    if(parseFloat(this.state.amountText) >= 100 && parseFloat(this.state.amountText) <= 5000) {
       this.setState({
         showCodeModal : true,
         showContributionModal : false,
@@ -153,7 +152,7 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   amountFuncText (amount) {
-    const value = functions.checkedValidateInputNumber(amount)
+    const value = functions.checkedValidateInputMoney(amount)
     this.setState({ amountText : value })
   }
 

@@ -91,7 +91,7 @@ class PensionContributionModals extends Component {
                     <GenericInput
                       text = { 'Slide Contribution Amount' }
                       value = { amountText }
-                      maxLength = { 4 }
+                      maxLength = { 7 }
                       onChange = { (e) => amountTextFunc(e.target.value, null) }
                       />
                     <SliderComponent

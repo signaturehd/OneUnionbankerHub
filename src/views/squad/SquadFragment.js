@@ -8,6 +8,7 @@ import SquadsComponent from './components/SquadsComponent'
 import VacanciesModal from './modals/VacanciesModal'
 
 import NoticeResponseModal from '../notice/NoticeResponseModal'
+import NoDataListComponent from '../common/components/NoDataListedComponent'
 
 import { GenericButton  } from '../../ub-components/'
 
@@ -38,7 +39,7 @@ class SquadFragment extends BaseMVPView {
   }
 
   setSquads (setSquadList) {
-    this.setState({ setSquadList })
+    this.setState({ setSquadList : [] })
   }
 
   setVacancies (vacants) {
@@ -141,25 +142,32 @@ class SquadFragment extends BaseMVPView {
           } }
         />
       <br/>
-      <div className = { `${pageNumber > 1 ? 'grid-global' : 'text-align-center'  }`}>
-        {
-          pageNumber > 1 &&
+      {
+        setSquadList && setSquadList.length !== 0 ?
+        <div className = { `${pageNumber > 1 ? 'grid-global' : 'text-align-center'  }`}>
+          {
+            pageNumber > 1 &&
+            <GenericButton
+              className = { 'profile-button-small cursor-pointer global-button' }
+              text = { 'Previous' }
+              onClick = { () => {
+                this.decrementPage()
+              } }
+            />
+          }
           <GenericButton
             className = { 'profile-button-small cursor-pointer global-button' }
-            text = { 'Previous' }
+            text = { 'Next' }
             onClick = { () => {
-              this.decrementPage()
+              this.incrementPage()
             } }
           />
-        }
-        <GenericButton
-          className = { 'profile-button-small cursor-pointer global-button' }
-          text = { 'Next' }
-          onClick = { () => {
-            this.incrementPage()
-          } }
+        </div>
+        :
+        <NoDataListComponent
+          text = { 'No Squad Vacancy Listed' }
         />
-      </div>
+      }
       </div>
     )
   }
