@@ -214,7 +214,7 @@ export default class PensionFundsPresenter {
   setChartFilter (dateData) {
     if (variableParam.toLowerCase() === 'day') { ///Daily Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': parseFloat(x.bidRate)}
         return object
       })
 
@@ -262,12 +262,13 @@ export default class PensionFundsPresenter {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
         bidRateArray.push(resp.bidRate)
       })
-
+      console.log(labelArray)
+      console.log(bidRateArray)
       this.view.setChartPensionData(labelArray, bidRateArray)
 
     } else if (variableParam.toLowerCase() === 'week') { ///Weekly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': parseFloat(x.bidRate)}
         return object
       })
 
@@ -322,7 +323,7 @@ export default class PensionFundsPresenter {
 
     } else if(variableParam.toLowerCase() === 'month') { ///Monthly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate,  'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate,  'rate': parseFloat(x.bidRate)}
         return object
       })
 
@@ -374,7 +375,7 @@ export default class PensionFundsPresenter {
 
     } else if(variableParam.toLowerCase() === 'quarterly') {///Quarterly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': parseFloat(x.bidRate)}
         return object
       })
 
