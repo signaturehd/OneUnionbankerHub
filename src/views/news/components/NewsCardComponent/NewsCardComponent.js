@@ -32,7 +32,7 @@ class NewsCardComponent extends Component {
       backgroundImage : `url(${news.imageUrl})`,
       backgroundRepeat : 'no-repeat',
       backgroundSize: 'cover',
-      height: 'unset',
+      height: 'inherit',
       backgroundPosition: 'center',
     }
     const detailsFiltered = news && news.details.substr(0, 200)

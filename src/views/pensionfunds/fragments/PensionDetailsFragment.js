@@ -79,13 +79,13 @@ class PensionDetailsFragment extends Component {
             <br/>
         </div>
           {
-            pensionContributionHistoryData && pensionContributionHistoryData ?
+            pensionContributionHistoryData && pensionContributionHistoryData.length !== 0 ?
             <PensionFundsPaymentHistoryComponent
               pensionContributionHistoryData = { pensionContributionHistoryData }
               changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
               :
             <NoDataListedComponent
-              text = { ' No Pension Data' }/>
+              text = { 'There is no contribution at this moment' }/>
           }
         </div>
       </div>

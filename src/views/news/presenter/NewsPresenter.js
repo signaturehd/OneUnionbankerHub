@@ -44,6 +44,7 @@ export default class NewsPresenter {
 
   getNewsNoLoading () {
     newsData = []
+    this.view.showLoader(false)
     this.getNewsInteractor.execute()
     .subscribe(data => {
       const objectParam = {
@@ -68,6 +69,7 @@ export default class NewsPresenter {
   }
 
   addNewsIsHeart (id, isHeart) {
+    this.view.showLoader(false)
     this.addCheckedStatusIsHeartInteractor.execute(id, isHeart === 0 ? 1 : 0)
     .subscribe(data => {
       this.getNewsNoLoading()

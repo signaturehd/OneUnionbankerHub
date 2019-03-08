@@ -3,6 +3,8 @@ import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensi
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
 import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
 import GetPensionFundsDatePaginationInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDatePaginationInteractor'
+import GetPensionAgreementValidateInteractor from '../../../domain/interactor/user/GetPensionAgreementValidateInteractor'
+
 // POST
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
@@ -26,6 +28,7 @@ let QUARTERLY_STRANDS = 4
 
 export default class PensionFundsPresenter {
   constructor (container) {
+    this.getPensionAgreementValidateInteractor = new GetPensionAgreementValidateInteractor(container.get('HRBenefitsClient'))
     this.getPensionValidateInteractor = new GetPensionValidateInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsHistoryInteractor = new GetPensionFundsHistoryInteractor(container.get('HRBenefitsClient'))
@@ -49,6 +52,11 @@ export default class PensionFundsPresenter {
   setPensionFundsPresenter (data) {
     pensionData = data
     this.view.setPensionFundsData(data)
+  }
+
+  getPensionAgreementValidate () {
+    const value = this.getPensionAgreementValidateInteractor.execute()
+    this.view.setPensionAgreementValidate(value)
   }
 
   getPensionValidate () {

@@ -28,7 +28,7 @@ class NewsHeadlinesCardComponent extends Component {
     const { isHeartActive } = this.state
     const styleHead = {
       newsBackground: {
-        backgroundImage : `url(${news.imageUrl})`,
+        backgroundImage : `url(https://www.oneunionbankerhub.com/imagerepo/news/agriGoesTechUp.jpg)`,
         backgroundRepeat : 'no-repeat',
         backgroundSize: 'cover',
         color : 'black',
@@ -36,10 +36,11 @@ class NewsHeadlinesCardComponent extends Component {
         fontWeight : 'lighter',
         width: '-webkit-fill-available',
         height: '350px',
+        padding: '0',
         borderRadius: '25px',
       }
     }
-    const detailsFiltered = news && news.details.substr(0, 200)
+    const detailsFiltered = news && news.details.substr(0, 100)
 
     return (
       <Card className = { 'news-card-headlines' }>
@@ -47,19 +48,22 @@ class NewsHeadlinesCardComponent extends Component {
           style = { styleHead.newsBackground }
           className = {'news-body'}
           onClick = { () =>
-            this.openLink() } >
-          <div className = { 'news-grid-headlines' }>
-            <div className = { 'text-align-left' }>
-              <h2 className = { 'font-size-30px unionbank-color font-weight-bold' }>{ news.title }</h2>
-            </div>
-            <div></div>
-            <div>
-              <br/>
-              <h2 className = { 'font-size-px unionbank-color' }>{ detailsFiltered }...</h2>
-              <br/>
-              <div className = { 'news-grid-date' }>
-                <span className = { 'news-icon-size news-icon-headlines' }/>
-                <h2 className = { 'font-weight-normal' }>{ moment(news.date).format('MMM DD, YYYY') }</h2>
+            this.openLink() }
+          >
+          <div id = { 'news-header-overlay' }>
+            <div className = { 'news-grid-headlines' }>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div className = { 'text-align-left' }>
+                <p className = { 'font-size-23px unionbank-white-color font-weight-bold' }>{ news.title }</p>
+              </div>
+              <div>
+                <h2 className = { 'font-size-16px unionbank-white-color' }>{ detailsFiltered }...</h2>
+                <div className = { 'news-grid-date' }>
+                  <span className = { 'news-icon-size news-icon-headlines' }/>
+                  <h2 className = { 'font-size-10px font-weight-normal unionbank-white-color' }>{ moment(news.date).format('MMM DD, YYYY') }</h2>
+                </div>
               </div>
             </div>
           </div>

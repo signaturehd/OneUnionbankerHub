@@ -43,14 +43,29 @@ class PensionFundsFragment extends BaseMVPView {
       amountText: 100,
       codeText: '',
       showNoticeResponseModal : false,
+      agreementBool : false,
     }
   }
 
   componentDidMount () {
-    this.presenter.getPensionFundsDocuments()
-    this.presenter.getPensionFunds()
-    this.presenter.getPensionValidate()
-    this.presenter.setUnitSummary('day')
+    this.presenter.getPensionAgreementValidate()
+    setTimeout(() => {
+      this.presenter.getPensionFunds()
+      this.presenter.getPensionValidate()
+    }, 500)
+  }
+
+  setPensionAgreementValidate (agreementBool) {
+    this.setState({ agreementBool })
+    const tempBool = agreementBool
+    console.log(tempBool)
+    setTimeout(() => {
+      if(tempBool === true) {
+        this.presenter.setUnitSummary('day')
+      } else {
+        this.presenter.getPensionFundsDocuments()
+      }
+    }, 500)
   }
 
   checkContributionAmount (e) {
@@ -134,11 +149,13 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   reloadPage () {
+    window.location.reload()
   }
 
   render () {
-    const { agreementBool, getProfileFunc } = this.props
+    const { getProfileFunc } = this.props
     const {
+      agreementBool,
       loader,
       pensionFundsData,
       pensionFundsDocumentsData,
