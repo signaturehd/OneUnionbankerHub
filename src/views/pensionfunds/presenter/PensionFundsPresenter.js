@@ -3,6 +3,8 @@ import GetPensionFundsDocumentsInteractor from '../../../domain/interactor/pensi
 import GetPensionValidateInteractor from '../../../domain/interactor/pensionfunds/GetPensionValidateInteractor'
 import GetPensionFundsHistoryInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsHistoryInteractor'
 import GetPensionFundsDatePaginationInteractor from '../../../domain/interactor/pensionfunds/GetPensionFundsDatePaginationInteractor'
+import GetPensionAgreementValidateInteractor from '../../../domain/interactor/user/GetPensionAgreementValidateInteractor'
+
 // POST
 import AddPensionFundsDocumentsInteractor from '../../../domain/interactor/pensionfunds/AddPensionFundsDocumentsInteractor'
 import AddPensionContributionalInteractor from '../../../domain/interactor/pensionfunds/AddPensionContributionalInteractor'
@@ -26,6 +28,7 @@ let QUARTERLY_STRANDS = 4
 
 export default class PensionFundsPresenter {
   constructor (container) {
+    this.getPensionAgreementValidateInteractor = new GetPensionAgreementValidateInteractor(container.get('HRBenefitsClient'))
     this.getPensionValidateInteractor = new GetPensionValidateInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsInteractor = new GetPensionFundsInteractor(container.get('HRBenefitsClient'))
     this.getPensionFundsHistoryInteractor = new GetPensionFundsHistoryInteractor(container.get('HRBenefitsClient'))
@@ -49,6 +52,11 @@ export default class PensionFundsPresenter {
   setPensionFundsPresenter (data) {
     pensionData = data
     this.view.setPensionFundsData(data)
+  }
+
+  getPensionAgreementValidate () {
+    const value = this.getPensionAgreementValidateInteractor.execute()
+    this.view.setPensionAgreementValidate(value)
   }
 
   getPensionValidate () {
@@ -206,7 +214,7 @@ export default class PensionFundsPresenter {
   setChartFilter (dateData) {
     if (variableParam.toLowerCase() === 'day') { ///Daily Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': parseFloat(x.bidRate)}
         return object
       })
 
@@ -254,12 +262,13 @@ export default class PensionFundsPresenter {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
         bidRateArray.push(resp.bidRate)
       })
-
+      console.log(labelArray)
+      console.log(bidRateArray)
       this.view.setChartPensionData(labelArray, bidRateArray)
 
     } else if (variableParam.toLowerCase() === 'week') { ///Weekly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': parseFloat(x.bidRate)}
         return object
       })
 
@@ -314,7 +323,7 @@ export default class PensionFundsPresenter {
 
     } else if(variableParam.toLowerCase() === 'month') { ///Monthly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate,  'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate,  'rate': parseFloat(x.bidRate)}
         return object
       })
 
@@ -366,7 +375,7 @@ export default class PensionFundsPresenter {
 
     } else if(variableParam.toLowerCase() === 'quarterly') {///Quarterly Formatting
       let response = dateData && dateData.map((x,i)=> {
-        const object = {'date': x.applicableNavDate, 'rate': x.bidRate}
+        const object = {'date': x.applicableNavDate, 'rate': parseFloat(x.bidRate)}
         return object
       })
 

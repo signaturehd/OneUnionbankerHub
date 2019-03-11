@@ -43,7 +43,7 @@ class BaseFooterComponent extends Component {
                 className = { 'cursor-pointer' }
                 onClick = { () =>history.push('/feedback') }>Feedback</h3>
               <p>
-                For inquiries, let us know.
+                How was your experience in using this website? Help us improve our way to serve you better.
               </p>
             </div>
             <div className={ 'giftdetails-copyright2 column' }>

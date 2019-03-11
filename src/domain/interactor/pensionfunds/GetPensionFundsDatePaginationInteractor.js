@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs'
 let limit = 100
 let list1 = [], list2 = []
-
 export default class GetPensionFundsDatePaginationInteractor {
   constructor (client) {
     this.client = client
@@ -10,10 +9,10 @@ export default class GetPensionFundsDatePaginationInteractor {
   execute (fromDate, toDate) {
     return this.client.getPensionFundsDatePagination(this.client.getToken(), limit, 1, fromDate, toDate)
       .flatMap(dateResp => {
-        return Observable.range(1, this.calculatePageCount(dateResp.totalRecords, dateResp.limit))
+        return Observable.range(1, this.calculatePageCount(parseInt(dateResp.totalRecords), parseInt(dateResp.limit)))
       })
       .flatMap(dateResp => {
-        return this.client.getPensionFundsDatePagination(this.client.getToken(), limit, 1, dateResp.fromDate, dateResp.toDate)
+        return this.client.getPensionFundsDatePagination(this.client.getToken(), limit, 1, fromDate, toDate)
       })
       /*
         Get List
@@ -32,11 +31,11 @@ export default class GetPensionFundsDatePaginationInteractor {
   *
   * if total record is lower than the limit given, return 1 page only.
   */
-  calculatePageCount (totalRecords, limit) {
-    if (limit > totalRecords) {
+  calculatePageCount (totalRecords, lm) {
+    if (lm > totalRecords) {
         return 1
     }
 
-    return totalRecords / limit
+    return totalRecords / lm
   }
 }
