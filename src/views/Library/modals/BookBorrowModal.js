@@ -66,13 +66,13 @@ class BookBorrowModal extends BaseMVPView {
                 <br/>
                 <div className = { 'grid-global' }>
                   <GenericButton
-                    className = { 'profile-button-small' }
+                    className = { 'profile-button-medium cursor-pointer global-button' }
                     text = { 'Cancel' }
                     onClick = { () => cancelRequest(false) }
                     />
                   <GenericButton
-                    className = { 'profile-button-small' }
                     text = { 'Submit' }
+                    className = { 'profile-button-medium cursor-pointer global-button' }
                     onClick = { () => confirmation(detail && detail.id) }
                     />
                 </div>
@@ -83,7 +83,7 @@ class BookBorrowModal extends BaseMVPView {
               {
                 this.checkStatus (detail && detail.status) &&
                 <GenericButton
-                  className = { 'profile-button-small' }
+                  className = { 'profile-button-medium cursor-pointer global-button' }
                   text = { 'Cancel Request' }
                   onClick = { () =>
                     cancelRequest(true)

@@ -43,19 +43,32 @@ class PensionFundsFragment extends BaseMVPView {
       amountText: 100,
       codeText: '',
       showNoticeResponseModal : false,
-      agreementBool: true,
+      agreementBool : false,
     }
   }
 
   componentDidMount () {
-    this.presenter.getPensionFunds()
-    this.presenter.getPensionValidate()
-    this.presenter.getPensionFundsDocuments()
-    this.presenter.setUnitSummary('day')
+    this.presenter.getPensionAgreementValidate()
+    setTimeout(() => {
+      this.presenter.getPensionFunds()
+      this.presenter.getPensionValidate()
+    }, 500)
+  }
+
+  setPensionAgreementValidate (agreementBool) {
+    this.setState({ agreementBool })
+    const tempBool = agreementBool
+    setTimeout(() => {
+      if(tempBool === true) {
+        this.presenter.setUnitSummary('day')
+      } else {
+        this.presenter.getPensionFundsDocuments()
+      }
+    }, 500)
   }
 
   checkContributionAmount (e) {
-    if(`${this.state.amountText}` >= 100 && `${this.state.amountText}` <= 5000) {
+    if(parseFloat(this.state.amountText) >= 100 && parseFloat(this.state.amountText) <= 5000) {
       this.setState({
         showCodeModal : true,
         showContributionModal : false,
@@ -135,11 +148,18 @@ class PensionFundsFragment extends BaseMVPView {
   }
 
   reloadPage () {
+    window.location.reload()
+  }
+
+  amountFuncText (amount) {
+    const value = functions.checkedValidateInputMoney(amount)
+    this.setState({ amountText : value })
   }
 
   render () {
-    const { agreementBool, getProfileFunc } = this.props
+    const { getProfileFunc } = this.props
     const {
+      agreementBool,
       loader,
       pensionFundsData,
       pensionFundsDocumentsData,
@@ -150,7 +170,6 @@ class PensionFundsFragment extends BaseMVPView {
       showDevelopmentModal,
       pensionChartData,
       data,
-      pensionAgreement,
       showContributionModal,
       isPincode,
       noticeResponse,
@@ -180,7 +199,7 @@ class PensionFundsFragment extends BaseMVPView {
         {
           showCodeModal &&
           <PensionCodeModals
-            agreementBool = { agreementBool }
+            agreementBool = { agreementBool && agreementBool }
             submitCodeFunc = { () => {
               if(agreementBool && agreementBool === true) {
                 if(cancelOption) {
@@ -212,9 +231,9 @@ class PensionFundsFragment extends BaseMVPView {
           showContributionModal &&
           <PensionContributionModals
             amountText = { amountText }
-            isBool = { agreementBool }
+            isBool = { agreementBool && agreementBool }
             amountTextFunc = { (e,value) => {
-              this.setState({ amountText: e })
+              this.amountFuncText (e)
             } }
             continueCodeFunc = { () => {
               this.checkContributionAmount()
@@ -318,6 +337,6 @@ class PensionFundsFragment extends BaseMVPView {
 }
 
 PensionFundsFragment.PropTypes = {
-   agreementBool : PropTypes.Boolean,
+   agreementBool : PropTypes.object,
 }
 export default ConnectView (PensionFundsFragment, Presenter)

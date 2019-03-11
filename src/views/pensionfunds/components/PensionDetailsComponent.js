@@ -28,7 +28,7 @@ class PensionDetailsComponent extends Component {
             borderRight: '.5px solid',
           }}
           className = { 'funds-grid-row-details line-spacing-2' }>
-          <h4 className = { 'font-weight-normal font-size-24px' }>
+          <h4 className = { 'font-weight-normal font-size-20px' }>
             { pensionContributionData && pensionContributionData.totalUnitsBought.toFixed(6) }
           </h4>
           <div>
@@ -38,7 +38,7 @@ class PensionDetailsComponent extends Component {
               flexDirection: 'column',
               lineHeight: '1.5'
               }}>
-            <span className = { 'font-size-14px font-weight-bold' }>Total Units</span>
+            <span className = { 'font-size-14px font-weight-bold' }>Units</span>
             <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
             </p>
           </div>
@@ -49,7 +49,7 @@ class PensionDetailsComponent extends Component {
             borderRight: '.5px solid',
           }}
           className = { 'funds-grid-row-details line-spacing-2' }>
-          <h4 className = { 'font-weight-normal font-size-24px' }>
+          <h4 className = { 'font-weight-normal font-size-20px' }>
             { format(pensionContributionData && pensionContributionData.totalInvestments) }
           </h4>
           <div>
@@ -60,13 +60,13 @@ class PensionDetailsComponent extends Component {
               lineHeight: '1.5'
               }}>
             <span className = { 'font-size-14px font-weight-bold' }>Total Investment</span>
-            <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
+            <span className = { 'font-size-11px font-weight-lighter' }></span>
             </p>
           </div>
         </div>
         <div
           className = { 'funds-grid-row-details  line-spacing-2' }>
-          <h4 className = { 'font-weight-normal font-size-24px' }>
+          <h4 className = { 'font-weight-normal font-size-20px' }>
             { format(pensionContributionData && pensionContributionData.unitToday) }
           </h4>
           <div>
@@ -76,7 +76,7 @@ class PensionDetailsComponent extends Component {
               flexDirection: 'column',
               lineHeight: '1.5'
               }}>
-            <span className = { 'font-size-14px font-weight-bold' }>Unit Today</span>
+            <span className = { 'font-size-14px font-weight-bold' }>Unit Price</span>
             <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
             </p>
           </div>

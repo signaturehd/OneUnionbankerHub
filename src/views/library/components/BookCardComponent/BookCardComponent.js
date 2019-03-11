@@ -55,7 +55,9 @@ class BookCardComponent extends Component {
               initialRating = { rating ? rating : detail.rating }
               readonly
             />
-            <GenericButton onClick =
+            <GenericButton
+              className = { 'profile-button-medium global-button cursor-pointer' }
+              onClick =
               { () =>
                 {
                   getComments(detail.id)

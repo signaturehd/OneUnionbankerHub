@@ -48,7 +48,7 @@ export default class NavigationPresenter {
     this.getLibrariesInteractor.execute()
       .subscribe(resp => {
         this.view.hideCircularLoader()
-        this.view.showAgreementStatus(resp)
+        this.view.showAgreementStatus(resp.pensionAgreement)
         this.view.showProfile(resp)
         this.view.showPinIsValid(resp.hasPIN)
         this.view.isHasCOC(resp.hasCOC)

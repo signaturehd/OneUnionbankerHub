@@ -63,6 +63,19 @@ class RewardsRecognitionFragment extends BaseMVPView {
     this.setState({ employeeMessage })
   }
 
+  setRewadsDataFragment () {
+    this.setState({ selectedAwards : true })
+  }
+
+	checkRewardsId (id) {
+		if (id === 3 || id === 2) {
+			this.presenter.getRewardsAccountValidate(id)
+			this.setState({ selectedId: id })
+		} else {
+			this.setState({ selectedAwards : true, selectedId: id })
+		}
+	}
+
 	sendData () {
 		const {
 			selectedId,
@@ -249,9 +262,13 @@ class RewardsRecognitionFragment extends BaseMVPView {
                             rewardList&&rewardList.map((value, idx) => (
                               <Card
                                 className={'myrewards-card'}
-                                onClick={() =>
-                                  this.setState({ selectedAwards : true, selectedId: value.id })
-                                }
+                                onClick={() =>{
+																	try {
+																		this.checkRewardsId (value.id)
+																	} catch (e) {
+																		console.log(e)
+																	}
+                                }}
                                 key={idx}>
                                 <div className={'rewards-column-grid'}>
                                   <div
