@@ -38,8 +38,8 @@ class PensionDetailsComponent extends Component {
               flexDirection: 'column',
               lineHeight: '1.5'
               }}>
-            <span className = { 'font-size-14px font-weight-bold' }>Units</span>
-            <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
+            <span className = { 'font-size-14px font-weight-bold' }>Units Owned</span>
+            <span className = { 'font-size-11px font-weight-lighter' }></span>
             </p>
           </div>
         </div>
