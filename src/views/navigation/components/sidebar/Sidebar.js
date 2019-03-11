@@ -150,7 +150,6 @@ class SideBar extends Component {
                 <div className = { 'sidebar-picture' }>
                   <h2 className = { 'sidebar-initial-text' }>{ splitUserInitial }</h2>
                 </div>
-
               }
             </div>
           </div>

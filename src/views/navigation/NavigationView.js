@@ -296,7 +296,7 @@ class NavigationView extends BaseMVPView {
     }
 
     const locationPath = history.location.pathname
-    const name = profile && profile.fullname
+    const name = profile && profile.fullname ? profile.fullname : 'Empty Empty'
     let initials = []
     let splitUserInitial
     name &&
@@ -317,6 +317,7 @@ class NavigationView extends BaseMVPView {
     const fullName = name && name.split(' ')
     let firstName = fullName && fullName[0]
     splitUserInitial = initials[0] + initials[initials.length - 1]
+
     return (
       <div
         className = { 'navigation-body-div' }>
@@ -326,6 +327,7 @@ class NavigationView extends BaseMVPView {
             hideProfileMenu = { () => this.hideProfileMenu() }
             tempPreEmployment = { preEmploymentStatus }
             selected={ selected }
+            splitUserInitial = { splitUserInitial }
             profillePosition = { profillePosition }
             firstName = { firstName }
             history = { history }
@@ -551,7 +553,9 @@ class NavigationView extends BaseMVPView {
                </Switch>
             </Drawer>
             <br/>
-            <BaseFooterComponent history = { history }/>
+            <BaseFooterComponent
+              preEmploymentStatus = { preEmploymentStatus }
+              history = { history }/>
           </main>
           <aside
             className ="left-side"

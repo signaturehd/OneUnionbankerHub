@@ -38,6 +38,12 @@
   padding: 0px 0px 0px 5px;
 }
 
+.appbar-icon-grid1 {
+  display: grid;
+  grid-template-columns: 1fr 0.3fr;
+  padding: 0px 0px 0px 5px;
+}
+
 .appbar-navbar-icon-grid {
   display: grid;
   grid-template-columns:  1fr;
@@ -55,8 +61,8 @@
   width: 325px;
   margin-right: 25px;
   border-radius: 6px;
-  margin-top: 50px;
   right: 0;
+  margin-top: 50px;
 }
 
 .appbar-grid-icon-center {
@@ -268,6 +274,16 @@
   background-position: center;
 }
 
+.appbar-sort-up-icon {
+  background-image: url('../../../../../images/icons/icons8-sort-up-90.png');
+  background-position: center;
+}
+
+.appbar-sort-down-icon {
+  background-image: url('../../../../../images/icons/icons8-sort-down-96.png');
+  background-position: center;
+}
+
 .appbar-background-menu {
   background-image: url('../../../../../images/mobileview/Orange Wallpaper Without Label.png');
   width: 100%;
@@ -398,7 +414,17 @@
   text-align: left;
   display: grid;
   height: 100%;
-  grid-template-columns: .5fr 1fr .1fr;
+  grid-template-columns: .5fr 1fr .2fr;
+}
+
+
+@media screen and (max-width: 768px) {
+  .icon-header {
+    text-align: left;
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr .2fr;
+  }
 }
 
 ._img-ub-logo {
@@ -524,4 +550,83 @@
   cursor: pointer;
   border: 0;
   outline-style: none;
+}
+
+.sidebar-picture {
+  background-color: #ff8a00;
+  width: 45px;
+  height: 44px;
+  background-size: cover;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 45px;
+  border: 0px solid rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 2px;
+  vertical-align: middle;
+  margin: auto 30px auto auto;
+}
+
+.sidebar-initial-text {
+  text-align: center;
+  align-items: center;
+  font-weight: lighter;
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  margin-top: 45px;
+}
+
+.appbar-pictures {
+  background-color: #ff8a00;
+  width: 45px;
+  height: 44px;
+  background-size: cover;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 50%;
+  border: 0px solid rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 2px;
+  vertical-align: middle;
+  margin: auto 30px auto auto;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+}
+
+.appbar-picture {
+  background-color: #fff;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 50%;
+  border: 0px solid rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 2px;
+  vertical-align: middle;
+  margin: auto;
+}
+
+.appbar-initial-text {
+  text-align: center;
+  align-items: center;
+  font-weight: lighter;
+  color: white;
+  font-size: 20px;
+  padding-top: 12px;
+}
+
+.appbars-initial-text {
+  text-align: center;
+  align-items: center;
+  font-weight: lighter;
+  color: #ff8a00;
+  font-size: 35px;
+  padding-top: 40px;
+  font-weight: bold;
+  margin: auto;
 }
