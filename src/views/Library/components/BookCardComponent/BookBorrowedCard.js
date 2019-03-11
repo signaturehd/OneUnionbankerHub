@@ -67,6 +67,7 @@ class BookBorrowedCard extends Component {
             onClick = { () =>
               onClick(detail, true)
             }
+            className = { 'profile-button-medium global-button cursor-pointer' }
             text = { 'Read More' } />
           </center>
         </div>

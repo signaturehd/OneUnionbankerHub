@@ -181,27 +181,7 @@ export default class ComputerLoanPresenter {
         this.view.isValid(true)
       },
       error => {
-        store.dispatch(NotifyActions.resetNotify())
-        error && error.errorResp &&
-        error.errorResp.errors.map((resp) => {
-          if(currentDate >= dateCompare) {
-            store.dispatch(NotifyActions.addNotify({
-                title: 'Multi Purpose Loan',
-                message : `We're sorry, but right now, you're not yet able to avail of this benefit because of your ${ resp.message }`,
-                type : 'success',
-                duration : 10000
-              })
-            )
-          } else{
-            store.dispatch(NotifyActions.addNotify({
-                title: 'Multi Purpose Loan',
-                message : resp.message,
-                type : 'success',
-                duration : 10000
-              })
-            )
-          }
-        })
+        this.view.hideCircularLoader()
         this.view.navigate()
       }
     )

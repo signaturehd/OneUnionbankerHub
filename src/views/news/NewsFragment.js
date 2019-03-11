@@ -96,7 +96,7 @@ class NewsFragment extends BaseMVPView {
             {
               newsList &&
               newsList.map((news, i) =>
-              news.status === 1 &&
+                newsList[0].id === news.id &&
                 <div>
                   <NewsHeadlinesCardComponent
                     key = { i }
@@ -104,18 +104,18 @@ class NewsFragment extends BaseMVPView {
                     onClick = { details =>
                       this.setState({ details, show: true })
                     }
-                    />
-                  </div>
-                )
-              }
-              <Card className = { 'news-feature-stories' }>
+                  />
+                </div>
+              )}
+              <br/>
+              <div className = { 'news-feature-stories' }>
                 <h2 className = { 'unionbank-color font-size-25px font-weight-bold' }>Featured Stories</h2>
                 <br/>
                 <br/>
                 {
                   newsList &&
                   newsList.map((news, i) =>
-                  news.status !== 1 &&
+                  newsList[0].id !== news.id &&
                   <div>
                     <NewsCardComponent
                       key={ i }
@@ -131,7 +131,7 @@ class NewsFragment extends BaseMVPView {
                   </div>
                     )
                   }
-              </Card>
+              </div>
             </div>
           }
         </div>

@@ -53,7 +53,7 @@ class PensionDetailsFragment extends Component {
             <h4 className = { ' margin-auto letter-spacing-2 font-weight-lighter font-size-25px' }>Unit Summary</h4>
             <GenericButton
               className = { 'cursor-pointer profile-button-medium' }
-              text = { 'Change Contribution Amount' }
+              text = { 'Nominate Contribution Amount' }
               className = { 'funds-contribution-button' }
               onClick = { () => contributionModal() }
             />
@@ -79,13 +79,13 @@ class PensionDetailsFragment extends Component {
             <br/>
         </div>
           {
-            pensionContributionHistoryData && pensionContributionHistoryData ?
+            pensionContributionHistoryData && pensionContributionHistoryData.contributionHistory.length !== 0 ?
             <PensionFundsPaymentHistoryComponent
               pensionContributionHistoryData = { pensionContributionHistoryData }
               changePaymentFunc = { (bool , id) => changePaymentFunc(bool , id) }/>
               :
             <NoDataListedComponent
-              text = { ' No Pension Data' }/>
+              text = { 'There is no contribution at this moment' }/>
           }
         </div>
       </div>

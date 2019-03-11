@@ -203,7 +203,6 @@ class DrawerAppBar extends Component {
       objectFit: 'cover',
       backgroundPosition: 'center',
       borderRadius: '50%',
-      transform: 'translateY(-100%) rotate(90deg)',
       transformOrigin: 'left bottom 0px',
     }
 

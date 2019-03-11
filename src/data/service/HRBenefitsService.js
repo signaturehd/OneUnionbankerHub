@@ -370,7 +370,6 @@ export default class HRBenefitsService {
     })
   }
 
-
  /* Podcasts */
   getPodcasts (token) {
     return this.apiClient.get('v1/podcasts', {
@@ -2631,6 +2630,12 @@ export default class HRBenefitsService {
 
   getRewardPoints (token) {
     return this.apiClient.get('v1/rewards?', {
+      headers : { token }
+    })
+  }
+
+  getRewardsAccountValidate (token, id) {
+    return this.apiClient.get(`v1/rewards/validate?awardType=${id}`, {
       headers : { token }
     })
   }

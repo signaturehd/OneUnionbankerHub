@@ -229,7 +229,8 @@ class BenefitsFragment extends BaseMVPView {
           {
           enabledAccountNumberLoader ?
             <CircularLoader
-               show={ true }/>
+             validateLoading = { true }
+             show={ true }/>
             :
               <div>
                 <h2 className = { 'font-weight-bold' }>UnionBank Account Enrollment</h2>
@@ -377,7 +378,9 @@ class BenefitsFragment extends BaseMVPView {
                 render={ props => <LoansFragment { ...props } />}/>
               {
                 enableLoader ?
-                <CircularLoader show={ enableLoader }/>
+                <CircularLoader
+                  validateLoading = { true }
+                  show={ enableLoader }/>
                 :
                 <Route exact path='/mybenefits/benefits/carlease'
                   render={ props => <CarLeaseFragment

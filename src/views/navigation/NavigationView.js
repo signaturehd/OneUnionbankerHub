@@ -294,6 +294,7 @@ class NavigationView extends BaseMVPView {
         display : displayShow
       }
     }
+
     const locationPath = history.location.pathname
     const name = profile && profile.fullname
     let initials = []

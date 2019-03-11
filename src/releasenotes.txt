@@ -1,0 +1,62 @@
+*****UAT Version*************
+
+v 8.3.2
+
+
+Fixed description in otp guide.
+Fixed font and background issue.
+
+=
+
+v 8.3.3
+
+
+Fixed news feed retrieving of images and added details.
+Fixed issue in image of profile alignment.
+Fixed issue in pension funds wrong confirmation message attach upon giving amount to contribute.
+
+=
+
+v 8.3.4
+
+
+Fixed issue in pension funds wrong confirmation message attach upon giving amount to contribute.
+Fixed rewards subtitle issue and validate upon selecting recognized awards
+
+=
+
+v 8.3.5
+
+
+Fixed issue in news feed alignment of details.
+Fixed Pension funds chart not rendering the navPu Rate, added validation in contribution amount and replaced label issue
+Feedback footer label replaced
+Employee name initial fixed to 2 initial
+Fixed issue in Employee name initial fixed to 2 initial and hide next/previous button.
+
+=
+
+*****Production Version******
+
+
+v 8.0.6
+
+Fixed description in otp guide.
+Fixed font and background issue (Mobile View and Global font).
+Fixed news feed retrieving of images and added details.
+Fixed issue in image of profile alignment.
+Fixed issue in pension funds wrong confirmation message attach upon giving amount to contribute.
+Fixed rewards subtitle issue and validate upon selecting recognized awards
+
+
+v 8.0.7
+
+Fixed issue in news feed alignment of details.
+Fixed Pension funds chart not rendering the navPu Rate, added validation in contribution amount and replaced label issue
+Feedback footer label replaced
+Fixed issue in Employee name initial fixed to 2 initial and hide next/previous button.
+
+v 8.0.8
+
+-Fixed issue in pension funds charts not retrieving the data
+-Kindly check gifts redeem fixed issue in blocked images.

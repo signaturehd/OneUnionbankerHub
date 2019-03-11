@@ -21,7 +21,7 @@ body {
 }
 
 * {
-  font-family: 'Gotham Light', sans-serif;
+  font-family: 'Gotham Light', sans-serif !important;
 }
 
 i {

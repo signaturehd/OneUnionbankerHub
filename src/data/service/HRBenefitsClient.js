@@ -387,7 +387,9 @@ export default class HRBenefitsClient {
 
   getNewsImage (token, file) {
     return this.service.getNewsImage(token, file)
-    .pipe(ServiceErrorOperator())
+      .map(resp => {
+        return resp.data
+      })
     .flatMap(resp =>
       Observable.create(observer => {
         const reader = new FileReader()
@@ -399,7 +401,6 @@ export default class HRBenefitsClient {
       })
     )
   }
-
   /* Transactions Personal */
   getTransactionsPersonal (token) {
     return this.service.getTransactionsPersonal(token)
@@ -1785,6 +1786,11 @@ export default class HRBenefitsClient {
 
   getRewardPoints (token) {
     return this.service.getRewardPoints(token)
+      .pipe(ServiceErrorOperator())
+  }
+
+  getRewardsAccountValidate (token, id) {
+    return this.service.getRewardsAccountValidate(token, id)
       .pipe(ServiceErrorOperator())
   }
 
