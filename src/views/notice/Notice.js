@@ -34,7 +34,6 @@ class Notice extends BaseMVPView {
   componentDidMount () {
     try {
       this.presenter.getPinCode()
-
     } catch (e) {
       console.log(e)
     }
@@ -153,7 +152,7 @@ class Notice extends BaseMVPView {
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () => {
                   try {
-                    if(showPinCode) {
+                    if(showPinCode === 1) {
                       this.setState({ disableSubmit: true })
                       this.presenter.updateNotice(noticeResponse.transactionId.toString(), 1, benefitId, '')
                     } else {

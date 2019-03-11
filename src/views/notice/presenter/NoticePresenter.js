@@ -4,6 +4,7 @@ import AddPinCodeStatusInteractor from '../../../domain/interactor/notice/AddPin
 import NoticeParam from '../../../domain/param/NoticeParam'
 import SubmitPinInteractor from '../../../domain/interactor/compliances/SubmitPinInteractor'
 import ValidateEmployeePinInteractor from '../../../domain/interactor/pinCode/ValidateEmployeePinInteractor'
+import GetHasPinInteractor from '../../../domain/interactor/user/GetHasPinInteractor'
 
 let pinCode
 
@@ -14,6 +15,7 @@ export default class NoticePresenter {
     this.validateEmployeePinInteractor = new ValidateEmployeePinInteractor(container.get('HRBenefitsClient'))
     this.getPinCodeStatusInteractor = new GetPinCodeStatusInteractor(container.get('HRBenefitsClient'))
     this.addPinCodeStatusInteractor = new AddPinCodeStatusInteractor(container.get('HRBenefitsClient'))
+    this.getHasPinInteractor = new GetHasPinInteractor(container.get('HRBenefitsClient'))
     // this.updateNoticeMplInteractor = new UpdateNoticeMplInteractor(container.get('HRBenefitsClient'))
   }
 
@@ -22,12 +24,8 @@ export default class NoticePresenter {
   }
 
   getPinCode () {
-    const pinCodeStatus = this.getPinCodeStatusInteractor.execute()
+    const pinCodeStatus = this.getHasPinInteractor.execute()
     this.view.setPinCodeStatus(pinCodeStatus)
-  }
-
-  setPinCode (status) {
-    this.addPinCodeStatusInteractor.execute(status)
   }
 
   updateNotice (transactionId, isAgree, benefitId, code) {
