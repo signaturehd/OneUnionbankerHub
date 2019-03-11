@@ -42,6 +42,7 @@ v 8.3.6
 -Pay for skill fixed in issue in multiple card upon submission.
 -Dental Reimbursement fixed issue, crashed upon selecting the field.
 -Enhancement in phenom hide loading in heart react.
+-Enhancement in appbar dropdown, added initial of name if image not exist.
 
 =
 
@@ -74,3 +75,4 @@ v 8.0.9
 -Pay for skill fixed in issue in multiple card upon submission.
 -Dental Reimbursement fixed issue, crashed upon selecting the field.
 -Enhancement in phenom hide loading in heart react.
+-Enhancement in appbar dropdown, added initial of name if image not exist.

@@ -27,6 +27,7 @@ class DrawerAppBar extends Component {
 
   onToggleShowChangeDisplay () {
     this.props.profileDisplayFunc(this.props.profileDisplay !== 'none'? 'none' : 'block')
+    this.setState({ showList : false })
   }
 
   checkImage (data) {
@@ -239,7 +240,10 @@ class DrawerAppBar extends Component {
       >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
-            <div onClick = { () => hideProfileMenu() } >
+            <div onClick = { () => {
+              hideProfileMenu()
+              this.setState({ showList : false })
+            } } >
             {
               // <img
               //   style={ style.navbar }
