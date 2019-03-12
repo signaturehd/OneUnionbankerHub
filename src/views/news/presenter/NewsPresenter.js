@@ -21,6 +21,7 @@ export default class NewsPresenter {
     this.view.showLoader(true)
     this.getNewsInteractor.execute()
     .subscribe(resp => {
+      this.view.showLoader(false)
       const objectParam = {
         id: resp.id,
         date : resp.date.replace('Z',''),
@@ -32,7 +33,6 @@ export default class NewsPresenter {
         isHeart: resp.isHeart,
         total: resp.totalLikes,
       }
-      this.view.showLoader(false)
       newsData.push(objectParam)
         if (newsData.length !== 0) {
           this.view.showNews(newsData)
@@ -45,27 +45,32 @@ export default class NewsPresenter {
   getNewsNoLoading () {
     newsData = []
     this.view.showLoader(false)
-    this.getNewsInteractor.execute()
-    .subscribe(resp => {
-      const objectParam = {
-        id: resp.id,
-        date : resp.date.replace('Z',''),
-        details : resp.details,
-        imageUrl : resp.imageUrl,
-        linkUrl : resp.articleUrl,
-        subtitle: resp.subtitle,
-        title: resp.title,
-        isHeart: resp.isHeart,
-        total: resp.totalLikes,
-      }
-      this.view.showLoader(false)
-      newsData.push(objectParam)
-        if (newsData.length !== 0) {
-          this.view.showNews(newsData)
+    try {
+      this.getNewsInteractor.execute()
+      .subscribe(resp => {
+        this.view.showLoader(false)
+        const objectParam = {
+          id: resp.id,
+          date : resp.date.replace('Z',''),
+          details : resp.details,
+          imageUrl : resp.imageUrl,
+          linkUrl : resp.articleUrl,
+          subtitle: resp.subtitle,
+          title: resp.title,
+          isHeart: resp.isHeart,
+          total: resp.totalLikes,
         }
-    }, error => {
-      this.view.showLoader(false)
-    })
+        newsData.push(objectParam)
+          if (newsData.length !== 0) {
+            this.view.showNews(newsData)
+          }
+      }, error => {
+        console.log('test')
+        this.view.showLoader(false)
+      })
+    } catch (e) {
+       console.log(e)
+    }
   }
 
   addNewsIsHeart (id, isHeart) {

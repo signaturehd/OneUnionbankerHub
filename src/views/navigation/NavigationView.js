@@ -153,12 +153,12 @@ class NavigationView extends BaseMVPView {
 
   showProfile (profile) {
     this.setState({
-      rewardsPoints: profile.badgesAndPoints.redeemablePoints,
-      profile : profile.employee,
-      isLineManager: profile.isLineManager,
-      isPO: profile.isPO,
-      profillePosition: profile.employee.position,
-      employeeNumber: profile.employee.employeeNumber
+      rewardsPoints: profile && profile.badgesAndPoints && profile.badgesAndPoints.redeemablePoints,
+      profile : profile && profile.employee,
+      isLineManager: profile && profile.isLineManager,
+      isPO: profile && profile.isPO,
+      profillePosition: profile && profile.employee && profile.employee.position,
+      employeeNumber: profile && profile.employee && profile.employee.employeeNumber
     })
   }
 

@@ -44,6 +44,12 @@ v 8.3.6
 -Enhancement in phenom hide loading in heart react.
 -Enhancement in appbar dropdown, added initial of name if image not exist.
 
+
+v 8.3.7
+
+-Replace endpoint query to TF107 in contribution chart, (Added loading upon filtering)
+-Enhancement in loading issue, when session expired.
+
 =
 
 *****Production Version******
@@ -76,3 +82,8 @@ v 8.0.9
 -Dental Reimbursement fixed issue, crashed upon selecting the field.
 -Enhancement in phenom hide loading in heart react.
 -Enhancement in appbar dropdown, added initial of name if image not exist.
+
+v 8.0.10
+
+-Replace endpoint query to TF107 in contribution chart, (Added loading upon filtering)
+-Enhancement in loading issue, when session expired.

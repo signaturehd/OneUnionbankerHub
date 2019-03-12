@@ -262,8 +262,6 @@ export default class PensionFundsPresenter {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
         bidRateArray.push(resp.bidRate)
       })
-      console.log(labelArray)
-      console.log(bidRateArray)
       this.view.setChartPensionData(labelArray, bidRateArray)
 
     } else if (variableParam.toLowerCase() === 'week') { ///Weekly Formatting
@@ -486,10 +484,13 @@ export default class PensionFundsPresenter {
   }
 
   getPensionFundsDatePagination () {
+    this.view.showCircularLoader(true)
     this.getPensionFundsDatePaginationInteractor.execute(fromDate, toDate)
     .subscribe(data => {
+      this.view.showCircularLoader(false)
       this.setChartFilter(data)
     }, error => {
+      this.view.showCircularLoader(false)
     })
   }
 

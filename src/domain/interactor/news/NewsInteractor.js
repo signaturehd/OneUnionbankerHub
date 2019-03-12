@@ -10,6 +10,9 @@ export default class NewsInteractor {
     try {
       return Observable.create(emitter => {
          this.client.getNews(this.client.getToken())
+         .catch((e) =>
+           Observable.of([])
+         )
           .flatMap(news => Observable.from(news))
           .flatMap(news => {
             if (news.imageUrl.charAt(0).toString() === '/') {
