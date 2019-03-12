@@ -89,7 +89,7 @@ v 8.0.9
 -Enhancement in phenom hide loading in heart react.
 -Enhancement in appbar dropdown, added initial of name if image not exist.
 
-  v 8.0.10
+v 8.0.10
 
 -Replace endpoint query to TF107 in contribution chart, (Added loading upon filtering)
 -Enhancement in loading issue, when session expired.
