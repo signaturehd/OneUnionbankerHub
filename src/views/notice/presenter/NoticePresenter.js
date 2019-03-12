@@ -24,9 +24,15 @@ export default class NoticePresenter {
   }
 
   getPinCode () {
-    const pinCodeStatus = this.getHasPinInteractor.execute()
+    // const pinCodeStatus = this.getHasPinInteractor.execute()
+    const pinCodeStatus = this.getPinCodeStatusInteractor.execute()
     this.view.setPinCodeStatus(pinCodeStatus)
   }
+
+  setPinCode (status) {
+    this.addPinCodeStatusInteractor.execute(status)
+  }
+
 
   updateNotice (transactionId, isAgree, benefitId, code) {
     this.view.circularLoader(true)

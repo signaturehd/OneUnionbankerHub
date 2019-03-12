@@ -152,7 +152,7 @@ class Notice extends BaseMVPView {
             <GenericButton text = {'Agree'} className = { 'notice-button-modal notice-agree' }
               onClick = { () => {
                   try {
-                    if(showPinCode === 1) {
+                    if(showPinCode) {
                       this.setState({ disableSubmit: true })
                       this.presenter.updateNotice(noticeResponse.transactionId.toString(), 1, benefitId, '')
                     } else {

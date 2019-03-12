@@ -58,6 +58,12 @@ v 8.3.8
 
 =
 
+v 8.3.9
+
+-Fixed issue in requiring pin code per session.
+
+=
+
 *****Production Version******
 
 v 8.0.6
@@ -93,4 +99,5 @@ v 8.0.10
 
 -Replace endpoint query to TF107 in contribution chart, (Added loading upon filtering)
 -Enhancement in loading issue, when session expired.
+-Fixed issue in requiring pin code per session.
 -Fixed issue in unable to redirect to the Account Unlock link due to Web mobile browser optimization.
