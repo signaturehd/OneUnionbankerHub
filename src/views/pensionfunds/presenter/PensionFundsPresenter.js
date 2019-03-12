@@ -186,7 +186,7 @@ export default class PensionFundsPresenter {
   getQuarterlyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'month').format('YYYY-MM-DD') // multiply 3 (quarterly is every 3 months) on number of chart strands
+    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS * 3, 'month').format('YYYY-MM-DD') // multiply 3 (quarterly is every 3 months) on number of chart strands
 
     return dateToday
   }
@@ -388,7 +388,7 @@ export default class PensionFundsPresenter {
         let fromDateCalendar = moment(toDateCalendar).clone().subtract(3, 'month')
 
         quarterRanges.push({
-          id: `Q${i+1}`,
+          id: `Q${i+1} ${moment(toDateCalendar).format('MMM DD YYYY')}`,
           fromDate: moment(fromDateCalendar).format('YYYY-MM-DD'),
           toDate: moment(toDateCalendar).format('YYYY-MM-DD'),
         })
@@ -411,7 +411,6 @@ export default class PensionFundsPresenter {
         } catch (e) {
           console.log(e)
         }
-
         newDateResultArray.push({
           applicableNavDate: quarterRanges[i].id,
           bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
@@ -420,6 +419,7 @@ export default class PensionFundsPresenter {
           description : ''
         })
       }
+      console.log(newDateResultArray)
 
       newDateResultArray.map((resp, key) => {
        labelArray.push(resp.applicableNavDate)
