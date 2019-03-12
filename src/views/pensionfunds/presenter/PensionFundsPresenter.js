@@ -260,7 +260,7 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
-        bidRateArray.push(resp.bidRate)
+        bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
       this.view.setChartPensionData(labelArray, bidRateArray)
 
@@ -314,7 +314,7 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
         labelArray.push('('+ moment(resp.applicableNavDate).format('MMM DD') + ') ' + `${'Week'+(key+1)}`)
-        bidRateArray.push(resp.bidRate)
+        bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
@@ -366,7 +366,7 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
         labelArray.push(resp.applicableNavDate)
-        bidRateArray.push(resp.bidRate)
+        bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
@@ -423,7 +423,7 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
        labelArray.push(resp.applicableNavDate)
-       bidRateArray.push(resp.bidRate)
+       bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)

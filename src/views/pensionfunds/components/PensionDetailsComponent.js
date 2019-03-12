@@ -67,7 +67,7 @@ class PensionDetailsComponent extends Component {
         <div
           className = { 'funds-grid-row-details  line-spacing-2' }>
           <h4 className = { 'font-weight-normal font-size-20px' }>
-            { format(pensionContributionData && pensionContributionData.unitToday) }
+            { pensionContributionData && pensionContributionData.unitToday.toFixed(6) }
           </h4>
           <div>
             <p style = {{

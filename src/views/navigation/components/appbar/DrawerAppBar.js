@@ -33,9 +33,9 @@ class DrawerAppBar extends Component {
   checkImage (data) {
     if(data.id === 30) {
       if(this.state.showList === true) {
-        return data.imageStyle
-      } else {
         return data.imageStyle1
+      } else {
+        return data.imageStyle
       }
     } else {
       return data.imageStyle
@@ -366,7 +366,7 @@ class DrawerAppBar extends Component {
                               className = { 'appbar-list' }>
                               <div className = { 'appbar-icon-grid' }>
                                 <span
-                                  className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                  className = { `appbar-${ this.checkImage(resp) }-icon appbar-menu-icon` }/>
                                 <a>
                                   { resp.name }
                                 </a>
@@ -450,7 +450,7 @@ class DrawerAppBar extends Component {
                                           <a className = { 'unionbank-color font-weight-bold text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
                                         }
                                         <span
-                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                          className = { `appbar-${ this.checkImage(resp) }-icon appbar-menu-icon` }/>
                                         {
                                           resp.id !== 30 &&
                                           <a>
