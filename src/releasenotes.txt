@@ -108,3 +108,5 @@ v 8.0.10
 -Fixed issue in requiring pin code per session.
 -Fixed issue in unable to redirect to the Account Unlock link due to Web mobile browser optimization.
 -Fixed chart filtering in quarterly.
+-Optical Reimbursement enhancement.
+-
