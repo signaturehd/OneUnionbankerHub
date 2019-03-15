@@ -126,7 +126,7 @@ class DrawerAppBar extends Component {
     },{
       id: 12,
       name: 'Post-Employment',
-      imageStyle : 'postemployment',
+      imageStyle : 'preemployment',
       action : () => history.push('/postemployment'),
     },{
       id: 19,

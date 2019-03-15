@@ -184,6 +184,11 @@
   background-position: center;
 }
 
+.appbar-preemployment-icon {
+  background-image: url('../../../../../images/drawer/nav_pre_employment.png');
+  background-position: center;
+}
+
 .appbar-feedback-iconactive {
   background-image: url('../../../../../images/NAVIGATION BAR/Feedback - Orange.png');
   background-position: center;
