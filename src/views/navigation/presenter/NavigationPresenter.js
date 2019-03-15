@@ -97,12 +97,7 @@ export default class NavigationPresenter {
   // 0 or empty string, also hide both and show benefits if employee is regular
 
   getPreEmploymentStatus () {
-    this.view.hideCircularLoader()
-    if (this.getStatusInteractor.execute()) {
-      this.view.showPreemploymentStatus(this.getStatusInteractor.execute())
-    } else {
-      this.getPreEmploymentStatusInteractor.execute()
-    }
+    const status = JSON.parse(this.getStatusInteractor.execute())
+    this.view.showPreemploymentStatus(status && status)
   }
-
 }

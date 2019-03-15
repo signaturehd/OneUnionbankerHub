@@ -132,7 +132,7 @@ class NavigationView extends BaseMVPView {
       profileHasCOC: '',
       tempPreEmploymentModal: false,
       hasFilledOut: '',
-      preEmploymentStatus: null,
+      preEmploymentStatus: 6,
       isLineManager : false,
       isPO : false,
       employeeNumber : '',
@@ -185,42 +185,50 @@ class NavigationView extends BaseMVPView {
     }
   }
 
-  showPreemploymentStatus (data) {
-    const status = data && data.id
-    const statusName = data && data.status
-    this.setState({ preEmploymentStatus : status })
+  componentDidMount () {
+    try {
+      const {
+        preEmploymentStatus,
+      } = this.state
 
-    if(status === 1 || status === 2) {
-      this.props.history.push('/preemployment')
-    } else if (status === null || status === 6) {
-      this.props.history.push('/')
-    } else if (status === 3 || status === 4 || status === 5) {
-      this.props.history.push('/postemployment')
+      this.presenter.getPreEmploymentStatus()
+      this.presenter.getLibraries()
+
+      const mediaQuery = window.matchMedia('(min-width: 1300px)')
+        if (mediaQuery.matches) {
+          this.setDisplay('none', 'none')
+        } else {
+          this.setDisplay('none', 'block')
+        }
+          mediaQuery.addListener(mq => {
+        if (mq.matches) {
+          this.setDisplay('none', 'none')
+        } else {
+          this.setDisplay('none', 'block')
+        }
+      })
+      this.checkWidthNavigation()
+    } catch (e) {
+      console.log(e)
     }
   }
 
-  componentDidMount () {
-    const {
-      preEmploymentStatus,
-    } = this.state
+  showPreemploymentStatus (data) {
+    try {
+      const status = data && data.id
+      const statusName = data && data.status
+      this.setState({ preEmploymentStatus : status })
 
-    this.presenter.getPreEmploymentStatus()
-    this.presenter.getLibraries()
-
-    const mediaQuery = window.matchMedia('(min-width: 1300px)')
-      if (mediaQuery.matches) {
-        this.setDisplay('none', 'none')
-      } else {
-        this.setDisplay('none', 'block')
+      if(status === 1 || status === 2) {
+        this.props.history.push('/preemployment')
+      } else if (status === null || status === 6) {
+        this.props.history.push('/')
+      } else if (status === 3 || status === 4 || status === 5) {
+        this.props.history.push('/postemployment')
       }
-        mediaQuery.addListener(mq => {
-      if (mq.matches) {
-        this.setDisplay('none', 'none')
-      } else {
-        this.setDisplay('none', 'block')
-      }
-    })
-    this.checkWidthNavigation()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   checkWidthNavigation() {
@@ -325,7 +333,7 @@ class NavigationView extends BaseMVPView {
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
             hideProfileMenu = { () => this.hideProfileMenu() }
-            tempPreEmployment = { preEmploymentStatus }
+            tempPreEmployment = { preEmploymentStatus && preEmploymentStatus }
             selected={ selected }
             splitUserInitial = { splitUserInitial }
             profillePosition = { profillePosition }
@@ -554,7 +562,7 @@ class NavigationView extends BaseMVPView {
             </Drawer>
             <br/>
             <BaseFooterComponent
-              preEmploymentStatus = { preEmploymentStatus }
+              preEmploymentStatus = { preEmploymentStatus && preEmploymentStatus }
               history = { history }/>
           </main>
           <aside

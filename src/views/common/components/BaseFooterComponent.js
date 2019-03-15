@@ -16,7 +16,7 @@ class BaseFooterComponent extends Component {
       history,
       preEmploymentStatus
     } = this.props
-
+    console.log(preEmploymentStatus)
     return (
       <div id={'global-footer-cover'}>
         <div id={'global-footer'}>
@@ -33,19 +33,38 @@ class BaseFooterComponent extends Component {
             </div>
             <div className={'globaldetails-footer-copyright column'}>
               <h3>Site Links</h3>
-              <ul>
-                <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
-                <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
-                <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
-                {
-                  preEmploymentStatus === 1 || preEmploymentStatus === 2 &&
+              {
+                preEmploymentStatus &&
+                preEmploymentStatus === 1 ||
+                preEmploymentStatus === 2 &&
+                <ul>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
                   <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/preemployment') }>Pre-Employment</a></li>
-                }
-                {
-                  preEmploymentStatus === 3 || preEmploymentStatus === 4 || preEmploymentStatus === 5 &&
+                </ul>
+              }
+              {
+                preEmploymentStatus &&
+                preEmploymentStatus === 6 &&
+                <ul>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
+                </ul>
+              }
+              {
+                preEmploymentStatus &&
+                preEmploymentStatus === 3 ||
+                preEmploymentStatus === 4 ||
+                preEmploymentStatus === 5 &&
+                <ul>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
                   <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/postemployment') }>Post-Employment</a></li>
-                }
-              </ul>
+                </ul>
+              }
             </div>
             <div className="globaldetails-footer-link column">
               <h3

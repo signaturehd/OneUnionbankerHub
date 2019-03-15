@@ -339,7 +339,9 @@ class DrawerAppBar extends Component {
                       </div>
                     </li>
                     {
-                      tempPreEmployment === 1 || tempPreEmployment === 2 ?
+                      tempPreEmployment&&
+                      tempPreEmployment === 1 ||
+                      tempPreEmployment === 2 ?
                       <div>
                         {
                           appBarList.map((resp, key) =>
@@ -379,6 +381,7 @@ class DrawerAppBar extends Component {
                       :
                       <div>
                         {
+                          tempPreEmployment &&
                           tempPreEmployment === 6 ||
                           tempPreEmployment === 0 ||
                           tempPreEmployment === null ||
@@ -393,11 +396,15 @@ class DrawerAppBar extends Component {
                                     resp.id !== 12 &&
                                     <li
                                       onClick = { () => {
-                                        if (resp.id === 30) {
-                                          resp.action()
-                                        } else {
-                                          resp.action(),
-                                          hideProfileMenu()
+                                        try {
+                                          if (resp.id === 30) {
+                                            resp.action()
+                                          } else {
+                                            resp.action(),
+                                            hideProfileMenu()
+                                          }
+                                        } catch (e) {
+                                          console.log(e)
                                         }
                                       } }
                                       key = { key }
@@ -434,12 +441,16 @@ class DrawerAppBar extends Component {
                                     resp.id !== 19 &&
                                     <li
                                       onClick = { () => {
+                                        try {
                                           if (resp.id === 30) {
                                             resp.action1()
                                           } else {
                                             resp.action(),
                                             hideProfileMenu()
                                           }
+                                        } catch (e) {
+                                          console.log(e)
+                                        }
                                         }
                                       }
                                       key = { key }
@@ -466,6 +477,7 @@ class DrawerAppBar extends Component {
                           </div> :
                           <div>
                             {
+                              tempPreEmployment &&
                               tempPreEmployment === 3 ||
                               tempPreEmployment === 4 ||
                               tempPreEmployment === 5 ?
@@ -480,11 +492,15 @@ class DrawerAppBar extends Component {
                                         resp.id !== 11 &&
                                         <li
                                           onClick = { () => {
-                                            if (resp.id === 30) {
-                                              resp.action()
-                                            } else {
-                                              resp.action(),
-                                              hideProfileMenu()
+                                            try {
+                                              if (resp.id === 30) {
+                                                resp.action1()
+                                              } else {
+                                                resp.action(),
+                                                hideProfileMenu()
+                                              }
+                                            } catch (e) {
+                                              console.log(e)
                                             }
                                           } }
                                           key = { key }
@@ -520,11 +536,15 @@ class DrawerAppBar extends Component {
                                         resp.id !== 19 &&
                                         <li
                                           onClick = { () => {
-                                            if (resp.id === 30) {
-                                              resp.action()
-                                            } else {
-                                              resp.action(),
-                                              hideProfileMenu()
+                                            try {
+                                              if (resp.id === 30) {
+                                                resp.action1()
+                                              } else {
+                                                resp.action(),
+                                                hideProfileMenu()
+                                              }
+                                            } catch (e) {
+                                              console.log(e)
                                             }
                                           } }
                                           key = { key }
@@ -561,7 +581,7 @@ class DrawerAppBar extends Component {
                                         <li
                                           onClick = { () => {
                                             if (resp.id === 30) {
-                                              resp.action()
+                                              resp.action1()
                                             } else {
                                               resp.action(),
                                               hideProfileMenu()
@@ -601,7 +621,7 @@ class DrawerAppBar extends Component {
                                         <li
                                           onClick = { () => {
                                             if (resp.id === 30) {
-                                              resp.action()
+                                              resp.action1()
                                             } else {
                                               resp.action(),
                                               hideProfileMenu()

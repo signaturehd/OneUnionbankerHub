@@ -78,6 +78,12 @@ v 8.3.11
 
 =
 
+v 8.3.12
+
+-Fixed issue in displaying of Post/Pre Employment by status.
+
+=
+
 *****Production Version******
 
 v 8.0.6

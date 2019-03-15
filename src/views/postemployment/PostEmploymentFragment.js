@@ -166,9 +166,6 @@ class PostEmploymentFragment extends BaseMVPView {
     }, {
       id: 3,
       name : 'Certificate of Employment',
-    }, {
-      id: 4,
-      name : 'Compliance Videos',
     }]
 
     return (

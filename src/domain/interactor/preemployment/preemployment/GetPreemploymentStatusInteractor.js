@@ -6,9 +6,17 @@ export default class GetPreEmploymentStatusInteractor {
   execute () {
     return this.client.getPreEmploymentStatus(this.client.getToken())
       .subscribe(preEmploymentStatus => {
-        this.client.setPreEmploymentStatus(preEmploymentStatus)
+        const objectParam = {
+          "id" : preEmploymentStatus && preEmploymentStatus.id,
+          "status" : preEmploymentStatus && preEmploymentStatus.status,
+        }
+        this.client.setPreEmploymentStatus(objectParam)
       }, e => {
-        this.client.setPreEmploymentStatus({id: 6, status: 'regular'})        
+        const objectParam = {
+        "id": 6,
+        "status": 'regular'
+        }
+        this.client.setPreEmploymentStatus(objectParam)
       })
-  }
+    }
 }
