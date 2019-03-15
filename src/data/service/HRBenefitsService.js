@@ -356,7 +356,7 @@ export default class HRBenefitsService {
   /* News */
   getNews (token) {
     return this.apiClient.get('v1/news', {
-        headers: { token }
+      headers: { token }
     })
   }
 

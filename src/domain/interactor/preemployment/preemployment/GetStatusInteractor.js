@@ -4,6 +4,6 @@ export default class GetPreEmploymentStatusInteractor {
   }
 
   execute () {
-    return this.client.getStatus()
+    return this.client.getEmploymentStatus()
   }
 }

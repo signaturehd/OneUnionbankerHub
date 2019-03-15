@@ -12,6 +12,8 @@ export default class RelogInInteractor {
      this.client.setProfile('')
      this.client.setAccountNumber('')
      this.client.setReleasingCenter('')
+     this.client.setPreEmploymentStatus('')
+     this.client.setPinCode('')
      store.dispatch(ProfileActions.setProfilePicture(null))
      store.dispatch(LoginActions.showReloginModal(false))
   }

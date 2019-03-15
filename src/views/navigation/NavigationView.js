@@ -147,7 +147,7 @@ class NavigationView extends BaseMVPView {
   }
 
   setDisplay (sideBar, topBar) {
-    this.setState ({ displayShow : sideBar })
+    this.setState ({ displayShow : 'none' })
     this.setState({ displayNavIcon : topBar })
   }
 
@@ -192,19 +192,21 @@ class NavigationView extends BaseMVPView {
       } = this.state
 
       this.presenter.getPreEmploymentStatus()
+
+      setTimeout(function(){ this.presenter.getStatus()}, 1000)
       this.presenter.getLibraries()
 
       const mediaQuery = window.matchMedia('(min-width: 1300px)')
         if (mediaQuery.matches) {
           this.setDisplay('none', 'none')
         } else {
-          this.setDisplay('none', 'block')
+          this.setDisplay('none', 'none')
         }
           mediaQuery.addListener(mq => {
         if (mq.matches) {
           this.setDisplay('none', 'none')
         } else {
-          this.setDisplay('none', 'block')
+          this.setDisplay('none', 'none')
         }
       })
       this.checkWidthNavigation()
@@ -299,7 +301,7 @@ class NavigationView extends BaseMVPView {
     const { history, login, profilePicture } = this.props
     const style = {
       show: {
-        display : displayShow
+        display : 'none'
       }
     }
 
@@ -343,7 +345,7 @@ class NavigationView extends BaseMVPView {
             displayNavIcon = { displayNavIcon }
             profileDisplay = { profileDisplay }
             displayShow = { displayShow }
-            hide = { () => this.setState({ displayShow : 'block' })}
+            hide = { () => this.setState({ displayShow : 'none' })}
             show = { () => this.setState({ displayShow : 'none' }) }
             profileDisplayFunc = { (profileDisplay) => this.setState({ profileDisplay }) }
             onHideChangeDisplay = { () => this.setState({ profileDisplay : 'block' }) }
