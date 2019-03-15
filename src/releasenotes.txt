@@ -70,6 +70,14 @@ v 8.3.10
 
 =
 
+v 8.3.11
+
+-Optical Reimbursement enhancement.
+-Enhancement in DatePicker Style
+-Enhancement in contribution amount automatically update slider if user enter a value.
+
+=
+
 *****Production Version******
 
 v 8.0.6
@@ -109,4 +117,6 @@ v 8.0.10
 -Fixed issue in unable to redirect to the Account Unlock link due to Web mobile browser optimization.
 -Fixed chart filtering in quarterly.
 -Optical Reimbursement enhancement.
--
+-Enhancement in DatePicker Style
+-Enhancement in contribution amount automatically update slider if user enter a value.
+-Revamp support page

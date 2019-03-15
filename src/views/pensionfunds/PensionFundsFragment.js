@@ -17,6 +17,8 @@ import NoticeResponse from '../notice/NoticeResponseModal'
 
 import * as functions from './functions/PensionFundFunction'
 
+import { format, formatValue, formatInput } from '../../utils/numberUtils'
+
 import { NotifyActions } from '../../actions'
 import store from '../../store'
 
