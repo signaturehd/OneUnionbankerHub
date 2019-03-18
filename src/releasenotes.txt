@@ -84,6 +84,12 @@ v 8.3.12
 
 =
 
+v 8.3.13
+
+-Added logs in Error Response (400, 500, 502 and 401) through firebase.
+
+=
+
 *****Production Version******
 
 v 8.0.6
