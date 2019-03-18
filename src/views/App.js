@@ -14,12 +14,32 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { EventActions } from '../actions'
 
-/* Mobile Charts */
-import PensionFundsChartComponent from './pensionfunds/components/PensionFundsChartComponent'
+/* Mobile View */
+import MobileView from './mobileplatform/MobileView'
 
 const mapStateToProps = state => ({
   events: state.events,
 })
+
+let platformChecker
+let platformUsed
+const userAgentTest = window.navigator.userAgent
+
+if(userAgentTest.toLowerCase().indexOf('android') !== -1) {
+  platformUsed = 'android'
+  platformChecker = true
+} else if (userAgentTest.toLowerCase().indexOf('iphone') !== -1) {
+  platformUsed = 'ios'
+  platformChecker = true
+} else if (userAgentTest.toLowerCase().indexOf('ipad') !== -1) {
+  platformUsed = 'ios'
+  platformChecker = true
+} else if (userAgentTest.toLowerCase().indexOf('playbook') !== -1) {
+  platformUsed = 'ios'
+  platformChecker = true
+} else {
+  platformChecker = false
+}
 
 class App extends BaseMVPView {
   constructor (props) {
@@ -59,13 +79,17 @@ class App extends BaseMVPView {
           <Route
             path = '/success/:token'
             render = { props => <ResetPasswordView { ...props }/> }/>
-          <Route path = '/' render={props => {
-            if (this.state.isLogin) {
-              return <NavigationView  { ...props } />
-            }
-            return (<LoginView { ...props } />)
-          }} />
-
+          {
+            platformChecker ?
+            <MobileView platformUsed = { platformUsed }/>
+            :
+            <Route path = '/' render={props => {
+              if (this.state.isLogin) {
+                return <NavigationView  { ...props } />
+              }
+              return (<LoginView { ...props } />)
+            }} />
+          }
       </Switch>
       </div>
     )

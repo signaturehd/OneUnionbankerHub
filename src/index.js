@@ -41,12 +41,7 @@ if(userAgentTest.toLowerCase().indexOf('android') !== -1) {
 ReactDOM.render(
   <Provider store={ store }>
     <HashRouter basename = { '/' }>
-    {
-      platformChecker ?
-      <MobileView platformUsed = { platformUsed }/>
-      :
       <App />
-    }
     </HashRouter>
   </Provider>, document.getElementById('root')
 )

@@ -42,7 +42,7 @@ export default class PhenomPresenter {
   }
 
   getPhenomDiscountsNoLoading () {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     phenomData = []
     this.getPhenomDiscountsInteractor.execute()
       .subscribe(resp => {
@@ -74,9 +74,10 @@ export default class PhenomPresenter {
   }
 
   addPhenomIsHeart (id, isHeart) {
-    this.view.showCircularLoader()
+    this.view.hideCircularLoader()
     this.addCheckedStatusIsHeartInteractor.execute(id, isHeart === 0 ? 1 : 0)
     .subscribe(data => {
+      this.view.hideCircularLoader()
       this.getPhenomDiscountsNoLoading()
     }, error => {
       this.view.hideCircularLoader()

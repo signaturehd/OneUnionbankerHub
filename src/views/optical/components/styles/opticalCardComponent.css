@@ -8,8 +8,7 @@
 }
 
 .optical-header {
-  float:left;
-  width: 480px;
+  width: auto;
   min-height:170px;
 }
 

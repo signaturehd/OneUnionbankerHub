@@ -86,11 +86,11 @@ export default class SessionProvider {
     return JSON.parse(this.storage.getItem(PROFILE)) || {}
   }
 
-  setPreEmploymentStatus (preEmploymentStatus = '') {
-    this.storage.setItem(EMPLOYMENT_STATUS, JSON.stringify(preEmploymentStatus))
+  setEmploymentStatus (status) {
+    this.storage.setItem(EMPLOYMENT_STATUS, JSON.stringify(status))
   }
 
-  getPreEmploymentStatus () {
-    return this.storage.getItem(EMPLOYMENT_STATUS) || {}
+  getEmploymentStatus () {
+    return JSON.parse(this.storage.getItem(EMPLOYMENT_STATUS)) || {}
   }
 }

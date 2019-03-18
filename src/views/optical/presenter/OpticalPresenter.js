@@ -20,38 +20,36 @@ export default class OpticalPresenter {
     orNumber,
     attachmentData
   ) {
-    this.view.showCircularLoader()
+    this.view.isEligible(true)
     this.addOpticalInteractior.execute(opticalParam(
       amount,
       orDate,
       orNumber,
       attachmentData))
       .subscribe(optical => {
+        this.view.isEligible(false)
         this.view.noticeOfUndertaking(optical)
-        this.view.hideCircularLoader()
         // this.view.showOptical(optical)
       }, e => {
-        this.view.hideCircularLoader()
+        this.view.isEligible(false)
       })
     }
 
   getOptical () {
+    this.view.isEligible(true)
     this.getOpticalInteractor.execute()
-      .map(data => {
+      .subscribe(data => {
+        this.view.isEligible(false)
         let attachmentsArray = []
           data &&
           data.attachments.map((resp, key) => {
           attachmentsArray.push({
             name : resp
           })
+          this.view.showAttachmentsMap(attachmentsArray, data.limit)
         })
-        this.view.showAttachmentsMap(attachmentsArray, data.limit)
-        this.view.isEligible(data ? true : false)
-      })
-      .subscribe(data => {
-        // this.view.isEligible(data ? true : false)
       }, errors => {
-        this.view.isEligible(false, errors)
+        this.view.isEligible(false)
         this.view.navigate()
       })
     }

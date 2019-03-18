@@ -140,7 +140,7 @@ class PhenomCardDetailsComponent extends Component {
                   <br/>
                   <div className = { 'phenom-details-contact-grid' }>
                     {
-                      terms.map((resp, key) =>
+                      terms && terms.map((resp, key) =>
                       <li
                         key = { key }
                         className = { 'font-size-14px' }>{

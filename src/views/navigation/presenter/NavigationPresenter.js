@@ -39,6 +39,7 @@ export default class NavigationPresenter {
   }
 
   relogin () {
+      this.view.hideCircularLoader()
       this.relogInInteractor.execute()
       store.dispatch(LoginActions.showReloginModal(false))
   }
@@ -96,11 +97,11 @@ export default class NavigationPresenter {
   // 0 or empty string, also hide both and show benefits if employee is regular
 
   getPreEmploymentStatus () {
-    if (this.getStatusInteractor.execute()) {
-      this.view.showPreemploymentStatus(this.getStatusInteractor.execute())
-    } else {
-      this.getPreEmploymentStatusInteractor.execute()
-    }
+    this.getPreEmploymentStatusInteractor.execute()
   }
 
+  getStatus () {
+    const status = JSON.parse(this.getStatusInteractor.execute())
+    this.view.showPreemploymentStatus(status && status)
+  }
 }

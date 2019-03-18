@@ -34,7 +34,6 @@ class Notice extends BaseMVPView {
   componentDidMount () {
     try {
       this.presenter.getPinCode()
-
     } catch (e) {
       console.log(e)
     }

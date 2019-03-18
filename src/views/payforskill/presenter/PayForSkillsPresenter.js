@@ -162,7 +162,6 @@ export default class PayForSkillsPresenter {
     }
   }
 
-
   submitPaySkills () {
     this.view.checkLoader(true)
     this.addPaySkillsInteractor.execute(AddPaySkillsParam(
@@ -174,6 +173,7 @@ export default class PayForSkillsPresenter {
     ))
     .subscribe(data => {
       this.view.checkLoader(false)
+      this.view.resetData()
       store.dispatch(NotifyActions.addNotify({
          title : 'Successfully Added',
          message : data.message,
@@ -181,6 +181,7 @@ export default class PayForSkillsPresenter {
          duration : 5000
        })
      )
+     this.getPaySkillsList()
      this.view.navigateLearning()
      storedProgramObject = ''
      storedDateOfCompletion = ''
