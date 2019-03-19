@@ -11,11 +11,13 @@ import SessionProvider from '../../provider/SessionProvider'
 import store from '../../../store'
 import { NotifyActions, LoginActions } from '../../../actions'
 import firebase from "firebase";
-import moment from 'moment'
 
 let origin = 'https://www.oneunionbankerhub.com'
 let logsStatus = null
+let logUrl = null
 
+let date = new Date()
+let timeLogs = date.toDateString() +' - '+ date.toLocaleTimeString()
 let config = {
   apiKey: "AIzaSyA2PFVGbSxBr3VnjA7v79OX_xaY0dmPO94",
   authDomain: "uhub-logs.firebaseapp.com",
@@ -28,13 +30,15 @@ firebase.initializeApp(config);
 
 if(window.location.origin.toString() === origin) {
   logsStatus = 'Production Logs'
+  logUrl = 'https://api.unionbankph.com/ubp/prod/'
 } else {
   logsStatus = 'UAT Logs'
+  logUrl = 'https://api-uat.unionbankph.com/ubp/uat/'
 }
 
 let databaseURL = firebase.database().ref();
 
-export default function ServiceErrorOperator () {
+export default function ServiceErrorOperator (url, token, method) {
   return function ServiceErrorOperatorImpl (source) {
     return Observable.create(subscriber => {
       const subscription = source.subscribe(data => {
@@ -47,9 +51,12 @@ export default function ServiceErrorOperator () {
           if (Array.isArray(body.errors)) {
             body.errors.map((error, key) => {
               refUrl.push({
-                "timeLogs": moment().format('dddd, MMMM DD, YYYY, h:MM:ss A'),
+                "timeLogs": timeLogs,
                 "status code": code,
                 "message": error.message,
+                "url" : logUrl+url,
+                "token" : token ? token : null,
+                "method" : method,
               })
               store.dispatch(NotifyActions.addNotify({
                   title : 'One UnionBanker Hub',
@@ -61,13 +68,27 @@ export default function ServiceErrorOperator () {
             })
           }
           subscriber.error(new GenericError(body))
+        } else if (code === 502) {
+          let refUrl = databaseURL.child(`${logsStatus}/code502`)
+
+          refUrl.push({
+            "timeLogs": timeLogs,
+            "status code": code,
+            "message": error.message,
+            "url" : logUrl+url,
+            "token" : token ? token : null,
+            "method" : method,
+          })
         } else if (code === 401) {
           let refUrl = databaseURL.child(`${logsStatus}/code401`)
 
           refUrl.push({
-            "timeLogs": moment().format('dddd, MMMM DD, YYYY, h:MM:ss A'),
+            "timeLogs": timeLogs,
             "status code": code,
-            "message": body,
+            "message": error.message,
+            "url" : logUrl+url,
+            "token" : token ? token : null,
+            "method" : method,
           })
 
           store.dispatch(LoginActions.showReloginModal(true))
@@ -83,9 +104,12 @@ export default function ServiceErrorOperator () {
           let refUrl = databaseURL.child(`${logsStatus}/code000`)
 
           refUrl.push({
-            "timeLogs": moment().format('dddd, MMMM DD, YYYY, h:MM:ss A'),
+            "timeLogs": timeLogs,
             "status code": code,
-            "message": body,
+            "message": error.message,
+            "url" : logUrl+ url,
+            "token" : token ? token : null,
+            "method" : method,
           })
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))
         }

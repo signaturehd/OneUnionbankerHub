@@ -14,69 +14,69 @@ export default class HRBenefitsClient {
   // HTTP status code
   login (loginParam) {
     return this.service.login(loginParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/login', null, 'POST'))
   }
 
   logout (token) {
     return this.service.logout(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/logout', token, 'POST'))
   }
 
   otp (otpParam) {
     return this.service.otp(otpParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/otp', null, 'POST'))
   }
 
   resend (resendOtpParam) {
     return this.service.resend(resendOtpParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/otp/resend', null, 'POST'))
   }
 
   profile (token) {
     return this.service.profile(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/profile', token, 'GET'))
   }
 
   validateTermsAndCondition (token) {
     return this.service.validateTermsAndCondition(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/agreements/tnc', token, 'POST'))
   }
 
   /* Update Profile */
 
   updateDescription (token, description) {
     return this.service.updateDescription(token, description)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/description', token, 'PUT'))
   }
 
   updateEmailAddress (token, emailAddress) {
     return this.service.updateEmailAddress(token, emailAddress)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/email', token, 'PUT'))
   }
 
   updateAddress (token, address, file) {
     return this.service.updateAddress(token, address, file)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/profile/address', token, 'PUT'))
   }
 
   updateContactNumber (token, number) {
     return this.service.updateContactNumber(token, number)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/profile/mobile', token, 'PUT'))
   }
 
   updateProfilePicture (token, image) {
     return this.service.updateProfilePicture(token, image)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/employees/v1/employees/profile/image', token, 'PUT'))
   }
 
   updateCivilStatus (token, civilStatus) {
     return this.service.updateCivilStatus(token, civilStatus)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/profile/civil-status', token, 'PUT'))
   }
 
   getProfilePicture (token, file) {
     return this.service.getProfilePicture(token, file)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/files/v1/uploads?folder=attachments', token, 'GET'))
       .flatMap(resp =>
         Observable.create(observer => {
           const reader = new FileReader()
@@ -93,43 +93,43 @@ export default class HRBenefitsClient {
 
   getDevices (token) {
     return this.service.getDevices(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/devices', token, 'GET'))
   }
 
   /* Unlock Account */
 
   requestUnlockAccount (token, empId, date) {
     return this.service.requestUnlockAccount(token, empId, date)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/account/unlock', token, 'POST'))
   }
 
   /* Reset Password */
 
   requestEmailVerification (token, empId, date) {
     return this.service.requestEmailVerification(token, empId, date)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/password/otp', token, 'POST'))
   }
 
   requestOtpVerification (token) {
     return this.service.requestOtpVerification(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/account/unlock/email', token, 'POST'))
   }
 
   requestNewPassword (token, otp, date, empId, password) {
     return this.service.requestNewPassword(token, otp, date, empId, password)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/password/reset', token, 'POST'))
   }
 
   /*  Unlock Get and Post PIN */
 
   getRequestPinOtp (token) {
     return this.service.getRequestPinOtp(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/pin/otp', token, 'GET'))
   }
 
   requestUnlockPin (token, otp, newCode) {
     return this.service.requestUnlockPin(token, otp, newCode)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/pin/reset', token, 'GET'))
   }
 
   /* Session */
@@ -225,62 +225,62 @@ export default class HRBenefitsClient {
   /* accounts */
   validateAccountNumber (token, accountNumber) {
     return this.service.validateAccountNumber(token, accountNumber)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/accounts/v1/${accountNumber}`, token, 'GET'))
   }
 
   updateAccountNumber (token, accountNumber) {
     return this.service.updateAccountNumber(token, accountNumber)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/employees/v1/employees/accounts`, token, 'GET'))
   }
 
   /* rds */
   getReleasingCenters (token) {
     return this.service.getReleasingCenters(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/rds/centers', token, 'GET'))
   }
 
   /* books */
   getBooks (token, pageNumber, find) {
     return this.service.getBooks(token, pageNumber, find)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/books?pageNumber=${pageNumber}&find=${find}`, token, 'GET'))
   }
 
   getBooksRecommended (token, pageNumber, find, isEditorsPick) {
     return this.service.getBooksRecommended(token, pageNumber, find, isEditorsPick)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/books?pageNumber=${ pageNumber }&find=${ find }&isEditorsPick=${ isEditorsPick }`, token, 'GET'))
   }
 
   getBooksBorrowed (token, borrowedPageNumber, find) {
     return this.service.getBooksBorrowed(token, borrowedPageNumber, find)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/books/history?pageNumber=${borrowedPageNumber}&find=${find}`, token, 'GET'))
   }
 
 
   addRating (token, bookParam) {
     return this.service.addRating(token, bookParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/books/rate', token, 'POST'))
   }
 
 
   reserveBook (token, BookReserveParam) {
     return this.service.reserveBook(token, BookReserveParam)
-        .pipe(ServiceErrorOperator())
+        .pipe(ServiceErrorOperator('hr/benefits/v1/books/reservation', token, 'POST'))
   }
 
   getBooksComments (token , itemId, page, items) {
     return this.service.getBooksComments(token , itemId, page, items)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/books/comments?bookId=${itemId}&page=${page}&items=${items}`, token, 'GET'))
   }
 
   addBookRequestCancel (token, objectParam) {
     return this.service.addBookRequestCancel(token, objectParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/books/requests/cancel', token, 'POST'))
   }
 
   /* optical */
   getOptical (token) {
     return this.service.getOptical(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/reimbursements/optical/validate', token, 'GET'))
   }
 
   addOptical (
@@ -295,17 +295,17 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       opticalParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/reimbursements/optical/submit', token, 'POST'))
   }
 
   getPodcasts (token) {
     return this.service.getPodcasts(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/podcasts', token, 'GET'))
   }
 
   getPodcast (token, id) {
     return this.service.getPodcast(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/podcasts', token, 'GET'))
       .map(resp => {
         for (const i in resp) {
           if (resp[i].id === id) {
@@ -319,28 +319,28 @@ export default class HRBenefitsClient {
 
   getPodcastsReviews (token) {
     return this.service.getPodcastsReviews(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/podcasts/reviews', token, 'GET'))
   }
 
   getPodcastsRecommendations (token) {
     return this.service.getPodcastsRecommendations(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/podcasts/recommendations', token, 'GET'))
   }
 
   getPodcastsViewed (token) {
     return this.service.getPodcastsViewed(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/podcasts/history/members', token, 'GET'))
   }
 
   paddRating (token, podcastParam) {
     return this.service.paddRating(token, podcastParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/podcasts/rate', token, 'GET'))
   }
 
   /* dental reimbursement */
   getDentalReimbursement (token) {
     return this.service.getDentalReimbursement(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/reimbursements/dental/validate?type=1', token, 'GET'))
   }
   addDentalReimbursement (
     token,
@@ -354,14 +354,14 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       dentalReimbursementParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/reimbursements/dental/submit', token, 'POST'))
   }
 
   /* dental loa */
 
   getDentalLoa (token) {
     return this.service.getDentalLoa(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/issuances/dental/loa/validate?type=1', token, 'GET'))
   }
 
   addDentalLoa (
@@ -376,17 +376,18 @@ export default class HRBenefitsClient {
       accountNo,
       releasingCenter,
       dentalLoaParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/issuances/dental/loa/submit', token, 'POST'))
   }
 
   /* News */
   getNews (token) {
     return this.service.getNews(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/news', token, 'GET'))
   }
 
   getNewsImage (token, file) {
     return this.service.getNewsImage(token, file)
+      .pipe(ServiceErrorOperator('hr/benefits/v1/uploads?folder=news', token, 'GET'))
       .map(resp => {
         return resp.data
       })
@@ -404,82 +405,82 @@ export default class HRBenefitsClient {
   /* Transactions Personal */
   getTransactionsPersonal (token) {
     return this.service.getTransactionsPersonal(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/transactions?type=1', token, 'GET'))
   }
 
   /* Transactions Approval */
   getTransactionsApproval (token) {
     return this.service.getTransactionsApproval(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/transactions?type=2&status=2', token, 'GET'))
   }
 
   /* Transaction Details */
   getTransactionsDetails (token, GetTransactionParam) {
     return this.service.getTransactionsDetails(token, GetTransactionParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/transactions/${  GetTransactionParam}`, token, 'GET'))
   }
 
   /* Faqs */
   getFaqs (token) {
     return this.service.getFaqs(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/faqs', token, 'GET'))
   }
 
   getFaqDetails (token, faqParam) {
     return this.service.getFaqDetails(token, faqParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/faqs/${faqParam}`, token, 'GET'))
   }
 
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/faqs/categories', token, 'GET'))
   }
 
   /* Notice of Undertaking */
   updateNotice (token, noticeParam) {
     return this.service.updateNotice(token, noticeParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/agreements', token, 'PUT'))
   }
 
   /* Feedback */
   getFeedback (token, FeedbackParam) {
     return this.service.getFeedback(token, FeedbackParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/feedback', token, 'GET'))
   }
 
   addFeedback (token, addFeedbackParam) {
     return this.service.addFeedback(token, addFeedbackParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/feedback', token, 'POST'))
   }
 
   getPayslipFeedbackCategoriesDiscrepancy (token) {
     return this.service.getPayslipFeedbackCategoriesDiscrepancy(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/payroll/discrepancies/categories', token, 'GET'))
   }
 
   addPayslipFeedbackDiscrepancy (token, addPayslipFeedbackParam) {
     return this.service.addPayslipFeedbackDiscrepancy(token, addPayslipFeedbackParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/payroll/discrepancies', token, 'POST'))
   }
 
   addBenefitFeedback (token, addBenefitFeedbackParam) {
     return this.service.addBenefitFeedback(token, addBenefitFeedbackParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/feedback/ratings', token, 'POST'))
   }
   /* Remarks */
   getRemarks (token, remarksParam) {
     return this.service.getRemarks(token, remarksParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/transactions/matrix/remarks?benefitId=${  remarksParam}`, token, 'GET'))
   }
 
   getFaqsCategories (token) {
     return this.service.getFaqsCategories(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/faqs/categories', token, 'GET'))
   }
 
   updateRemarks (token, remarksParam) {
     return this.service.updateRemarks(token, remarksParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/transactions/${  remarksParam.transactionId}`, token, 'PUT'))
   }
 
   /* MPL Client */
@@ -493,22 +494,22 @@ export default class HRBenefitsClient {
       purposeOfLoan,
       subcategoryLevel
     })
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/loans/mpl?loanId=${ loanTypesId }&purposeOfAvailment=${ purposeOfLoan }&subcategoryLevel=${ subcategoryLevel }`, token, 'GET'))
   }
 
   getMplTypes (token) {
     return this.service.getMplTypes(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/loans/mpl/types', token, 'GET'))
   }
 
   getMplValidate (token, mplValidateParam) {
     return this.service.getMplValidate(token, mplValidateParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/loans/mpl/validate?loanId=${ mplValidateParam.loanTypeId }`, token, 'GET'))
   }
 
   getMplFormAttachments (token, mplGetFormParam) {
     return this.service.getMplFormAttachments (token, mplGetFormParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/attachments?purposeOfLoan=${ mplGetFormParam.formRequesting }&loanId=${ mplGetFormParam.loanId }`, token, 'GET'))
   }
 
   addLoan (
@@ -523,7 +524,7 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       mplPurposeLoanAddParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/loans/mpl/submit', token, 'POST'))
   }
 
   addLoanMotor (
@@ -538,7 +539,7 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       addMotorLoanParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/loans/mpl/submit', token, 'POST'))
   }
 
   addLoanComputer (
@@ -553,12 +554,12 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       addComputerLoanParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/loans/mpl/submit', token, 'POST'))
   }
 
   getCarValidate (token) {
     return this.service.getCarValidate(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/leases/car/validate', token, 'GET'))
   }
 
   addCarRequest (
@@ -573,7 +574,7 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       carRequestParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/leases/car', token), 'POST')
   }
 
   /* Education Grant Aid */
@@ -589,32 +590,32 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       grantAidParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/grants/education/personal/submit', token, 'POST'))
   }
 
   addCarLeasePayment (token, leasesConfirmpaymentParam) {
     return this.service.addCarLeasePayment(token, leasesConfirmpaymentParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/leases/car/payment', token, 'POST'))
   }
 
   addCarLeaseConfirmation (token, leasesCarConfirm) {
     return this.service.addCarLeaseConfirmation(token, leasesCarConfirm)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/leases/car/confirm', token, 'POST'))
   }
 
   addCarLeaseReleasing (token, leasesCarLeaseReleasingParam) {
     return this.service.addCarLeaseReleasing(token, leasesCarLeaseReleasingParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/benefits/v1/leases/car/release', token, 'POST'))
   }
 
   getPayslip (token) {
     return this.service.getPayslip(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/leases/car/confirm', token, 'GET'))
   }
 
   addPayslipSelectedDate (token, payslipParam) {
     return this.service.addPayslipSelectedDate(token, payslipParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/pay', token, 'POST'))
       .flatMap(resp => {
           return this.service.getPdf(token, resp)
         }
@@ -644,7 +645,7 @@ export default class HRBenefitsClient {
       accountNo,
       releasingCenter,
       educationAidParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/reimbursements/education/personal/submit', token, 'POST'))
   }
 
   /* Education Grant Plan */
@@ -660,17 +661,17 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       grantPlanParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/grants/education/dependent/submit', token, 'POST'))
   }
 
   validateGrantAid (token) {
     return this.service.validateGrantAid(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/grants/education/personal/validate', token, 'GET'))
   }
 
   validateGrantPlan (token) {
     return this.service.validateGrantPlan(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/grants/education/dependent/validate', token, 'GET'))
   }
 
   /* Education Gorup Aid */
@@ -686,23 +687,23 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       groupAidParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v2/reimbursements/education/dependent/submit', token, 'POST'))
   }
 
   validateAid (token) {
     return this.service.validateAid(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/reimbursements/education/personal/validate', token, 'GET'))
   }
 
   validateGroupAid (token) {
     return this.service.validateGroupAid(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/reimbursements/education/dependent/validate', token, 'GET'))
   }
 
   /* Bereavement */
   validateBereavement (token) {
     return this.service.validateBereavement(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/bereavement/validate', token, 'GET'))
   }
 
   addBereavement (
@@ -717,13 +718,13 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       addBereavementParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/bereavement/availment', token, 'POST'))
   }
 
   /* Calamity Assitance */
   validateCalamityAssistance (token) {
     return this.service.validateCalamityAssistance(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/calamity/validate', token, 'GET'))
   }
 
   addCalamityAssistance (token,
@@ -737,7 +738,7 @@ export default class HRBenefitsClient {
     accountNumber,
     releasingCenter,
     calamityAssistanceParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/calamity/availment', token, 'POST'))
   }
 
   uploadTransactionImageInteractor (token, type, id, file) {
@@ -755,12 +756,12 @@ export default class HRBenefitsClient {
 
   validateMedicalScheduling (token) {
     return this.service.validateMedicalScheduling(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/medical/exam/validate', token, 'GET'))
   }
 
   getHospitalBranch (token, id) {
     return this.service.getHospitalBranch(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/medical/hospitals/${ id }/branches`, token, 'GET'))
   }
 
   addMedicalScheduling (
@@ -770,13 +771,13 @@ export default class HRBenefitsClient {
     return this.service.addMedicalScheduling (
       token,
       addMedicalSchedulingParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/benefits/v1/medical/exam/submit',token, 'POST'))
   }
 
   /* Outpatient Reimbursement */
   validateOutPatientReimbursement (token) {
     return this.service.validateOutPatientReimbursement(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/outpatient/validate', token, 'GET'))
   }
 
   addOutPatientReimbursement (
@@ -793,55 +794,55 @@ export default class HRBenefitsClient {
         releasingCenter,
         outPatientParam
       )
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/outpatient/submit', token, 'POST'))
   }
 
   /* Employee Trainings */
 
   getEmployeeTraining (token) {
     return this.service.getEmployeeTraining (token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/trainings', token, 'GET'))
   }
 
   getEmployeeTrainingDetails (token, id) {
     return this.service.getEmployeeTrainingDetails (token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/trainings/${id}`, token, 'GET'))
   }
 
   enrollEmployee (token, id) {
     return this.service.enrollEmployee(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/trainings/enroll', token, 'POST'))
   }
 
   getEnrolledTrainings (token) {
     return this.service.getEnrolledTrainings (token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/trainings/learners/enrolled', token, 'GET'))
   }
 
   getNeedApprovalTrainings (token) {
     return this.service.getNeedApprovalTrainings (token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/trainings/learners/requests', token, 'GET'))
   }
 
   getApprovedTrainings (token) {
     return this.service.getApprovedTrainings (token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/trainings/learners/approved', token, 'GET'))
   }
 
   getApprovalTrainingDetails (id, token) {
     return this.service.getApprovalTrainingDetails (id, token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/trainings/learners/enrollments/${id}`, token, 'GET'))
   }
 
   trainingRequest (trainingId, ApprovalTrainingParam, token) {
     return this.service.trainingRequest (trainingId, ApprovalTrainingParam, token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/trainings/${trainingId}/requests`, token, 'POST'))
   }
 
   /* Maternity Assistance */
   validateMaternityAssistance (token) {
     return this.service.validateMaternityAssistance(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/maternity/validate', token, 'GET'))
   }
 
   addMaternityAssistance (
@@ -857,7 +858,7 @@ export default class HRBenefitsClient {
       accountNumber,
       releasingCenter,
       addMaternityAssistanceParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/benefits/v1/maternity/submit', token, 'POST'))
   }
 
   /* Maternity Assistance SSS */
@@ -876,7 +877,7 @@ export default class HRBenefitsClient {
       releasingCenter,
       maternityAssistanceSSSParam
     )
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/maternity/submit/sss/mat1', token, 'POST'))
   }
 
 
@@ -884,43 +885,44 @@ export default class HRBenefitsClient {
 
   getCompliancesPdf (token) {
     return this.service.getCompliancesPdf(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/compliances/coc`, token, 'GET'))
   }
 
   submitPin (token, code) {
     return this.service.submitPin(token, code)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/compliances/coc', token, 'POST'))
   }
 
   /* My Existing Loans */
   getExistingLoans (token) {
     return this.service.getExistingLoans(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/loans/mpl/outstanding', token, 'GET'))
   }
 
   getNonExistingLoans (token) {
     return this.service.getNonExistingLoans(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/loans', token, 'GET'))
   }
 
   /* Phenom Loans */
   getPhenomDiscounts (token) {
     return this.service.getPhenomDiscounts(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/phenom/discounts?type=corporate', token, 'GET'))
   }
 
   getPhenomSelectedDiscounts (token, id) {
     return this.service.getPhenomSelectedDiscounts(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/phenom/discounts/${ id }`, token, 'GET'))
   }
 
   addPhenomIsHeart (token, id, isHeart) {
     return this.service.addPhenomIsHeart(token, id, isHeart)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/phenom/reactions?type=corporate', token, 'POST'))
   }
 
   getPhenomImage (token, file) {
     return this.service.getPhenomImage(token, file)
+      .pipe(ServiceErrorOperator('hr/benefits/v1/uploads?folder=phenom', token, 'GET'))
       .map(resp => {
         return resp.data
       })
@@ -938,6 +940,7 @@ export default class HRBenefitsClient {
 
   getVendorImage (token, file) {
     return this.service.getVendorImage(token, file)
+      .pipe(ServiceErrorOperator('hr/benefits/v1/uploads?folder=phenom', token, 'GET'))
       .map(resp => {
         return resp.data
       })
@@ -956,71 +959,71 @@ export default class HRBenefitsClient {
   /* Leave Filing  */
   addLeaveFiling (token, leaveFilingParam) {
     return this.service.addLeaveFiling(token, leaveFilingParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/leaves', token, 'POST'))
   }
 
   /* Pin Enrollment */
   postEnrollPin (token, id) {
     return this.service.postEnrollPin(token , id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/pin', token, 'POST'))
   }
 
   putEnrollPin (token, putPINParam) {
     return this.service.putEnrollPin(token, putPINParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/pin', token, 'PUT'))
   }
 
   validateEmployeePin (token, employeePinParam) {
     return this.service.validateEmployeePin(token, employeePinParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/pin/validate', token, 'GET'))
   }
 
   /* Staff Accounts */
   getForConfirmation (token, id) {
     return this.service.getForConfirmation(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/employees/v1/accounts', token, 'GET'))
   }
 
   addStaffAccounts (token, staffAccountsParam) {
     return this.service.addStaffAccounts(token, staffAccountsParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/employees/v1/accounts', token, 'POST'))
   }
 
   updateStaffAccounts (token, staffAccountsParam) {
     return this.service.updateStaffAccounts(token, staffAccountsParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/employees/v1/accounts', token, 'PUT'))
   }
 
   /* Pre Employment */
 
   getPreEmploymentMessageStatus (token) {
     return this.service.getPreEmploymentMessageStatus (token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/letters/status', token, 'GET'))
   }
 
   postPreEmploymentMessageStatus (token, id) {
     return this.service.postPreEmploymentMessageStatus (token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/letters?status=${ id }`, token, 'POST'))
   }
 
   getPreEmploymentStatus (token) {
     return this.service.getPreEmploymentStatus (token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/requirements/status', token, 'GET'))
   }
 
   getPreEmploymentAffirmationId (token, affirmId, affirmPage) {
     return this.service.getPreEmploymentAffirmationId(token, affirmId, affirmPage)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/affirmation/${affirmId}?page=${affirmPage}`, token, 'GET'))
   }
 
   postAffirmPreEmploymentUndertaking (token) {
     return this.service.postAffirmPreEmploymentUndertaking(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/affirmations/employers', token, 'POST'))
   }
 
   getOnBoardingDocument (token, link) {
     return this.service.getOnBoardingDocument(token, link)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/files/v1/uploads?folder=documents', token, 'GET'))
     .flatMap(resp =>
       Observable.create(observer => {
         const reader = new FileReader()
@@ -1036,7 +1039,7 @@ export default class HRBenefitsClient {
 
   getOnBoardingAttachments (token, file) {
     return this.service.getOnBoardingAttachments(token, file)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/onboarding/v1/uploads?folder=onboarding-requirements', token, 'GET'))
     .flatMap(resp =>
       Observable.create(observer => {
         const reader = new FileReader()
@@ -1052,157 +1055,157 @@ export default class HRBenefitsClient {
 
   getAffirmationsStatus (token) {
     return this.service.getAffirmationsStatus(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/affirmations/status', token, 'GET'))
   }
 
   getFinancialStatus (token) {
     return this.service.getFinancialStatus(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/finances/status', token, 'GET'))
   }
 
   getFinancialDetails (token) {
     return this.service.getFinancialDetails(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/finances', token, 'GET'))
   }
 
   addFinancialStatus (token, financialStatusParam) {
     return this.service.addFinancialStatus(token, financialStatusParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/finances', token, 'POST'))
   }
 
   putFinancialStatus (token, financialStatusParam) {
     return this.service.putFinancialStatus(token, financialStatusParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/finances/${financialStatusParam.financeId}`, token, 'PUT'))
   }
 
   getEmployeeTin (token) {
     return this.service.getEmployeeTin(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/tin', token, 'GET'))
   }
 
   addEmployeeTin (token, employeeTinParam) {
     return this.service.addEmployeeTin(token, employeeTinParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/tin', token, 'POST'))
   }
 
   getEmployeeSSS (token) {
     return this.service.getEmployeeSSS(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/sss', token, 'GET'))
   }
 
   addEmployeeSSS (token, employeeSSSParam) {
     return this.service.addEmployeeSSS(token, employeeSSSParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/sss', token, 'PUT'))
   }
 
   getPreEmploymentForm (token) {
     return this.service.getPreEmploymentForm(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/requirements?phase=1', token, 'GET'))
   }
 
   postEnrollPinAffirmationsEmployment (token, pin) {
     return this.service.postEnrollPinAffirmationsEmployment(token, pin)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/affirmations/employers', token, 'POST'))
   }
 
   postEnrollPinAffirmationsPolicy (token, pin) {
     return this.service.postEnrollPinAffirmationsPolicy(token, pin)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/affirmations/policy', token, 'POST'))
   }
 
   postEnrollPinAffirmationsConfidential (token, pin) {
     return this.service.postEnrollPinAffirmationsConfidential(token, pin)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/affirmations/confidentiality', token, 'POST'))
   }
 
   postEnrollPinAffirmationsSecrecy (token, pin) {
     return this.service.postEnrollPinAffirmationsSecrecy(token, pin)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/affirmations/secrecy', token, 'POST'))
   }
 
   getWorkExperience (token) {
     return this.service.getWorkExperience(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/employers', token, 'GET'))
   }
 
   getWorkExperienceForm (token) {
     return this.service.getWorkExperienceForm(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/employers/forms/verify', token, 'GET'))
   }
 
   addWorkExperience (token, workExperienceParam) {
     return this.service.addWorkExperience(token, workExperienceParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/employers', token, 'POST'))
   }
 
   addEmployeeRequirement (token, requirementParam) {
     return this.service.addEmployeeRequirement(token, requirementParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/requirements?phase=1', token, 'POST'))
   }
 
   getCharacterReference (token) {
     return this.service.getCharacterReference(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/references', token, 'GET'))
   }
 
   getCharacterReferenceForm (token) {
     return this.service.getCharacterReferenceForm(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/references/forms', token, 'GET'))
   }
 
   deleteCharacterReference (token, id) {
     return this.service.deleteCharacterReference(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/references/${ id }`, token, 'DELETE'))
   }
 
   postCharacterReference (token, postCharacterReferenceParam) {
     return this.service.postCharacterReference(token, postCharacterReferenceParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/references', token, 'POST'))
   }
 
   putCharacterReference (token, putCharacterReferenceParam) {
     return this.service.putCharacterReference(token, putCharacterReferenceParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/references/{${ putCharacterReferenceParam.id }}`, token, 'PUT'))
   }
 
   getEmployeeSchool (token) {
     return this.service.getEmployeeSchool(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/school', token, 'GET'))
   }
 
   getSchoolRecordVerificationForm (token) {
     return this.service.getSchoolRecordVerificationForm(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/school/forms/verify', token, 'GET'))
   }
 
   getSchoolData (token, pageNumber, find) {
     return this.service.getSchoolData(token, pageNumber, find)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/onboarding/v1/schools?pageNumber=${ pageNumber }&find=${ find }`, token, 'GET'))
   }
 
   addEducationSchool(token, educationParam) {
     return this.service.addEducationSchool(token, educationParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/school', token, 'POST'))
   }
 
   putWorkExperience (token, workExperienceParam) {
     return this.service.putWorkExperience(token, workExperienceParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/employers/${workExperienceParam.workExpId}`, token, 'PUT'))
   }
 
   putEducationSchool(token, educationParam) {
     return this.service.putEducationSchool(token, educationParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/onboarding/v1/employees/school/${educationParam.educId}`, token, 'PUT'))
   }
 
   getSpouse (token) {
     return this.service.getSpouse(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/spouse', token, 'GET'))
   }
 
   postSpouseForm (token, spouseFormParam) {
     return this.service.postSpouseForm(token, spouseFormParam)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/onboarding/v1/employees/spouse', token, 'POST'))
   }
 
   putSpouseForm (token, spouseFormParam) {
