@@ -24,7 +24,8 @@ class SquadsComponent extends Component {
       <br/>
       <div className = { 'squads-container' }>
         {
-          squads && squads.map((squad, key) => (
+          squads && squads.map((squad, key) =>
+            squad.isVacant !== false &&
             <Card
               className = { 'cursor-pointer' }
               onClick = { () => getVacancies(null, squad.id, squad) }>
@@ -41,7 +42,7 @@ class SquadsComponent extends Component {
               <div className = { 'squad-description' }>
               </div>
             </Card>
-          ))
+          )
         }
       </div>
       </div>
