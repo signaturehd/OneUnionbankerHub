@@ -86,7 +86,7 @@ v 8.3.12
 
 v 8.3.13
 
--Fixed issue in Squad Workforce Vacancies filtering.
+-Fixed issue in Squad Workforce Vacancies filtering, (showing of squads if there is a vacancies).
 
 =
 
@@ -135,7 +135,6 @@ v 8.0.10
 
 v 8.0.11
 
--Fixed issue in Squad Workforce Vacancies filtering.
 -Fixed issue in displaying of Post/Pre Employment by status.
-
+-Fixed issue in Squad Workforce Vacancies filtering, (showing of squads if there is a vacancies).
 =
