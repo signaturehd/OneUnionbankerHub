@@ -1621,91 +1621,91 @@ export default class HRBenefitsClient {
 
   addTeamGoals (token, teamGoalsParam) {
     return this.service.addTeamGoals(token, teamGoalsParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals?goalType=${teamGoalsParam.goalType}`, token, 'POST'))
   }
 
   addSquadGoals (token, squadGoalsParam) {
     return this.service.addSquadGoals(token, squadGoalsParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals?goalType=${squadGoalsParam.goalType}`, token, 'POST'))
   }
 
   getSquadGoals (token, goalType) {
     return this.service.getSquadGoals(token, goalType)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/members?goalType=${goalType}`, token, 'GET'))
   }
 
   getMembersGoals (token, goalType) {
     return this.service.getMembersGoals(token, goalType)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/members?goalType=${goalType}`, token, 'GET'))
   }
 
   getDirectReportGoals (token, status) {
     return this.service.getDirectReportGoals(token, status)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/reports?goalType=personal&status=2,6,8`, token, 'GET'))
   }
 
   getGoalsForConfirmation (token) {
     return this.service.getGoalsForConfirmation(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goals?status=1`, token, 'GET'))
   }
 
   getGoalGroupList (token) {
     return this.service.getGoalGroupList(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/goals/groups', token, 'GET'))
   }
 
   getGroupDetailsById (token, id) {
     return this.service.getGroupDetailsById(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/groups/${ id }`, token, 'GET'))
   }
 
   /* Certificaqte of Employment */
 
   getPurposeCoeType (token, data) {
     return this.service.getPurposeCoeType(token, data)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`v1/coe/libraries?type=${ data }`, token, 'GET'))
   }
 
   getCountryCoeType (token, data) {
     return this.service.getCountryCoeType(token, data)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`v1/coe/libraries?type=${ data }`, token, 'GET'))
   }
 
   submitCoe (token, bodyParam) {
     return this.service.submitCoe(token, bodyParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`v1/coe`, token, 'POST'))
   }
 
   // PensionFunds
 
   getPensionFunds (token) {
     return this.service.getPensionFunds(token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('/appian/pension/v1/investments', token, 'GET'))
   }
 
   cancelContributionalAmount (token, code) {
     return this.service.cancelContributionalAmount(token, code)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('appian/pension/v1/cancel', token, 'POST'))
   }
 
   getPensionFundsDocuments (token) {
     return this.service.getPensionFundsDocuments (token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('appian/pension/v1/agreements', token, 'GET'))
   }
 
   addPensionFundsDocuments (token) {
     return this.service.addPensionFundsDocuments (token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('appian/pension/v1/agreements', token, 'POST'))
   }
 
   addPensionContributional (token, amount, code) {
     return this.service.addPensionContributional (token, amount, code)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('appian/pension/v1/availments', token, 'POST'))
   }
 
   updatePensionContributional (token, amount, code, id) {
     return this.service.updatePensionContributional (token, amount, code, id)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`appian/pension/v1/contribution/${id ? id : null}`, token, 'PUT'))
   }
 
   getPensionFundsHistory (token) {
@@ -1715,7 +1715,7 @@ export default class HRBenefitsClient {
 
   getPensionValidate (token) {
     return this.service.getPensionValidate(token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('appian/pension/v1', token, 'GET'))
   }
 
   getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
@@ -1761,69 +1761,69 @@ export default class HRBenefitsClient {
     //   observer.complete()
     // })
     return this.service.getPensionFundsDatePagination(token, limit, start, fromDate, toDate)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`finacle/v1/uitf/products/navpu?fromDate=${fromDate}&page=1&toDate=${toDate}&limit=${limit}&product=TF107`, token, 'GET'))
   }
 
   // Reward Goals
   getRewardsDNAMoment (token, id) {
     return this.service.getRewardsDNAMoment(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/rewards?awardId=${ id }`, token, 'GET'))
   }
 
   getRewardAwards (token) {
     return this.service.getRewardAwards(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/rewards/awards`, token, 'GET'))
   }
 
   getRewardPoints (token) {
     return this.service.getRewardPoints(token)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/rewards?', token, 'GET'))
   }
 
   getRewardsAccountValidate (token, id) {
     return this.service.getRewardsAccountValidate(token, id)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/rewards/validate?awardType=${id}`, token, 'GET'))
   }
 
   getRewardGiftsDetails (token, id) {
     return this.service.getRewardGiftsDetails(token, id)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/giftaway/v1/merchants/${ id }`, token, 'GET'))
   }
 
   getRewardGifts (token) {
     return this.service.getRewardGifts(token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/giftaway/v1/merchants`, token, 'GET'))
   }
 
   addRewardGiftsDenominations (token, merchant, mode) {
     return this.service.addRewardGiftsDenominations (token, merchant, mode)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/rewards/redeem?mode=${mode}`, token, 'POST'))
   }
 
   submitAwards (token, objectParam) {
     return this.service.submitAwards(token, objectParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/rewards`, token, 'POST'))
   }
 
   getEligibleInRewards (token, type, string) {
     return this.service.getEligibleInRewards(token, type, string)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/rewards/candidates?awardType=${type}&keyword=${ string }`, token, 'GET'))
   }
 
   getGiftOrderDetails (token, refNo) {
     return this.service.getGiftOrderDetails(token, refNo)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/hr/giftaway/v1/orders?referenceNo=${refNo}`, token, 'GET'))
   }
 
   // Bir2316 My Documents
   getBir2316List (token) {
     return this.service.getBir2316List(token)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('v1/bir/history', token, 'GET'))
   }
 
   requestBIR2316 (token, year) {
     return this.service.requestBIR2316(token, year)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator('v1/bir', token, 'POST'))
     .flatMap(resp => {
         return this.service.getPdf(token, resp)
       }
@@ -1844,22 +1844,21 @@ export default class HRBenefitsClient {
   //Squads and Workforce
   getSquads (token, squadId, page) {
     return this.service.getSquads(token, squadId, page)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/squad?page=${page}`, token, 'GET'))
   }
 
   getVacancies (token, positionId, squadId, pageNumber) {
     return this.service.getVacancies(token, positionId, squadId, pageNumber)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/vacancies?goalType=squad&squadId=${squadId}`, token, 'GET'))
   }
 
   submitSquads (token, positionId) {
     return this.service.submitSquads(token, positionId)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator('hr/benefits/v1/goals/vacancies/submit', token, 'GET'))
   }
 
   getStatusSquadApplication (token, isActive) {
     return this.service.getStatusSquadApplication(token, isActive)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`v1/goals/squad/applications?status=${ isActive }`, token, 'GET'))
   }
-
 }
