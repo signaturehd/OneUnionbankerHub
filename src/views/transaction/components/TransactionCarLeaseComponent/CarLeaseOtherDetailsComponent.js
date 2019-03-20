@@ -12,9 +12,7 @@ class CarLeaseOtherDetailsComponent extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      file: [{
-        name : 'Equity Form'
-      }],
+      file: []
     }
   }
 
@@ -31,7 +29,8 @@ class CarLeaseOtherDetailsComponent extends Component {
       equityAttachments,
       loader,
       onConfirmationReleaseFunc,
-      onUploadAttachmentsFunc
+      onUploadAttachmentsFunc,
+      requiredCarleaseAttachments
     } = this.props
 
     const {
@@ -235,20 +234,23 @@ class CarLeaseOtherDetailsComponent extends Component {
                 <div>
                   <center>
                     {
-                    equityAttachments &&  equityAttachments.length !== 0 &&
+                    requiredCarleaseAttachments &&  requiredCarleaseAttachments.length !== 0 &&
 
-                      <MultipleFileUploader
-                        fileArray = { file }
-                        placeholder = { 'Equity Attachments' }
-                        setFile = { (file) => {
-                          this.setState({ file })
-                        } }
-                        />
+                      <div>
+                        <MultipleFileUploader
+                          fileArray = { requiredCarleaseAttachments }
+                          placeholder = { 'Equity Attachments' }
+                          setFile = { (file) => {
+                            this.setState({ file })
+                          } }
+                          />
+                        <br/>
+                        <GenericButton
+                          onClick = { () => onUploadAttachments(transactionID, file) }
+                          text = { 'I Confirm' }
+                          />
+                      </div>
                     }
-                    <GenericButton
-                      onClick = { () => onUploadAttachments(transactionID, file) }
-                      text = { 'I Confirm' }
-                      />
                   </center>
                 </div>
               }
