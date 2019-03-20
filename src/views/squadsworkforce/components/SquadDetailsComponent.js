@@ -11,6 +11,11 @@ class SquadDetailsComponent extends Component {
     super (props)
   }
 
+  checkDate (date) {
+    const removeNecessaryLetter = date.replace('Z', '')
+    return moment(removeNecessaryLetter).format('MMM DD YYYY')
+  }
+
   render () {
     const {
       squadDetails,
@@ -38,7 +43,7 @@ class SquadDetailsComponent extends Component {
               <div className = { '' }>
                 <h4 className = { 'unionbank-color-grey font-size-13px text-align-left' }>{ data.description }</h4>
                 <br/>
-                <h4 className = { 'unionbank-color-grey font-size-12px text-align-right' }>{ data.date.start + '-' + data.date.end }</h4>
+                <h4 className = { 'unionbank-color-grey font-size-12px text-align-right' }>{ this.checkDate(data.date.start) + ' - ' + this.checkDate(data.date.end) }</h4>
               </div>
             </Card>
           )
