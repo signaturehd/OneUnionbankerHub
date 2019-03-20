@@ -32,7 +32,8 @@ class CarLeaseDetailsFragment extends Component {
     attachments,
     equityAttachments,
     loader,
-    onConfirmationReleaseFunc
+    onConfirmationReleaseFunc,
+    requiredCarleaseAttachments
   } = this.props
 
   const detailStatus = TransactionDetailsFunction.checkedBenefitStatus(details.status)
@@ -73,6 +74,7 @@ class CarLeaseDetailsFragment extends Component {
           <br/>
           <div>
             <CarLeaseDetailCardComponent
+              requiredCarleaseAttachments = { requiredCarleaseAttachments }
               equityAttachments = { equityAttachments }
               attachments = { attachments }
               loader = { loader }

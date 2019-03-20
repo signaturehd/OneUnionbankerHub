@@ -36,6 +36,7 @@ import TransactionDetailsRecepientsModal from './modals/TransactionDetailsRecepi
 function  TransactionDetails (props)  {
   const transactionId = props.details ? props.details.benefitType.id : 0
   const transactionDetails = props.details
+  const requiredCarleaseAttachments = props.requiredCarleaseAttachments
   const transactionsPerson = props.transactions
   const uploadImage = props.uploadImage
   const showFileReceipt = props.showFileReceipt
@@ -79,6 +80,7 @@ function  TransactionDetails (props)  {
     return <CarLeaseDetailsFragment
       fileCarLease = { fileCarLease }
       loader = { loader }
+      requiredCarleaseAttachments = { requiredCarleaseAttachments }
       attachments = { attachments }
       onConfirmationReleaseFunc = { (resp) => onConfirmationReleaseFunc(resp) }
       onConfirmationCarleaseFunc = { (id, status) => onConfirmationCarleaseFunc(id, status) }
@@ -256,6 +258,10 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     this.setState({ showAttachmentsMPLModal })
   }
 
+  setCarleaseEquityAttachments (requiredCarleaseAttachments) {
+    this.setState({ requiredCarleaseAttachments })
+  }
+
   transactions (transactions) {
     this.setState({ transactions })
   }
@@ -304,7 +310,8 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
     fileCarLease,
     recepients,
     equityAttachments,
-    showRecepients
+    showRecepients,
+    requiredCarleaseAttachments
   } = this.state
   return (
     <div  className={ 'container' }>
@@ -380,6 +387,7 @@ class TransactionPersonalDetailsFragment extends BaseMVPView {
         enabledLoader ?
           <div className = { 'transaction-detail-container' }>
             <TransactionDetails
+             requiredCarleaseAttachments = { requiredCarleaseAttachments }
              loader = { loader }
              details = { details }
              attachments = { attachments }
