@@ -27,7 +27,8 @@ class CarLeaseDetailCardComponent extends Component {
       attachments,
       onUploadAttachments,
       loader,
-      onConfirmationReleaseFunc
+      onConfirmationReleaseFunc,
+      requiredCarleaseAttachments
      } = this.props
 
    const transactionID = details.transactionId
@@ -94,6 +95,7 @@ class CarLeaseDetailCardComponent extends Component {
             setFileCarlease = { (resp) => setFileCarlease(resp) }
             onConfirmation = { (id, status) => onConfirmationFunc(id, status) }
             detailsCarLease = { details && details.details }
+            requiredCarleaseAttachments = { requiredCarleaseAttachments }
           />
         </div>
         <div className = { 'transaction-attachments-agreements-grid' }>
