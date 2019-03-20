@@ -18,12 +18,12 @@ let logUrl = null
 
 let date = new Date()
 let timeLogs = date.toDateString() +' - '+ date.toLocaleTimeString()
-let config = {
+var config = {
   apiKey: "AIzaSyA2PFVGbSxBr3VnjA7v79OX_xaY0dmPO94",
   authDomain: "uhub-logs.firebaseapp.com",
   databaseURL: "https://uhub-logs.firebaseio.com",
   projectId: "uhub-logs",
-  storageBucket: "",
+  storageBucket: "uhub-logs.appspot.com",
   messagingSenderId: "636212495753"
 };
 firebase.initializeApp(config);
@@ -37,6 +37,14 @@ if(window.location.origin.toString() === origin) {
 }
 
 let databaseURL = firebase.database().ref();
+
+/* Remove Data from database */
+// let removeData = databaseURL.child(`${logsStatus}/code400/`)
+// removeData.remove()
+
+databaseURL.once('value', function(snap){
+    console.log(JSON.stringify(snap.val()))
+})
 
 export default function ServiceErrorOperator (url, token, method) {
   return function ServiceErrorOperatorImpl (source) {

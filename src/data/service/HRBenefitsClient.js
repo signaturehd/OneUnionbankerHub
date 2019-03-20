@@ -1556,72 +1556,67 @@ export default class HRBenefitsClient {
 
   addGoalComment (token, goalCommentParam) {
     return this.service.addGoalComment(token, goalCommentParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/comments?goalType=${goalCommentParam.goalType}`, token, 'POST'))
   }
 
   getGoalComment (token, goalId, pageNumber, pageItem) {
     return this.service.getGoalComment(token, goalId, pageNumber, pageItem)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/hrv1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId.goalId}&goalType=${goalId.goalType}`, token, 'GET'))
   }
 
   getSquadGoalComment (token, goalId, pageNumber, pageItem, goalType) {
     return this.service.getSquadGoalComment(token, goalId, pageNumber, pageItem, goalType)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/comments?pageNumber=${pageNumber}&pageItem=${pageItem}&goalId=${goalId}&goalType=${goalType}`, token, 'GET'))
   }
 
   updateGoalTask (token, goalId, taskDescription, isCompleted) {
     return this.service.updateGoalTask(token,  goalId, taskDescription, isCompleted)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/tasks/${goalId.taskId}?goalType=${goalId.goalType}`, token, 'PUT'))
   }
 
   updateGoalComment (token, commentId, goalComment) {
     return this.service.updateGoalComment(token, commentId, goalComment)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/comments/${commentId}`, token, 'PUT'))
   }
 
   deleteGoal (token, goalId) {
     return this.service.deleteGoal(token, goalId)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goal/${goalParam.goalId}?goalType=${goalParam.goalType}`, token, 'DELETE'))
   }
 
   deleteTask (token, taskId) {
     return this.service.deleteTask(token, taskId)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/tasks/${taskId}?isArchived=1`, token, 'DELETE'))
   }
 
   deleteComment (token, commentId) {
     return this.service.deleteComment(token, commentId)
-      .pipe(ServiceErrorOperator())
+      .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/comments/${commentId}?isArchived=1`, token, 'DELETE'))
   }
 
   getTeamGoals (token, goalType) {
     return this.service.getTeamGoals(token, goalType)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/reports?goalType=${goalType}&status=1,2,5,8`, token, 'GET'))
   }
 
   addSquadGoalComment (token, squadCommentParam) {
     return this.service.addSquadGoalComment(token, squadCommentParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/comments?goalType=${squadGoalParam.type}`, token, 'POST'))
   }
 
   getGoalsHistory (token, goalId, pageNumber, pageItem) {
     return this.service.getGoalsHistory(token, goalId, pageNumber, pageItem)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/${goalId}/history?pageItem=${pageItem}&pageNumber=${pageNumber}`, token, 'GET'))
   }
 
   addRatingGoal (token, ratingParam) {
     return this.service.addRatingGoal(token, ratingParam)
-    .pipe(ServiceErrorOperator())
-  }
-
-  markAsCompleted (token, markParam) {
-    return this.service.markAsCompleted(token, markParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/${ratingParam.goalId}/rate?goalType=${ratingParam.goalType}`, token, 'POST'))
   }
 
   markAsCompletedWithType (token, markParam) {
     return this.service.markAsCompletedWithType(token, markParam)
-    .pipe(ServiceErrorOperator())
+    .pipe(ServiceErrorOperator(`hr/benefits/v1/goals/${markParam.id}/remarks or v1/goals/${markParam.goalId}/completion?goalType=${markParam.type}`, token, 'POST'))
   }
 
   addTeamGoals (token, teamGoalsParam) {
