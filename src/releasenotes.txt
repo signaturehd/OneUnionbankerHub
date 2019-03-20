@@ -88,7 +88,11 @@ v 8.3.13
 
 -Added logs in Error Response (400, 500, 502 and 401) through firebase.
 -Fixed issue in Squad Workforce Vacancies filtering, (showing of squads if there is a vacancies).
+=
 
+v 8.3.14
+
+-Fixed issue in Car lease Equity Payment Required Attachments
 =
 
 *****Production Version******
@@ -137,6 +141,7 @@ v 8.0.10
 v 8.0.11
 
 -Fixed issue in displaying of Post/Pre Employment by status.
--Fixed issue in Squad Workforce Vacancies filtering, (showing of squads if there is a vacancies) and change the date format in vacancies details.
+-Fixed issue in Squad Workforce Vacancies filtering, (showing of squads if there is a vacancies).
+-Fixed issue in Car lease Equity Payment Required Attachments
 
 =
