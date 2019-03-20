@@ -99,8 +99,19 @@ p {
 }
 
 .global-button:hover {
-  color: white;
+  color: #fff;
   background-color: #ff8a00;
+}
+
+.global-button-reverse {
+  color: #fff;
+  background-color: #ff8a00;
+}
+
+.global-button-reverse:hover {
+  color: #ff8a00;
+  background-color: #fff;
+  font-weight: 900;
 }
 
 .profile-button-small {

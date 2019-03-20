@@ -64,12 +64,15 @@ class NewEmployeeHireNextVideosComponent extends Component {
                  <div style = {{
                      display : 'inline-flex'
                    }}>
-                   <UserAvatar size="24" name="Will Binns-Smith" />
-                   <UserAvatar size="24" name="Will Binns-Smith" src="https://pbs.twimg.com/profile_images/429442426038538240/6Ac9kykG_400x400.jpeg" />
-                   <UserAvatar size="24" name="John Doe" colors={['#ccc', '#fafafa', '#ccaabb']}/>
-                   <UserAvatar size="24" name="Mary Ann Gilligans" />
-                   <UserAvatar size="24" name="Jane Doe" color="#FFF" />
-                   <UserAvatar size="24" name="Madonna" />
+                   <UserAvatar size="22" name="Will" />
+                   <UserAvatar size="22" name="Will" src="https://pbs.twimg.com/profile_images/429442426038538240/6Ac9kykG_400x400.jpeg" />
+                   <UserAvatar size="22" name="John" colors={['#ccc', '#fafafa', '#ccaabb']}/>
+                   <UserAvatar size="22" name="Mary" />
+                   <UserAvatar size="22" name="Jane" color="#FFF" />
+                   <UserAvatar size="22" name="Madonna" />
+                   <UserAvatar size="22" name="Madonna" />
+                   <UserAvatar size="22" name="Madonna" />
+                   <UserAvatar size="22" name="Madonna" />
                  </div>
                 </div>
               </div>

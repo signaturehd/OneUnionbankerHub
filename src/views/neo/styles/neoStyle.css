@@ -4,6 +4,12 @@
   column-gap: .5%;
 }
 
+.neo-assessment-button {
+  height: 30px;
+  border-radius: 50px;
+  width: 100%;
+}
+
 .neo-details-grid-video {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

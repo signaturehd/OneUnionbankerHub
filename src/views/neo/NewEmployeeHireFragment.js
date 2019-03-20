@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import Presenter from './presenter/NewEmployeeHirePresenter'
 import BaseMVPView from '../common/base/BaseMVPView'
 import ConnectPartial from '../../utils/ConnectPartial'
+import { Route, Switch } from 'react-router-dom'
 
 import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
 import NewEmployeeHireWelcomeModal from './modals/NewEmployeeHireWelcomeModal'
 
 import NewEmployeeHireListFragment from './fragments/NewEmployeeHireListFragment'
 import NewEmployeeHireMainFragment from './fragments/NewEmployeeHireMainFragment'
+import NewEmployeeHireVideoAssessmentFragment from './fragments/NewEmployeeHireVideoAssessmentFragment'
 
 import './styles/neoStyle.css'
 
@@ -49,6 +51,10 @@ class NewEmployeeHireFragment extends BaseMVPView {
       selectedVideo,
     } = this.state
 
+    const {
+      history
+    } = this.props
+
     document.onkeydown = function(e) {
       if(event.keyCode == 123) {
         return false;
@@ -86,19 +92,43 @@ class NewEmployeeHireFragment extends BaseMVPView {
               />
             :
             <div>
+              <Switch>
+                <Route path = '/neo/:id' render = { props =>
+                  <NewEmployeeHireMainFragment
+                    selectedVideo = { selectedVideo }
+                    neoData = { neoData }
+                    /> } />
+                <Route path = '/neo' render = { props =>
+                  <NewEmployeeHireListFragment
+                    selectedVideoFunc = { (value) => {
+                      console.log(value)
+                      history.push(`/neo/${value.id}`)
+                      this.setState({ selectedVideo : false })
+                    }}
+                    neoData = { neoData }
+                    selectedVideo = { selectedVideo }
+                    /> } />
+                  <Route
+                    path = '/neo/:id/videos/:id'
+                    render = { props =>
+                    <NewEmployeeHireVideoAssessment
+                      />
+                    }
+                    />
+              </Switch>
             {
-              selectedVideo ?
-
-              <NewEmployeeHireListFragment
-                selectedVideoFunc = { (value) => this.setState({ selectedVideo : false }) }
-                neoData = { neoData }
-                selectedVideo = { selectedVideo }
-                />
-              :
-              <NewEmployeeHireMainFragment
-                selectedVideo = { selectedVideo }
-                neoData = { neoData }
-                />
+              // selectedVideo ?
+              //
+              // <NewEmployeeHireListFragment
+              //   selectedVideoFunc = { (value) => this.setState({ selectedVideo : false }) }
+              //   neoData = { neoData }
+              //   selectedVideo = { selectedVideo }
+              //   />
+              // :
+              // <NewEmployeeHireMainFragment
+              //   selectedVideo = { selectedVideo }
+              //   neoData = { neoData }
+              //   />
             }
             </div>
             }
