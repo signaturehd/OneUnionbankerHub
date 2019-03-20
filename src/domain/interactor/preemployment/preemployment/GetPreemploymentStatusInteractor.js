@@ -1,3 +1,6 @@
+import { NotifyActions } from '../../../../actions'
+import store from '../../../../store'
+
 export default class GetPreEmploymentStatusInteractor {
   constructor (client) {
     this.client = client
@@ -6,9 +9,18 @@ export default class GetPreEmploymentStatusInteractor {
   execute () {
     return this.client.getPreEmploymentStatus(this.client.getToken())
       .subscribe(preEmploymentStatus => {
-        this.client.setPreEmploymentStatus(preEmploymentStatus)
+        let objectParam = {
+          "id" : preEmploymentStatus && preEmploymentStatus.id,
+          "status" : preEmploymentStatus && preEmploymentStatus.status,
+        }
+        this.client.setEmploymentStatus(objectParam)
       }, e => {
-        this.client.setPreEmploymentStatus({id: 6, status: 'regular'})        
+        store.dispatch(NotifyActions.resetNotify())
+        let objectParam = {
+          "id": 6,
+          "status": 'Regular'
+        }
+        this.client.setEmploymentStatus(objectParam)
       })
-  }
+    }
 }

@@ -11,16 +11,25 @@ class BaseFooterComponent extends Component {
     super (props)
   }
 
+  checkStatus (status) {
+    if(status === 1 || status === 2) {
+      return 1
+    } else if (status === 3 || status === 4 || status === 5) {
+      return 2
+    }
+  }
+
   render () {
     const {
-      history
+      history,
+      preEmploymentStatus
     } = this.props
 
     return (
-      <div id={'giftdetails-footer-cover'}>
-        <div id={'giftdetails-footer'}>
-          <div className={'giftdetails-footer-container'}>
-            <div className={'giftdetails-copyright column'}>
+      <div id={'global-footer-cover'}>
+        <div id={'global-footer'}>
+          <div className={'global-footer-container'}>
+            <div className={'globaldetails-footer-copyright column'}>
               <h3>Site Links</h3>
               <ul>
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mygoals') }>My Goals and Performance</a></li>
@@ -30,23 +39,31 @@ class BaseFooterComponent extends Component {
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/pensionfunds') }>My Future</a></li>
               </ul>
             </div>
-            <div className={'giftdetails-copyright column'}>
+            <div className={'globaldetails-footer-copyright column'}>
               <h3>Site Links</h3>
               <ul>
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mybenefits') }>My Benefits</a></li>
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/mylearning') }>My Learning</a></li>
                 <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/payslip') }>My Pay</a></li>
+                {
+                  this.checkStatus(preEmploymentStatus) === 1 &&
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/preemployment') }>Pre-Employment</a></li>
+                }
+                {
+                this.checkStatus(preEmploymentStatus) === 2 &&
+                  <li className = { 'cursor-pointer' }><a onClick = { () => history.push('/postemployment') }>Post-Employment</a></li>
+               }
               </ul>
             </div>
-            <div className="giftdetails-link column">
+            <div className="globaldetails-footer-link column">
               <h3
                 className = { 'cursor-pointer' }
                 onClick = { () =>history.push('/feedback') }>Feedback</h3>
-              <p>
+              <p className = { 'feedbak-global-footer' }>
                 How was your experience in using this website? Help us improve our way to serve you better.
               </p>
             </div>
-            <div className={ 'giftdetails-copyright2 column' }>
+            <div className={ 'globaldetails-footer-copyright2 column' }>
               <a href={ '/' } className={ 'logo' }>
                 <img
                   height = { 100 }

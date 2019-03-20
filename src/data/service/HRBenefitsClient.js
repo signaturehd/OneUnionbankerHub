@@ -187,12 +187,12 @@ export default class HRBenefitsClient {
     this.sessionProvider.setNEOStatus(status)
   }
 
-  setPreEmploymentStatus (preEmploymentStatus) {
-    this.sessionProvider.setPreEmploymentStatus(preEmploymentStatus)
+  setEmploymentStatus (status) {
+    this.sessionProvider.setEmploymentStatus(status)
   }
 
-  getStatus () {
-    return this.sessionProvider.getPreEmploymentStatus()
+  getEmploymentStatus () {
+    return this.sessionProvider.getEmploymentStatus()
   }
 
   /* Set Selected Releasing Center*/
@@ -1002,7 +1002,6 @@ export default class HRBenefitsClient {
     return this.service.postPreEmploymentMessageStatus (token, id)
       .pipe(ServiceErrorOperator())
   }
-
 
   getPreEmploymentStatus (token) {
     return this.service.getPreEmploymentStatus (token)

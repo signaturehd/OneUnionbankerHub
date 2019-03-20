@@ -12,6 +12,9 @@ import GreetingMessageComponent from '../GreetingMessageComponent.js'
 class DrawerAppBar extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showList : false
+    }
   }
 
   onToggleShow () {
@@ -24,6 +27,19 @@ class DrawerAppBar extends Component {
 
   onToggleShowChangeDisplay () {
     this.props.profileDisplayFunc(this.props.profileDisplay !== 'none'? 'none' : 'block')
+    this.setState({ showList : false })
+  }
+
+  checkImage (data) {
+    if(data.id === 30) {
+      if(this.state.showList === true) {
+        return data.imageStyle1
+      } else {
+        return data.imageStyle
+      }
+    } else {
+      return data.imageStyle
+    }
   }
 
   render () {
@@ -41,8 +57,13 @@ class DrawerAppBar extends Component {
       profillePosition,
       selected,
       tempPreEmployment,
-      hideProfileMenu
+      hideProfileMenu,
+      splitUserInitial
     } = this.props
+
+    const {
+      showList
+    } = this.state
 
     const style = {
       show: {
@@ -110,7 +131,7 @@ class DrawerAppBar extends Component {
     },{
       id: 12,
       name: 'Post-Employment',
-      imageStyle : 'postemployment',
+      imageStyle : 'preemployment',
       action : () => history.push('/postemployment'),
     },{
       id: 19,
@@ -132,6 +153,13 @@ class DrawerAppBar extends Component {
       name: 'Logout',
       imageStyle : 'logout',
       action : () => logout()
+    },{
+      id: 30,
+      name: '',
+      imageStyle : 'sort-down',
+      imageStyle1 : 'sort-up',
+      action : () => this.setState({ showList : false }),
+      action1 : () => this.setState({ showList : true }),
     }]
 
     let navBarList = [{
@@ -217,7 +245,10 @@ class DrawerAppBar extends Component {
       >
         <div id={ 'drawer-header' }>
           <div className = {'icon-header'}>
-            <div onClick = { () => hideProfileMenu() } >
+            <div onClick = { () => {
+              hideProfileMenu()
+              this.setState({ showList : false })
+            } } >
             {
               // <img
               //   style={ style.navbar }
@@ -265,24 +296,19 @@ class DrawerAppBar extends Component {
                 <ExifOrientationImg
                   src = { profileImage}
                   onClick = { () => {
-                    if(displayNavIcon === 'block') {
-                      this.onToggleShow()
-                    } else {
-                      this.onToggleShowChangeDisplay()
-                    }
+                    this.onToggleShowChangeDisplay()
+                    this.setState({ showList : false })
                   }}
                   style = { styleAppIcon }
                 /> :
-                <img
+                <div
                   onClick = { () => {
-                    if(displayNavIcon === 'block') {
-                      this.onToggleShow()
-                    } else {
-                      this.onToggleShowChangeDisplay()
-                    }
+                    this.onToggleShowChangeDisplay()
+                    this.seState({ showList : false })
                   }}
-                  src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
-                  className = { 'appbar-logo-circle' }/>
+                  className = { 'appbar-pictures' }>
+                  <h2 className = { 'appbar-initial-text' }>{ splitUserInitial }</h2>
+                </div>
               }
 
                 <div
@@ -301,9 +327,13 @@ class DrawerAppBar extends Component {
                                   style = { styleAppPopIcon }
                                 />
                                 :
-                                <img
-                                  src = { require('../../../../images/WEB and LOGO/1UHub Logo_Gotham_2.png') }
-                                  className = { 'appbar-submenu-profile-circle' }/>
+                                <div
+                                  onClick = { () => {
+                                    this.onToggleShowChangeDisplay()
+                                  }}
+                                  className = { 'appbar-picture' }>
+                                  <h2 className = { 'appbars-initial-text' }>{ splitUserInitial }</h2>
+                                </div>
                               }
                             </div>
                             <GreetingMessageComponent
@@ -314,7 +344,9 @@ class DrawerAppBar extends Component {
                       </div>
                     </li>
                     {
-                      tempPreEmployment === 1 || tempPreEmployment === 2 ?
+                      tempPreEmployment&&
+                      tempPreEmployment === 1 ||
+                      tempPreEmployment === 2 ?
                       <div>
                         {
                           appBarList.map((resp, key) =>
@@ -331,13 +363,17 @@ class DrawerAppBar extends Component {
                             resp.id !== 12 &&
                             resp.id !== 13 &&
                             resp.id !== 14 &&
+                            resp.id !== 15 &&
+                            resp.id !== 17 &&
+                            resp.id !== 19 &&
+                            resp.id !== 30 &&
                             <li
                               onClick = { () => { resp.action() , hideProfileMenu() } }
                               key = { key }
                               className = { 'appbar-list' }>
                               <div className = { 'appbar-icon-grid' }>
                                 <span
-                                  className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
+                                  className = { `appbar-${ this.checkImage(resp) }-icon appbar-menu-icon` }/>
                                 <a>
                                   { resp.name }
                                 </a>
@@ -350,51 +386,47 @@ class DrawerAppBar extends Component {
                       :
                       <div>
                         {
+                          tempPreEmployment &&
                           tempPreEmployment === 6 ||
                           tempPreEmployment === 0 ||
                           tempPreEmployment === null ||
                           tempPreEmployment === undefined ?
                           <div>
                             {
-
-                              appBarList.map((resp, key) =>
-                                resp.id !== 11 &&
-                                resp.id !== 12 &&
-                                <li
-                                  onClick = { () => { resp.action() , hideProfileMenu() } }
-                                  key = { key }
-                                  className = { 'appbar-list' }>
-                                  <div className = { 'appbar-icon-grid' }>
-                                    <span
-                                      className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
-                                    <a>
-                                      { resp.name }
-                                    </a>
-                                  </div>
-                                </li>
-                              )
-                            }
-                          </div> :
-                          <div>
-                            {
-                              tempPreEmployment === 3 ||
-                              tempPreEmployment === 4 ||
-                              tempPreEmployment === 5 ?
-
+                              showList ?
                               <div>
                                 {
                                   appBarList.map((resp, key) =>
                                     resp.id !== 11 &&
+                                    resp.id !== 12 &&
                                     <li
-                                      onClick = { () => { resp.action() , hideProfileMenu() }  }
+                                      onClick = { () => {
+                                        try {
+                                          if (resp.id === 30) {
+                                            resp.action()
+                                          } else {
+                                            resp.action(),
+                                            hideProfileMenu()
+                                          }
+                                        } catch (e) {
+                                          console.log(e)
+                                        }
+                                      } }
                                       key = { key }
                                       className = { 'appbar-list' }>
-                                      <div className = { 'appbar-icon-grid' }>
+                                      <div className = { `${ resp.id === 30 ? 'appbar-icon-grid1' : 'appbar-icon-grid' }` }>
+                                        {
+                                          resp.id === 30 &&
+                                          <a className = { 'unionbank-color font-weight-bold text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
+                                        }
                                         <span
-                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
-                                        <a>
-                                          { resp.name }
-                                        </a>
+                                          className = { `appbar-${this.checkImage(resp)}-icon appbar-menu-icon` }/>
+                                        {
+                                          resp.id !== 30 &&
+                                          <a>
+                                            { resp.name }
+                                          </a>
+                                        }
                                       </div>
                                     </li>
                                   )
@@ -403,22 +435,223 @@ class DrawerAppBar extends Component {
                               :
                               <div>
                                 {
-                                  appBarList.map((resp, key) =>
 
+                                  appBarList.map((resp, key) =>
+                                    resp.id !== 10 &&
+                                    resp.id !== 11 &&
                                     resp.id !== 12 &&
+                                    resp.id !== 13 &&
+                                    resp.id !== 15 &&
+                                    resp.id !== 1 &&
+                                    resp.id !== 19 &&
                                     <li
-                                      onClick = { () => { resp.action() , hideProfileMenu() } }
+                                      onClick = { () => {
+                                        try {
+                                          if (resp.id === 30) {
+                                            resp.action1()
+                                          } else {
+                                            resp.action(),
+                                            hideProfileMenu()
+                                          }
+                                        } catch (e) {
+                                          console.log(e)
+                                        }
+                                        }
+                                      }
                                       key = { key }
                                       className = { 'appbar-list' }>
-                                      <div className = { 'appbar-icon-grid' }>
+                                      <div className = { `${ resp.id === 30 ? 'appbar-icon-grid1' : 'appbar-icon-grid' }` }>
+                                        {
+                                          resp.id === 30 &&
+                                          <a className = { 'unionbank-color font-weight-bold text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
+                                        }
                                         <span
-                                          className = { `appbar-${ resp.imageStyle }-icon appbar-menu-icon` }/>
-                                        <a>
-                                          { resp.name }
-                                        </a>
+                                          className = { `appbar-${ this.checkImage(resp) }-icon appbar-menu-icon` }/>
+                                        {
+                                          resp.id !== 30 &&
+                                          <a>
+                                            { resp.name }
+                                          </a>
+                                        }
                                       </div>
                                     </li>
                                   )
+                                }
+                              </div>
+                            }
+                          </div> :
+                          <div>
+                            {
+                              tempPreEmployment &&
+                              tempPreEmployment === 3 ||
+                              tempPreEmployment === 4 ||
+                              tempPreEmployment === 5 ?
+
+                              <div>
+                                {
+                                  showList ?
+
+                                  <div>
+                                    {
+                                      appBarList.map((resp, key) =>
+                                        resp.id !== 11 &&
+                                        <li
+                                          onClick = { () => {
+                                            try {
+                                              if (resp.id === 30) {
+                                                resp.action1()
+                                              } else {
+                                                resp.action(),
+                                                hideProfileMenu()
+                                              }
+                                            } catch (e) {
+                                              console.log(e)
+                                            }
+                                          } }
+                                          key = { key }
+                                          className = { 'appbar-list' }>
+                                          <div className = { `${ resp.id === 30 ? 'appbar-icon-grid1' : 'appbar-icon-grid' }` }>
+                                            {
+                                              resp.id === 30 &&
+                                              <a className = { 'unionbank-color font-weight-bold  text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
+                                            }
+                                            <span
+                                              className = { `appbar-${this.checkImage(resp)}-icon appbar-menu-icon` }/>
+                                            {
+                                              resp.id !== 30 &&
+                                              <a>
+                                                { resp.name }
+                                              </a>
+                                            }
+                                          </div>
+                                        </li>
+                                      )
+                                    }
+                                  </div>
+                                  :
+                                  <div>
+                                    {
+                                      appBarList.map((resp, key) =>
+                                        resp.id !== 1 &&
+                                        resp.id !== 10 &&
+                                        resp.id !== 11 &&
+                                        resp.id !== 12 &&
+                                        resp.id !== 13 &&
+                                        resp.id !== 15 &&
+                                        resp.id !== 19 &&
+                                        <li
+                                          onClick = { () => {
+                                            try {
+                                              if (resp.id === 30) {
+                                                resp.action1()
+                                              } else {
+                                                resp.action(),
+                                                hideProfileMenu()
+                                              }
+                                            } catch (e) {
+                                              console.log(e)
+                                            }
+                                          } }
+                                          key = { key }
+                                          className = { 'appbar-list' }>
+                                          <div className = { `${ resp.id === 30 ? 'appbar-icon-grid1' : 'appbar-icon-grid' }` }>
+                                            {
+                                              resp.id === 30 &&
+                                              <a className = { 'unionbank-color font-weight-bold text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
+                                            }
+                                            <span
+                                              className = { `appbar-${this.checkImage(resp)}-icon appbar-menu-icon` }/>
+                                            {
+                                              resp.id !== 30 &&
+                                              <a>
+                                                { resp.name }
+                                              </a>
+                                            }
+                                          </div>
+                                        </li>
+                                      )
+                                    }
+                                  </div>
+                                }
+                              </div>
+                              :
+                              <div>
+                                {
+                                  showList ?
+
+                                  <div>
+                                    {
+                                      appBarList.map((resp, key) =>
+                                        resp.id !== 12 &&
+                                        <li
+                                          onClick = { () => {
+                                            if (resp.id === 30) {
+                                              resp.action1()
+                                            } else {
+                                              resp.action(),
+                                              hideProfileMenu()
+                                            }
+                                          } }
+                                          key = { key }
+                                          className = { 'appbar-list' }>
+                                          <div className = { `${ resp.id === 30 ? 'appbar-icon-grid1' : 'appbar-icon-grid' }` }>
+                                            {
+                                              resp.id === 30 &&
+                                              <a className = { 'unionbank-color font-weight-bold text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
+                                            }
+                                            <span
+                                              className = { `appbar-${this.checkImage(resp)}-icon appbar-menu-icon` }/>
+                                            {
+                                              resp.id !== 30 &&
+                                              <a>
+                                                { resp.name }
+                                              </a>
+                                            }
+                                          </div>
+                                        </li>
+                                      )
+                                    }
+                                  </div>
+                                  :
+                                  <div>
+                                    {
+                                      appBarList.map((resp, key) =>
+                                        resp.id !== 1 &&
+                                        resp.id !== 10 &&
+                                        resp.id !== 11 &&
+                                        resp.id !== 12 &&
+                                        resp.id !== 13 &&
+                                        resp.id !== 15 &&
+                                        resp.id !== 19 &&
+                                        <li
+                                          onClick = { () => {
+                                            if (resp.id === 30) {
+                                              resp.action1()
+                                            } else {
+                                              resp.action(),
+                                              hideProfileMenu()
+                                            }
+                                          } }
+                                          key = { key }
+                                          className = { 'appbar-list' }>
+                                          <div className = { `${ resp.id === 30 ? 'appbar-icon-grid1' : 'appbar-icon-grid' }` }>
+                                            {
+                                              resp.id === 30 &&
+                                              <a className = { 'unionbank-color font-weight-bold text-align-center margin-auto' }>{ showList ? 'less' : 'more' }</a>
+                                            }
+                                            <span
+                                              className = { `appbar-${this.checkImage(resp)}-icon appbar-menu-icon` }/>
+                                            {
+                                              resp.id !== 30 &&
+                                              <a>
+                                                { resp.name }
+                                              </a>
+                                            }
+                                          </div>
+                                        </li>
+                                      )
+                                    }
+                                  </div>
                                 }
                               </div>
                             }

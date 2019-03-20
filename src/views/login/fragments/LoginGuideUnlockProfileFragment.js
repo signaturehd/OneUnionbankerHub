@@ -37,6 +37,9 @@ class LoginGuideUnlockProfileFragment extends Component {
         </div>
         <br/>
         <br/>
+        <br/>
+        <br/>
+        <br/>
         <h2 className = { 'font-size-18px text-align-center font-weight-bold' }>
           Unlock Account Activity
         </h2>

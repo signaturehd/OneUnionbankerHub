@@ -117,6 +117,15 @@ class PayForSkillsFragment extends BaseMVPView {
     }
   }
 
+  resetData () {
+    this.setState({
+      posDraft : [],
+      posReview : [],
+      posApproved : [],
+      posReject : []
+    })
+  }
+
   render () {
     const {
       accrediting,
@@ -177,6 +186,10 @@ class PayForSkillsFragment extends BaseMVPView {
 
         <div>
         {
+          enabledLoader &&
+          <CircularLoader show = { enabledLoader } />
+        }
+        {
           !showAddingPaySkillsComponent ?
           <PayForSkillsListComponent
             posDraft = { posDraft }
@@ -187,6 +200,7 @@ class PayForSkillsFragment extends BaseMVPView {
           />
           :
           <PayForSkillsForm
+            enabledLoader = { enabledLoader }
             showEditMode = { showEditMode }
             attachmentsArray = { attachmentsArray }
             onContinue = { () => this.presenter.validateInput() }

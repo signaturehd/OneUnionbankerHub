@@ -4,6 +4,16 @@
   column-gap: 2%;
 }
 
+#phenom-overlay-body {
+  background: -moz-linear-gradient(top, rgba(255,255,255,0) 25% ,rgba(0,0,0,0.5));
+  background: -webkit-linear-gradient(top,rgba(33, 30, 30, 0) 25%, rgba(25, 21, 21, 0.63));
+  background: -o-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: -ms-linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  background: linear-gradient(top,rgba(255,255,255,0) 25%, rgba(0,0,0,0.5));
+  height: 100%;
+  border-radius: 5px;
+}
+
 .phenom-container-component {
   padding-left: 20px;
   padding-right: 20px;

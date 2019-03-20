@@ -186,7 +186,7 @@ export default class PensionFundsPresenter {
   getQuarterlyStartDate() {
     let dateToday = moment()
 
-    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS, 'month').format('YYYY-MM-DD') // multiply 3 (quarterly is every 3 months) on number of chart strands
+    dateToday = moment(dateToday).subtract(QUARTERLY_STRANDS * 3, 'month').format('YYYY-MM-DD') // multiply 3 (quarterly is every 3 months) on number of chart strands
 
     return dateToday
   }
@@ -260,10 +260,8 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
         labelArray.push(moment(resp.applicableNavDate).format('MMM DD'))
-        bidRateArray.push(resp.bidRate)
+        bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
-      console.log(labelArray)
-      console.log(bidRateArray)
       this.view.setChartPensionData(labelArray, bidRateArray)
 
     } else if (variableParam.toLowerCase() === 'week') { ///Weekly Formatting
@@ -316,7 +314,7 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
         labelArray.push('('+ moment(resp.applicableNavDate).format('MMM DD') + ') ' + `${'Week'+(key+1)}`)
-        bidRateArray.push(resp.bidRate)
+        bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
@@ -368,7 +366,7 @@ export default class PensionFundsPresenter {
 
       newDateResultArray.map((resp, key) => {
         labelArray.push(resp.applicableNavDate)
-        bidRateArray.push(resp.bidRate)
+        bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
@@ -390,7 +388,7 @@ export default class PensionFundsPresenter {
         let fromDateCalendar = moment(toDateCalendar).clone().subtract(3, 'month')
 
         quarterRanges.push({
-          id: `Q${i+1}`,
+          id: `Q${i+1} ${moment(toDateCalendar).format('MMM DD YYYY')}`,
           fromDate: moment(fromDateCalendar).format('YYYY-MM-DD'),
           toDate: moment(toDateCalendar).format('YYYY-MM-DD'),
         })
@@ -413,7 +411,6 @@ export default class PensionFundsPresenter {
         } catch (e) {
           console.log(e)
         }
-
         newDateResultArray.push({
           applicableNavDate: quarterRanges[i].id,
           bidRate: (totalDates > 0) ?  totalRate/ totalDates : 0.0,
@@ -422,10 +419,11 @@ export default class PensionFundsPresenter {
           description : ''
         })
       }
+      console.log(newDateResultArray)
 
       newDateResultArray.map((resp, key) => {
        labelArray.push(resp.applicableNavDate)
-       bidRateArray.push(resp.bidRate)
+       bidRateArray.push(parseFloat(resp.bidRate).toFixed(6))
       })
 
       this.view.setChartPensionData(labelArray, bidRateArray)
@@ -486,10 +484,13 @@ export default class PensionFundsPresenter {
   }
 
   getPensionFundsDatePagination () {
+    this.view.showCircularLoader(true)
     this.getPensionFundsDatePaginationInteractor.execute(fromDate, toDate)
     .subscribe(data => {
+      this.view.showCircularLoader(false)
       this.setChartFilter(data)
     }, error => {
+      this.view.showCircularLoader(false)
     })
   }
 

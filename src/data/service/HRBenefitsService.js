@@ -356,7 +356,7 @@ export default class HRBenefitsService {
   /* News */
   getNews (token) {
     return this.apiClient.get('v1/news', {
-        headers: { token }
+      headers: { token }
     })
   }
 
@@ -2610,7 +2610,7 @@ export default class HRBenefitsService {
   }
 
   getPensionFundsDatePagination (token, limit, start, fromDate, toDate) {
-    return this.rootClient.get(`finacle/v1/uitf/products/navpu?fromDate=${fromDate}&page=1&toDate=${toDate}&limit=${limit}`, {
+    return this.rootClient.get(`finacle/v1/uitf/products/navpu?fromDate=${fromDate}&page=1&toDate=${toDate}&limit=${limit}&product=TF107`, {
       headers : { token }
     })
   }

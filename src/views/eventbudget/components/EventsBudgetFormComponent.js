@@ -140,8 +140,10 @@ class EventsBudgetFormComponent extends Component {
           <center>
             <h2 className = { 'font-size-12px' }>Please review the information you have selected before submitting the transaction</h2>
           </center>
+          <br/>
           <center>
             <GenericButton
+              className = { 'global-button cursor-pointer profile-button-medium' }
               text = { 'Submit' }
               onClick = { () => validatePresenter() }
             />

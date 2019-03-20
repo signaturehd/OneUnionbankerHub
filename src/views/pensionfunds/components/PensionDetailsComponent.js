@@ -38,8 +38,8 @@ class PensionDetailsComponent extends Component {
               flexDirection: 'column',
               lineHeight: '1.5'
               }}>
-            <span className = { 'font-size-14px font-weight-bold' }>Units</span>
-            <span className = { 'font-size-11px font-weight-lighter' }>(Net assets Value per unit)</span>
+            <span className = { 'font-size-14px font-weight-bold' }>Units Owned</span>
+            <span className = { 'font-size-11px font-weight-lighter' }></span>
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@ class PensionDetailsComponent extends Component {
         <div
           className = { 'funds-grid-row-details  line-spacing-2' }>
           <h4 className = { 'font-weight-normal font-size-20px' }>
-            { format(pensionContributionData && pensionContributionData.unitToday) }
+            { pensionContributionData && pensionContributionData.unitToday.toFixed(6) }
           </h4>
           <div>
             <p style = {{

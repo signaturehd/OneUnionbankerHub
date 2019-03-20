@@ -177,7 +177,7 @@ render () {
     <div className = { 'dentalreimbursement-container' }>
       <div className = { 'dentailreimbursement-grid-x3' }>
         <div></div>
-          <Card className = { 'dentalreimbursement-card' }>
+          <div className = { 'dentalreimbursement-card' }>
             <div>
               <DatePicker
                 maxDate = { moment() }
@@ -303,7 +303,7 @@ render () {
              text = { 'Continue' }/>
           }
 
-          </Card>
+        </div>
         <div></div>
       </div>
     </div>

@@ -128,6 +128,7 @@ class EducationAidFormCardComponent extends Component {
               type={ 'text' }/>
             <div className = { 'grid-global' }>
               <GenericInput
+                readOnly
                 value={ academicYearFromText }
                 onClick={ () => showAcademicYearFromFunc() }
                 errorMessage = { academicYearFromTextErrorMessage }
@@ -135,6 +136,7 @@ class EducationAidFormCardComponent extends Component {
                 text={ 'From Year' }
                 type={ 'text' }/>
               <GenericInput
+                readOnly
                 value={ academicYearToText }
                 onClick={ () => showAcademicYearToFunc() }
                 errorMessage = { academicYearToTextErrorMessage }

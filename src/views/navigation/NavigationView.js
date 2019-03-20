@@ -132,7 +132,7 @@ class NavigationView extends BaseMVPView {
       profileHasCOC: '',
       tempPreEmploymentModal: false,
       hasFilledOut: '',
-      preEmploymentStatus: null,
+      preEmploymentStatus: 6,
       isLineManager : false,
       isPO : false,
       employeeNumber : '',
@@ -147,18 +147,18 @@ class NavigationView extends BaseMVPView {
   }
 
   setDisplay (sideBar, topBar) {
-    this.setState ({ displayShow : sideBar })
+    this.setState ({ displayShow : 'none' })
     this.setState({ displayNavIcon : topBar })
   }
 
   showProfile (profile) {
     this.setState({
-      rewardsPoints: profile.badgesAndPoints.redeemablePoints,
-      profile : profile.employee,
-      isLineManager: profile.isLineManager,
-      isPO: profile.isPO,
-      profillePosition: profile.employee.position,
-      employeeNumber: profile.employee.employeeNumber
+      rewardsPoints: profile && profile.badgesAndPoints && profile.badgesAndPoints.redeemablePoints,
+      profile : profile && profile.employee,
+      isLineManager: profile && profile.isLineManager,
+      isPO: profile && profile.isPO,
+      profillePosition: profile && profile.employee && profile.employee.position,
+      employeeNumber: profile && profile.employee && profile.employee.employeeNumber
     })
   }
 
@@ -185,42 +185,52 @@ class NavigationView extends BaseMVPView {
     }
   }
 
-  showPreemploymentStatus (data) {
-    const status = data && data.id
-    const statusName = data && data.status
-    this.setState({ preEmploymentStatus : status })
+  componentDidMount () {
+    try {
+      const {
+        preEmploymentStatus,
+      } = this.state
 
-    if(status === 1 || status === 2) {
-      this.props.history.push('/preemployment')
-    } else if (status === null || status === 6) {
-      this.props.history.push('/')
-    } else if (status === 3 || status === 4 || status === 5) {
-      this.props.history.push('/postemployment')
+      this.presenter.getPreEmploymentStatus()
+
+      setTimeout(function(){ this.presenter.getStatus()}, 1000)
+      this.presenter.getLibraries()
+
+      const mediaQuery = window.matchMedia('(min-width: 1300px)')
+        if (mediaQuery.matches) {
+          this.setDisplay('none', 'none')
+        } else {
+          this.setDisplay('none', 'none')
+        }
+          mediaQuery.addListener(mq => {
+        if (mq.matches) {
+          this.setDisplay('none', 'none')
+        } else {
+          this.setDisplay('none', 'none')
+        }
+      })
+      this.checkWidthNavigation()
+    } catch (e) {
+      console.log(e)
     }
   }
 
-  componentDidMount () {
-    const {
-      preEmploymentStatus,
-    } = this.state
+  showPreemploymentStatus (data) {
+    try {
+      const status = data && data.id
+      const statusName = data && data.status
+      this.setState({ preEmploymentStatus : status })
 
-    this.presenter.getPreEmploymentStatus()
-    this.presenter.getLibraries()
-
-    const mediaQuery = window.matchMedia('(min-width: 1300px)')
-      if (mediaQuery.matches) {
-        this.setDisplay('none', 'none')
-      } else {
-        this.setDisplay('none', 'block')
+      if(status === 1 || status === 2) {
+        this.props.history.push('/preemployment')
+      } else if (status === null || status === 6) {
+        this.props.history.push('/')
+      } else if (status === 3 || status === 4 || status === 5) {
+        this.props.history.push('/postemployment')
       }
-        mediaQuery.addListener(mq => {
-      if (mq.matches) {
-        this.setDisplay('none', 'none')
-      } else {
-        this.setDisplay('none', 'block')
-      }
-    })
-    this.checkWidthNavigation()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   checkWidthNavigation() {
@@ -291,12 +301,12 @@ class NavigationView extends BaseMVPView {
     const { history, login, profilePicture } = this.props
     const style = {
       show: {
-        display : displayShow
+        display : 'none'
       }
     }
 
     const locationPath = history.location.pathname
-    const name = profile && profile.fullname
+    const name = profile && profile.fullname ? profile.fullname : 'Empty Empty'
     let initials = []
     let splitUserInitial
     name &&
@@ -317,6 +327,7 @@ class NavigationView extends BaseMVPView {
     const fullName = name && name.split(' ')
     let firstName = fullName && fullName[0]
     splitUserInitial = initials[0] + initials[initials.length - 1]
+
     return (
       <div
         className = { 'navigation-body-div' }>
@@ -324,8 +335,9 @@ class NavigationView extends BaseMVPView {
         <header className = { 'page-boundary page-boundary--fixed-top' }>
           <DrawerAppBar
             hideProfileMenu = { () => this.hideProfileMenu() }
-            tempPreEmployment = { preEmploymentStatus }
+            tempPreEmployment = { preEmploymentStatus && preEmploymentStatus }
             selected={ selected }
+            splitUserInitial = { splitUserInitial }
             profillePosition = { profillePosition }
             firstName = { firstName }
             history = { history }
@@ -333,7 +345,7 @@ class NavigationView extends BaseMVPView {
             displayNavIcon = { displayNavIcon }
             profileDisplay = { profileDisplay }
             displayShow = { displayShow }
-            hide = { () => this.setState({ displayShow : 'block' })}
+            hide = { () => this.setState({ displayShow : 'none' })}
             show = { () => this.setState({ displayShow : 'none' }) }
             profileDisplayFunc = { (profileDisplay) => this.setState({ profileDisplay }) }
             onHideChangeDisplay = { () => this.setState({ profileDisplay : 'block' }) }
@@ -549,7 +561,9 @@ class NavigationView extends BaseMVPView {
                </Switch>
             </Drawer>
             <br/>
-            <BaseFooterComponent history = { history }/>
+            <BaseFooterComponent
+              preEmploymentStatus = { preEmploymentStatus && preEmploymentStatus }
+              history = { history }/>
           </main>
           <aside
             className ="left-side"

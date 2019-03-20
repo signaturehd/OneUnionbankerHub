@@ -15,6 +15,8 @@ import {
 import store from '../../../store'
 import { NotifyActions } from '../../../actions'
 
+import { format, formatValue, formatInput } from '../../../utils/numberUtils'
+
 import moment from 'moment'
 
 class OpticalCard extends Component {
@@ -48,8 +50,8 @@ class OpticalCard extends Component {
           <div className = {'optical-header'} >
             <div>
               <GenericInput
-                text = { 'Amount' }
-                value = { amount }
+                text = { `Amount` }
+                value = { formatInput(amount) }
                 disabled = { showEditSubmitButton }
                 errorMessage = { amountErrorMessage }
                 placeholder = { 'Enter Amount' }

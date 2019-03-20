@@ -15,8 +15,6 @@ import { NotifyActions } from '../../actions'
 
 import { CircularLoader, Modal, GenericButton } from '../../ub-components'
 
-import { format } from '../../utils/numberUtils'
-
 import {
   RequiredValidation,
   Validator,
@@ -24,6 +22,8 @@ import {
 } from '../../utils/validate'
 
 import * as func from './functions/OpticalFunctions'
+
+import { format, formatValue, formatInput } from '../../utils/numberUtils'
 
 import moment from 'moment'
 
@@ -61,20 +61,8 @@ class OpticalFragment extends BaseMVPView {
     this.props.setSelectedNavigation(1)
   }
 
-  isEligible (isVisible, showErrorMessageValue) {
-    if(isVisible === true) {
-      this.setState({ isVisible })
-    } else {
-      this.setState({ showErrorMessageValue, showErrorMessageModal : true })
-    }
-  }
-
-  showCircularLoader () {
-    this.setState({ isVisible : false })
-  }
-
-  hideCircularLoader () {
-    this.setState({ isVisible : false })
+  isEligible (isVisible) {
+    this.setState({ isVisible })
   }
 
   showAttachmentsMap (attachmentsData, limit) {
@@ -94,7 +82,9 @@ class OpticalFragment extends BaseMVPView {
   }
 
   validateDesiredAmount (e) {
-    const validate = func.checkedAmount(e)
+    const validate = func.checkedAmount(formatValue(e))
+    // const validate = formatValue(e)
+
     this.setState({ amount : validate, amountErrorMessage : '' })
   }
 
@@ -202,6 +192,12 @@ class OpticalFragment extends BaseMVPView {
     return (
       <div>
         {
+          isVisible &&
+          <center>
+            <CircularLoader show = {isVisible} />
+          </center>
+        }
+        {
           showNoticeModal &&
           <NoticeModal
             onClose = { () => this.setState({ showNotice : false })}
@@ -241,34 +237,26 @@ class OpticalFragment extends BaseMVPView {
           </div>
           <div>
             <h2 className = { 'header-margin-default' }>Optical Reimbursement</h2>
-            {
-              isVisible ?
-              <div className = { 'optical-container' }>
-                <Card
-                  attachmentsData = { attachmentsData }
-                  amount = { amount }
-                  orNumberText = { orNumberText }
-                  showEditSubmitButton = { showEditSubmitButton }
-                  preferredDate = { preferredDate }
-                  dateFunc = { (resp) => this.validateDate(resp) }
-                  onEditSubmissionFunc = { (resp) =>  this.editMode(resp) }
-                  onCheckedSubmissionFunc = { () => this.confirmation() }
-                  oRNumberFunc = { (resp) => this.validateSymbol(resp) }
-                  desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
-                  onSubmitFunc = { () => this.submitFormFunc() }
-                  amountErrorMessage = { amountErrorMessage }
-                  dateErrorMessage = { dateErrorMessage }
-                  orNumberErrorMessage = { orNumberErrorMessage }
-                  setAttachmentArrayFunc = { (resp) =>
-                    this.getAttachmentsArray(resp) }
-                  />
-              </div>          :
-              <div className = { 'optical-loader' }>
-                <center>
-                  <CircularLoader show = {true} />
-                </center>
-              </div>
-            }
+            <div className = { 'optical-container' }>
+              <Card
+                attachmentsData = { attachmentsData }
+                amount = { amount }
+                orNumberText = { orNumberText }
+                showEditSubmitButton = { showEditSubmitButton }
+                preferredDate = { preferredDate }
+                dateFunc = { (resp) => this.validateDate(resp) }
+                onEditSubmissionFunc = { (resp) =>  this.editMode(resp) }
+                onCheckedSubmissionFunc = { () => this.confirmation() }
+                oRNumberFunc = { (resp) => this.validateSymbol(resp) }
+                desiredAmount = { (resp) => this.validateDesiredAmount(resp) }
+                onSubmitFunc = { () => this.submitFormFunc() }
+                amountErrorMessage = { amountErrorMessage }
+                dateErrorMessage = { dateErrorMessage }
+                orNumberErrorMessage = { orNumberErrorMessage }
+                setAttachmentArrayFunc = { (resp) =>
+                  this.getAttachmentsArray(resp) }
+                />
+            </div>
           </div>
           <div></div>
         </div>

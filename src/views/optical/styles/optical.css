@@ -14,5 +14,5 @@
 
 .optical-grid-x3 {
   display: grid;
-  grid-template-columns: .5fr 1fr .5fr;
+  grid-template-columns: .4fr 1fr .4fr;
 }
