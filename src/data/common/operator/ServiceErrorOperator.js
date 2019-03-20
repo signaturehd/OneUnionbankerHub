@@ -41,10 +41,10 @@ let databaseURL = firebase.database().ref();
 /* Remove Data from database */
 // let removeData = databaseURL.child(`${logsStatus}/code400/`)
 // removeData.remove()
-
-databaseURL.once('value', function(snap){
-    console.log(JSON.stringify(snap.val()))
-})
+// 
+// databaseURL.once('value', function(snap){
+//     console.log(JSON.stringify(snap.val()))
+// })
 
 export default function ServiceErrorOperator (url, token, method) {
   return function ServiceErrorOperatorImpl (source) {
