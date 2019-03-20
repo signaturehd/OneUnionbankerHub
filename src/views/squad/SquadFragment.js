@@ -39,7 +39,7 @@ class SquadFragment extends BaseMVPView {
   }
 
   setSquads (setSquadList) {
-    this.setState({ setSquadList : [] })
+    this.setState({ setSquadList })
   }
 
   setVacancies (vacants) {
@@ -109,7 +109,7 @@ class SquadFragment extends BaseMVPView {
       showDetailsFragmentFunc,
       addApplySquad
     } = this.props
-
+    
     return (
       <div>
         { super.render() }
