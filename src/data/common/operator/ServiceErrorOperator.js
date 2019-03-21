@@ -50,22 +50,15 @@ export default function ServiceErrorOperator (url, token, method) {
   return function ServiceErrorOperatorImpl (source) {
     return Observable.create(subscriber => {
       const subscription = source.subscribe(data => {
-        const code = data.status
-        const body = data.data
+        const code = data && data.status
+        const body = data && data.data
+        const logs = JSON.stringify(data && data)
         if (code === 200) {
           subscriber.next(body)
         } else if (code === 400) {
           let refUrl = databaseURL.child(`${logsStatus}/code400`)
           if (Array.isArray(body.errors)) {
-            body.errors.map((error, key) => {
-              refUrl.push({
-                "timeLogs": timeLogs,
-                "status code": code,
-                "message": error.message,
-                "url" : logUrl+url,
-                "token" : token ? token : null,
-                "method" : method,
-              })
+            body.errors.map((error, key) => (
               store.dispatch(NotifyActions.addNotify({
                   title : 'One UnionBanker Hub',
                   message : error.message,
@@ -73,8 +66,17 @@ export default function ServiceErrorOperator (url, token, method) {
                   duration : 6000
                 })
               )
-            })
+            ))
           }
+
+          refUrl.push({
+            "timeLogs": timeLogs,
+            "status code": code,
+            "message": logs,
+            "url" : logUrl+url,
+            "token" : token ? token : null,
+            "method" : method,
+          })
           subscriber.error(new GenericError(body))
         } else if (code === 502) {
           let refUrl = databaseURL.child(`${logsStatus}/code502`)
@@ -82,7 +84,7 @@ export default function ServiceErrorOperator (url, token, method) {
           refUrl.push({
             "timeLogs": timeLogs,
             "status code": code,
-            "message": error.message,
+            "message": logs,
             "url" : logUrl+url,
             "token" : token ? token : null,
             "method" : method,
@@ -93,7 +95,7 @@ export default function ServiceErrorOperator (url, token, method) {
           refUrl.push({
             "timeLogs": timeLogs,
             "status code": code,
-            "message": error.message,
+            "message": logs,
             "url" : logUrl+url,
             "token" : token ? token : null,
             "method" : method,
@@ -102,6 +104,17 @@ export default function ServiceErrorOperator (url, token, method) {
           store.dispatch(LoginActions.showReloginModal(true))
           subscriber.error(new ForbiddenError())
         } else {
+          let refUrl = databaseURL.child(`${logsStatus}/code${code}`)
+
+          refUrl.push({
+            "timeLogs": timeLogs,
+            "status code": code,
+            "message": logs,
+            "url" : logUrl+url,
+            "token" : token ? token : null,
+            "method" : method,
+          })
+
           store.dispatch(NotifyActions.addNotify({
               title : 'One UnionBanker Hub',
               message : 'It seems that we\'ve encountered a problem.',
@@ -109,16 +122,7 @@ export default function ServiceErrorOperator (url, token, method) {
               duration : 6000
             })
           )
-          let refUrl = databaseURL.child(`${logsStatus}/code000`)
 
-          refUrl.push({
-            "timeLogs": timeLogs,
-            "status code": code,
-            "message": error.message,
-            "url" : logUrl+ url,
-            "token" : token ? token : null,
-            "method" : method,
-          })
           subscriber.error(new ServerError('It seems that we\'ve encountered a problem. Error: 1'))
         }
       },

@@ -387,7 +387,6 @@ export default class HRBenefitsClient {
 
   getNewsImage (token, file) {
     return this.service.getNewsImage(token, file)
-      .pipe(ServiceErrorOperator('hr/benefits/v1/uploads?folder=news', token, 'GET'))
       .map(resp => {
         return resp.data
       })
@@ -401,6 +400,7 @@ export default class HRBenefitsClient {
         reader.readAsDataURL(resp)
       })
     )
+    .pipe(ServiceErrorOperator('hr/benefits/v1/uploads?folder=news', token, 'GET'))
   }
   /* Transactions Personal */
   getTransactionsPersonal (token) {
