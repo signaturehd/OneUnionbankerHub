@@ -95,6 +95,13 @@ v 8.3.14
 -Fixed issue in Car lease Equity Payment Required Attachments
 =
 
+
+v 8.3.15
+
+-Added logs checker in front end and fixed issue in feedback view
+
+=
+
 *****Production Version******
 
 v 8.0.6
