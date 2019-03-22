@@ -9,8 +9,8 @@ import { CircularLoader, GenericInput, Line, Card } from '../../ub-components'
 import NewEmployeeHireWelcomeModal from './modals/NewEmployeeHireWelcomeModal'
 
 import NewEmployeeHireListFragment from './fragments/NewEmployeeHireListFragment'
-import NewEmployeeHireMainFragment from './fragments/NewEmployeeHireMainFragment'
-import NewEmployeeHireVideoAssessmentFragment from './fragments/NewEmployeeHireVideoAssessmentFragment'
+import NewEmployeeHireMainFragment from '../neostreaming/NeoStreamingFragment'
+import NewEmployeeHireVideoAssessmentFragment from '../neoassessment/NewEmployeeHireVideoAssessmentFragment'
 
 import './styles/neoStyle.css'
 

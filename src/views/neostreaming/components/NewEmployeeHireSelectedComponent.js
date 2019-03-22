@@ -33,7 +33,7 @@ class NewEmployeeHireNextVideosComponent extends Component {
           <div>
             <iframe
               width={ '100%' }
-              height={ '500px' }
+              height={ '450px' }
               src={ 'https://www.youtube.com/embed/V2AqToWyv5s' }
               frameborder="0"
               allow={ 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' }
