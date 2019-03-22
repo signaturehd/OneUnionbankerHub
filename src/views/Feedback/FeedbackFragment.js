@@ -11,6 +11,8 @@ import FeedbackCard from './components/FeedbackCardFragment/FeedbackCard'
 
 import './styles/feedbackStyles.css'
 
+import { CircularLoader } from '../../ub-components/'
+
 import { NotifyActions } from '../../actions'
 import store from '../../store'
 
@@ -24,6 +26,7 @@ class FeedbackFragment extends BaseMVPView {
       feedbackId : null,
       feedbackValue : null,
       showFeedback : true,
+      loader: false,
     }
     this.showFeedback = this.showFeedback.bind(this)
   }
@@ -37,9 +40,16 @@ class FeedbackFragment extends BaseMVPView {
     this.setState({ feedback })
   }
 
+  showLoading () {
+    this.setState({ loader : true })
+  }
+
+  hideLoading () {
+    this.setState({ loader : false })
+  }
+
   submitForm (feedbackId, feedbackValue) {
-    this.setState({ showFeedback: false })
-    if (!feedbackId || !feedbackValue) {
+    if (feedbackId === null || feedbackValue === null) {
       store.dispatch(NotifyActions.addNotify({
           title : 'Feedback',
           message : 'Please check the Form before submitting',
@@ -67,14 +77,21 @@ class FeedbackFragment extends BaseMVPView {
       feedback,
       feedbackValue,
       feedbackId,
-      showFeedback
+      showFeedback,
+      loader
     } = this.state
 
    const { details, chosenCategory, feedbackTextareaValue } = this.props
 
    return (
       <div>
-      <img
+        {
+          loader &&
+          <center>
+            <CircularLoader show = {loader}/>
+          </center>
+        }
+        <img
         onClick={ () => history.push('/settings') }
         src={ require('../../images/icons/img_message_circle.png') }
         className= {'sidebar-img-ub-logo'}/>

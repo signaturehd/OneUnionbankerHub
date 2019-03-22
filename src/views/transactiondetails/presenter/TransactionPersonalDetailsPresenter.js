@@ -13,6 +13,7 @@ import leasesCarConfirm from '../../../domain/param/AddCarLeaseConfirmationParam
 import leasesCarLeaseReleasingParam from '../../../domain/param/AddCarLeaseReleasingParam'
 import leasesConfirmpaymentParam from '../../../domain/param/AddCarleasePaymentParam'
 import GetTransactionParam from '../../../domain/param/GetTransactionParam'
+let attachmentsRequired = []
 
 import store from '../../../store'
 import { NotifyActions } from '../../../actions/'
@@ -76,9 +77,24 @@ export default class TransactionPersonalDetailsPresenter {
   }
 
   getTransactionDetails (id) {
+    attachmentsRequired = []
     this.view.hideCircularLoader()
     this.getTransactionDetailsInteractor.execute(GetTransactionParam(id))
     .do(resp => this.view.getTransactionDetails(resp))
+    .do(dataAttachments => {
+      dataAttachments &&
+      dataAttachments.details &&
+      dataAttachments.details.CarDetails &&
+      dataAttachments.details.CarDetails.RequiredAttachment.map(resp => {
+        const objectParam = {
+          "name" : resp
+        }
+        const updateAttachments = [...objectParam]
+        updateAttachments.push(objectParam)
+        attachmentsRequired = updateAttachments
+      })
+      this.view.setCarleaseEquityAttachments(attachmentsRequired)
+    })
       .flatMap(resp =>
         Observable.from(resp.details.Attachments)
           .flatMap(attachment =>

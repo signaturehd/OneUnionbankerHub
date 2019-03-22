@@ -55,47 +55,40 @@ class FeedbackCard extends Component {
       <div className = { 'feedback-card' }
         feedbackTextareaValue = { feedbackTextareaValue }
          >
-          {
-            showFeedback ?
-            <div>
-              <div className = { 'feedback-header' } >
-                <div className = { 'feedback-body' }>
-                <br/>
-                  <div className = { 'feedback-col span_1_of_3' }>
-                    <GenericInput
-                     value = { feedbackCategory ? feedbackCategory : '' }
-                     onClick = { () => onClick(true) }
-                     text = { 'Feedback Category' }
-                     readOnly
-                   />
-                  </div>
-                  <textarea
-                    onChange = { e => this.getTextareaValue(e.target.value) }
-                    className = { 'feedback-textarea' }
-                    placeholder = { 'Let us know more...' }
-                    value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
-                  />
+          <div>
+            <div className = { 'feedback-header' } >
+              <div className = { 'feedback-body' }>
+              <br/>
+                <div className = { 'feedback-col span_1_of_3' }>
+                  <GenericInput
+                   value = { feedbackCategory ? feedbackCategory : '' }
+                   onClick = { () => onClick(true) }
+                   text = { 'Feedback Category' }
+                   readOnly
+                 />
                 </div>
-              </div>
-              <center>
-                <GenericButton
-                  onClick = { () => {
-                     submitForm(feedbackTextareaValue, false),
-                     this.setState({ feedbackTextareaValue : null })
-                    }
-                  }
-                  type = { 'button' }
-                  text = { submit }
-                  className = {'feedback-procedure' }
-                  value = { 'Procedures' }
+                <textarea
+                  onChange = { e => this.getTextareaValue(e.target.value) }
+                  className = { 'feedback-textarea' }
+                  placeholder = { 'Let us know more...' }
+                  value = { feedbackTextareaValue ? feedbackTextareaValue : '' }
                 />
-              </center>
-            </div>            :
+              </div>
+            </div>
             <center>
-              <CircularLoader show = {true}/>
+              <GenericButton
+                onClick = { () => {
+                   submitForm(feedbackTextareaValue, false),
+                   this.setState({ feedbackTextareaValue : null })
+                  }
+                }
+                type = { 'button' }
+                text = { submit }
+                className = {'feedback-procedure' }
+                value = { 'Procedures' }
+              />
             </center>
-          }
-
+          </div>
       </div>
     )
   }
