@@ -516,7 +516,7 @@ class NavigationView extends BaseMVPView {
                     setSelectedNavigation = { this.setSelectedNavigation } /> } />
                 <Route path = '/mylearning' render = { props =>
                   <MyLearningView { ...props }
-                    profile = { profile }
+                    profile = { isLineManager }
                     setSelectedNavigation = { this.setSelectedNavigation }/> } />
                 <Route path = '/mygoals/' render = { props =>
                   <MyGoalsFragment { ...props }
