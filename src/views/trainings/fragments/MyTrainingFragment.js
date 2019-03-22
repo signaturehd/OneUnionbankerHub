@@ -6,6 +6,7 @@ import ConnectView from '../../../utils/ConnectView'
 
 import ResponseModal from '../../notice/NoticeResponseModal'
 import TrainingCardModal from '../modals/TrainingCardModal'
+import NoDataListComponent from '../../common/components/NoDataListedComponent'
 
 import MyTrainingListCardComponent from
 '../components/MyTrainingListCardComponent'
@@ -161,75 +162,51 @@ class MyTrainingFragment extends BaseMVPView {
             <Line/>
             <br/>
           </div>
-          <div className = { 'mytrainings-list' }>
-          {
-           training &&
-           training.slice(0, index).map((resp, key) =>
-             <MyTrainingListCardComponent
-               key = { key }
-               id = { resp.id }
-               venue = { resp.venue }
-               title = { resp.title }
-               startTime = { resp.startTime }
-               endTime = { resp.endTime }
-               status = { resp.status }
-               startDate = { resp.startDate }
-               endDate = { resp.endDate }
-               onClick = { (id) => presenterEmployeeDetails(id) }
-             />
-           )
-          }
+          <div>
+            {
+              training.length === 0 ?
+              <NoDataListComponent
+                text = { 'No Training Listed' }
+              />
+              :
+              <div>
+                <div className = { 'mytrainings-list' }>
+                {
+                 training &&
+                 training.slice(0, index).map((resp, key) =>
+                   <MyTrainingListCardComponent
+                     key = { key }
+                     id = { resp.id }
+                     venue = { resp.venue }
+                     title = { resp.title }
+                     startTime = { resp.startTime }
+                     endTime = { resp.endTime }
+                     status = { resp.status }
+                     startDate = { resp.startDate }
+                     endDate = { resp.endDate }
+                     onClick = { (id) => presenterEmployeeDetails(id) }
+                   />
+                 )
+                }
+                </div>
+                <br/>
+                <button
+                  type = { 'button' }
+                  className = { `viewmore tooltip ${isVisible}` }
+                  onClick = {
+                    () => {
+                      if(index === training.length)
+                       this.setState({ index : 3, viewMoreText : 'View more' })
+                      else
+                       this.setState({ index : training.length, viewMoreText : 'View less' })
+                    }
+                  }>
+                  <img src={ require('../../../images/icons/horizontal.png') } />
+                  <span className={ 'tooltiptext' }>{ viewMoreText }</span>
+                </button>
+              </div>
+            }
           </div>
-          <br/>
-          <button
-            type = { 'button' }
-            className = { `viewmore tooltip ${isVisible}` }
-            onClick = {
-              () => {
-                if(index === training.length)
-                 this.setState({ index : 3, viewMoreText : 'View more' })
-                else
-                 this.setState({ index : training.length, viewMoreText : 'View less' })
-              }
-            }>
-            <img src={ require('../../../images/icons/horizontal.png') } />
-            <span className={ 'tooltiptext' }>{ viewMoreText }</span>
-          </button>
-          {
-            // trainingList ?
-            // <div>
-            //   <div className = { 'grid-global' }>
-            //     {
-            //       index < trainingList.length &&
-            //       <GenericButton
-            //         className = { 'transaction-component-button' }
-            //         text = { 'View Less' }
-            //         onClick = { () =>
-            //           this.setState({
-            //             index : MyTrainingFunctions.indexDecreased(index)
-            //             })
-            //           }
-            //         />
-            //     }
-            //     {
-            //       index > trainingList.length &&
-            //
-            //       <GenericButton
-            //         className = { 'transaction-component-button' }
-            //         text = { 'View More' }
-            //         onClick = { () =>
-            //           this.setState({
-            //             index : MyTrainingFunctions.indexIncreased(index)
-            //             })
-            //           }
-            //         />
-            //     }
-            //   </div>
-            //   <Line/>
-            // </div>
-            // :
-            // <div></div>
-          }
         </div>
       </div>
       }

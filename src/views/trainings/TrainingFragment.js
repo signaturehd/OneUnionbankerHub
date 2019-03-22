@@ -108,50 +108,46 @@ class TrainingFragment extends BaseMVPView {
                 onClick = { () => history.push('/mylearning/trainings/enrolledtrainings') }
                 name = { 'tabs' } />
               <label  htmlFor = { 'training-tab2' }>Enrolled Trainings</label>
-
-            {
-              profile && profile.isLineManager &&
-              <div>
-                <input
-                  className = { 'training-input-tab' }
-                  id='training-tab3'
-                  onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
-                  type = { 'radio' }
-                  name = { 'tabs' }/>
+              <input
+                className = { 'training-input-tab' }
+                id='training-tab3'
+                onClick = { () => history.push('/mylearning/trainings/approvaltrainings') }
+                type = { 'radio' }
+                name = { 'tabs' }/>
+              {
+                profile && profile &&
                 <label  htmlFor = 'training-tab3' >For Approval</label>
-              </div>
-            }
-
-              <section id = { 'content1' }>
-                  <Switch>
-                    <Route path = '/mylearning/trainings/mytrainings'
-                      render = { props => <MyTrainingFragment
-                          presenter = { this.presenter }
-                          presenterEmployeeDetails = { (resp) => this.onClickEmployeeTrainingDetails(resp) }
-                          presenterEnrollFunc = { (resp) => this.onClickEnrollToTraining(resp) }
-                          searchString = { searchString }
-                        />
-                      }
-                    />
-                    <Route path = '/mylearning/trainings/enrolledtrainings'
-                      render = { props => <EnrolledTrainingFragment
-                        presenter = { this.presenter }
-                        enrolledTrainingList = { enrolledTrainingList }
-                        searchString = { searchString }
-                        />
-                      }
-                    />
-                    <Route path = '/mylearning/trainings/approvaltrainings'
-                      render = { props => <ApprovalTrainingFragment
-                        presenter = { this.presenter }
-                        approvalTrainingList = { approvalTrainingList }
-                        searchString = { searchString }
-                        />
-                      }
-                    />
-                </Switch>
-              </section>
+              }
             </div>
+            <section id = { 'content1' }>
+                <Switch>
+                  <Route path = '/mylearning/trainings/mytrainings'
+                    render = { props => <MyTrainingFragment
+                        presenter = { this.presenter }
+                        presenterEmployeeDetails = { (resp) => this.onClickEmployeeTrainingDetails(resp) }
+                        presenterEnrollFunc = { (resp) => this.onClickEnrollToTraining(resp) }
+                        searchString = { searchString }
+                      />
+                    }
+                  />
+                  <Route path = '/mylearning/trainings/enrolledtrainings'
+                    render = { props => <EnrolledTrainingFragment
+                      presenter = { this.presenter }
+                      enrolledTrainingList = { enrolledTrainingList }
+                      searchString = { searchString }
+                      />
+                    }
+                  />
+                  <Route path = '/mylearning/trainings/approvaltrainings'
+                    render = { props => <ApprovalTrainingFragment
+                      presenter = { this.presenter }
+                      approvalTrainingList = { approvalTrainingList }
+                      searchString = { searchString }
+                      />
+                    }
+                  />
+              </Switch>
+            </section>
           </div>
           <div></div>
         </div>

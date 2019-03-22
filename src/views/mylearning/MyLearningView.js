@@ -111,7 +111,9 @@ class MyLearningView extends BaseMVPView {
           <Route path = '/mylearning/pay/skills' render = { props =>
             <PayForSkillsFragment { ...props } /> } />
           <Route path = '/mylearning/trainings' render = { props =>
-            <TrainingFragment { ...props } /> } />
+            <TrainingFragment
+              profile = { profile && profile }
+              { ...props } /> } />
           <Route exact path = '/mylearning/podcasts' render = { props =>
             <PodcastFragment { ...props } /> } />
           <Route exact path = '/mylearning/podcasts/:id' render = { props =>
