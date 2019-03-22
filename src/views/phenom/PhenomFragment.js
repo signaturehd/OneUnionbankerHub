@@ -12,7 +12,8 @@ import PhenomCardDetailsComponent from './components/PhenomCardDetailsComponent'
 import NoDataListedComponent from '../common/components/NoDataListedComponent'
 
 import {
-  CircularLoader
+  CircularLoader,
+  Loader
 } from '../../ub-components/'
 
 import * as PhenomFunction from './functions/PhenomFunction'
@@ -97,7 +98,9 @@ class PhenomFragment extends BaseMVPView {
         {
           loader ?
          <center className = { 'circular-loader-center' }>
-           <CircularLoader show = { loader }/>
+           <Loader
+             width = { false }
+             show = { loader }/>
          </center>
          :
          <div>

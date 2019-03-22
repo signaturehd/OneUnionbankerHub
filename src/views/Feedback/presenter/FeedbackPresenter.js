@@ -23,8 +23,10 @@ export default class FeedbackPresenter {
     this.view.showLoading()
     this.getFeedbackInteractor.execute()
       .subscribe(feedback => {
+          this.view.hideLoading()
           this.view.showFeedback(feedback)
         }, e => {
+          this.view.hideLoading()
       })
   }
 
@@ -33,6 +35,8 @@ export default class FeedbackPresenter {
     this.addFeedbackInteractor.execute(FeedbackParam(feedbackId, feedback))
       .subscribe(
         data => {
+          this.view.hideLoading()
+
           store.dispatch(NotifyActions.addNotify({
               title : 'Feedback',
               message : data.message,
