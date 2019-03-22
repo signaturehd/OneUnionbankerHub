@@ -9,6 +9,10 @@
   padding: 0 4% 0 4%;
 }
 
+.tabs-container {
+  display: flex;
+}
+
 .title-view {
   margin : 25px auto;
 }
@@ -21,7 +25,8 @@
   color: #546E7A;
   border-radius: 50px;
   font-weight: lighter;
-  min-width: 200px;
+  width: 300px;
+  height: 35px;
   margin-right: 20px;
   border-bottom: 1px solid #546E7A;
   border-top: 1px solid #546E7A;
@@ -33,7 +38,8 @@
   color: #ff8a00;
   border-radius: 50px;
   font-weight: lighter;
-  min-width: 200px;
+  width: 300px;
+  height: 35px;
   margin-right: 20px;
   border-bottom: 1px solid #ff8a00;
   border-top: 1px solid #ff8a00;
