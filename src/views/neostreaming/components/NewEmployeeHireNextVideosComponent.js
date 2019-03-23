@@ -5,7 +5,8 @@ import UserAvatar from 'react-user-avatar'
 
 import {
   Card,
-  Line
+  Line,
+  SingleAvatar
 }  from '../../../ub-components/'
 
 import staticIcon from '../../../images/onboarding/thumbnail.jpg'
@@ -24,6 +25,11 @@ class NewEmployeeHireNextVideosComponent extends Component {
 
     return (
       <div>
+        <SingleAvatar
+          width = { '40px' }
+          height = { '40px' }
+          backgroundColor = { 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' }
+          />
       <br/>
       <h4 className = { 'font-weight-bold font-size-20px padding-10px unionbank-color-grey' }>Up Next:</h4>
       <Line />

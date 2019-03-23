@@ -102,6 +102,11 @@ v 8.3.15
 
 =
 
+v 8.3.16
+
+-Fixed issue in My Training crashed if training list is empty.
+
+=
 *****Production Version******
 
 v 8.0.6
@@ -151,5 +156,6 @@ v 8.0.11
 -Fixed issue in Squad Workforce Vacancies filtering, (showing of squads if there is a vacancies).
 -Fixed issue in Car lease Equity Payment Required Attachments
 -Added logs checker in front end and fixed issue in feedback view
+-Fixed issue in My Training crashed if training list is empty.
 
 =
