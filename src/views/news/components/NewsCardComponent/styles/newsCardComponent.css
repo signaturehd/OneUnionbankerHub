@@ -98,10 +98,10 @@
     display: grid;
     grid-template-columns: 1fr;
     box-shadow: none;
-    border-radius: 25px;
-    height: 250px;
+    height: 100%;
     border: none;
   }
+
   .news-body {
     padding: 80px;
     cursor: pointer;

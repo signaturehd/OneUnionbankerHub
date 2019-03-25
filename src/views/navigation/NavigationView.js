@@ -26,6 +26,7 @@ import GiftsDetailsFragment from '../giftsdetails/GiftsDetailsFragment'
 import DrawerAppBar from './components/appbar/DrawerAppBar'
 import SideBar from './components/sidebar/SideBar'
 import Drawer from './components/drawer/Drawer'
+import FloatAppbar from './components/appbar/FloatAppbar'
 
 import './styles/drawerview.css'
 
@@ -196,17 +197,17 @@ class NavigationView extends BaseMVPView {
       setTimeout(function(){ this.presenter.getStatus()}, 1000)
       this.presenter.getLibraries()
 
-      const mediaQuery = window.matchMedia('(min-width: 1300px)')
+      const mediaQuery = window.matchMedia('(min-width: 1024px)')
         if (mediaQuery.matches) {
           this.setDisplay('none', 'none')
         } else {
-          this.setDisplay('none', 'none')
+          this.setDisplay('none', 'block')
         }
           mediaQuery.addListener(mq => {
         if (mq.matches) {
           this.setDisplay('none', 'none')
         } else {
-          this.setDisplay('none', 'none')
+          this.setDisplay('none', 'block')
         }
       })
       this.checkWidthNavigation()
@@ -581,6 +582,10 @@ class NavigationView extends BaseMVPView {
              </SideBar>
           </aside>
         </div>
+        <FloatAppbar
+          selected = { selected }
+          history = { history }
+        />
       </div>
     )
   }
