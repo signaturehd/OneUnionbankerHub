@@ -1,7 +1,6 @@
 import { Progress } from 'react-sweet-progress'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import UserAvatar from 'react-user-avatar'
 
 import {
   Card,
@@ -70,15 +69,6 @@ class NewEmployeeHireNextVideosComponent extends Component {
                  <div style = {{
                      display : 'inline-flex'
                    }}>
-                   <UserAvatar size="22" name="Will" />
-                   <UserAvatar size="22" name="Will" src="https://pbs.twimg.com/profile_images/429442426038538240/6Ac9kykG_400x400.jpeg" />
-                   <UserAvatar size="22" name="John" colors={['#ccc', '#fafafa', '#ccaabb']}/>
-                   <UserAvatar size="22" name="Mary" />
-                   <UserAvatar size="22" name="Jane" color="#FFF" />
-                   <UserAvatar size="22" name="Madonna" />
-                   <UserAvatar size="22" name="Madonna" />
-                   <UserAvatar size="22" name="Madonna" />
-                   <UserAvatar size="22" name="Madonna" />
                  </div>
                 </div>
               </div>

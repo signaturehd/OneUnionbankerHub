@@ -6912,22 +6912,6 @@ react-transition-group@^2.2.0, react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-user-avatar-badge@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/react-user-avatar-badge/-/react-user-avatar-badge-1.10.1.tgz#71423500718c8e934c92353004426247f7c3bfbe"
-  dependencies:
-    add-px "^1.0.0"
-    contrast "^1.0.1"
-    initials "^2.1.5"
-
-react-user-avatar@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/react-user-avatar/-/react-user-avatar-1.10.0.tgz#79a384956b6ea332793b3e1f2651659356dd6cc8"
-  dependencies:
-    add-px "^1.0.0"
-    contrast "^1.0.1"
-    initials "^2.1.5"
-
 react@^16.2.0, react@^16.6.3:
   version "16.8.5"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.5.tgz#49be3b655489d74504ad994016407e8a0445de66"

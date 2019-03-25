@@ -42,8 +42,6 @@
     "react-sweet-progress": "^1.1.2",
     "react-table": "^6.8.2",
     "react-times": "^3.1.9",
-    "react-user-avatar": "^1.10.0",
-    "react-user-avatar-badge": "^1.10.1",
     "redux": "^3.7.2",
     "rxios": "tentenponce/rxios",
     "rxjs": "^5.5.6",
