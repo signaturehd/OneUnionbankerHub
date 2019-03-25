@@ -113,3 +113,10 @@
   background-repeat: no-repeat;
   width: 30px;
 }
+
+@media screen and (max-width: 768px) {
+  .neo-details-grid-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

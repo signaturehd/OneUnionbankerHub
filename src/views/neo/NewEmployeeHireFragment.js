@@ -101,7 +101,6 @@ class NewEmployeeHireFragment extends BaseMVPView {
                 <Route path = '/neo' render = { props =>
                   <NewEmployeeHireListFragment
                     selectedVideoFunc = { (value) => {
-                      console.log(value)
                       history.push(`/neo/${value.id}`)
                       this.setState({ selectedVideo : false })
                     }}
